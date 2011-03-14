@@ -54,7 +54,7 @@ namespace CrisisAtSwissStation
          * Updates the object's game logic.
          * objects by default have no game logic significance.
          */
-        public virtual void Update(DemoWorld world, float dt)
+        public virtual void Update(CASSWorld world, float dt)
         {
             foreach (PhysicsObject child in children)
                 child.Update(world, dt);

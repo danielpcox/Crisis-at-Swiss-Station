@@ -106,14 +106,14 @@ namespace CrisisAtSwissStation
             bubbleGenerator = new ParticleGenerator(bubbleTexture);
         }
 
-        public override void Update(DemoWorld world, float dt)
+        public override void Update(CASSWorld world, float dt)
         {
             base.Update(world, dt);
 
             //Handles generation of bubble particles
             if (bubbleTimer == 0)
             {
-                bubbleGenerator.addParticle(Body.GetWorldPoint(new Box2DX.Common.Vec2(14.5f / DemoWorld.SCALE, -64 / DemoWorld.SCALE)));
+                bubbleGenerator.addParticle(Body.GetWorldPoint(new Box2DX.Common.Vec2(14.5f / CASSWorld.SCALE, -64 / CASSWorld.SCALE)));
                 bubbleTimer = BUBBLE_INTERVAL;
             }
             else

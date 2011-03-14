@@ -27,8 +27,8 @@ namespace CrisisAtSwissStation
             this.texture = texture;
             
             // Determine dimensions
-            float halfWidth = (float)texture.Width / (2 * DemoWorld.SCALE);
-            float halfHeight = (float)texture.Height / (2 * DemoWorld.SCALE);
+            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
+            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
 
             // Create the collision shape
             PolygonDef shape = new PolygonDef();
@@ -47,7 +47,7 @@ namespace CrisisAtSwissStation
             base.Draw(offset);
 
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
-            Vector2 screenOffset = (DemoWorld.SCALE * Position) - offset;
+            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin();

@@ -14,7 +14,7 @@ using Box2DX.Dynamics;
 
 namespace CrisisAtSwissStation
 {
-    public class ScrollingWorld : DemoWorld
+    public class ScrollingWorld : CASSWorld
     {
         // Dimensions of the game world
         public const float WIDTH = 16.0f;
@@ -167,7 +167,7 @@ namespace CrisisAtSwissStation
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
             bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
-            mousePosition = new Vector2(mouse.X / DemoWorld.SCALE, mouse.Y / DemoWorld.SCALE);
+            mousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
             if (mouse.RightButton == ButtonState.Pressed)
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -210,7 +210,7 @@ namespace CrisisAtSwissStation
                 {
                     // Query a small box around the mouse
                     AABB aabb = new AABB();
-                    Vector2 gamepos = new Vector2(pos.X / DemoWorld.SCALE, pos.Y / DemoWorld.SCALE) + screenOffset;
+                    Vector2 gamepos = new Vector2(pos.X / CASSWorld.SCALE, pos.Y / CASSWorld.SCALE) + screenOffset;
                     aabb.LowerBound = Utils.Convert(gamepos - new Vector2(0.1f));
                     aabb.UpperBound = Utils.Convert(gamepos + new Vector2(0.1f));
 
@@ -318,7 +318,7 @@ namespace CrisisAtSwissStation
             base.Draw(screenOffset);
 
             GameEngine.Instance.SpriteBatch.Begin();                   
-            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, mousePosition * DemoWorld.SCALE,
+            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, mousePosition * CASSWorld.SCALE,
                 null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
                 SpriteEffects.None, 0);
             foreach (Vector2 dotpos in dotPositions)

@@ -18,7 +18,7 @@ namespace CrisisAtSwissStation
         public RopeBridge(World world, Texture2D texture, float y, float x1, float x2, float density, float friction, float restitution)
             : base(world, texture, density, friction, restitution)
         {
-            width = texture.Width / DemoWorld.SCALE;
+            width = texture.Width / CASSWorld.SCALE;
     
             int nLinks = (int)((x2 - x1) / width);
             if (nLinks <= 0)

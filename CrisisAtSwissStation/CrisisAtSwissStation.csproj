@@ -132,7 +132,7 @@
     <Compile Include="Objects\RagdollObject.cs" />
     <Compile Include="Objects\RopeBridge.cs" />
     <Compile Include="PhysicsObject.cs" />
-    <Compile Include="DemoWorld.cs" />
+    <Compile Include="CASSWorld.cs" />
     <Compile Include="PolygonDrawer.cs" />
     <Compile Include="Objects\PolygonObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

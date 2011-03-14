@@ -28,7 +28,7 @@ namespace CrisisAtSwissStation
         public ParticleGenerator(Texture2D texture)
         {
             this.texture = texture;
-            origin = new Vector2(texture.Width / (2 * DemoWorld.SCALE), texture.Height / (2 * DemoWorld.SCALE));
+            origin = new Vector2(texture.Width / (2 * CASSWorld.SCALE), texture.Height / (2 * CASSWorld.SCALE));
 
             for (int i = 0; i < maxParticles; i++)
             {
@@ -53,7 +53,7 @@ namespace CrisisAtSwissStation
             {
                 if (Particles[i].life > 0)
                 {
-                    Particles[i].pos.Y -= 1 / DemoWorld.SCALE;
+                    Particles[i].pos.Y -= 1 / CASSWorld.SCALE;
                     Particles[i].life -= 1;
                     if (Particles[i].life == 0)
                     {
@@ -70,7 +70,7 @@ namespace CrisisAtSwissStation
             for (int i = 0; i < Particles.Length; i++)
             {
                 if(Particles[i].life > 0)
-                    spriteBatch.Draw(texture, Particles[i].pos * DemoWorld.SCALE, null, Color.White, 0f,
+                    spriteBatch.Draw(texture, Particles[i].pos * CASSWorld.SCALE, null, Color.White, 0f,
                         origin, 1, SpriteEffects.None, 0);
             }
             spriteBatch.End();

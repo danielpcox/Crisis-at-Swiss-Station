@@ -106,8 +106,8 @@ namespace CrisisAtSwissStation
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin();
 
-            spriteBatch.Draw(texture, DemoWorld.SCALE * Position, null, Microsoft.Xna.Framework.Color.White, Angle, origin, 1, SpriteEffects.None, 0);
-            spriteBatch.Draw(flameEffect, DemoWorld.SCALE * Position, sourceRectangle, Microsoft.Xna.Framework.Color.White, Angle, origin, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Microsoft.Xna.Framework.Color.White, Angle, origin, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(flameEffect, CASSWorld.SCALE * Position, sourceRectangle, Microsoft.Xna.Framework.Color.White, Angle, origin, 1, SpriteEffects.None, 0);
 
             spriteBatch.End();
         }

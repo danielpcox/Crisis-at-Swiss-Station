@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace CrisisAtSwissStation
 {
-    public abstract class DemoWorld
+    public abstract class CASSWorld
     {
         // Scale from game space -> screen space
         public const float SCALE = 50.0f;
@@ -28,7 +28,7 @@ namespace CrisisAtSwissStation
         private bool succeeded;
         private bool failed;
 
-        public DemoWorld(float width, float height, Vector2 gravity)
+        public CASSWorld(float width, float height, Vector2 gravity)
         {
             // Create the world's axis-aligned bounding box
             AABB aabb = new AABB();

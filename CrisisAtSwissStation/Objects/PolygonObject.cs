@@ -186,8 +186,8 @@ namespace CrisisAtSwissStation
         public override void Draw(Vector2 offset)
         {
             PolygonDrawer drawer = GameEngine.Instance.PolygonDrawer;
-            Vector2 screenOffset = (DemoWorld.SCALE * Position) - offset;
-            drawer.DrawPolygons(screenOffset, Angle, DemoWorld.SCALE, texture, vertices, BlendState.AlphaBlend);
+            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
+            drawer.DrawPolygons(screenOffset, Angle, CASSWorld.SCALE, texture, vertices, BlendState.AlphaBlend);
 
             base.Draw(offset);
         }
@@ -229,7 +229,7 @@ namespace CrisisAtSwissStation
                     Vector3 v = new Vector3(points[j], 0);
 
                     // Generate texture coordinate around the center of the texture
-                    Vector2 t = DemoWorld.SCALE * points[j] / new Vector2(texture.Width, texture.Height) +
+                    Vector2 t = CASSWorld.SCALE * points[j] / new Vector2(texture.Width, texture.Height) +
                         new Vector2(0.5f);
 
                     vertices[3 * i + j] = new VertexPositionTexture(v, t);

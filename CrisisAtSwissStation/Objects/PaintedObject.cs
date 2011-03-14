@@ -34,13 +34,13 @@ namespace CrisisAtSwissStation
         public PaintedObject(World world, Texture2D texture, List<Vector2> blobs)
             : base(world, texture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
         {
-            Position = blobs[0] / DemoWorld.SCALE; // position of the painting is the first blob in it
+            Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
 
-            float radius = (float)texture.Width / (2 * DemoWorld.SCALE);
+            float radius = (float)texture.Width / (2 * CASSWorld.SCALE);
 
             foreach (Vector2 blobpos in blobs)
             {
-                Vector2 localpos = (blobpos / DemoWorld.SCALE) - Position;
+                Vector2 localpos = (blobpos / CASSWorld.SCALE) - Position;
 
                 // add a circle fixture to this object at each point
                 CircleDef circle = new CircleDef();
@@ -65,11 +65,11 @@ namespace CrisisAtSwissStation
             //    totalblobs.Add(Utils.Convert(shape.LocalPosition));
             //}
 
-            float radius = (float)texture.Width / (2 * DemoWorld.SCALE);
+            float radius = (float)texture.Width / (2 * CASSWorld.SCALE);
 
             foreach (Vector2 blobpos in blobs)
             {
-                Vector2 localpos = (blobpos / DemoWorld.SCALE) - Position;
+                Vector2 localpos = (blobpos / CASSWorld.SCALE) - Position;
 
                 // add a circle fixture to this object at each point
                 CircleDef circle = new CircleDef();
@@ -103,7 +103,7 @@ namespace CrisisAtSwissStation
 
                 double theta = System.Math.Atan2(localpos.Y, localpos.X) + Angle;
                 Vector2 rotatedpos = new Vector2((float)(localpos.Length() * System.Math.Cos(theta)), (float)(localpos.Length() * System.Math.Sin(theta)));
-                Vector2 screenOffset = ((Position + rotatedpos) * DemoWorld.SCALE) - offset;
+                Vector2 screenOffset = ((Position + rotatedpos) * CASSWorld.SCALE) - offset;
                 spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, 0, 0);
             }
             

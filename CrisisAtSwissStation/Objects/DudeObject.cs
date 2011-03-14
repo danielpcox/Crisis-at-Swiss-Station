@@ -71,8 +71,8 @@ namespace CrisisAtSwissStation
             // whether or not he is grounded.
 
             // Compute dimensions of the ground sensor
-            float halfWidth = (float)texture.Width / (2 * DemoWorld.SCALE);
-            float halfHeight = (float)texture.Height / (2 * DemoWorld.SCALE);
+            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
+            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
             Vector2 sensorCenter = new Vector2(0, halfHeight);
 
             // Create collision shape of the ground sensor
@@ -87,7 +87,7 @@ namespace CrisisAtSwissStation
         /**
          * Updates dude game logic - shooting, jumping cooldowns
          */
-        public override void Update(DemoWorld world, float dt)
+        public override void Update(CASSWorld world, float dt)
         {
             /*
             // Just fired a shot
@@ -121,7 +121,7 @@ namespace CrisisAtSwissStation
         public override void Draw(Vector2 offset)
         {
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
-            Vector2 screenOffset = (DemoWorld.SCALE * Position) - offset;
+            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
 
             SpriteEffects flip = facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;

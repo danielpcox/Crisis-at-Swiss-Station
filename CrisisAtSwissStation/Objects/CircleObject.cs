@@ -27,7 +27,7 @@ namespace CrisisAtSwissStation
             this.texture = texture;
 
             // Determine dimension
-            float radius = (float)texture.Width / (2 * DemoWorld.SCALE);
+            float radius = (float)texture.Width / (2 * CASSWorld.SCALE);
 
             // Create collision shape
             CircleDef shape = new CircleDef();
@@ -44,7 +44,7 @@ namespace CrisisAtSwissStation
         public override void Draw(Vector2 offset)
         {
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
-            Vector2 screenOffset = (DemoWorld.SCALE * Position) - offset;
+            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin();

@@ -56,7 +56,7 @@ namespace CrisisAtSwissStation
         int countdown;
 
         // Current world instance
-        DemoWorld currentWorld;
+        CASSWorld currentWorld;
 
         // Keyboard state
         KeyboardState lastKeyboardState;
