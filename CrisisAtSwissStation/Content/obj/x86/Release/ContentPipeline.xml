@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
+  <Asset Type="Pipeline:BuildItemCollection">
+    <Item>
+      <Source>EarthTile01.jpg</Source>
+      <Name>EarthTile01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\EarthTile01.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Crate01.jpg</Source>
+      <Name>Crate01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Crate01.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Crate02.jpg</Source>
+      <Name>Crate02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Crate02.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Rocket.png</Source>
+      <Name>Rocket</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Rocket.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>WinDoor.png</Source>
+      <Name>WinDoor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\WinDoor.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>EarthTile02.jpg</Source>
+      <Name>EarthTile02</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\EarthTile02.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Dude.png</Source>
+      <Name>Dude</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Dude.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>RopeBridge.jpg</Source>
+      <Name>RopeBridge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\RopeBridge.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Barrier.jpg</Source>
+      <Name>Barrier</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Barrier.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Bullet.png</Source>
+      <Name>Bullet</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Bullet.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>ProfWhite.png</Source>
+      <Name>ProfWhite</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\ProfWhite.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Tux.png</Source>
+      <Name>Tux</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Tux.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>TuxArm.png</Source>
+      <Name>TuxArm</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\TuxArm.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>TuxForearm.png</Source>
+      <Name>TuxForearm</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\TuxForearm.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>TuxThigh.png</Source>
+      <Name>TuxThigh</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\TuxThigh.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>TuxShin.png</Source>
+      <Name>TuxShin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\TuxShin.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Crosshair.png</Source>
+      <Name>Crosshair</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Crosshair.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>failure.png</Source>
+      <Name>failure</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\failure.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Victory.png</Source>
+      <Name>Victory</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\Victory.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>RocketFlames.png</Source>
+      <Name>RocketFlames</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\RocketFlames.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>ragdollBG.png</Source>
+      <Name>ragdollBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\ragdollBG.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>ragdollFG.png</Source>
+      <Name>ragdollFG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\ragdollFG.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>bubble.png</Source>
+      <Name>bubble</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\bubble.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>paint.png</Source>
+      <Name>paint</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\paint.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>background.png</Source>
+      <Name>background</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\background.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>PhysicsFont.spritefont</Source>
+      <Name>PhysicsFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\PhysicsFont.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>EarlyLevelv2.mp3</Source>
+      <Name>EarlyLevelv2</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\EarlyLevelv2.xnb</Output>
+      <Extra>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\EarlyLevelv2.wma</Extra>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <Item>
+      <Source>VictoryTrumpets.mp3</Source>
+      <Name>VictoryTrumpets</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\VictoryTrumpets.xnb</Output>
+      <Time>2011-03-02T20:08:20-05:00</Time>
+    </Item>
+    <BuildSuccessful>true</BuildSuccessful>
+    <Settings>
+      <TargetPlatform>Windows</TargetPlatform>
+      <TargetProfile>HiDef</TargetProfile>
+      <BuildConfiguration>Release</BuildConfiguration>
+      <CompressContent>true</CompressContent>
+      <RootDirectory>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\Content\</RootDirectory>
+      <LoggerRootDirectory>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\Content\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\bin\x86\Release\Content\</OutputDirectory>
+    </Settings>
+    <Assemblies>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Value>2010-08-23T13:41:18-04:00</Value>
+      </Assembly>
+      <Assembly>
+        <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2011-01-10T09:19:21.2987113-05:00</Value>
+      </Assembly>
+    </Assemblies>
+  </Asset>
+</XnaContent>

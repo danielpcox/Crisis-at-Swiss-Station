@@ -1,0 +1,2 @@
+C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\CrisisAtSwissStation\Content\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\projects\Crisis-at-Swiss-Station\CrisisAtSwissStation\Content\obj\x86\Debug\ResolveAssemblyReference.cache

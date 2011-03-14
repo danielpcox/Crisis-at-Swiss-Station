@@ -1,0 +1,20 @@
+Z:\CIS3000\Lab3\PhysicsDemo\Output\Box2DX.dll
+Z:\CIS3000\Lab3\PhysicsDemo\Output\Box2DX.pdb
+Z:\CIS3000\Lab3\PhysicsDemo\Build\VCS\Box2DX\obj\Debug\ResolveAssemblyReference.cache
+Z:\CIS3000\Lab3\PhysicsDemo\Build\VCS\Box2DX\obj\Debug\Box2DX.dll
+Z:\CIS3000\Lab3\PhysicsDemo\Build\VCS\Box2DX\obj\Debug\Box2DX.pdb
+Z:\CIS3000\GameplayPrototype\Output\Box2DX.dll
+Z:\CIS3000\GameplayPrototype\Output\Box2DX.pdb
+Z:\CIS3000\GameplayPrototype\Build\VCS\Box2DX\obj\Debug\ResolveAssemblyReference.cache
+Z:\CIS3000\GameplayPrototype\Build\VCS\Box2DX\obj\Debug\Box2DX.dll
+Z:\CIS3000\GameplayPrototype\Build\VCS\Box2DX\obj\Debug\Box2DX.pdb
+C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\Output\Box2DX.dll
+C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\Output\Box2DX.pdb
+C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\Build\VCS\Box2DX\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\Build\VCS\Box2DX\obj\Debug\Box2DX.dll
+C:\Documents and Settings\dpc65\Desktop\Modified Gameplayprototype\Build\VCS\Box2DX\obj\Debug\Box2DX.pdb
+Z:\projects\Crisis-at-Swiss-Station\Output\Box2DX.dll
+Z:\projects\Crisis-at-Swiss-Station\Output\Box2DX.pdb
+Z:\projects\Crisis-at-Swiss-Station\Build\VCS\Box2DX\obj\Debug\ResolveAssemblyReference.cache
+Z:\projects\Crisis-at-Swiss-Station\Build\VCS\Box2DX\obj\Debug\Box2DX.dll
+Z:\projects\Crisis-at-Swiss-Station\Build\VCS\Box2DX\obj\Debug\Box2DX.pdb
