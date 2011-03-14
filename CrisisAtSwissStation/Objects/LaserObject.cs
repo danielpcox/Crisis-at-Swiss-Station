@@ -16,32 +16,34 @@ namespace CrisisAtSwissStation
         private Box2DX.Dynamics.World world;
         private float SCALE;
         private DudeObject dude;
-
+        private bool canIDraw;
+        private Vector2 original, adjustment, end;
+        Box2DX.Collision.Shape interference;
+        
         PrimitiveBatch primitiveBatch;
 
-        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, float myScale)
-        {   
-            SCALE = myScale;
+        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude)
+        {               
             world = myWorld;
             dude = myDude;
 
+            SCALE = CASSWorld.SCALE;
             primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
             
         }
 
-        public void Create(float mX, float mY)
-        {
-            primitiveBatch.Begin(PrimitiveType.LineList);
+        public bool canDraw()
+        { return canIDraw; }
 
-            //I know magic numbers suck, i just wanted this to look pretty to begin with
-            Vector2 adjustment;
+        public void Update(float mX, float mY)
+        {
             if (dude.isRight() == true)
                 adjustment = new Vector2(12.5f, -6f);
             else
                 adjustment = new Vector2(-12.5f, -6f);
 
-            Vector2 original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
-            Vector2 end = new Vector2(mX * SCALE, mY * SCALE);
+            original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
+            end = new Vector2(mX * SCALE, mY * SCALE);
 
             Vector2 gunpos = original + adjustment;
 
@@ -52,14 +54,25 @@ namespace CrisisAtSwissStation
             float lambda = 1;
             Box2DX.Common.Vec2 normal;
 
-            Box2DX.Collision.Shape interference = world.RaycastOne(myseg, out lambda, out normal, false, null);
+            interference = world.RaycastOne(myseg, out lambda, out normal, false, null);            
 
-            Box2DX.Common.Vec2 p = (((1 - lambda) * myseg.P1) + (lambda * myseg.P2));
             if (interference != null)
             {
+                Box2DX.Common.Vec2 p = (((1 - lambda) * myseg.P1) + (lambda * myseg.P2));
                 end.X = SCALE * p.X;
                 end.Y = SCALE * p.Y;
+                canIDraw = false;
+            }
+            else { canIDraw = true; }
 
+        }
+
+        public void Draw()
+        {
+            primitiveBatch.Begin(PrimitiveType.LineList);
+
+            if (interference != null)
+            {
                 primitiveBatch.AddVertex(original + adjustment, OUT_SIGHT);
                 primitiveBatch.AddVertex(end, OUT_SIGHT);
             }
@@ -73,6 +86,7 @@ namespace CrisisAtSwissStation
 
         }
 
+      
     }
 
 }

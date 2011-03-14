@@ -114,7 +114,7 @@ namespace CrisisAtSwissStation
             AddObject(dude);
 
             // Create laser
-            laser = new LaserObject(World, dude, CASSWorld.SCALE);
+            laser = new LaserObject(World, dude);
 
             // create a DEBUG painted object
             List<Vector2> blobs = new List<Vector2> { new Vector2(400, 300), new Vector2(410, 310), new Vector2(420, 300) };
@@ -255,6 +255,8 @@ namespace CrisisAtSwissStation
 
             prevms = mouse;
 
+            laser.Update(mousePosition.X, mousePosition.Y);
+
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
         }
@@ -330,8 +332,8 @@ namespace CrisisAtSwissStation
                 GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.White);
             }
             GameEngine.Instance.SpriteBatch.End();
-
-            laser.Create(mousePosition.X, mousePosition.Y);
+            
+            laser.Draw();
         }
 
 
