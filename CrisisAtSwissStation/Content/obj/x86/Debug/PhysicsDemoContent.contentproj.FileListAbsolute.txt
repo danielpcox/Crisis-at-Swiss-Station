@@ -1,4 +1,0 @@
-C:\Documents and Settings\sal236\My Documents\PhysicsDemo\PhysicsDemo\Content\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Public\Documents\3000\Programming Lab 3\PhysicsDemo\PhysicsDemo\Content\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Users\Ronnie\Dropbox\My Stuff\3000\Programming Lab 3\PhysicsDemo\PhysicsDemo\Content\obj\x86\Debug\ResolveAssemblyReference.cache
-E:\Programming Lab 3\PhysicsDemo\PhysicsDemo\Content\obj\x86\Debug\ResolveAssemblyReference.cache
