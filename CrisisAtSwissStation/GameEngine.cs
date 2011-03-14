@@ -27,8 +27,8 @@ namespace CrisisAtSwissStation
         Vector2 halfdotsize;
         float PAINTING_GRANULARITY = 1f; // how far apart points in a painting need to be for us to store them both
 
-        public const int GAME_WINDOW_WIDTH = 800; // how much of the game you can see at one time
-        public const int GAME_WINDOW_HEIGHT = 600; // how much of the game you can see at one time
+        public const int GAME_WINDOW_WIDTH = 1024; // how much of the game you can see at one time
+        public const int GAME_WINDOW_HEIGHT = 768; // how much of the game you can see at one time
 
         // How many frames after winning/losing do we continue?
         int COUNTDOWN = 60;
