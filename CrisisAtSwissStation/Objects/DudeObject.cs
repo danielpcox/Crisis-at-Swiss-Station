@@ -141,6 +141,11 @@ namespace CrisisAtSwissStation
             set { isGrounded = value; }
         }
 
+        public bool isRight()
+        {
+            return facingRight;
+        }
+
         /**
          * Controller for a dude
          */

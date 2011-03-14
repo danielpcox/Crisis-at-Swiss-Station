@@ -90,6 +90,7 @@ namespace CrisisAtSwissStation
 
         DudeObject dude;
         SensorObject winDoor;
+        LaserObject laser;
 
         public ScrollingWorld()
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
@@ -111,6 +112,9 @@ namespace CrisisAtSwissStation
             dude = new DudeObject(World, dudeTexture, bulletTexture, dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
+
+            // Create laser
+            laser = new LaserObject(World, dude, CASSWorld.SCALE);
 
             // create a DEBUG painted object
             List<Vector2> blobs = new List<Vector2> { new Vector2(400, 300), new Vector2(410, 310), new Vector2(420, 300) };
@@ -326,6 +330,8 @@ namespace CrisisAtSwissStation
                 GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.White);
             }
             GameEngine.Instance.SpriteBatch.End();
+
+            laser.Create(mousePosition.X, mousePosition.Y);
         }
 
 
