@@ -314,14 +314,14 @@ namespace CrisisAtSwissStation
             }
         }
 
-        public override void Draw(Vector2 offset)
+        public override void Draw(GraphicsDevice device, Vector3 eye, Matrix view, Matrix proj)
         {
             GameEngine.Instance.SpriteBatch.Begin();
             Vector2 backgroundOffset = new Vector2(0, 0) - screenOffset;
             GameEngine.Instance.SpriteBatch.Draw(background, backgroundOffset, Color.White);
             GameEngine.Instance.SpriteBatch.End();
 
-            base.Draw(screenOffset);
+            base.Draw(device, eye, view, proj);
 
             GameEngine.Instance.SpriteBatch.Begin();                   
             GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, mousePosition * CASSWorld.SCALE,
@@ -336,7 +336,14 @@ namespace CrisisAtSwissStation
             laser.Draw();
         }
 
-
+        /**
+         * Returns the location of the dude, which should be
+         * used as the center of the visible screen.
+         */
+        public override Vector2 GetVisualTargetPosition()
+        {
+            return dude.Position;
+        }
 
         private class PlatformBoundaryListener : BoundaryListener
         {
