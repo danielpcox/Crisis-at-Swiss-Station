@@ -41,11 +41,25 @@ namespace CrisisAtSwissStation
         // Lets us know which direction we're facing
         private bool facingRight;
 
+        //animation stuff
+        private Rectangle sourceRect;
+        private Vector2 origin;
+        private float walkTimer;
+        private float walkInterval;
+        private int xFrame;
+        private int yFrame;
+        private int spriteWidth;
+        private int spriteHeight;
+        private Texture2D animTexture;
+        private int myGameTime;
+
+      
+
         /**
          * Creates a new dude
          */
-        public DudeObject(World world, Texture2D texture, Texture2D bulletTexture, string groundSensorName)
-            : base(world, texture, 1.0f, 0.0f, 0.0f)
+        public DudeObject(World world, Texture2D texture, Texture2D bulletTexture, Texture2D objectTexture, string groundSensorName)
+        : base(world, objectTexture, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
             isGrounded = false;
@@ -56,6 +70,19 @@ namespace CrisisAtSwissStation
 
             // Make a dude controller
             controllers.Add(new DudeController());
+
+            //animation stuff
+            myGameTime = 0;
+            animTexture = texture;
+            walkTimer = 0;
+            walkInterval = 5;
+            xFrame = 0;
+            yFrame = 0;
+            spriteWidth = 64;
+            spriteHeight = 64;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
 
             // Ground Sensor
             // -------------
@@ -70,10 +97,17 @@ namespace CrisisAtSwissStation
             //   Game logic in PlatformWorld tells the dude
             // whether or not he is grounded.
 
+
+            //animation stuff
+            /*
             // Compute dimensions of the ground sensor
             float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
             float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
             Vector2 sensorCenter = new Vector2(0, halfHeight);
+             */
+            float halfWidth = (float)sourceRect.Width / (2 * CASSWorld.SCALE);
+            float halfHeight = (float)sourceRect.Height / (2 * CASSWorld.SCALE);
+            Vector2 sensorCenter = new Vector2(0, halfHeight); 
 
             // Create collision shape of the ground sensor
             PolygonDef groundSensor = new PolygonDef();
@@ -82,6 +116,9 @@ namespace CrisisAtSwissStation
             groundSensor.UserData = groundSensorName;
             groundSensor.SetAsBox(halfWidth / 2, 0.05f, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
+
+            //animation stuff
+            //base.(world, texture, 1.0f, 0.0f, 0.0f);
         }
 
         /**
@@ -111,6 +148,8 @@ namespace CrisisAtSwissStation
             shootCooldown = Math.Max(0, shootCooldown - 1);
             jumpCooldown = Math.Max(0, jumpCooldown - 1);
 
+            //animation stuff
+            myGameTime++;
 
             base.Update(world, dt);
         }
@@ -120,6 +159,22 @@ namespace CrisisAtSwissStation
          */
         public override void Draw(Vector2 offset)
         {
+            //animation stuff
+
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
+            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
+            SpriteEffects flip = facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+
+            spriteBatch.End();
+
+
+            /*
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
             Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
 
@@ -129,7 +184,7 @@ namespace CrisisAtSwissStation
 
             spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, flip, 0);
 
-            spriteBatch.End();
+            spriteBatch.End();*/
         }
 
         /**
@@ -144,6 +199,11 @@ namespace CrisisAtSwissStation
         public bool isRight()
         {
             return facingRight;
+        }
+
+        public int getTime()
+        {
+            return myGameTime;
         }
 
         /**
@@ -169,9 +229,17 @@ namespace CrisisAtSwissStation
                 // --------------------
                 KeyboardState ks = Keyboard.GetState();
                 if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.A))
+                { 
                     moveForce.X -= DUDE_FORCE;
+                    //dudeObject.walkAnimation(dudeObject.getTime());
+                    dudeObject.walkAnimation();
+                }
                 else if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
+                {
                     moveForce.X += DUDE_FORCE;
+                    //dudeObject.walkAnimation(dudeObject.getTime());
+                    dudeObject.walkAnimation();
+                }
                 if (ks.IsKeyDown(Keys.Space))
                     shoot = true;
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
@@ -207,7 +275,9 @@ namespace CrisisAtSwissStation
                 // Jump!
                 if (dudeObject.jumpCooldown == 0 && jump && dudeObject.Grounded)
                 {
-                    Vector2 impulse = new Vector2(0, -2.1f);
+                    //animation stuff
+                    //Vector2 impulse = new Vector2(0, -2.1f);
+                    Vector2 impulse = new Vector2(0, -1.5f);
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }
@@ -218,6 +288,38 @@ namespace CrisisAtSwissStation
                     dudeObject.shootCooldown = SHOOT_COOLDOWN;
                 }
             }
+        }
+
+        //animation stuff
+        private void walkAnimation()//int gameTime)
+        {
+            //walkTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            //walkTimer += (float)gameTime;
+            walkTimer += myGameTime;
+
+            if (walkTimer > walkInterval)
+            {
+                xFrame++;
+
+                if (xFrame > 7 && yFrame == 0)
+                { 
+                    xFrame = 0;                  
+                    yFrame = 1;
+                }
+                else if (xFrame > 7 && yFrame == 1)
+                {
+                    xFrame = 0;
+                    yFrame = 0;
+                }
+
+                // -= (int)walkInterval;
+                myGameTime = 0;
+                walkTimer = 0;
+
+            }
+
+
+
         }
     }
 }
