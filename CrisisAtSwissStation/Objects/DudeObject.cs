@@ -30,7 +30,6 @@ namespace CrisisAtSwissStation
         private bool isGrounded;
 
         // Cooldown values
-        private int shootCooldown;
         private int jumpCooldown;
 
         // Lets us know which direction we're facing
@@ -200,7 +199,7 @@ namespace CrisisAtSwissStation
 
                 Vector2 moveForce = new Vector2();
                 bool jump = false;
-                bool shoot = false;
+               
 
                 // TODO: XBox controls
                 // --------------------
@@ -219,8 +218,7 @@ namespace CrisisAtSwissStation
                     if(dudeObject.Grounded)
                     dudeObject.walkAnimation();
                 }
-                if (ks.IsKeyDown(Keys.Space))
-                    shoot = true;
+                
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
                     jump = true;
                 // --------------------

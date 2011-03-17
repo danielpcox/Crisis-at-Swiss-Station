@@ -123,7 +123,6 @@ namespace CrisisAtSwissStation
             graphics.PreferredBackBufferWidth = GAME_WINDOW_WIDTH;
             graphics.PreferredBackBufferHeight = GAME_WINDOW_HEIGHT;
             graphics.ApplyChanges();
-     //       audioManager.Play(AudioManager.MusicSelection.EarlyLevelv2);
             base.Initialize();
         }
 
@@ -180,6 +179,10 @@ namespace CrisisAtSwissStation
             // exit when they press escape
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            // toggle mute if they press 'm' 
+            if (ks.IsKeyDown(Keys.M))
+                audioManager.Pause();
 
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {

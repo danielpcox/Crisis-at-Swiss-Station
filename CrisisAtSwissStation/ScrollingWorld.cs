@@ -33,7 +33,7 @@ namespace CrisisAtSwissStation
         private static Texture2D paintTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
-        private static AudioManager audioman;
+        
 
         // Wall vertices
         private static Vector2[] wall1 = new Vector2[]
