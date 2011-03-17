@@ -26,6 +26,7 @@ namespace CrisisAtSwissStation
         // Content in the game world
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
+        private static Texture2D dudeObjectTexture;
         private static Texture2D bulletTexture;
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
@@ -109,7 +110,7 @@ namespace CrisisAtSwissStation
                 AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
 
             // Create dude
-            dude = new DudeObject(World, dudeTexture, bulletTexture, dudeSensorName);
+            dude = new DudeObject(World, dudeTexture, bulletTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
@@ -153,7 +154,9 @@ namespace CrisisAtSwissStation
         public static void LoadContent(ContentManager content)
         {
             groundTexture = content.Load<Texture2D>("EarthTile02");
-            dudeTexture = content.Load<Texture2D>("Dude");
+            //dudeTexture = content.Load<Texture2D>("Dude");
+            dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
+            dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             bulletTexture = content.Load<Texture2D>("Bullet");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
