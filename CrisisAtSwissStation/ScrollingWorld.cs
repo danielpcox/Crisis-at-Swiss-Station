@@ -27,7 +27,6 @@ namespace CrisisAtSwissStation
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
         private static Texture2D dudeObjectTexture;
-        private static Texture2D bulletTexture;
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
@@ -110,7 +109,7 @@ namespace CrisisAtSwissStation
                 AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
 
             // Create dude
-            dude = new DudeObject(World, dudeTexture, bulletTexture, dudeObjectTexture,dudeSensorName);
+            dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
@@ -157,7 +156,6 @@ namespace CrisisAtSwissStation
             //dudeTexture = content.Load<Texture2D>("Dude");
             dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
-            bulletTexture = content.Load<Texture2D>("Bullet");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
@@ -275,22 +273,7 @@ namespace CrisisAtSwissStation
             {
                 this.world = world;
             }
-            public override void Add(ContactPoint point)
-            {
-                // Test bullet collision with world
-                BulletObject bullet;
-                if (point.Shape1.GetBody().GetUserData() is BulletObject)
-                {
-                    bullet = point.Shape1.GetBody().GetUserData() as BulletObject;
-                    bullet.Die();
-                }
-                if (point.Shape2.GetBody().GetUserData() is BulletObject)
-                {
-                    bullet = point.Shape2.GetBody().GetUserData() as BulletObject;
-                    bullet.Die();
-                }
-            }
-
+            
             public override void Persist(ContactPoint point)
             {
                 // Test player collision with ground
