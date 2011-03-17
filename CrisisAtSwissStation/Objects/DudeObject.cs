@@ -225,7 +225,7 @@ namespace CrisisAtSwissStation
 
                 Vector2 vel = Utils.Convert(dude.GetLinearVelocity());
 
-                // Which way are we facing
+                // Which way are we facing  (add in a is X(mouse) > X(dude) condition??)
                 if (moveForce.X < 0)
                     dudeObject.facingRight = false;
                 else if (moveForce.X > 0)

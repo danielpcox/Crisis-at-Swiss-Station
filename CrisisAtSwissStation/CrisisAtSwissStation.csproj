@@ -129,7 +129,6 @@
     <Compile Include="Objects\PaintedObject.cs" />
     <Compile Include="Objects\DudeObject.cs" />
     <Compile Include="Objects\ParticleGenerator.cs" />
-    <Compile Include="Objects\RagdollObject.cs" />
     <Compile Include="Objects\RopeBridge.cs" />
     <Compile Include="PhysicsObject.cs" />
     <Compile Include="CASSWorld.cs" />
@@ -139,7 +138,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="GameEngine.cs" />
-    <Compile Include="Objects\RocketObject.cs" />
     <Compile Include="Objects\SensorObject.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ScrollingWorld.cs" />
