@@ -100,8 +100,8 @@ namespace CrisisAtSwissStation
             float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
             Vector2 sensorCenter = new Vector2(0, halfHeight);
              */
-            float halfWidth = (float)sourceRect.Width / (2 * CASSWorld.SCALE);
-            float halfHeight = (float)sourceRect.Height / (2 * CASSWorld.SCALE);
+            float halfWidth = (float)objectTexture.Width / (2 * CASSWorld.SCALE);
+            float halfHeight = (float)objectTexture.Height / (2 * CASSWorld.SCALE);
             Vector2 sensorCenter = new Vector2(0, halfHeight); 
 
             // Create collision shape of the ground sensor
@@ -209,12 +209,14 @@ namespace CrisisAtSwissStation
                 { 
                     moveForce.X -= DUDE_FORCE;
                     //dudeObject.walkAnimation(dudeObject.getTime());
+                    if(dudeObject.Grounded)
                     dudeObject.walkAnimation();
                 }
                 else if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
                 {
                     moveForce.X += DUDE_FORCE;
                     //dudeObject.walkAnimation(dudeObject.getTime());
+                    if(dudeObject.Grounded)
                     dudeObject.walkAnimation();
                 }
                 if (ks.IsKeyDown(Keys.Space))
@@ -254,7 +256,7 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                    Vector2 impulse = new Vector2(0, -1.5f);
+                    Vector2 impulse = new Vector2(0, -1.3f);
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }
