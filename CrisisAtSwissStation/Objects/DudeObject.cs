@@ -21,15 +21,10 @@ namespace CrisisAtSwissStation
     public class DudeObject : BoxObject
     {
         private const int JUMP_COOLDOWN = 30;
-        private const int SHOOT_COOLDOWN = 40;
-        private const float BULLET_SPEED = 20.0f;
 
         private const float DUDE_FORCE = 20.0f;   // How much force to apply to get the dude moving
         private const float DUDE_DAMPING = 10.0f; // How hard the brakes are applied to get a dude to stop moving
         private const float DUDE_MAXSPEED = 6.0f; // Upper limit on dude left-right movement.  Does NOT apply to vertical movement.
-
-        // Texture of the bullets we shoot
-        private Texture2D bulletTexture;
 
         // Whether or not this dude is touching the ground
         private bool isGrounded;
@@ -58,12 +53,12 @@ namespace CrisisAtSwissStation
         /**
          * Creates a new dude
          */
-        public DudeObject(World world, Texture2D texture, Texture2D bulletTexture, Texture2D objectTexture, string groundSensorName)
+        public DudeObject(World world, Texture2D texture, Texture2D objectTexture, string groundSensorName)
         : base(world, objectTexture, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
             isGrounded = false;
-            this.bulletTexture = bulletTexture;
+            
 
             // BodyDef options
             BodyDef.FixedRotation = true;
@@ -122,30 +117,12 @@ namespace CrisisAtSwissStation
         }
 
         /**
-         * Updates dude game logic - shooting, jumping cooldowns
+         * Updates dude game logic - jumping cooldown
          */
         public override void Update(CASSWorld world, float dt)
         {
-            /*
-            // Just fired a shot
-            if (shootCooldown == SHOOT_COOLDOWN)
-            {
-                BulletObject bullet = new BulletObject(world.World, bulletTexture, 10.0f, 0, 0);
-                float offset = (texture.Width + bulletTexture.Width + 1) / (2 * DemoWorld.SCALE);
-                float speed = BULLET_SPEED;
-                if (!facingRight)
-                {
-                    offset = -offset;
-                    speed = -speed;
-                }
-
-                bullet.Position = Position + new Vector2(offset, 0);
-                world.AddObject(bullet);
-                bullet.Body.SetLinearVelocity(Utils.Convert(new Vector2(speed, 0)));
-            }
-            */
+            
             // Apply cooldowns
-            shootCooldown = Math.Max(0, shootCooldown - 1);
             jumpCooldown = Math.Max(0, jumpCooldown - 1);
 
             //animation stuff
@@ -282,11 +259,6 @@ namespace CrisisAtSwissStation
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }
 
-                // Shoot!
-                if (dudeObject.shootCooldown == 0 && shoot)
-                {
-                    dudeObject.shootCooldown = SHOOT_COOLDOWN;
-                }
             }
         }
 

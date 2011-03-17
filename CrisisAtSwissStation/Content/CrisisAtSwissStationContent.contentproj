@@ -118,13 +118,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bullet.png">
-      <Name>Bullet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="ProfWhite.png">
       <Name>ProfWhite</Name>
       <Importer>TextureImporter</Importer>
