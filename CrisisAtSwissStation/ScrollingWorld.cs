@@ -198,7 +198,7 @@ namespace CrisisAtSwissStation
                 }
             }
 
-            if (mouse.LeftButton == ButtonState.Released && prevms.LeftButton == ButtonState.Pressed)
+            if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
             if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
