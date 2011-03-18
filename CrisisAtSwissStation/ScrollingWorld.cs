@@ -87,6 +87,7 @@ namespace CrisisAtSwissStation
         MouseState prevms;
         int numDrawLeft = 105;
         bool finishDraw = false;
+        bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
         DudeObject dude;
         SensorObject winDoor;
@@ -173,6 +174,7 @@ namespace CrisisAtSwissStation
             MouseState mouse = Mouse.GetState();
             bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
             mousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
+            //ERASING
             if (mouse.RightButton == ButtonState.Pressed)
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -196,7 +198,10 @@ namespace CrisisAtSwissStation
                 }
             }
 
-            if (mouse.LeftButton == ButtonState.Pressed && mouseinbounds && numDrawLeft > 0)
+            if (mouse.LeftButton == ButtonState.Released && prevms.LeftButton == ButtonState.Pressed)
+                drawingInterrupted = false;
+
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
             {// if we're holding down the mouse button
                 Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
                 if (dotPositions.Count == 0 || (mousepos - dotPositions[dotPositions.Count - 1]).Length() > PAINTING_GRANULARITY)
@@ -207,8 +212,10 @@ namespace CrisisAtSwissStation
                 }
                 
             }
-            else if ((mouse.LeftButton == ButtonState.Released && (numDrawLeft > 0 || finishDraw)) && prevms.LeftButton == ButtonState.Pressed && mouseinbounds)
+            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > 0 || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
             {
+                if (!laser.canDraw())
+                    drawingInterrupted = true;
                 Box2DX.Dynamics.Body overlapped = null;
                 PhysicsObject po = null;
                 foreach (Vector2 pos in dotPositions)
@@ -246,7 +253,8 @@ namespace CrisisAtSwissStation
                 else
                 {
                     // create the painting as an object in the world
-                    this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
+                    if (dotPositions.Count>0)
+                        this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
