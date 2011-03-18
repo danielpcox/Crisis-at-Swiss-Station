@@ -23,6 +23,8 @@ namespace CrisisAtSwissStation
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
         public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window
 
+        public const float PAINTING_GRANULARITY = 20f; // how far apart points in a painting need to be for us to store them both
+
         // Content in the game world
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
@@ -31,6 +33,7 @@ namespace CrisisAtSwissStation
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
         private static Texture2D paintTexture;
+        private static Texture2D paintedSegmentTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
 
@@ -111,7 +114,6 @@ namespace CrisisAtSwissStation
         Vector2 mousePosition;
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
-        float PAINTING_GRANULARITY = 5f; // how far apart points in a painting need to be for us to store them both
         MouseState prevms;
        public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
         bool finishDraw = false;
@@ -220,7 +222,9 @@ namespace CrisisAtSwissStation
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
+            //paintTexture = content.Load<Texture2D>("paint");
             paintTexture = content.Load<Texture2D>("paint");
+            paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
 
@@ -321,8 +325,8 @@ namespace CrisisAtSwissStation
                 else
                 {
                     // create the painting as an object in the world
-                    if (dotPositions.Count>0)
-                        this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
+                    if (dotPositions.Count>1)
+                        this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dotPositions));
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 

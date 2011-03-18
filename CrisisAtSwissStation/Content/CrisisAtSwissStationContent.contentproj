@@ -203,6 +203,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="paintedsegment.png">
+      <Name>paintedsegment</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="bigBoxTexture.png">
       <Name>bigBoxTexture</Name>
       <Importer>TextureImporter</Importer>
