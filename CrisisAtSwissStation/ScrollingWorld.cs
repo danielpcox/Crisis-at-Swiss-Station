@@ -46,16 +46,16 @@ namespace CrisisAtSwissStation
         // Wall vertices
         private static Vector2[] wall1 = new Vector2[]
         {
-            new Vector2(8,  0), new Vector2(8,  1),
-            new Vector2(1,  1), new Vector2(1, 12),
-            new Vector2(0, 12), new Vector2(0,  0)
+          new Vector2(8,  0), new Vector2(8,  1),
+          new Vector2(1,  1), new Vector2(1, 12),
+          new Vector2(0, 12), new Vector2(0,  0)
         };
         private static Vector2[] wall2 = new Vector2[]
         {
-            new Vector2(16,   0), new Vector2(16, 12),
-            new Vector2(15,  12), new Vector2(15,  1),
-            new Vector2( 8,  1),  new Vector2( 8,  0)
-        };
+          new Vector2(16,   0), new Vector2(16, 12),
+          new Vector2(15,  12), new Vector2(15,  1),
+          new Vector2( 8,  1),  new Vector2( 8,  0)
+        }; 
 
         private static Vector2 winDoorPos = new Vector2(19f, 4.38f);
 
@@ -243,7 +243,7 @@ namespace CrisisAtSwissStation
             bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
             mousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
             //ERASING
-            if (mouse.RightButton == ButtonState.Pressed)
+            if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
@@ -266,7 +266,7 @@ namespace CrisisAtSwissStation
                 }
             }
 
-            if (mouse.LeftButton == ButtonState.Released && prevms.LeftButton == ButtonState.Pressed)
+            if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
             if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)

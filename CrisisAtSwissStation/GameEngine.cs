@@ -207,6 +207,10 @@ namespace CrisisAtSwissStation
             if (ks.IsKeyDown(Keys.M))
                 audioManager.Mute();
 
+            // Move to next track if they press 'x'
+            if (ks.IsKeyDown(Keys.X))
+                audioManager.PlayNext();
+
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {
                 countdown--;
