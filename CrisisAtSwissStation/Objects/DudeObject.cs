@@ -22,7 +22,7 @@ namespace CrisisAtSwissStation
     {
 
         //dude's jump impulse
-        public static float jumpImpulse = -1.3f;
+        public static float jumpImpulse = -2.7f;
 
 
         private const int JUMP_COOLDOWN = 30;
