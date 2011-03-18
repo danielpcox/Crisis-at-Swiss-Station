@@ -18,7 +18,7 @@ namespace CrisisAtSwissStation
     {
         // Dimensions of the game world
         public const float WIDTH = 20.0f; //16.0f
-        public const float HEIGHT = 13.0f; //12.0f
+        public const float HEIGHT = 15.0f; //12.0f
         private const float GRAVITY = 9.8f;
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
         public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window
@@ -33,6 +33,14 @@ namespace CrisisAtSwissStation
         private static Texture2D paintTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
+
+        private static Texture2D bigBoxTexture;
+        private static Texture2D littleBoxTexture;
+        private static Texture2D leftPipeTexture;
+        private static Texture2D rightPipeTexture;
+        private static Texture2D platformTexture;
+        private static Texture2D bottomTexture;
+
         
 
         // Wall vertices
@@ -49,7 +57,7 @@ namespace CrisisAtSwissStation
             new Vector2( 8,  1),  new Vector2( 8,  0)
         };
 
-        private static Vector2 winDoorPos = new Vector2(2.5f, 3.2f);
+        private static Vector2 winDoorPos = new Vector2(19f, 4.38f);
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
@@ -58,6 +66,26 @@ namespace CrisisAtSwissStation
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
 
+        private static Vector2 bigBoxPosition = new Vector2(2.5f, 4f);
+        private BoxObject bigBox;
+
+        private static Vector2 littleBoxPosition = new Vector2(5.85f, 5.65f);
+        private BoxObject littleBox;
+
+        private static Vector2 leftPipePosition = new Vector2(8.9f, 5.7f);
+        private BoxObject leftPipe;
+
+        private static Vector2 rightPipePosition = new Vector2(16.35f, 6.37f);
+        private BoxObject rightPipe;
+
+        private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
+        private BoxObject platform;
+
+        private static Vector2 bottomPosition = new Vector2(10f, 15f);
+        private BoxObject bottom;
+
+
+        /*
         private static Vector2[][] platforms = new Vector2[][]
         {
             new Vector2[]
@@ -71,15 +99,15 @@ namespace CrisisAtSwissStation
             new Vector2[]
             { new Vector2(14,6), new Vector2(15, 6), new Vector2(15,6.5f), new Vector2(14, 6.5f) },
             new Vector2[]
-            { new Vector2(12,5), new Vector2(13, 5), new Vector2(13,5.5f), new Vector2(12, 5.5f) },*/
+            { new Vector2(12,5), new Vector2(13, 5), new Vector2(13,5.5f), new Vector2(12, 5.5f) },
             new Vector2[]
             { new Vector2(10,4), new Vector2(12, 4), new Vector2(12,4.5f), new Vector2(10, 4.5f) },
             new Vector2[]
             { new Vector2(1,4), new Vector2(4, 4), new Vector2(4,4.5f), new Vector2(1, 4.5f) },
             //new Vector2[] // Daniel-added
             //{ new Vector2(10,10), new Vector2(11, 10), new Vector2(11,11f), new Vector2(10, 11f) },
-        };
-
+        }; 
+        */
         Vector2 mousePosition;
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
@@ -102,17 +130,49 @@ namespace CrisisAtSwissStation
             AddObject(winDoor);
 
             // Create ground pieces
-            AddObject(new PolygonObject(World, wall1, groundTexture, 0, 0.0f, 0.1f));
-            AddObject(new PolygonObject(World, wall2, groundTexture, 0, 0.0f, 0.1f));
+            //AddObject(new PolygonObject(World, wall1, groundTexture, 0, 0.0f, 0.1f));
+            //AddObject(new PolygonObject(World, wall2, groundTexture, 0, 0.0f, 0.1f));
 
+            
             // Create platforms
-            foreach(Vector2[] platform in platforms)
-                AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
+            //foreach(Vector2[] platform in platforms)
+            //    AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
+            
+
+            //new platforms
+            //float s = CASSWorld.SCALE;
+           // AddObject(new HackObject(World, (int)(1024/s), (int)(38/s), 0, (int)(730/s),.1f));
+
 
             // Create dude
             dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
+
+            //create bottom platforms
+            bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
+            bigBox.Position = bigBoxPosition;
+            AddObject(bigBox);
+
+            littleBox = new BoxObject(World, littleBoxTexture, 0, .1f, 0);
+            littleBox.Position = littleBoxPosition;
+            AddObject(littleBox);
+
+            leftPipe = new BoxObject(World, leftPipeTexture, 0, .1f, 0);
+            leftPipe.Position = leftPipePosition;
+            AddObject(leftPipe);
+
+            rightPipe = new BoxObject(World, rightPipeTexture, 0, .1f, 0);
+            rightPipe.Position = rightPipePosition;
+            AddObject(rightPipe);
+
+            platform = new BoxObject(World, platformTexture, 0, .1f, 0);
+            platform.Position = platformPosition;
+            AddObject(platform);
+
+            bottom = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            bottom.Position = bottomPosition;
+            AddObject(bottom);
 
             // Create laser
             laser = new LaserObject(World, dude);
@@ -122,7 +182,7 @@ namespace CrisisAtSwissStation
             //AddObject(new PaintedObject(World, paintTexture, blobs));
 
             // Create rope bridge
-            AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
+            //AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
 
            // Create spinning platform
            /** BoxObject spinPlatform = new BoxObject(World, barrierTexture, 25,0,0);
@@ -163,6 +223,14 @@ namespace CrisisAtSwissStation
             paintTexture = content.Load<Texture2D>("paint");
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
+
+            //our new platforms
+            bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
+            littleBoxTexture = content.Load<Texture2D>("littleBoxTexture");
+            leftPipeTexture = content.Load<Texture2D>("leftPipeTexture");
+            rightPipeTexture = content.Load<Texture2D>("rightPipeTexture");
+            platformTexture = content.Load<Texture2D>("platformTexture");
+            bottomTexture = content.Load<Texture2D>("bottomTexture");
           
         }
 
