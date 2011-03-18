@@ -28,6 +28,7 @@ namespace CrisisAtSwissStation
         // Content in the game world
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
+        private static Texture2D armTexture;
         private static Texture2D dudeObjectTexture;
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
@@ -120,6 +121,7 @@ namespace CrisisAtSwissStation
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
         DudeObject dude;
+        BoxObject arm;
         SensorObject winDoor;
         LaserObject laser;
 
@@ -151,6 +153,13 @@ namespace CrisisAtSwissStation
             dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
+
+            // Create the dude's arm
+            /*
+            arm = new BoxObject(World, armTexture, 0, .1f, 0);
+            arm.Position = dudePosition;
+            AddObject(arm);
+            */
 
             //create bottom platforms
             bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
@@ -237,6 +246,7 @@ namespace CrisisAtSwissStation
             groundTexture = content.Load<Texture2D>("EarthTile02");
             //dudeTexture = content.Load<Texture2D>("Dude");
             dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
+            //armTexture = content.Load<Texture2D>("arm");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
