@@ -61,7 +61,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 7);
+        private static Vector2 dudePosition = new Vector2(2.5f, 14f);
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -113,7 +113,7 @@ namespace CrisisAtSwissStation
         Vector2 halfdotsize;
         float PAINTING_GRANULARITY = 5f; // how far apart points in a painting need to be for us to store them both
         MouseState prevms;
-       public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
+        public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
@@ -178,8 +178,26 @@ namespace CrisisAtSwissStation
             laser = new LaserObject(World, dude);
 
             // create a DEBUG painted object
-            List<Vector2> blobs = new List<Vector2> { new Vector2(400, 300), new Vector2(410, 310), new Vector2(420, 300) };
-            //AddObject(new PaintedObject(World, paintTexture, blobs));
+            List<Vector2> blobs = new List<Vector2>(500);
+
+            int i = 0;
+            for (int y = 250; y >= 50; y-= 10)
+            {
+                for (int x = 350; x <= 450; x+=10)
+                {
+                    //Vector2 temp = new Vector2();
+                    //temp.X = x;
+                   // temp.Y = y;
+                    //blobs[i] = temp;
+                    //blobs.Insert(i,new Vector2(x, y));
+                    blobs.Add(new Vector2(x, y));
+                    i++;
+                }
+                i++;
+            }
+            Console.WriteLine("{0}", blobs.Count);
+            AddObject(new PaintedObject(World, paintTexture, blobs));
+
 
             // Create rope bridge
             //AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
@@ -391,7 +409,7 @@ namespace CrisisAtSwissStation
                 SpriteEffects.None, 0);
             foreach (Vector2 dotpos in dotPositions)
             {
-                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.White);
+                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.Red);
             }
             GameEngine.Instance.SpriteBatch.End();
             

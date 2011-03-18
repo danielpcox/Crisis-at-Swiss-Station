@@ -104,7 +104,7 @@ namespace CrisisAtSwissStation
                 double theta = System.Math.Atan2(localpos.Y, localpos.X) + Angle;
                 Vector2 rotatedpos = new Vector2((float)(localpos.Length() * System.Math.Cos(theta)), (float)(localpos.Length() * System.Math.Sin(theta)));
                 Vector2 screenOffset = ((Position + rotatedpos) * CASSWorld.SCALE) - offset;
-                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, 0, 0);
+                spriteBatch.Draw(texture, screenOffset, null, Color.Red, Angle, origin, 1, 0, 0);
             }
             
             spriteBatch.End();
