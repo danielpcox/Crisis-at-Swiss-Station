@@ -132,12 +132,12 @@ namespace CrisisAtSwissStation
             graphics.ApplyChanges();
 
             //initializes our InstaSteel text box
-            instaSteelTextBox = new TextBox(new Vector2(805, 30), 80, Content);//instantiates with vector for location, 80 is the width, Content is a content manager
+            instaSteelTextBox = new TextBox(new Vector2(50, 160), 80, Content);//instantiates with vector for location, 80 is the width, Content is a content manager
             instaSteelTextBox.SetBgColor(Color.White);
             instaSteelTextBox.SetTextColor(Color.Black);
 
             //initializes our jumpTextBox
-            jumpTextBox = new TextBox(new Vector2(805, 70), 80, Content);
+            jumpTextBox = new TextBox(new Vector2(50, 220), 80, Content);
             jumpTextBox.SetBgColor(Color.White);
             jumpTextBox.SetTextColor(Color.Black);
 
@@ -323,14 +323,14 @@ namespace CrisisAtSwissStation
 
 
             //Draw IS label 
-            spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(805, 10), Color.Red);
+            spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(50, 140), Color.Red);
             //Draw IS amount
-            spriteBatch.DrawString(spriteFont, ScrollingWorld.numDrawLeft.ToString(), new Vector2(910, 10), Color.Yellow);
+            spriteBatch.DrawString(spriteFont, ScrollingWorld.numDrawLeft.ToString(), new Vector2(155, 140), Color.Yellow);
 
             //Draw Jump label 
-            spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(805, 50), Color.Red);
+            spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(50, 200), Color.Red);
             //Draw Jump amount
-            spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(870, 50), Color.Yellow);
+            spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(115, 200), Color.Yellow);
 
 
             if (currentWorld.Succeeded && !currentWorld.Failed)
