@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Media;
 /*** Code by Rajiv Puvvada and Ara Yessayan **/
 /*** Modification code to work with MP3's by Sam Dannemiller **/
 
+/*** Most of this code is from Music Lab 4, with some modifications **/
+
 
 namespace CrisisAtSwissStation
 {
@@ -20,26 +22,14 @@ namespace CrisisAtSwissStation
         private Dictionary<SFXSelection, SoundEffect> soundEffects;
         private float SFXVolume;     //Value between 0.0 and 1.0.
 
-        /*NOTE: Volume for music is internal to the MediaPlayer static class.  
-                So we don't need a variable for it here.*/
-
-
-
         //This is an enum that speeds up coding and reduces errors.
         //Specifying SFX by enum takes advantage of Intellisense and reduces 
         //the chance of a spelling mistake.
         public enum SFXSelection
         {
-            VictoryTrumpets
+            VictoryTrumpets,
+            LevelComplete
 
-            /*If you have multiple SFX, you need to list them here,
-             * you need to type each SFX's name followed by a comma
-             * and a new line.  Like this:
-             
-               AwesomeSFX1,
-               AwesomeSFX2,
-               AwesomeSFX3
-             */
         }
 
         //This is an enum that speeds up coding and reduces errors.
@@ -80,6 +70,7 @@ namespace CrisisAtSwissStation
 
             //Sound Effects
             soundEffects.Add(SFXSelection.VictoryTrumpets, content.Load<SoundEffect>("VictoryTrumpets"));
+            soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("LevelComplete"));
 
         }
 
@@ -187,6 +178,16 @@ namespace CrisisAtSwissStation
         {
             MathHelper.Clamp(MediaPlayer.Volume-decrement, 0.0f, 1.0f);
             MediaPlayer.Volume = MediaPlayer.Volume - decrement;
+        }
+
+        //Set volume equal to 0.0 or 0.5
+        public void Mute()
+        {
+            if (MediaPlayer.Volume == 0.0f)
+                MediaPlayer.Volume = 0.5f;
+            else if (MediaPlayer.Volume>0.0)
+            MediaPlayer.Volume = 0.0f;
+            
         }
 
         //*** END YOUR CODE ***//

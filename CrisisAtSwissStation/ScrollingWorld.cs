@@ -10,7 +10,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 using Box2DX.Collision;
 using Box2DX.Dynamics;
-// NOTE: Much of the code has been taken from programing lab 3
+// NOTE: Much of the code has been taken from programming lab 3
 
 namespace CrisisAtSwissStation
 {
@@ -26,14 +26,14 @@ namespace CrisisAtSwissStation
         // Content in the game world
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
-        private static Texture2D bulletTexture;
+        private static Texture2D dudeObjectTexture;
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
         private static Texture2D paintTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
-        private static AudioManager audioman;
+        
 
         // Wall vertices
         private static Vector2[] wall1 = new Vector2[]
@@ -51,7 +51,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 winDoorPos = new Vector2(2.5f, 3.2f);
 
-        private static Vector2 spinPlatformPos = new Vector2(5.5f, 4.0f);
+        private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
         private static Vector2 dudePosition = new Vector2(2.5f, 7);
         private static string dudeSensorName = "Dude Ground Sensor";
@@ -109,7 +109,7 @@ namespace CrisisAtSwissStation
                 AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
 
             // Create dude
-            dude = new DudeObject(World, dudeTexture, bulletTexture, dudeSensorName);
+            dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
@@ -123,8 +123,8 @@ namespace CrisisAtSwissStation
             // Create rope bridge
             AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
 
-           /* // Create spinning platform
-            BoxObject spinPlatform = new BoxObject(World, barrierTexture, 10,0,0);
+           // Create spinning platform
+           /** BoxObject spinPlatform = new BoxObject(World, barrierTexture, 25,0,0);
             spinPlatform.Position = spinPlatformPos;
             AddObject(spinPlatform);
             
@@ -133,7 +133,7 @@ namespace CrisisAtSwissStation
 
             RevoluteJointDef joint = new RevoluteJointDef();
             joint.Initialize(spinPlatform.Body, World.GetGroundBody(), Utils.Convert(spinPlatform.Position));
-            World.CreateJoint(joint);*/
+            World.CreateJoint(joint); */
 
             ////////////////////////////////////////////
 
@@ -153,8 +153,9 @@ namespace CrisisAtSwissStation
         public static void LoadContent(ContentManager content)
         {
             groundTexture = content.Load<Texture2D>("EarthTile02");
-            dudeTexture = content.Load<Texture2D>("Dude");
-            bulletTexture = content.Load<Texture2D>("Bullet");
+            //dudeTexture = content.Load<Texture2D>("Dude");
+            dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
+            dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
@@ -272,22 +273,7 @@ namespace CrisisAtSwissStation
             {
                 this.world = world;
             }
-            public override void Add(ContactPoint point)
-            {
-                // Test bullet collision with world
-                BulletObject bullet;
-                if (point.Shape1.GetBody().GetUserData() is BulletObject)
-                {
-                    bullet = point.Shape1.GetBody().GetUserData() as BulletObject;
-                    bullet.Die();
-                }
-                if (point.Shape2.GetBody().GetUserData() is BulletObject)
-                {
-                    bullet = point.Shape2.GetBody().GetUserData() as BulletObject;
-                    bullet.Die();
-                }
-            }
-
+            
             public override void Persist(ContactPoint point)
             {
                 // Test player collision with ground

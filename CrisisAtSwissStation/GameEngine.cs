@@ -35,7 +35,8 @@ namespace CrisisAtSwissStation
         public const int GAME_WINDOW_HEIGHT = 768; // how much of the game you can see at one time
 
         // How many frames after winning/losing do we continue?
-        int COUNTDOWN = 60;
+
+        int COUNTDOWN = 200;
         
         // Lets us draw things on the screen
         GraphicsDeviceManager graphics;
@@ -195,13 +196,32 @@ namespace CrisisAtSwissStation
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            // toggle mute if they press 'm' 
+            if (ks.IsKeyDown(Keys.M))
+                audioManager.Mute();
+
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {
                 countdown--;
+                audioManager.DecreaseMusicVolume(.005f);
+                if (currentWorld.Failed)
+                {
+                    countdown--;
+                }
+
+                //Play the level complete SFX
+                if (countdown == 180 && currentWorld.Succeeded)
+                {
+                    audioManager.Stop();
+                    audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
+                }
+
                 if (countdown == 0)
                 {
+                   
                     reset = currentWorld.Failed;
                     next = !currentWorld.Failed && currentWorld.Succeeded;
+                    audioManager.IncreaseMusicVolume(0.5f);
                 }
             }
             
