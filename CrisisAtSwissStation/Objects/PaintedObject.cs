@@ -24,7 +24,7 @@ namespace CrisisAtSwissStation
         // physical parameters for each blob in a PaintedObject
         private const float POB_DENSITY = 1.0f;
         private const float POB_FRICTION = 0.5f;
-        private const float POB_RESTITUTION = 0.5f;
+        private const float POB_RESTITUTION = 0.0f;
 
         int numBlobs = 0;
 

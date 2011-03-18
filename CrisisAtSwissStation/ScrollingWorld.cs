@@ -85,7 +85,7 @@ namespace CrisisAtSwissStation
         Vector2 halfdotsize;
         float PAINTING_GRANULARITY = 5f; // how far apart points in a painting need to be for us to store them both
         MouseState prevms;
-        int numDrawLeft = 105;
+       public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
         bool finishDraw = false;
 
         DudeObject dude;
