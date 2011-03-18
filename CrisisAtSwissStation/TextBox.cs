@@ -65,6 +65,7 @@ namespace CrisisAtSwissStation
                 Mouse.GetState().X >= loc.X && Mouse.GetState().X <= loc.X + size.X &&
                 Mouse.GetState().Y >= loc.Y && Mouse.GetState().Y <= loc.Y + size.Y)
                 GiveFocus();//give focus if clicked in the box
+            else TakeFocus();
 
             if (hasFocus)//cursor flash if box has focus
             {
@@ -108,6 +109,9 @@ namespace CrisisAtSwissStation
                             keyString = "(";
                         if (key == Keys.D0 && shift)
                             keyString = ")";
+
+                        if (key == Keys.OemPeriod || key == Keys.Decimal)
+                            keyString = ".";
 
                        
 

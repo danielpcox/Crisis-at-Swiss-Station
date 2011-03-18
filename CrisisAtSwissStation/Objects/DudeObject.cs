@@ -20,6 +20,11 @@ namespace CrisisAtSwissStation
      */
     public class DudeObject : BoxObject
     {
+
+        //dude's jump impulse
+        public static float jumpImpulse = -1.3f;
+
+
         private const int JUMP_COOLDOWN = 30;
 
         private const float DUDE_FORCE = 20.0f;   // How much force to apply to get the dude moving
@@ -254,7 +259,7 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                    Vector2 impulse = new Vector2(0, -1.3f);
+                   Vector2 impulse = new Vector2(0, jumpImpulse);
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }

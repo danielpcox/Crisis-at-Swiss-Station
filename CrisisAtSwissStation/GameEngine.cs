@@ -21,6 +21,8 @@ namespace CrisisAtSwissStation
 
         //textbox for setting insta-steel
         TextBox instaSteelTextBox;
+        //textbox for setting Jump
+        TextBox jumpTextBox;
        
     
         // TODO : pretty much nothing about drawing should eventually be in this class - it should be moved into ScrollingWorld.cs
@@ -134,6 +136,11 @@ namespace CrisisAtSwissStation
             instaSteelTextBox.SetBgColor(Color.White);
             instaSteelTextBox.SetTextColor(Color.Black);
 
+            //initializes our jumpTextBox
+            jumpTextBox = new TextBox(new Vector2(805, 70), 80, Content);
+            jumpTextBox.SetBgColor(Color.White);
+            jumpTextBox.SetTextColor(Color.Black);
+
      //       audioManager.Play(AudioManager.MusicSelection.EarlyLevelv2);
             base.Initialize();
         }
@@ -244,6 +251,7 @@ namespace CrisisAtSwissStation
 
             //Call to update the Text Box
             instaSteelTextBox.Update(gameTime);
+            jumpTextBox.Update(gameTime);
 
             //Need the text from the text box to interpret it later
             string temp = instaSteelTextBox.GetText();
@@ -257,6 +265,20 @@ namespace CrisisAtSwissStation
                 if (parseWin)
                 {
                      ScrollingWorld.numDrawLeft = Int32.Parse(temp);
+                }
+            }
+
+            string temp2 = jumpTextBox.GetText();
+
+            //check if enter pushed and a valid number entered. Update Jump accordingly 
+            if (ks.IsKeyDown(Keys.Enter))
+            {
+                float num;
+                bool parseWin = float.TryParse(temp2, out num);//try to parse the string to int
+
+                if (parseWin)
+                {
+                    DudeObject.jumpImpulse = -float.Parse(temp2);
                 }
             }
 
@@ -300,7 +322,11 @@ namespace CrisisAtSwissStation
             spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(805, 10), Color.Red);
             //Draw IS amount
             spriteBatch.DrawString(spriteFont, ScrollingWorld.numDrawLeft.ToString(), new Vector2(910, 10), Color.Yellow);
-           
+
+            //Draw Jump label 
+            spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(805, 50), Color.Red);
+            //Draw Jump amount
+            spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(870, 50), Color.Yellow);
 
 
             if (currentWorld.Succeeded && !currentWorld.Failed)
@@ -319,6 +345,7 @@ namespace CrisisAtSwissStation
             
             spriteBatch.End();
             instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+            jumpTextBox.Draw(spriteBatch, 255);
             base.Draw(gameTime);
         }
     }
