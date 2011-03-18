@@ -47,7 +47,6 @@ namespace CrisisAtSwissStation
         private int spriteHeight;
         private Texture2D animTexture;
         private int myGameTime;
-
       
 
         /**
@@ -57,8 +56,7 @@ namespace CrisisAtSwissStation
         : base(world, objectTexture, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
-            isGrounded = false;
-            
+            isGrounded = false;            
 
             // BodyDef options
             BodyDef.FixedRotation = true;
@@ -73,8 +71,8 @@ namespace CrisisAtSwissStation
             walkInterval = 5;
             xFrame = 0;
             yFrame = 0;
-            spriteWidth = 64;
-            spriteHeight = 64;
+            spriteWidth = 100;
+            spriteHeight = 100;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
@@ -127,6 +125,9 @@ namespace CrisisAtSwissStation
 
             //animation stuff
             myGameTime++;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
 
             base.Update(world, dt);
         }
@@ -138,17 +139,20 @@ namespace CrisisAtSwissStation
         {
             //animation stuff
 
-            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            //sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
             Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
             SpriteEffects flip = facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            spriteBatch.Begin();
+            //SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
+            //spriteBatch.Begin();
+            GameEngine.Instance.SpriteBatch.Begin();
 
-            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+            //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+            GameEngine.Instance.SpriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
 
-            spriteBatch.End();
+            //spriteBatch.End();
+            GameEngine.Instance.SpriteBatch.End();
 
 
             /*
@@ -256,7 +260,7 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                    Vector2 impulse = new Vector2(0, -1.3f);
+                    Vector2 impulse = new Vector2(0, -2.5f);
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }

@@ -77,7 +77,7 @@ namespace CrisisAtSwissStation
                 circle.Radius = radius;
                 circle.Density = POB_DENSITY;
                 circle.Friction = POB_FRICTION;
-                circle.Restitution = POB_RESTITUTION;
+                circle.Restitution = POB_RESTITUTION;               
                 shapes.Add(circle);
                 Body.CreateShape(circle);
             }
