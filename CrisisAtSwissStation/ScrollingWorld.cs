@@ -10,7 +10,7 @@ using Color = Microsoft.Xna.Framework.Color;
 
 using Box2DX.Collision;
 using Box2DX.Dynamics;
-// NOTE: Much of the code has been taken from programing lab 3
+// NOTE: Much of the code has been taken from programming lab 3
 
 namespace CrisisAtSwissStation
 {
@@ -51,7 +51,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 winDoorPos = new Vector2(2.5f, 3.2f);
 
-        private static Vector2 spinPlatformPos = new Vector2(5.5f, 4.0f);
+        private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
         private static Vector2 dudePosition = new Vector2(2.5f, 7);
         private static string dudeSensorName = "Dude Ground Sensor";
@@ -123,8 +123,8 @@ namespace CrisisAtSwissStation
             // Create rope bridge
             AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
 
-           /* // Create spinning platform
-            BoxObject spinPlatform = new BoxObject(World, barrierTexture, 10,0,0);
+           // Create spinning platform
+           /** BoxObject spinPlatform = new BoxObject(World, barrierTexture, 25,0,0);
             spinPlatform.Position = spinPlatformPos;
             AddObject(spinPlatform);
             
@@ -133,7 +133,7 @@ namespace CrisisAtSwissStation
 
             RevoluteJointDef joint = new RevoluteJointDef();
             joint.Initialize(spinPlatform.Body, World.GetGroundBody(), Utils.Convert(spinPlatform.Position));
-            World.CreateJoint(joint);*/
+            World.CreateJoint(joint); */
 
             ////////////////////////////////////////////
 
