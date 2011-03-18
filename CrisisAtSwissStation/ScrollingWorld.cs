@@ -18,7 +18,7 @@ namespace CrisisAtSwissStation
     {
         // Dimensions of the game world
         public const float WIDTH = 20.0f; //16.0f
-        public const float HEIGHT = 13.0f; //12.0f
+        public const float HEIGHT = 15.0f; //12.0f
         private const float GRAVITY = 9.8f;
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
         public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window

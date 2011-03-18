@@ -37,16 +37,9 @@ namespace CrisisAtSwissStation
         //the chance of a spelling mistake.
         public enum MusicSelection
         {
-            EarlyLevelv2
-            /*If you have multiple songs, you need to list them here,
-             * you need to type each song's name followed by a comma
-             * and a new line.  Like this:
-             
-               AwesomeSong1,
-               AwesomeSong2,
-               AwesomeSong3
-             */
-               
+            EarlyLevelv2,
+            Tension
+           
         }
 
         public void Initialize()
@@ -67,6 +60,7 @@ namespace CrisisAtSwissStation
 
             //Music
             songs.Add(MusicSelection.EarlyLevelv2, content.Load<Song>("EarlyLevelv2"));
+            songs.Add(MusicSelection.Tension, content.Load<Song>("Tension(Lab 3)"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.VictoryTrumpets, content.Load<SoundEffect>("VictoryTrumpets"));
@@ -190,7 +184,15 @@ namespace CrisisAtSwissStation
             
         }
 
-        //*** END YOUR CODE ***//
+        //Play next track
+        public void PlayNext()
+        {
+            if (MediaPlayer.State == MediaState.Playing)
+            {
+                MediaPlayer.MoveNext();
+            }
+        }
+
 
         //Don't touch these functions
         protected void Update(GameTime gameTime)
