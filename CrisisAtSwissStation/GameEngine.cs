@@ -19,6 +19,12 @@ namespace CrisisAtSwissStation
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
 
+        //textbox for setting insta-steel
+        TextBox instaSteelTextBox;
+        //textbox for setting Jump
+        TextBox jumpTextBox;
+       
+    
         // TODO : pretty much nothing about drawing should eventually be in this class - it should be moved into ScrollingWorld.cs
         // current and previous mouse state (for drawing)
         MouseState ms, prevms;
@@ -31,8 +37,9 @@ namespace CrisisAtSwissStation
         public const int GAME_WINDOW_HEIGHT = 768; // how much of the game you can see at one time
 
         // How many frames after winning/losing do we continue?
-        int COUNTDOWN = 60;
 
+        int COUNTDOWN = 200;
+        
         // Lets us draw things on the screen
         GraphicsDeviceManager graphics;
 
@@ -123,6 +130,17 @@ namespace CrisisAtSwissStation
             graphics.PreferredBackBufferWidth = GAME_WINDOW_WIDTH;
             graphics.PreferredBackBufferHeight = GAME_WINDOW_HEIGHT;
             graphics.ApplyChanges();
+
+            //initializes our InstaSteel text box
+            instaSteelTextBox = new TextBox(new Vector2(805, 30), 80, Content);//instantiates with vector for location, 80 is the width, Content is a content manager
+            instaSteelTextBox.SetBgColor(Color.White);
+            instaSteelTextBox.SetTextColor(Color.Black);
+
+            //initializes our jumpTextBox
+            jumpTextBox = new TextBox(new Vector2(805, 70), 80, Content);
+            jumpTextBox.SetBgColor(Color.White);
+            jumpTextBox.SetTextColor(Color.Black);
+
      //       audioManager.Play(AudioManager.MusicSelection.EarlyLevelv2);
             base.Initialize();
         }
@@ -139,6 +157,8 @@ namespace CrisisAtSwissStation
             victory = Content.Load<Texture2D>("Victory");
             failure = Content.Load<Texture2D>("failure");
             audioManager.LoadContent(Content);
+
+         
 
             // TODO : change this to something more appropriate
             //painting texture
@@ -170,6 +190,8 @@ namespace CrisisAtSwissStation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            
+
             // TODO: XBox controls
             KeyboardState ks = Keyboard.GetState();
             bool next = ks.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N);
@@ -181,13 +203,32 @@ namespace CrisisAtSwissStation
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
 
+            // toggle mute if they press 'm' 
+            if (ks.IsKeyDown(Keys.M))
+                audioManager.Mute();
+
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {
                 countdown--;
+                audioManager.DecreaseMusicVolume(.005f);
+                if (currentWorld.Failed)
+                {
+                    countdown--;
+                }
+
+                //Play the level complete SFX
+                if (countdown == 180 && currentWorld.Succeeded)
+                {
+                    audioManager.Stop();
+                    audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
+                }
+
                 if (countdown == 0)
                 {
+                   
                     reset = currentWorld.Failed;
                     next = !currentWorld.Failed && currentWorld.Succeeded;
+                    audioManager.IncreaseMusicVolume(0.5f);
                 }
             }
             
@@ -206,7 +247,42 @@ namespace CrisisAtSwissStation
             if ((currentWorld.Failed || currentWorld.Succeeded) && countdown == 0)
                 countdown = COUNTDOWN;
 
-            
+           
+
+            //Call to update the Text Box
+            instaSteelTextBox.Update(gameTime);
+            jumpTextBox.Update(gameTime);
+
+            //Need the text from the text box to interpret it later
+            string temp = instaSteelTextBox.GetText();
+           
+            //check if enter pushed and a valid number entered. Update insta-steel accordingly 
+            if (ks.IsKeyDown(Keys.Enter))
+            {
+                int num;
+                bool parseWin = Int32.TryParse(temp, out num);//try to parse the string to int
+
+                if (parseWin)
+                {
+                     ScrollingWorld.numDrawLeft = Int32.Parse(temp);
+                }
+            }
+
+            string temp2 = jumpTextBox.GetText();
+
+            //check if enter pushed and a valid number entered. Update Jump accordingly 
+            if (ks.IsKeyDown(Keys.Enter))
+            {
+                float num;
+                bool parseWin = float.TryParse(temp2, out num);//try to parse the string to int
+
+                if (parseWin)
+                {
+                    DudeObject.jumpImpulse = -float.Parse(temp2);
+                }
+            }
+
+
             base.Update(gameTime);
 
             prevms = ms;
@@ -241,6 +317,18 @@ namespace CrisisAtSwissStation
 
             spriteBatch.Begin();
 
+
+            //Draw IS label 
+            spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(805, 10), Color.Red);
+            //Draw IS amount
+            spriteBatch.DrawString(spriteFont, ScrollingWorld.numDrawLeft.ToString(), new Vector2(910, 10), Color.Yellow);
+
+            //Draw Jump label 
+            spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(805, 50), Color.Red);
+            //Draw Jump amount
+            spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(870, 50), Color.Yellow);
+
+
             if (currentWorld.Succeeded && !currentWorld.Failed)
             {
                 //Currently plays the victory trumpets... a lot.
@@ -256,7 +344,8 @@ namespace CrisisAtSwissStation
 
             
             spriteBatch.End();
-
+            instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+            jumpTextBox.Draw(spriteBatch, 255);
             base.Draw(gameTime);
         }
     }

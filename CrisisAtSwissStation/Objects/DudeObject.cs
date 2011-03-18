@@ -20,6 +20,11 @@ namespace CrisisAtSwissStation
      */
     public class DudeObject : BoxObject
     {
+
+        //dude's jump impulse
+        public static float jumpImpulse = -1.3f;
+
+
         private const int JUMP_COOLDOWN = 30;
 
         private const float DUDE_FORCE = 20.0f;   // How much force to apply to get the dude moving
@@ -30,7 +35,6 @@ namespace CrisisAtSwissStation
         private bool isGrounded;
 
         // Cooldown values
-        private int shootCooldown;
         private int jumpCooldown;
 
         // Lets us know which direction we're facing
@@ -47,7 +51,6 @@ namespace CrisisAtSwissStation
         private int spriteHeight;
         private Texture2D animTexture;
         private int myGameTime;
-
       
 
         /**
@@ -57,8 +60,7 @@ namespace CrisisAtSwissStation
         : base(world, objectTexture, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
-            isGrounded = false;
-            
+            isGrounded = false;            
 
             // BodyDef options
             BodyDef.FixedRotation = true;
@@ -73,8 +75,8 @@ namespace CrisisAtSwissStation
             walkInterval = 5;
             xFrame = 0;
             yFrame = 0;
-            spriteWidth = 64;
-            spriteHeight = 64;
+            spriteWidth = 100;
+            spriteHeight = 100;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
@@ -127,6 +129,9 @@ namespace CrisisAtSwissStation
 
             //animation stuff
             myGameTime++;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
 
             base.Update(world, dt);
         }
@@ -138,17 +143,20 @@ namespace CrisisAtSwissStation
         {
             //animation stuff
 
-            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            //sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
             Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
             SpriteEffects flip = facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            spriteBatch.Begin();
+            //SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
+            //spriteBatch.Begin();
+            GameEngine.Instance.SpriteBatch.Begin();
 
-            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+            //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+            GameEngine.Instance.SpriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
 
-            spriteBatch.End();
+            //spriteBatch.End();
+            GameEngine.Instance.SpriteBatch.End();
 
 
             /*
@@ -200,7 +208,7 @@ namespace CrisisAtSwissStation
 
                 Vector2 moveForce = new Vector2();
                 bool jump = false;
-                bool shoot = false;
+               
 
                 // TODO: XBox controls
                 // --------------------
@@ -219,15 +227,14 @@ namespace CrisisAtSwissStation
                     if(dudeObject.Grounded)
                     dudeObject.walkAnimation();
                 }
-                if (ks.IsKeyDown(Keys.Space))
-                    shoot = true;
+                
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
                     jump = true;
                 // --------------------
 
                 Vector2 vel = Utils.Convert(dude.GetLinearVelocity());
 
-                // Which way are we facing
+                // Which way are we facing  (add in a is X(mouse) > X(dude) condition??)
                 if (moveForce.X < 0)
                     dudeObject.facingRight = false;
                 else if (moveForce.X > 0)
@@ -256,7 +263,7 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                    Vector2 impulse = new Vector2(0, -1.3f);
+                   Vector2 impulse = new Vector2(0, jumpImpulse);
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }

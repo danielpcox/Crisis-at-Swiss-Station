@@ -10,15 +10,15 @@ using Color = Microsoft.Xna.Framework.Color;
 
 using Box2DX.Collision;
 using Box2DX.Dynamics;
-// NOTE: Much of the code has been taken from programing lab 3
+// NOTE: Much of the code has been taken from programming lab 3
 
 namespace CrisisAtSwissStation
 {
     public class ScrollingWorld : CASSWorld
     {
         // Dimensions of the game world
-        public const float WIDTH = 16.0f;
-        public const float HEIGHT = 12.0f;
+        public const float WIDTH = 20.0f; //16.0f
+        public const float HEIGHT = 13.0f; //12.0f
         private const float GRAVITY = 9.8f;
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
         public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window
@@ -33,25 +33,25 @@ namespace CrisisAtSwissStation
         private static Texture2D paintTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
-        private static AudioManager audioman;
+        
 
         // Wall vertices
         private static Vector2[] wall1 = new Vector2[]
         {
-            new Vector2(8,  0), new Vector2(8,  1),
-            new Vector2(1,  1), new Vector2(1, 12),
-            new Vector2(0, 12), new Vector2(0,  0)
+          new Vector2(8,  0), new Vector2(8,  1),
+          new Vector2(1,  1), new Vector2(1, 12),
+          new Vector2(0, 12), new Vector2(0,  0)
         };
         private static Vector2[] wall2 = new Vector2[]
         {
-            new Vector2(16,   0), new Vector2(16, 12),
-            new Vector2(15,  12), new Vector2(15,  1),
-            new Vector2( 8,  1),  new Vector2( 8,  0)
-        };
+          new Vector2(16,   0), new Vector2(16, 12),
+          new Vector2(15,  12), new Vector2(15,  1),
+          new Vector2( 8,  1),  new Vector2( 8,  0)
+        }; 
 
         private static Vector2 winDoorPos = new Vector2(2.5f, 3.2f);
 
-        private static Vector2 spinPlatformPos = new Vector2(5.5f, 4.0f);
+        private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
         private static Vector2 dudePosition = new Vector2(2.5f, 7);
         private static string dudeSensorName = "Dude Ground Sensor";
@@ -85,8 +85,9 @@ namespace CrisisAtSwissStation
         Vector2 halfdotsize;
         float PAINTING_GRANULARITY = 5f; // how far apart points in a painting need to be for us to store them both
         MouseState prevms;
-        int numDrawLeft = 105;
+       public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
         bool finishDraw = false;
+        bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
         DudeObject dude;
         SensorObject winDoor;
@@ -123,8 +124,8 @@ namespace CrisisAtSwissStation
             // Create rope bridge
             AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
 
-           /* // Create spinning platform
-            BoxObject spinPlatform = new BoxObject(World, barrierTexture, 10,0,0);
+           // Create spinning platform
+           /** BoxObject spinPlatform = new BoxObject(World, barrierTexture, 25,0,0);
             spinPlatform.Position = spinPlatformPos;
             AddObject(spinPlatform);
             
@@ -133,7 +134,7 @@ namespace CrisisAtSwissStation
 
             RevoluteJointDef joint = new RevoluteJointDef();
             joint.Initialize(spinPlatform.Body, World.GetGroundBody(), Utils.Convert(spinPlatform.Position));
-            World.CreateJoint(joint);*/
+            World.CreateJoint(joint); */
 
             ////////////////////////////////////////////
 
@@ -173,6 +174,7 @@ namespace CrisisAtSwissStation
             MouseState mouse = Mouse.GetState();
             bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
             mousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
+            //ERASING
             if (mouse.RightButton == ButtonState.Pressed)
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -196,7 +198,10 @@ namespace CrisisAtSwissStation
                 }
             }
 
-            if (mouse.LeftButton == ButtonState.Pressed && mouseinbounds && numDrawLeft > 0)
+            if (mouse.LeftButton == ButtonState.Released && prevms.LeftButton == ButtonState.Pressed)
+                drawingInterrupted = false;
+
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
             {// if we're holding down the mouse button
                 Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
                 if (dotPositions.Count == 0 || (mousepos - dotPositions[dotPositions.Count - 1]).Length() > PAINTING_GRANULARITY)
@@ -207,8 +212,10 @@ namespace CrisisAtSwissStation
                 }
                 
             }
-            else if ((mouse.LeftButton == ButtonState.Released && (numDrawLeft > 0 || finishDraw)) && prevms.LeftButton == ButtonState.Pressed && mouseinbounds)
+            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > 0 || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
             {
+                if (!laser.canDraw())
+                    drawingInterrupted = true;
                 Box2DX.Dynamics.Body overlapped = null;
                 PhysicsObject po = null;
                 foreach (Vector2 pos in dotPositions)
@@ -246,7 +253,8 @@ namespace CrisisAtSwissStation
                 else
                 {
                     // create the painting as an object in the world
-                    this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
+                    if (dotPositions.Count>0)
+                        this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
