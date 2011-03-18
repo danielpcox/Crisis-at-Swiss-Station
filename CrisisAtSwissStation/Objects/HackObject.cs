@@ -28,12 +28,9 @@ namespace CrisisAtSwissStation
             shapes.Add(shape);
 
             BodyDef.Position.X = x;
-            BodyDef.Position.Y = y;
-            
-            
-           
+            BodyDef.Position.Y = y;       
+                       
         }
-
 
     }
 }

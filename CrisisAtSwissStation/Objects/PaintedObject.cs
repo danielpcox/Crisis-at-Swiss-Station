@@ -25,6 +25,7 @@ namespace CrisisAtSwissStation
         private const float POB_DENSITY = 1.0f;
         private const float POB_FRICTION = 0.5f;
         private const float POB_RESTITUTION = 0.0f;
+        private Color INSTASTEEL_COLOR = Color.Gold;
 
         List<Vec2> vertices = new List<Vec2>(); // we need this for drawing between the vertices
 
@@ -137,9 +138,7 @@ namespace CrisisAtSwissStation
                 Vector2 localpos = Utils.Convert(blobpos); //Utils.Convert(blobpos.LocalPosition);
 
                 double theta = System.Math.Atan2(localpos.Y, localpos.X) + Angle;
-                Vector2 rotatedpos = new Vector2((float)(localpos.Length() * System.Math.Cos(theta)), (float)(localpos.Length() * System.Math.Sin(theta)));
-                Vector2 screenOffset = ((Position + rotatedpos) * CASSWorld.SCALE) - offset;
-                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, 0, 0);
+                Vector2 rotatedpos = new Vector2((float)(localpos.Length() * System.Math.Cos(theta)), (float)(localpos.Length() * System.Math.Sin(theta)));                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, 0, 0);
             }*/
 
             //DEBUG
@@ -151,7 +150,7 @@ namespace CrisisAtSwissStation
             }
             */
 
-            for (int i = 0; i < vertices.Count-1; i++ )
+            for (int i = 0; i < vertices.Count - 1; i++)
             {
                 Vector2 localpos = Utils.Convert(vertices[i]);
                 Vector2 localpos2 = Utils.Convert(vertices[i + 1]);
@@ -162,10 +161,10 @@ namespace CrisisAtSwissStation
                 Vector2 screenpos = ((Position + rotatedpos) * CASSWorld.SCALE);
                 Vector2 screenpos2 = ((Position + rotatedpos2) * CASSWorld.SCALE);
                 // Draw blob at point
-                spriteBatch.Draw(texture, screenpos, null, Color.White, Angle, origin, 1, 0, 0);
+                spriteBatch.Draw(texture, screenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 
                 // Draw segment between points
-                CrisisAtSwissStation.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, Color.White);
+                CrisisAtSwissStation.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, INSTASTEEL_COLOR);
             }
             // Draw blob at last point
             Vector2 lastlocalpos = Utils.Convert(vertices[vertices.Count - 1]);
@@ -173,8 +172,8 @@ namespace CrisisAtSwissStation
             Vector2 lastrotatedpos = new Vector2((float)(lastlocalpos.Length() * System.Math.Cos(lasttheta)), (float)(lastlocalpos.Length() * System.Math.Sin(lasttheta)));
             Vector2 lastscreenpos = ((Position + lastrotatedpos) * CASSWorld.SCALE);
             // Draw blob at point
-            spriteBatch.Draw(texture, lastscreenpos, null, Color.White, Angle, origin, 1, 0, 0);
-            
+            spriteBatch.Draw(texture, lastscreenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
+
             spriteBatch.End();
         }
 
