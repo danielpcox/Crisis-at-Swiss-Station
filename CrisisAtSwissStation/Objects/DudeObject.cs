@@ -235,10 +235,10 @@ namespace CrisisAtSwissStation
                 Vector2 vel = Utils.Convert(dude.GetLinearVelocity());
 
                 // Which way are we facing  (add in a is X(mouse) > X(dude) condition??)
-                if (moveForce.X < 0)
-                    dudeObject.facingRight = false;
-                else if (moveForce.X > 0)
+                if (dudeObject.Position.X * CASSWorld.SCALE < Mouse.GetState().X)
                     dudeObject.facingRight = true;
+                else if (dudeObject.Position.X * CASSWorld.SCALE >= Mouse.GetState().X)
+                    dudeObject.facingRight = false;
 
                 // Don't want to be moving - damp out player motion
                 if (moveForce.X == 0.0f)
