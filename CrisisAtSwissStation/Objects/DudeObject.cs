@@ -20,6 +20,11 @@ namespace CrisisAtSwissStation
      */
     public class DudeObject : BoxObject
     {
+
+        //dude's jump impulse
+        public static float jumpImpulse = -1.3f;
+
+
         private const int JUMP_COOLDOWN = 30;
 
         private const float DUDE_FORCE = 20.0f;   // How much force to apply to get the dude moving
@@ -30,7 +35,6 @@ namespace CrisisAtSwissStation
         private bool isGrounded;
 
         // Cooldown values
-        private int shootCooldown;
         private int jumpCooldown;
 
         // Lets us know which direction we're facing
@@ -204,7 +208,7 @@ namespace CrisisAtSwissStation
 
                 Vector2 moveForce = new Vector2();
                 bool jump = false;
-                bool shoot = false;
+               
 
                 // TODO: XBox controls
                 // --------------------
@@ -223,15 +227,14 @@ namespace CrisisAtSwissStation
                     if(dudeObject.Grounded)
                     dudeObject.walkAnimation();
                 }
-                if (ks.IsKeyDown(Keys.Space))
-                    shoot = true;
+                
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
                     jump = true;
                 // --------------------
 
                 Vector2 vel = Utils.Convert(dude.GetLinearVelocity());
 
-                // Which way are we facing
+                // Which way are we facing  (add in a is X(mouse) > X(dude) condition??)
                 if (moveForce.X < 0)
                     dudeObject.facingRight = false;
                 else if (moveForce.X > 0)
@@ -260,7 +263,7 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                    Vector2 impulse = new Vector2(0, -2.5f);
+                   Vector2 impulse = new Vector2(0, jumpImpulse);
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }

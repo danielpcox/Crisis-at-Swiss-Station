@@ -57,32 +57,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EarthTile01.jpg">
-      <Name>EarthTile01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Crate01.jpg">
-      <Name>Crate01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Crate02.jpg">
-      <Name>Crate02</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Rocket.png">
-      <Name>Rocket</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="WinDoor.png">
       <Name>WinDoor</Name>
       <Importer>TextureImporter</Importer>
@@ -118,48 +92,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProfWhite.png">
-      <Name>ProfWhite</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Tux.png">
-      <Name>Tux</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TuxArm.png">
-      <Name>TuxArm</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TuxForearm.png">
-      <Name>TuxForearm</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TuxThigh.png">
-      <Name>TuxThigh</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TuxShin.png">
-      <Name>TuxShin</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="PhysicsFont.spritefont">
       <Name>PhysicsFont</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -181,34 +113,6 @@
     </Compile>
     <Compile Include="Victory.png">
       <Name>Victory</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="RocketFlames.png">
-      <Name>RocketFlames</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ragdollBG.png">
-      <Name>ragdollBG</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ragdollFG.png">
-      <Name>ragdollFG</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="bubble.png">
-      <Name>bubble</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -264,8 +168,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DudeFilmstrip.bmp">
-      <Name>DudeFilmstrip</Name>
+    <Compile Include="pixel.png">
+      <Name>pixel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -273,6 +177,20 @@
   <ItemGroup>
     <Compile Include="dudeObject.bmp">
       <Name>dudeObject</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="LevelComplete.mp3">
+      <Name>LevelComplete</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DudeFilmstrip.bmp">
+      <Name>DudeFilmstrip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
