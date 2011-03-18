@@ -23,14 +23,18 @@ namespace CrisisAtSwissStation
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
         public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window
 
+        public const float PAINTING_GRANULARITY = 20f; // how far apart points in a painting need to be for us to store them both
+
         // Content in the game world
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
+        private static Texture2D armTexture;
         private static Texture2D dudeObjectTexture;
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
         private static Texture2D paintTexture;
+        private static Texture2D paintedSegmentTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
 
@@ -61,7 +65,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 7);
+        private static Vector2 dudePosition = new Vector2(2.5f, 14f);
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -111,19 +115,20 @@ namespace CrisisAtSwissStation
         Vector2 mousePosition;
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
-        float PAINTING_GRANULARITY = 5f; // how far apart points in a painting need to be for us to store them both
         MouseState prevms;
-       public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
+        public static int numDrawLeft = 0; //yeah yeah, bad coding style...im tired :(
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
         DudeObject dude;
+        BoxObject arm;
         SensorObject winDoor;
         LaserObject laser;
 
         public ScrollingWorld()
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
+            numDrawLeft = 0; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
             winDoor.Position = winDoorPos;
@@ -148,6 +153,13 @@ namespace CrisisAtSwissStation
             dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
+
+            // Create the dude's arm
+            /*
+            arm = new BoxObject(World, armTexture, 0, .1f, 0);
+            arm.Position = dudePosition;
+            AddObject(arm);
+            */
 
             //create bottom platforms
             bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
@@ -178,8 +190,26 @@ namespace CrisisAtSwissStation
             laser = new LaserObject(World, dude);
 
             // create a DEBUG painted object
-            List<Vector2> blobs = new List<Vector2> { new Vector2(400, 300), new Vector2(410, 310), new Vector2(420, 300) };
-            //AddObject(new PaintedObject(World, paintTexture, blobs));
+            List<Vector2> blobs = new List<Vector2>(500);
+
+            int i = 0;
+            for (int y = 250; y >= 50; y-= 20)
+            {
+                for (int x = 350; x <= 450; x+=20)
+                {
+                    //Vector2 temp = new Vector2();
+                    //temp.X = x;
+                   // temp.Y = y;
+                    //blobs[i] = temp;
+                    //blobs.Insert(i,new Vector2(x, y));
+                    blobs.Add(new Vector2(x, y));
+                    i++;
+                }
+                i++;
+            }
+            Console.WriteLine("{0}", blobs.Count);
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
+
 
             // Create rope bridge
             //AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
@@ -216,11 +246,14 @@ namespace CrisisAtSwissStation
             groundTexture = content.Load<Texture2D>("EarthTile02");
             //dudeTexture = content.Load<Texture2D>("Dude");
             dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
+            //armTexture = content.Load<Texture2D>("arm");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
+            //paintTexture = content.Load<Texture2D>("paint");
             paintTexture = content.Load<Texture2D>("paint");
+            paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
 
@@ -321,8 +354,8 @@ namespace CrisisAtSwissStation
                 else
                 {
                     // create the painting as an object in the world
-                    if (dotPositions.Count>0)
-                        this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
+                    if (dotPositions.Count>1)
+                        this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dotPositions));
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
@@ -391,7 +424,7 @@ namespace CrisisAtSwissStation
                 SpriteEffects.None, 0);
             foreach (Vector2 dotpos in dotPositions)
             {
-                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.White);
+                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.Red);
             }
             GameEngine.Instance.SpriteBatch.End();
             

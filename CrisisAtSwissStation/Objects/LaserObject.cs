@@ -75,14 +75,31 @@ namespace CrisisAtSwissStation
             {
                 canIDraw = true;
                 canIErase = true;
-            }
+            }           
             else if ((PhysicsObject)interference.GetBody().GetUserData() is PaintedObject)
             {
+
                 Box2DX.Common.Vec2 p = (((1 - lambda) * myseg.P1) + (lambda * myseg.P2));
-                end.X = SCALE * p.X;
-                end.Y = SCALE * p.Y;
-                canIDraw = false;
-                canIErase = true;
+
+                Box2DX.Collision.Segment tempseg = new Segment();
+                tempseg.P1 = new Box2DX.Common.Vec2(end.X / SCALE, end.Y / SCALE);
+                tempseg.P2 = p;
+                interference = world.RaycastOne(tempseg, out lambda, out normal, false, null);
+
+                if (interference == null)
+                {
+                    end.X = SCALE * p.X;
+                    end.Y = SCALE * p.Y;
+                    canIDraw = false;
+                    canIErase = true;
+                }
+                else
+                {
+                    end.X = SCALE * p.X;
+                    end.Y = SCALE * p.Y;
+                    canIDraw = false;
+                    canIErase = false;
+                }
             }
             else
             {
