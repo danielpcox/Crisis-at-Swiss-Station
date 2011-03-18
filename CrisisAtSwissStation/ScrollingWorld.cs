@@ -38,16 +38,16 @@ namespace CrisisAtSwissStation
         // Wall vertices
         private static Vector2[] wall1 = new Vector2[]
         {
-            new Vector2(8,  0), new Vector2(8,  1),
-            new Vector2(1,  1), new Vector2(1, 12),
-            new Vector2(0, 12), new Vector2(0,  0)
+          new Vector2(8,  0), new Vector2(8,  1),
+          new Vector2(1,  1), new Vector2(1, 12),
+          new Vector2(0, 12), new Vector2(0,  0)
         };
         private static Vector2[] wall2 = new Vector2[]
         {
-            new Vector2(16,   0), new Vector2(16, 12),
-            new Vector2(15,  12), new Vector2(15,  1),
-            new Vector2( 8,  1),  new Vector2( 8,  0)
-        };
+          new Vector2(16,   0), new Vector2(16, 12),
+          new Vector2(15,  12), new Vector2(15,  1),
+          new Vector2( 8,  1),  new Vector2( 8,  0)
+        }; 
 
         private static Vector2 winDoorPos = new Vector2(2.5f, 3.2f);
 
