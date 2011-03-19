@@ -18,21 +18,33 @@ namespace CrisisAtSwissStation
     {
         // Dimensions of the game world
         public const float WIDTH = 20.0f; //16.0f
-        public const float HEIGHT = 13.0f; //12.0f
+        public const float HEIGHT = 15.0f; //12.0f
         private const float GRAVITY = 9.8f;
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
         public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window
 
+        public const float PAINTING_GRANULARITY = 20f; // how far apart points in a painting need to be for us to store them both
+
         // Content in the game world
         private static Texture2D groundTexture;
         private static Texture2D dudeTexture;
+        private static Texture2D armTexture;
         private static Texture2D dudeObjectTexture;
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
         private static Texture2D paintTexture;
+        private static Texture2D paintedSegmentTexture;
         private static Texture2D crosshairTexture;
         private static Texture2D background;
+
+        private static Texture2D bigBoxTexture;
+        private static Texture2D littleBoxTexture;
+        private static Texture2D leftPipeTexture;
+        private static Texture2D rightPipeTexture;
+        private static Texture2D platformTexture;
+        private static Texture2D bottomTexture;
+
         
 
         // Wall vertices
@@ -49,15 +61,35 @@ namespace CrisisAtSwissStation
           new Vector2( 8,  1),  new Vector2( 8,  0)
         }; 
 
-        private static Vector2 winDoorPos = new Vector2(2.5f, 3.2f);
+        private static Vector2 winDoorPos = new Vector2(19f, 4.38f);
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 7);
+        private static Vector2 dudePosition = new Vector2(2.5f, 14f);
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
 
+        private static Vector2 bigBoxPosition = new Vector2(2.5f, 4f);
+        private BoxObject bigBox;
+
+        private static Vector2 littleBoxPosition = new Vector2(5.85f, 5.65f);
+        private BoxObject littleBox;
+
+        private static Vector2 leftPipePosition = new Vector2(8.9f, 5.7f);
+        private BoxObject leftPipe;
+
+        private static Vector2 rightPipePosition = new Vector2(16.35f, 6.37f);
+        private BoxObject rightPipe;
+
+        private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
+        private BoxObject platform;
+
+        private static Vector2 bottomPosition = new Vector2(10f, 15f);
+        private BoxObject bottom;
+
+
+        /*
         private static Vector2[][] platforms = new Vector2[][]
         {
             new Vector2[]
@@ -71,58 +103,116 @@ namespace CrisisAtSwissStation
             new Vector2[]
             { new Vector2(14,6), new Vector2(15, 6), new Vector2(15,6.5f), new Vector2(14, 6.5f) },
             new Vector2[]
-            { new Vector2(12,5), new Vector2(13, 5), new Vector2(13,5.5f), new Vector2(12, 5.5f) },*/
+            { new Vector2(12,5), new Vector2(13, 5), new Vector2(13,5.5f), new Vector2(12, 5.5f) },
             new Vector2[]
             { new Vector2(10,4), new Vector2(12, 4), new Vector2(12,4.5f), new Vector2(10, 4.5f) },
             new Vector2[]
             { new Vector2(1,4), new Vector2(4, 4), new Vector2(4,4.5f), new Vector2(1, 4.5f) },
             //new Vector2[] // Daniel-added
             //{ new Vector2(10,10), new Vector2(11, 10), new Vector2(11,11f), new Vector2(10, 11f) },
-        };
-
+        }; 
+        */
         Vector2 mousePosition;
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
-        float PAINTING_GRANULARITY = 5f; // how far apart points in a painting need to be for us to store them both
         MouseState prevms;
-       public static int numDrawLeft = 105;//yeah yeah, bad coding style...im tired :(
+        public static int numDrawLeft = 0; //yeah yeah, bad coding style...im tired :(
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
         DudeObject dude;
+        BoxObject arm;
         SensorObject winDoor;
         LaserObject laser;
 
         public ScrollingWorld()
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
+            numDrawLeft = 0; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
             winDoor.Position = winDoorPos;
             AddObject(winDoor);
 
             // Create ground pieces
-            AddObject(new PolygonObject(World, wall1, groundTexture, 0, 0.0f, 0.1f));
-            AddObject(new PolygonObject(World, wall2, groundTexture, 0, 0.0f, 0.1f));
+            //AddObject(new PolygonObject(World, wall1, groundTexture, 0, 0.0f, 0.1f));
+            //AddObject(new PolygonObject(World, wall2, groundTexture, 0, 0.0f, 0.1f));
 
+            
             // Create platforms
-            foreach(Vector2[] platform in platforms)
-                AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
+            //foreach(Vector2[] platform in platforms)
+            //    AddObject(new PolygonObject(World, platform, groundTexture, 0, 0.1f, 0.0f));
+            
+
+            //new platforms
+            //float s = CASSWorld.SCALE;
+           // AddObject(new HackObject(World, (int)(1024/s), (int)(38/s), 0, (int)(730/s),.1f));
+
 
             // Create dude
             dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
+            // Create the dude's arm
+            /*
+            arm = new BoxObject(World, armTexture, 0, .1f, 0);
+            arm.Position = dudePosition;
+            AddObject(arm);
+            */
+
+            //create bottom platforms
+            bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
+            bigBox.Position = bigBoxPosition;
+            AddObject(bigBox);
+
+            littleBox = new BoxObject(World, littleBoxTexture, 0, .1f, 0);
+            littleBox.Position = littleBoxPosition;
+            AddObject(littleBox);
+
+            leftPipe = new BoxObject(World, leftPipeTexture, 0, .1f, 0);
+            leftPipe.Position = leftPipePosition;
+            AddObject(leftPipe);
+
+            rightPipe = new BoxObject(World, rightPipeTexture, 0, .1f, 0);
+            rightPipe.Position = rightPipePosition;
+            AddObject(rightPipe);
+
+            platform = new BoxObject(World, platformTexture, 0, .1f, 0);
+            platform.Position = platformPosition;
+            AddObject(platform);
+
+            bottom = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            bottom.Position = bottomPosition;
+            AddObject(bottom);
+
             // Create laser
             laser = new LaserObject(World, dude);
 
             // create a DEBUG painted object
-            List<Vector2> blobs = new List<Vector2> { new Vector2(400, 300), new Vector2(410, 310), new Vector2(420, 300) };
-            //AddObject(new PaintedObject(World, paintTexture, blobs));
+            List<Vector2> blobs = new List<Vector2>(500);
+
+            int i = 0;
+            for (int y = 250; y >= 50; y-= 20)
+            {
+                for (int x = 350; x <= 450; x+=20)
+                {
+                    //Vector2 temp = new Vector2();
+                    //temp.X = x;
+                   // temp.Y = y;
+                    //blobs[i] = temp;
+                    //blobs.Insert(i,new Vector2(x, y));
+                    blobs.Add(new Vector2(x, y));
+                    i++;
+                }
+                i++;
+            }
+            Console.WriteLine("{0}", blobs.Count);
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
+
 
             // Create rope bridge
-            AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
+            //AddObject(new RopeBridge(World, ropeBridgeTexture, 8.1f, 5.5f, 11.5f, 1, 0, 0));
 
            // Create spinning platform
            /** BoxObject spinPlatform = new BoxObject(World, barrierTexture, 25,0,0);
@@ -156,13 +246,24 @@ namespace CrisisAtSwissStation
             groundTexture = content.Load<Texture2D>("EarthTile02");
             //dudeTexture = content.Load<Texture2D>("Dude");
             dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
+            //armTexture = content.Load<Texture2D>("arm");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
+            //paintTexture = content.Load<Texture2D>("paint");
             paintTexture = content.Load<Texture2D>("paint");
+            paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
+
+            //our new platforms
+            bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
+            littleBoxTexture = content.Load<Texture2D>("littleBoxTexture");
+            leftPipeTexture = content.Load<Texture2D>("leftPipeTexture");
+            rightPipeTexture = content.Load<Texture2D>("rightPipeTexture");
+            platformTexture = content.Load<Texture2D>("platformTexture");
+            bottomTexture = content.Load<Texture2D>("bottomTexture");
           
         }
 
@@ -175,7 +276,7 @@ namespace CrisisAtSwissStation
             bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
             mousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
             //ERASING
-            if (mouse.RightButton == ButtonState.Pressed)
+            if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
@@ -198,7 +299,7 @@ namespace CrisisAtSwissStation
                 }
             }
 
-            if (mouse.LeftButton == ButtonState.Released && prevms.LeftButton == ButtonState.Pressed)
+            if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
             if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
@@ -253,8 +354,8 @@ namespace CrisisAtSwissStation
                 else
                 {
                     // create the painting as an object in the world
-                    if (dotPositions.Count>0)
-                        this.AddObject(new PaintedObject(World, paintTexture, dotPositions));
+                    if (dotPositions.Count>1)
+                        this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dotPositions));
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
@@ -323,7 +424,7 @@ namespace CrisisAtSwissStation
                 SpriteEffects.None, 0);
             foreach (Vector2 dotpos in dotPositions)
             {
-                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.White);
+                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.Red);
             }
             GameEngine.Instance.SpriteBatch.End();
             
