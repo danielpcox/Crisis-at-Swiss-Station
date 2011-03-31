@@ -74,12 +74,13 @@ namespace CrisisAtSwissStation
         /**
          * Draws all objects in the physics world
          */
-        public virtual void Draw(GraphicsDevice device, Vector3 eye, Matrix view, Matrix proj)
+        public virtual void Draw(GraphicsDevice device, Matrix cameraTransform, float guyPos)
         {
-            Vector2 offset = new Vector2(0, 0);
+            Vector2 offset = new Vector2(guyPos, 0);
             foreach (PhysicsObject obj in objects)
                 obj.Draw(offset);
         }
+
 
         /**
          * Returns the location to of what should be

@@ -18,6 +18,7 @@ namespace CrisisAtSwissStation
         private DudeObject dude;
         private bool canIDraw, canIErase;
         private Vector2 original, adjustment, end;
+        private float mouseX, mouseY;
         Box2DX.Collision.Shape interference;
         //Box2DX.Collision.Shape[] interference;
         
@@ -43,13 +44,15 @@ namespace CrisisAtSwissStation
 
         public void Update(float mX, float mY)
         {
+            mouseX = mX * SCALE;
+            mouseY = mY * SCALE;
             if (dude.isRight() == true)
                 adjustment = new Vector2(12.5f, -6f);
             else
                 adjustment = new Vector2(-12.5f, -6f);
 
             original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
-            end = new Vector2(mX * SCALE, mY * SCALE);
+            end = new Vector2((mX+ dude.Position.X)*SCALE - 512, mY * SCALE);
 
             Vector2 gunpos = original + adjustment;
 
@@ -125,19 +128,19 @@ namespace CrisisAtSwissStation
             
         }
 
-        public void Draw()
+        public void Draw(Vector2 offset)
         {
             primitiveBatch.Begin(PrimitiveType.LineList);
 
             if (interference != null)
             {
-                primitiveBatch.AddVertex(original + adjustment, OUT_SIGHT);
-                primitiveBatch.AddVertex(end, OUT_SIGHT);
+                primitiveBatch.AddVertex(original + adjustment +offset, OUT_SIGHT);
+                primitiveBatch.AddVertex(new Vector2(mouseX,mouseY), OUT_SIGHT);
             }
             else
             {
-                primitiveBatch.AddVertex(original + adjustment, IN_SIGHT);
-                primitiveBatch.AddVertex(end, IN_SIGHT);
+                primitiveBatch.AddVertex(original + adjustment +offset, IN_SIGHT);
+                primitiveBatch.AddVertex(new Vector2(mouseX,mouseY), IN_SIGHT);
             }
 
             primitiveBatch.End();

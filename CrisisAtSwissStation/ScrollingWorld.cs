@@ -65,7 +65,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 14f);
+        private static Vector2 dudePosition = new Vector2(10f, 0f);
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -150,7 +150,7 @@ namespace CrisisAtSwissStation
 
 
             // Create dude
-            dude = new DudeObject(World, dudeTexture, dudeObjectTexture,dudeSensorName);
+            dude = new DudeObject(World, dudeTexture, dudeObjectTexture, armTexture, dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
@@ -246,7 +246,7 @@ namespace CrisisAtSwissStation
             groundTexture = content.Load<Texture2D>("EarthTile02");
             //dudeTexture = content.Load<Texture2D>("Dude");
             dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
-            //armTexture = content.Load<Texture2D>("arm");
+            armTexture = content.Load<Texture2D>("arm");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
@@ -353,8 +353,18 @@ namespace CrisisAtSwissStation
                 }
                 else
                 {
+
+                    List<Vector2> dp2 = new List<Vector2>();
+                    // hack to make the drawing fit the offset
+                    //foreach (Vector2 pos in dotPositions)
+                    //{
+                    //    //Console.WriteLine(dude.Position.X * CASSWorld.SCALE);
+                    //    dp2.Add(pos + new Vector2(dude.Position.X * CASSWorld.SCALE, 0));
+                    //}
+
                     // create the painting as an object in the world
                     if (dotPositions.Count>1)
+                        //this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dp2));
                         this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dotPositions));
                 }
                 // clear the way for another painting
@@ -409,14 +419,14 @@ namespace CrisisAtSwissStation
             }
         }
 
-        public override void Draw(GraphicsDevice device, Vector3 eye, Matrix view, Matrix proj)
+        public override void Draw(GraphicsDevice device, Matrix cameraTransform, float guyPos)
         {
-            GameEngine.Instance.SpriteBatch.Begin();
-            Vector2 backgroundOffset = new Vector2(0, 0) - screenOffset;
-            GameEngine.Instance.SpriteBatch.Draw(background, backgroundOffset, Color.White);
+            GameEngine.Instance.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
+                              RasterizerState.CullCounterClockwise, null, cameraTransform);
+            GameEngine.Instance.SpriteBatch.Draw(background, new Vector2(0, 0), Color.White);
             GameEngine.Instance.SpriteBatch.End();
 
-            base.Draw(device, eye, view, proj);
+            base.Draw(device, cameraTransform, guyPos);
 
             GameEngine.Instance.SpriteBatch.Begin();                   
             GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, mousePosition * CASSWorld.SCALE,
@@ -428,7 +438,7 @@ namespace CrisisAtSwissStation
             }
             GameEngine.Instance.SpriteBatch.End();
             
-            laser.Draw();
+            laser.Draw(new Vector2(guyPos, 0));
         }
 
         /**

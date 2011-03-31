@@ -131,7 +131,9 @@ namespace CrisisAtSwissStation
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            spriteBatch.Begin();
+            Matrix cameraTransform = Matrix.CreateTranslation(new Vector3(offset, 0));
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
+                              RasterizerState.CullCounterClockwise, null, cameraTransform);
 
             /*foreach (Vec2 blobpos in vertices)//(CircleDef blobpos in shapes)
             {

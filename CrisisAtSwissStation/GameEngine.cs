@@ -300,24 +300,14 @@ namespace CrisisAtSwissStation
         {
             GraphicsDevice.Clear(Color.Black);
 
-            ////////////////////////////////////////////////////////////////
-            // Taken from the ship AI lab
-            float dist1 = 200; //
-            float dist2 = 20;
-
-            float width = graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
-            float height = graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
-
-            Vector3 eye = new Vector3(currentWorld.GetVisualTargetPosition(), -dist1) +
-                dist2 * Vector3.UnitY;
-            Vector3 target = new Vector3(currentWorld.GetVisualTargetPosition(), 0);
-
-            Matrix view = Matrix.CreateLookAt(eye, target, -Vector3.UnitY);
-            Matrix proj = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, width / height, 20.0f, 500.0f);
-            ////////////////////////////////////////////////////////////////
-
+            
             if (currentWorld != null)
-                currentWorld.Draw(graphics.GraphicsDevice, eye, view, proj);
+            {
+                float guyPos = -currentWorld.GetVisualTargetPosition().X * CASSWorld.SCALE + 512;
+                Matrix cameraTransform = Matrix.CreateTranslation(guyPos, 0.0f, 0.0f);
+                currentWorld.Draw(graphics.GraphicsDevice, cameraTransform, guyPos);
+            }
+
 
             spriteBatch.Begin();
 
