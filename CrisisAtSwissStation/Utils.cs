@@ -41,7 +41,7 @@ namespace CrisisAtSwissStation
 
             angle = (float)(System.Math.Atan2(diff.Y, diff.X)) - MathHelper.PiOver2;
 
-            spriteBatch.Draw(spr, a, null, col, angle, Origin, Scale, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(spr, a, null, col, angle, Origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

@@ -46,11 +46,15 @@ namespace CrisisAtSwissStation
         {
             base.Draw(offset);
 
+            
+
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
-            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
+            Vector2 screenOffset = (CASSWorld.SCALE * Position);// -offset;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            spriteBatch.Begin();
+            Matrix cameraTransform = Matrix.CreateTranslation(new Vector3(offset, 0));
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
+                              RasterizerState.CullCounterClockwise, null, cameraTransform);
 
             spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);
 

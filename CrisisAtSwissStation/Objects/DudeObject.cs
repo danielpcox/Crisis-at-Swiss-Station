@@ -50,13 +50,14 @@ namespace CrisisAtSwissStation
         private int spriteWidth;
         private int spriteHeight;
         private Texture2D animTexture;
+        private Texture2D armTexture;
         private int myGameTime;
       
 
         /**
          * Creates a new dude
          */
-        public DudeObject(World world, Texture2D texture, Texture2D objectTexture, string groundSensorName)
+        public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
         : base(world, objectTexture, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
@@ -71,6 +72,7 @@ namespace CrisisAtSwissStation
             //animation stuff
             myGameTime = 0;
             animTexture = texture;
+            this.armTexture = armTexture;
             walkTimer = 0;
             walkInterval = 5;
             xFrame = 0;
@@ -146,14 +148,18 @@ namespace CrisisAtSwissStation
             //sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
-            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
+            Vector2 screenOffset = (CASSWorld.SCALE * Position);// -offset;
             SpriteEffects flip = facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             //SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             //spriteBatch.Begin();
-            GameEngine.Instance.SpriteBatch.Begin();
+            SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
+            Matrix cameraTransform = Matrix.CreateTranslation(new Vector3(offset, 0));
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
+                              RasterizerState.CullCounterClockwise, null, cameraTransform);
 
             //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
             GameEngine.Instance.SpriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+            GameEngine.Instance.SpriteBatch.Draw(armTexture, screenOffset + new Vector2(5,5), null, Color.White, Angle, origin, 1, flip, 0);
 
             //spriteBatch.End();
             GameEngine.Instance.SpriteBatch.End();
