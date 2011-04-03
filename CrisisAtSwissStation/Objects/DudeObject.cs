@@ -243,8 +243,7 @@ namespace CrisisAtSwissStation
                         dudeObject.walkAnimation();
                    
                 }
-                Console.WriteLine("Calced Force" + moveForce);
-                
+            
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
                     jump = true;
                 // --------------------
@@ -278,7 +277,7 @@ namespace CrisisAtSwissStation
                // else
               //  {
                     dude.ApplyForce(Utils.Convert(moveForce), dude.GetPosition());
-                    Console.WriteLine("Applied" + moveForce);
+                   
                     
                // }
 
