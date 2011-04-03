@@ -143,28 +143,25 @@ namespace CrisisAtSwissStation
         /**
          * Draws the dude
          */
-        public override void Draw(Vector2 offset)
+        public override void Draw(Matrix cameraTransform)
         {
             //animation stuff
 
             //sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
-            Vector2 screenOffset = (CASSWorld.SCALE * Position);// -offset;
+            Vector2 screenOffset = (CASSWorld.SCALE * Position);
             SpriteEffects flip = facingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            //SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            //spriteBatch.Begin();
+
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            Matrix cameraTransform = Matrix.CreateTranslation(new Vector3(offset, 0));
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
 
             //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
-            GameEngine.Instance.SpriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
-            GameEngine.Instance.SpriteBatch.Draw(armTexture, screenOffset + new Vector2(5,5), null, Color.White, Angle, origin, 1, flip, 0);
+            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+            spriteBatch.Draw(armTexture, screenOffset + new Vector2(5,5), null, Color.White, Angle, origin, 1, flip, 0);
 
-            //spriteBatch.End();
-            GameEngine.Instance.SpriteBatch.End();
+            spriteBatch.End();
 
 
             /*

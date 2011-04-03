@@ -126,12 +126,11 @@ namespace CrisisAtSwissStation
         /**
          * Draws the painted object
          */
-        public override void Draw(Vector2 offset)
+        public override void Draw(Matrix cameraTransform)
         {
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            Matrix cameraTransform = Matrix.CreateTranslation(new Vector3(offset, 0));
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
 

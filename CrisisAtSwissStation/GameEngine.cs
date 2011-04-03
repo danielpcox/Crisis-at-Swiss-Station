@@ -303,9 +303,7 @@ namespace CrisisAtSwissStation
             
             if (currentWorld != null)
             {
-                float guyPos = -currentWorld.GetVisualTargetPosition().X * CASSWorld.SCALE + 512;
-                Matrix cameraTransform = Matrix.CreateTranslation(guyPos, 0.0f, 0.0f);
-                currentWorld.Draw(graphics.GraphicsDevice, cameraTransform, guyPos);
+                currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
             }
 
 
