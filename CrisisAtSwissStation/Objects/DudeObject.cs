@@ -20,6 +20,7 @@ namespace CrisisAtSwissStation
      */
     public class DudeObject : BoxObject
     {
+       
 
         //dude's jump impulse
         public static float jumpImpulse = -2.7f;
@@ -135,6 +136,7 @@ namespace CrisisAtSwissStation
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
 
+
             base.Update(world, dt);
         }
 
@@ -207,6 +209,7 @@ namespace CrisisAtSwissStation
              */
             public override void Step(TimeStep step)
             {
+
                 Body dude = _bodyList.body;
                 DudeObject dudeObject = dude.GetUserData() as DudeObject;
 
@@ -219,20 +222,28 @@ namespace CrisisAtSwissStation
                 // TODO: XBox controls
                 // --------------------
                 KeyboardState ks = Keyboard.GetState();
+
                 if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.A))
-                { 
-                    moveForce.X -= DUDE_FORCE;
+                {
+                 
+                    
+                        moveForce.X = -DUDE_FORCE;
+
                     //dudeObject.walkAnimation(dudeObject.getTime());
-                    if(dudeObject.Grounded)
-                    dudeObject.walkAnimation();
+                    if (dudeObject.Grounded)
+                        dudeObject.walkAnimation();
                 }
                 else if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
                 {
-                    moveForce.X += DUDE_FORCE;
+                
+                        moveForce.X += DUDE_FORCE;
+
                     //dudeObject.walkAnimation(dudeObject.getTime());
-                    if(dudeObject.Grounded)
-                    dudeObject.walkAnimation();
+                    if (dudeObject.Grounded)
+                        dudeObject.walkAnimation();
+                   
                 }
+                Console.WriteLine("Calced Force" + moveForce);
                 
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
                     jump = true;
@@ -245,6 +256,11 @@ namespace CrisisAtSwissStation
                     dudeObject.facingRight = true;
                 else if (dudeObject.Position.X * CASSWorld.SCALE >= Mouse.GetState().X)
                     dudeObject.facingRight = false;
+                
+                if (moveForce.X < 0)
+                    dudeObject.facingRight = false;
+                else if (moveForce.X > 0)
+                    dudeObject.facingRight = true;
 
                 // Don't want to be moving - damp out player motion
                 if (moveForce.X == 0.0f)
@@ -254,15 +270,17 @@ namespace CrisisAtSwissStation
                 }
 
                 // Velocity too high, clamp it
-                if (Math.Abs(vel.X) >= DUDE_MAXSPEED)
+               if (Math.Abs(vel.X) >= DUDE_MAXSPEED)
                 {
-                    vel.X = Math.Sign(vel.X) * DUDE_MAXSPEED;
-                    dude.SetLinearVelocity(Utils.Convert(vel));
+                   vel.X = Math.Sign(vel.X) * DUDE_MAXSPEED;
+                   dude.SetLinearVelocity(Utils.Convert(vel));
                 }
-                else
-                {
+               // else
+              //  {
                     dude.ApplyForce(Utils.Convert(moveForce), dude.GetPosition());
-                }
+                    Console.WriteLine("Applied" + moveForce);
+                    
+               // }
 
                 // Jump!
                 if (dudeObject.jumpCooldown == 0 && jump && dudeObject.Grounded)
