@@ -617,10 +617,9 @@ namespace CrisisAtSwissStation
             
              // Create a joint to affix the platform to the world.
              ////////////////////////////////////////////
-
-             RevoluteJointDef joint = new RevoluteJointDef();
-             joint.Initialize(spinPlatform.Body, World.GetGroundBody(), Utils.Convert(spinPlatform.Position));
-             World.CreateJoint(joint); */
+            RevoluteJointDef joint = new RevoluteJointDef();
+            joint.Initialize(spinPlatform.Body, World.GetGroundBody(), Common.Utils.Convert(spinPlatform.Position));
+            World.CreateJoint(joint); */
 
             ////////////////////////////////////////////
 
@@ -818,8 +817,8 @@ namespace CrisisAtSwissStation
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
-                aabb.LowerBound = Utils.Convert(mouseGamePosition - new Vector2(0.1f));
-                aabb.UpperBound = Utils.Convert(mouseGamePosition + new Vector2(0.1f));
+                aabb.LowerBound = Common.Utils.Convert(mouseGamePosition - new Vector2(0.1f));
+                aabb.UpperBound = Common.Utils.Convert(mouseGamePosition + new Vector2(0.1f));
 
                 Shape[] shapes = new Shape[1];
                 int nHit = World.Query(aabb, shapes, 1);
@@ -896,8 +895,8 @@ namespace CrisisAtSwissStation
                     AABB aabb = new AABB();
                     //Vector2 gamepos = new Vector2(pos.X / CASSWorld.SCALE, pos.Y / CASSWorld.SCALE) + screenOffset;
                     //Vector2 gamepos = new Vector2(pos.X, pos.Y);
-                    aabb.LowerBound = Utils.Convert(pos - new Vector2(0.1f));
-                    aabb.UpperBound = Utils.Convert(pos + new Vector2(0.1f));
+                    aabb.LowerBound = Common.Utils.Convert(pos - new Vector2(0.1f));
+                    aabb.UpperBound = Common.Utils.Convert(pos + new Vector2(0.1f));
 
                     Box2DX.Collision.Shape[] shapes = new Box2DX.Collision.Shape[1];
                     int nHit = World.Query(aabb, shapes, 1);

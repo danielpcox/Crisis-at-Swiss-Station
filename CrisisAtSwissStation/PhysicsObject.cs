@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 
 using System.Collections.Generic;
 
+using CrisisAtSwissStation.Common;
+
 namespace CrisisAtSwissStation
 {
     public abstract class PhysicsObject
@@ -30,6 +32,9 @@ namespace CrisisAtSwissStation
 
         // Are we dead?
         private bool isDead;
+
+        float width = 10f;
+        float height = 10f; // 10 for DEBUGging purposes
 
         /**
          * Creates a new physics object
@@ -141,6 +146,36 @@ namespace CrisisAtSwissStation
                 SetTransform(Position, value);
             }
         }
+        
+        public float Height
+        {
+            get
+            {
+                return this.height;
+            }
+            set
+            {
+                this.height = value;
+            }
+        }
+
+        public float Width
+        {
+            get
+            {
+                return this.width;
+            }
+            set
+            {
+                this.width = value;
+            }
+        }
+
+        public Point getCenterPoint(){
+            Point center = getBBRelativeToWorld().Center;
+
+            return (new Point(center.X, center.Y));
+        }
 
         /**
          * Explicitly sets the body's position and rotation
@@ -154,6 +189,101 @@ namespace CrisisAtSwissStation
             }
             else
                 body.SetXForm(Utils.Convert(position), rotation);
+        }
+
+        //Maps a point on the original image to a point in the world. Takes into account rotation and scaling.
+        //Scale. Rotate. Translate.
+        public Vector2 mapPointOnImage(Vector2 point)
+        {
+
+            Vector2 newPoint = new Vector2(point.X, point.Y);
+
+            //Scale
+            //newPoint = newPoint * ScaleVector;
+
+            //The next thing we do is rotate. Since the origin for the rotation is the center, we need to 
+            //untranslate the image (we did this in the line above), and then retranslate it to the center.
+            float cos_theta = (float)System.Math.Cos(Angle);
+            float sin_theta = (float)System.Math.Sin(Angle);
+
+            Vector2 center = new Vector2(boundingBox.Center.X * horizontalScale,
+                boundingBox.Center.Y);
+
+            newPoint = newPoint - center;
+
+            newPoint = new Vector2(
+                newPoint.X * cos_theta - newPoint.Y * sin_theta,
+                newPoint.X * sin_theta + newPoint.Y * cos_theta
+                );
+
+            newPoint = newPoint + center;
+
+            newPoint = newPoint + Position;
+
+            return newPoint;
+        }
+
+
+        //A convience function for the above function.
+        public Vector2 mapPointOnImage(float x, float y)
+        {
+            return (mapPointOnImage(new Vector2(x, y)));
+        }
+
+
+        //The stretch in the horizontal direction. Scales the y-axis of the bounding box
+        protected float horizontalScale = 1.0f;
+        /// <summary>
+        /// The stretch in the horizontal direction.
+        /// </summary>
+        //The axis-aligned bounding box of the sprite. This provides a very loose bound for the sprite object.
+        protected Rectangle boundingBox;
+
+        public Rectangle getBBRelativeToWorld()
+        {
+            List<Vector2> newPts = new List<Vector2>();
+
+            newPts.Add(mapPointOnImage(boundingBox.X * horizontalScale, boundingBox.Y));
+            newPts.Add(mapPointOnImage(boundingBox.X * horizontalScale, Height + boundingBox.Y));
+            newPts.Add(mapPointOnImage(Width + boundingBox.X * horizontalScale, boundingBox.Y));
+            newPts.Add(mapPointOnImage(Height + boundingBox.X * horizontalScale, Height + boundingBox.Y));
+
+            float max_y = newPts[0].Y;
+            float min_y = newPts[0].Y;
+            float max_x = newPts[0].X;
+            float min_x = newPts[0].X;
+
+            foreach (Vector2 pt in newPts)
+            {
+                if (pt.X > max_x)
+                {
+                    max_x = pt.X;
+                }
+                else if (pt.X < min_x)
+                {
+                    min_x = pt.X;
+                }
+
+                if (pt.Y > max_y)
+                {
+                    max_y = pt.Y;
+                }
+                else if (pt.Y < min_y)
+                {
+                    min_y = pt.Y;
+                }
+            }
+
+            min_x -= boundingBox.X; // *horizontalScale;
+            min_y -= boundingBox.Y; // *verticalScale;
+            max_x -= boundingBox.X; // *horizontalScale;
+            max_y -= boundingBox.Y; // *verticalScale;
+
+            return (new Rectangle(
+                (int)min_x,
+                (int)min_y,
+                (int)(max_x - min_x),
+                (int)(max_y - min_y)));
         }
     }
 }

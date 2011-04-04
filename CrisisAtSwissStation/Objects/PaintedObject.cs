@@ -61,7 +61,7 @@ namespace CrisisAtSwissStation
                 // add a circle fixture to this object at each point
                 /*
                 CircleDef circle = new CircleDef();
-                circle.LocalPosition = Utils.Convert(localpos);
+                circle.LocalPosition = Common.Utils.Convert(localpos);
                 circle.Radius = radius;
                 circle.Density = POB_DENSITY;
                 circle.Friction = POB_FRICTION;
@@ -90,10 +90,12 @@ namespace CrisisAtSwissStation
                 Split(polygon, cornerpoints, triangles);
                 CreateShapes(triangles, POB_DENSITY, POB_FRICTION, POB_RESTITUTION);
 
-                vertices.Add(Utils.Convert(localpos)); // that is, vertices of the curve approximation
+                vertices.Add(Common.Utils.Convert(localpos)); // that is, vertices of the curve approximation
                 numBlobs++;
             }
             // add the last vertex
+            //Vector2 lastlocalpos = (blobs[blobs.Count - 1] / CASSWorld.SCALE) - Position;
+            //vertices.Add(Common.Utils.Convert(lastlocalpos));
             Vector2 lastlocalpos = blobs[blobs.Count - 1]- Position;
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
@@ -193,7 +195,8 @@ namespace CrisisAtSwissStation
 
                 // add a circle fixture to this object at each point
                 CircleDef circle = new CircleDef();
-                circle.LocalPosition = Utils.Convert(localpos);
+                circle.LocalPosition = Ut
+                ls.Convert(localpos);
                 circle.Radius = radius;
                 circle.Density = POB_DENSITY;
                 circle.Friction = POB_FRICTION;
@@ -236,8 +239,8 @@ namespace CrisisAtSwissStation
 
             for (int i = 0; i < vertices.Count - 1; i++)
             {
-                Vector2 localpos = Utils.Convert(vertices[i]);
-                Vector2 localpos2 = Utils.Convert(vertices[i + 1]);
+                Vector2 localpos = Common.Utils.Convert(vertices[i]);
+                Vector2 localpos2 = Common.Utils.Convert(vertices[i + 1]);
                 double theta = System.Math.Atan2(localpos.Y, localpos.X) + Angle;
                 double theta2 = System.Math.Atan2(localpos2.Y, localpos2.X) + Angle;
                 Vector2 rotatedpos = new Vector2((float)(localpos.Length() * System.Math.Cos(theta)), (float)(localpos.Length() * System.Math.Sin(theta)));
@@ -248,10 +251,10 @@ namespace CrisisAtSwissStation
                 spriteBatch.Draw(texture, screenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 
                 // Draw segment between points
-                CrisisAtSwissStation.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, INSTASTEEL_COLOR);
+                CrisisAtSwissStation.Common.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, INSTASTEEL_COLOR);
             }
             // Draw blob at last point
-            Vector2 lastlocalpos = Utils.Convert(vertices[vertices.Count - 1]);
+            Vector2 lastlocalpos = Common.Utils.Convert(vertices[vertices.Count - 1]);
             double lasttheta = System.Math.Atan2(lastlocalpos.Y, lastlocalpos.X) + Angle;
             Vector2 lastrotatedpos = new Vector2((float)(lastlocalpos.Length() * System.Math.Cos(lasttheta)), (float)(lastlocalpos.Length() * System.Math.Sin(lasttheta)));
             Vector2 lastscreenpos = ((Position + lastrotatedpos) * CASSWorld.SCALE);
@@ -279,9 +282,9 @@ namespace CrisisAtSwissStation
             foreach (Vector2[] triangle in triangles)
             {
                 PolygonDef polygon = new PolygonDef();
-                polygon.Vertices[0] = Utils.Convert(triangle[0]);
-                polygon.Vertices[1] = Utils.Convert(triangle[1]);
-                polygon.Vertices[2] = Utils.Convert(triangle[2]);
+                polygon.Vertices[0] = Common.Utils.Convert(triangle[0]);
+                polygon.Vertices[1] = Common.Utils.Convert(triangle[1]);
+                polygon.Vertices[2] = Common.Utils.Convert(triangle[2]);
                 polygon.VertexCount = 3;
                 polygon.Density = density;
                 polygon.Friction = friction;
@@ -360,7 +363,7 @@ namespace CrisisAtSwissStation
 
                         Vector2 b = p3 - p1;
                         float d = d1.X * d2.Y - d2.X * d1.Y;
-                        if (System.Math.Abs(d) < Utils.EPSILON)
+                        if (System.Math.Abs(d) < Common.Utils.EPSILON)
                             continue;
                         d = 1.0f / d;
 

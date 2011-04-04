@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using CrisisAtSwissStation.Common;
 
 namespace CrisisAtSwissStation
 {
@@ -31,6 +32,8 @@ namespace CrisisAtSwissStation
             : base(world)
         {
             this.texture = texture;
+            Height = texture.Height;
+            Width = texture.Width;
 
             Debug.Assert(points.Length >= 3);
 

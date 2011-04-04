@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -10,6 +11,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+
+using Forms = System.Windows.Forms; // alias as Forms so that we don't get collisions with keyboard stuff
 
 namespace CrisisAtSwissStation
 {
@@ -23,7 +26,15 @@ namespace CrisisAtSwissStation
         TextBox instaSteelTextBox;
         //textbox for setting Jump
         TextBox jumpTextBox;
+
+
+        Forms.Form editor;
        
+        private static Dictionary<string, Texture2D> textureList = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Texture2D> TextureList
+        {
+            get { return textureList; }
+        }
     
         // TODO : pretty much nothing about drawing should eventually be in this class - it should be moved into ScrollingWorld.cs
         // current and previous mouse state (for drawing)
@@ -158,6 +169,24 @@ namespace CrisisAtSwissStation
             failure = Content.Load<Texture2D>("failure");
             audioManager.LoadContent(Content);
 
+            DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Content\\Art");
+            FileInfo[] fileList = di.GetFiles("*.xnb", SearchOption.AllDirectories);
+            string test  = fileList[1].DirectoryName;
+            string test2 = fileList[1].Name;
+            //DirectoryInfo di = new DirectoryInfo(Editor.CurrDirHack());
+            //FileInfo[] fileList = di.GetFiles("*.png", SearchOption.AllDirectories);
+
+            /*
+             * Load each texture and take its accompanying string
+             * relative to the Content directory.  The string is what
+             * each SpaceObject stores from the level editor.
+             */
+            foreach (FileInfo file in fileList)
+            {
+                int dirIndex = file.DirectoryName.LastIndexOf("\\Content\\Art") + 9; // Index to remove head of directory
+                string fullName = file.DirectoryName.Substring(dirIndex) + "\\" + file.Name.Replace(".xnb", ""); // Art\...\..., without .png
+                textureList.Add(fullName, Content.Load<Texture2D>(fullName));
+            }
          
 
             // TODO : change this to something more appropriate
@@ -202,6 +231,10 @@ namespace CrisisAtSwissStation
             // exit when they press escape
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            if (ks.IsKeyDown(Keys.L))
+                editor = new CrisisAtSwissStation.LevelEditor.Editor();
+                editor.Show();
 
             // toggle mute if they press 'm' 
             if (ks.IsKeyDown(Keys.M) && lastKeyboardState.IsKeyUp(Keys.M))

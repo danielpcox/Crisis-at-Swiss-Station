@@ -44,8 +44,26 @@ namespace CrisisAtSwissStation
             shape.Restitution = restitution;
             shapes.Add(shape);
         }
-        
-        
+
+        public BoxObject(World world, string textureName, float density, float friction, float restitution)
+            : base(world)
+        {
+            // Initialize
+            this.texture = texture;
+            
+            // Determine dimensions
+            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
+            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
+
+            // Create the collision shape
+            PolygonDef shape = new PolygonDef();
+            shape.SetAsBox(halfWidth, halfHeight);
+            shape.Density = density;
+            shape.Friction = friction;
+            shape.Restitution = restitution;
+            shapes.Add(shape);
+        }
+
         /**
          * Draws the object on the screen using a sprite batch.
          */

@@ -126,12 +126,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioManager.cs" />
-    <Compile Include="Objects\AnimationObject.cs" />
+    <Compile Include="Common\Conversion.cs" />
+    <Compile Include="Common\Serializer.cs" />
+    <Compile Include="LevelEditor\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelEditor\Editor.designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelEditor\EditorConstants.cs" />
+    <Compile Include="LevelEditor\StringPromptDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelEditor\StringPromptDialog.designer.cs">
+      <DependentUpon>StringPromptDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\BoxObject.cs" />
     <Compile Include="Objects\CircleObject.cs" />
-    <Compile Include="Objects\FanObject.cs" />
     <Compile Include="Objects\HackObject.cs" />
-    <Compile Include="Objects\HoleObject.cs" />
     <Compile Include="Objects\LaserObject.cs" />
     <Compile Include="Objects\PaintedObject.cs" />
     <Compile Include="Objects\DudeObject.cs" />
@@ -147,7 +159,7 @@
     <Compile Include="GameEngine.cs" />
     <Compile Include="Objects\SensorObject.cs" />
     <Compile Include="TextBox.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="Common\Utils.cs" />
     <Compile Include="ScrollingWorld.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +223,14 @@
       <Name>CrisisAtSwissStationContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="LevelEditor\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelEditor\StringPromptDialog.resx">
+      <DependentUpon>StringPromptDialog.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

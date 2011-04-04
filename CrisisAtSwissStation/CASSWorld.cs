@@ -1,4 +1,5 @@
-﻿using Box2DX.Collision;
+﻿using System;
+using Box2DX.Collision;
 using Box2DX.Common;
 using Box2DX.Dynamics;
 
@@ -6,9 +7,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using System.Collections.Generic;
+using CrisisAtSwissStation.Common;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public abstract class CASSWorld
     {
         // Scale from game space -> screen space
@@ -53,6 +56,15 @@ namespace CrisisAtSwissStation
             obj.RemoveFromWorld();
         }
 
+        public List<PhysicsObject> Objects
+        {
+            get
+            {
+                return objects;
+            }
+        }
+
+
         public virtual void Simulate(float dt)
         {
             int iterations = 10;
@@ -69,14 +81,6 @@ namespace CrisisAtSwissStation
                     obj.Update(this, dt);
             }
             tempObjects.Clear();
-        }
-        
-        public List<PhysicsObject> Objects
-        {
-            get
-            {
-                return objects;
-            }
         }
 
         /**
@@ -131,5 +135,42 @@ namespace CrisisAtSwissStation
          */
         public bool Failed
         { get { return failed; } }
+
+        public void reloadNonSerializedAssets()
+        {
+            foreach (PhysicsObject obj in objects)
+            {
+
+                if (obj is BoxObject)
+                {
+                    ((BoxObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is PolygonObject)
+                {
+                    ((PolygonObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is CircleObject)
+                {
+                    ((CircleObject)obj).reloadNonSerializedAssets();
+                }
+
+                if (obj is DudeObject)
+                {
+                    ((DudeObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is PaintedObject)
+                {
+                    ((PaintedObject)obj).reloadNonSerializedAssets();
+                }
+            }
+
+            // misc
+            if (this is ScrollingWorld)
+            {
+                ((ScrollingWorld)this).laser.reloadNonSerializedAssets();
+                ((ScrollingWorld)this).reloadNonSerializedAssets();
+            }
+        }
+
     }
 }
