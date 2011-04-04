@@ -45,6 +45,11 @@ namespace CrisisAtSwissStation
         private static Texture2D platformTexture;
         private static Texture2D bottomTexture;
 
+        private static Texture2D holeTexture;
+
+        private static Texture2D movingPlatformTexture;
+        private bool movPlat;
+
         
 
         // Wall vertices
@@ -86,9 +91,13 @@ namespace CrisisAtSwissStation
         private BoxObject platform;
 
         private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
-        private BoxObject bottom1,bottom2,bottom3,bottom4;      
+        private BoxObject bottom1,bottom2,bottom3,bottom4;
 
+        private static Vector2 hole1Position = new Vector2(12f, 14.7f);
+        private  BoxObject hole1;
 
+        private static Vector2 movPlatform1Position = new Vector2(10f, 13f);
+        private BoxObject movPlatform1;
         /*
         private static Vector2[][] platforms = new Vector2[][]
         {
@@ -128,6 +137,8 @@ namespace CrisisAtSwissStation
         public ScrollingWorld()
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
+            movPlat = true;
+
             numDrawLeft = 0; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
@@ -197,7 +208,14 @@ namespace CrisisAtSwissStation
             bottom4 = new BoxObject(World, bottomTexture, 0, .5f, 0);
             bottom4.Position = bottomPosition + new Vector2(60.9f, 0f); 
             AddObject(bottom4);
-            
+
+            hole1 = new BoxObject(World, holeTexture, 0, .5f, 0);
+            hole1.Position = hole1Position;
+            AddObject(hole1);
+
+            movPlatform1 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);
+            movPlatform1.Position = movPlatform1Position;
+            AddObject(movPlatform1);
 
             // Create laser
             laser = new LaserObject(World, dude);
@@ -269,7 +287,7 @@ namespace CrisisAtSwissStation
             paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
-
+            
             //our new platforms
             bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
             littleBoxTexture = content.Load<Texture2D>("littleBoxTexture");
@@ -277,11 +295,28 @@ namespace CrisisAtSwissStation
             rightPipeTexture = content.Load<Texture2D>("rightPipeTexture");
             platformTexture = content.Load<Texture2D>("platformTexture");
             bottomTexture = content.Load<Texture2D>("bottomTexture");
+
+            holeTexture = content.Load<Texture2D>("hole_tile");
+
+            movingPlatformTexture = content.Load<Texture2D>("moving platform");
           
         }
 
         public override void Simulate(float dt)
         {
+            if (movPlat == true)
+            {
+                movPlatform1.Position = movPlatform1.Position + new Vector2(.05f, 0);
+                if (movPlatform1.Position.X > 20)
+                    movPlat = false;
+            }
+            else
+            {
+                movPlatform1.Position = movPlatform1.Position - new Vector2(.05f, 0);
+                if (movPlatform1.Position.X <10 )
+                    movPlat = true;
+            }
+
             dude.Grounded = false; // unrelated to the following
 
             // code for erasing a painted object
@@ -428,6 +463,10 @@ namespace CrisisAtSwissStation
                 if ((object1 == world.winDoor && object2 == world.dude) ||
                     (object2 == world.winDoor && object1 == world.dude))
                     world.Win();
+
+                //ronnie added as hole test
+               //if (object1 == world.hole1 && object2 == world.dude)
+                   // world.Fail();
                 
             }
         }
