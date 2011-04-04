@@ -419,14 +419,17 @@ namespace CrisisAtSwissStation
             }
         }
 
-        public override void Draw(GraphicsDevice device, Matrix cameraTransform, float guyPos)
+        public override void Draw(GraphicsDevice device, Matrix camera)
         {
+            float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
+            Matrix cameraTransform = Matrix.CreateTranslation(guyPos, 0.0f, 0.0f);
+
             GameEngine.Instance.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
             GameEngine.Instance.SpriteBatch.Draw(background, new Vector2(0, 0), Color.White);
             GameEngine.Instance.SpriteBatch.End();
 
-            base.Draw(device, cameraTransform, guyPos);
+            base.Draw(device, cameraTransform);
 
             GameEngine.Instance.SpriteBatch.Begin();                   
             GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, mousePosition * CASSWorld.SCALE,

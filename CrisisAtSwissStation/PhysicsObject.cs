@@ -44,10 +44,10 @@ namespace CrisisAtSwissStation
         /**
          * Draws the object
          */
-        public virtual void Draw(Vector2 offset)
+        public virtual void Draw(Matrix cameraTransform)
         {
             foreach (PhysicsObject child in children)
-                child.Draw(offset);
+                child.Draw(cameraTransform);
         }
 
         /**

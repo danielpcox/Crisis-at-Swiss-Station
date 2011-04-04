@@ -183,13 +183,12 @@ namespace CrisisAtSwissStation
 
             return Math.Abs(Vector2.Dot(dir, direction));
         }
-        public override void Draw(Vector2 offset)
+        public override void Draw(Matrix cameraTransform)
         {
             PolygonDrawer drawer = GameEngine.Instance.PolygonDrawer;
-            Vector2 screenOffset = (CASSWorld.SCALE * Position) - offset;
-            drawer.DrawPolygons(screenOffset, Angle, CASSWorld.SCALE, texture, vertices, BlendState.AlphaBlend);
+            drawer.DrawPolygons(CASSWorld.SCALE * Position, Angle, CASSWorld.SCALE, texture, vertices, BlendState.AlphaBlend);
 
-            base.Draw(offset);
+            base.Draw(cameraTransform);
         }
 
         /**
