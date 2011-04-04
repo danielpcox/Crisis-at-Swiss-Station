@@ -133,9 +133,7 @@ namespace CrisisAtSwissStation
             //animation stuff
             myGameTime++;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
-
-
+            //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
             base.Update(world, dt);
         }
@@ -156,6 +154,8 @@ namespace CrisisAtSwissStation
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
+
+            //Console.WriteLine("X {0} Y {1}",sourceRect.Width, sourceRect.Height);
 
             //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
             spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
@@ -227,19 +227,26 @@ namespace CrisisAtSwissStation
                         moveForce.X = -DUDE_FORCE;
 
                     //dudeObject.walkAnimation(dudeObject.getTime());
-                    if (dudeObject.Grounded)
+                        if (dudeObject.Grounded) 
                         dudeObject.walkAnimation();
                 }
                 else if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
                 {
-                
-                        moveForce.X += DUDE_FORCE;
+
+                    moveForce.X += DUDE_FORCE;
 
                     //dudeObject.walkAnimation(dudeObject.getTime());
                     if (dudeObject.Grounded)
                         dudeObject.walkAnimation();
-                   
+
                 }
+                else
+                {
+                    if (dudeObject.Grounded)                                   
+                        dudeObject.standAnimation();
+                    
+                }
+                
             
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
                     jump = true;
@@ -291,6 +298,14 @@ namespace CrisisAtSwissStation
             }
         }
 
+        private void standAnimation()
+        {
+            xFrame = 4;
+            yFrame = 1;
+           // Console.WriteLine("Stand called");
+            //myGameTime = 0;
+        }
+
         //animation stuff
         private void walkAnimation()//int gameTime)
         {
@@ -308,6 +323,11 @@ namespace CrisisAtSwissStation
                     yFrame = 1;
                 }
                 else if (xFrame > 7 && yFrame == 1)
+                {
+                    xFrame = 0;
+                    yFrame = 0;
+                }
+                else if (yFrame == 2)
                 {
                     xFrame = 0;
                     yFrame = 0;

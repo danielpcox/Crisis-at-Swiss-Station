@@ -17,7 +17,7 @@ namespace CrisisAtSwissStation
     public class ScrollingWorld : CASSWorld
     {
         // Dimensions of the game world
-        public const float WIDTH = 20.0f; //16.0f
+        public const float WIDTH = 80.0f; //16.0f originally, then 20f, now changed for side scrolling
         public const float HEIGHT = 15.0f; //12.0f
         private const float GRAVITY = 9.8f;
         public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
@@ -65,7 +65,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(10f, 0f);
+        private static Vector2 dudePosition = new Vector2(10f, 10f);
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -85,8 +85,8 @@ namespace CrisisAtSwissStation
         private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
         private BoxObject platform;
 
-        private static Vector2 bottomPosition = new Vector2(10f, 15f);
-        private BoxObject bottom;
+        private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
+        private BoxObject bottom1,bottom2,bottom3,bottom4;      
 
 
         /*
@@ -131,7 +131,7 @@ namespace CrisisAtSwissStation
             numDrawLeft = 0; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
-            winDoor.Position = winDoorPos;
+            winDoor.Position = winDoorPos + new Vector2(61.5f, .05f); 
             AddObject(winDoor);
 
             // Create ground pieces
@@ -163,28 +163,41 @@ namespace CrisisAtSwissStation
 
             //create bottom platforms
             bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
-            bigBox.Position = bigBoxPosition;
+            bigBox.Position = bigBoxPosition + new Vector2(61.5f, .05f); 
             AddObject(bigBox);
 
             littleBox = new BoxObject(World, littleBoxTexture, 0, .1f, 0);
-            littleBox.Position = littleBoxPosition;
+            littleBox.Position = littleBoxPosition + new Vector2(61.5f, 0f); 
             AddObject(littleBox);
 
             leftPipe = new BoxObject(World, leftPipeTexture, 0, .1f, 0);
-            leftPipe.Position = leftPipePosition;
+            leftPipe.Position = leftPipePosition + new Vector2(61.5f, 0f); 
             AddObject(leftPipe);
 
             rightPipe = new BoxObject(World, rightPipeTexture, 0, .1f, 0);
-            rightPipe.Position = rightPipePosition;
+            rightPipe.Position = rightPipePosition + new Vector2(61.5f, 0f); 
             AddObject(rightPipe);
 
             platform = new BoxObject(World, platformTexture, 0, .1f, 0);
-            platform.Position = platformPosition;
+            platform.Position = platformPosition + new Vector2(61.5f, 0f); 
             AddObject(platform);
 
-            bottom = new BoxObject(World, bottomTexture, 0, .5f, 0);
-            bottom.Position = bottomPosition;
-            AddObject(bottom);
+            bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            bottom1.Position = bottomPosition;
+            AddObject(bottom1);
+
+            bottom2 = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            bottom2.Position = bottomPosition + new Vector2(20.3f, 0f);
+            AddObject(bottom2);
+
+            bottom3 = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            bottom3.Position = bottomPosition + new Vector2(40.6f, 0f); 
+            AddObject(bottom3);
+
+            bottom4 = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            bottom4.Position = bottomPosition + new Vector2(60.9f, 0f); 
+            AddObject(bottom4);
+            
 
             // Create laser
             laser = new LaserObject(World, dude);
@@ -195,7 +208,7 @@ namespace CrisisAtSwissStation
             int i = 0;
             for (int y = 250; y >= 50; y-= 20)
             {
-                for (int x = 350; x <= 450; x+=20)
+                for (int x = 3422; x <= 3522; x += 20)//(int x = 350; x <= 450; x+=20)
                 {
                     //Vector2 temp = new Vector2();
                     //temp.X = x;
@@ -245,7 +258,7 @@ namespace CrisisAtSwissStation
         {
             groundTexture = content.Load<Texture2D>("EarthTile02");
             //dudeTexture = content.Load<Texture2D>("Dude");
-            dudeTexture = content.Load<Texture2D>("DudeFilmstrip");
+            dudeTexture = content.Load<Texture2D>("newDudeFilmstrip");
             armTexture = content.Load<Texture2D>("arm");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");

@@ -189,13 +189,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DudeFilmstrip.bmp">
-      <Name>DudeFilmstrip</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="bottomTexture.png">
       <Name>bottomTexture</Name>
       <Importer>TextureImporter</Importer>
@@ -244,6 +237,13 @@
   <ItemGroup>
     <Compile Include="arm.png">
       <Name>arm</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="newDudeFilmstrip.bmp">
+      <Name>newDudeFilmstrip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
