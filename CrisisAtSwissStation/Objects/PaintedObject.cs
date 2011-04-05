@@ -25,7 +25,7 @@ namespace CrisisAtSwissStation
         private const float POB_DENSITY = 1.0f;
         private const float POB_FRICTION = 0.5f;
         private const float POB_RESTITUTION = 0.0f;
-        private Color INSTASTEEL_COLOR = Color.Gold;
+        private Color INSTASTEEL_COLOR = Color.Gray;
 
         List<Vec2> vertices = new List<Vec2>(); // we need this for drawing between the vertices
 
@@ -42,15 +42,17 @@ namespace CrisisAtSwissStation
             : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
         {
             segmentTexture = segmenttexture;
-            Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
-
+            //Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
+            Position = blobs[0];
             radius = (float)blobtexture.Width / (2 * CASSWorld.SCALE);
 
             //foreach (Vector2 blobpos in blobs)
             for (int i=0; i<blobs.Count-1; i++)
             {
-                Vector2 localpos = (blobs[i] / CASSWorld.SCALE) - Position;
-                Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
+               // Vector2 localpos = (blobs[i] / CASSWorld.SCALE) - Position;
+                //Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
+                Vector2 localpos = blobs[i]  - Position;
+                Vector2 localpos2 = blobs[i+1]- Position;
 
                 // add a circle fixture to this object at each point
                 /*
@@ -88,11 +90,13 @@ namespace CrisisAtSwissStation
                 numBlobs++;
             }
             // add the last vertex
-            Vector2 lastlocalpos = (blobs[blobs.Count - 1] / CASSWorld.SCALE) - Position;
+            Vector2 lastlocalpos = blobs[blobs.Count - 1]- Position;
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
         }
 
+
+        //Not fixed for side scrolling!!!!!!!!!!!!
         // DEBUG : so, Box2DX for some reason didn't want to add shapes to an object on the fly.
         // temporary solution: blast the old object and create a whole new one
         public void AddToShapes(List<Vector2> blobs)
@@ -122,6 +126,8 @@ namespace CrisisAtSwissStation
             }
             Body.SetMassFromShapes();
         }
+
+
 
         /**
          * Draws the painted object

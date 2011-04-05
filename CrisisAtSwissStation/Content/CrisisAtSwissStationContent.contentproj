@@ -242,13 +242,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="newDudeFilmstrip.bmp">
-      <Name>newDudeFilmstrip</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="hole_tile.png">
       <Name>hole_tile</Name>
       <Importer>TextureImporter</Importer>
@@ -258,6 +251,34 @@
   <ItemGroup>
     <Compile Include="moving platform.png">
       <Name>moving platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="hole_tile2.png">
+      <Name>hole_tile2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="newDudeFilmstrip.png">
+      <Name>newDudeFilmstrip</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="hole_strip.png">
+      <Name>hole_strip</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="big_hole_strip.png">
+      <Name>big_hole_strip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
