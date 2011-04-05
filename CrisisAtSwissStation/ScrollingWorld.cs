@@ -96,7 +96,7 @@ namespace CrisisAtSwissStation
         private static Vector2 hole1Position = new Vector2(12f, 14.7f);
         private  BoxObject hole1;
 
-        private static Vector2 movPlatform1Position = new Vector2(10f, 13f);
+        private static Vector2 movPlatform1Position = new Vector2(10f, 14f);
         private BoxObject movPlatform1;
         /*
         private static Vector2[][] platforms = new Vector2[][]
