@@ -15,8 +15,7 @@ namespace CrisisAtSwissStation
     /**
      * Defines a platform character, the super-fancy
      * technical name of which is a "Dude."
-     * Our dude can move left and right, jump, and shoot
-     * bullets.
+     * Our dude can move left and right, jump, and draw and erase.
      */
     public class DudeObject : BoxObject
     {

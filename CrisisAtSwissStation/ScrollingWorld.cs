@@ -96,7 +96,7 @@ namespace CrisisAtSwissStation
         private static Vector2 hole1Position = new Vector2(12f, 14.7f);
         private  BoxObject hole1;
 
-        private static Vector2 movPlatform1Position = new Vector2(10f, 14f);
+        private static Vector2 movPlatform1Position = new Vector2(10f, 13f);
         private BoxObject movPlatform1;
         /*
         private static Vector2[][] platforms = new Vector2[][]
@@ -214,11 +214,15 @@ namespace CrisisAtSwissStation
             AddObject(hole1);
 
             movPlatform1 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);
+            Box2DX.Collision.MassData infmass = new Box2DX.Collision.MassData();
+            //infmass = movPlatform1.Body.;
+            //infmass.Mass = 0;
+            //movPlatform1.Body.SetMass(0f);
             movPlatform1.Position = movPlatform1Position;
             AddObject(movPlatform1);
 
             // Create laser
-            laser = new LaserObject(World, dude);
+            laser = new LaserObject(World, dude,paintedSegmentTexture,10);
 
             // create a DEBUG painted object
             List<Vector2> blobs = new List<Vector2>(500);
@@ -238,7 +242,7 @@ namespace CrisisAtSwissStation
                 }
                 i++;
             }
-            Console.WriteLine("{0}", blobs.Count);
+            //Console.WriteLine("{0}", blobs.Count);
             AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
 
 
@@ -304,6 +308,11 @@ namespace CrisisAtSwissStation
 
         public override void Simulate(float dt)
         {
+            //ronnies 2 line attempt at fixing drawing
+            //float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
+           // screenOffset = new Vector2(guyPos, 0);
+
+            //hackish code to make the platform move
             if (movPlat == true)
             {
                 movPlatform1.Position = movPlatform1.Position + new Vector2(.05f, 0);
@@ -351,7 +360,11 @@ namespace CrisisAtSwissStation
                 drawingInterrupted = false;
 
             if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
-            {// if we're holding down the mouse button
+            {
+                //random ronnie addition for laser
+                laser.startDrawing();
+
+                // if we're holding down the mouse button
                 Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
                 if (dotPositions.Count == 0 || (mousepos - dotPositions[dotPositions.Count - 1]).Length() > PAINTING_GRANULARITY)
                 { // according to the granularity constraint for paintings,
@@ -359,6 +372,9 @@ namespace CrisisAtSwissStation
                     numDrawLeft--;
                     finishDraw = true;
                 }
+
+                //other random ronnie addition for laser
+                //laser.finishDrawing();
                 
             }
             else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > 0 || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
@@ -389,6 +405,7 @@ namespace CrisisAtSwissStation
                         break;
                     }
                 }
+                laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
                 // TODO Diana: add something about screen offset?
@@ -493,7 +510,7 @@ namespace CrisisAtSwissStation
             }
             GameEngine.Instance.SpriteBatch.End();
             
-            laser.Draw(new Vector2(guyPos, 0));
+            laser.Draw();
         }
 
         /**
