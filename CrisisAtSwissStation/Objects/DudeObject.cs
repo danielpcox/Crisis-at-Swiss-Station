@@ -59,7 +59,7 @@ namespace CrisisAtSwissStation
          * Creates a new dude
          */
         public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
-        : base(world, objectTexture, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
+        : base(world, objectTexture, .5f, 0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
             isGrounded = false;            
@@ -134,6 +134,7 @@ namespace CrisisAtSwissStation
             myGameTime++;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            
 
             base.Update(world, dt);
         }
@@ -255,11 +256,36 @@ namespace CrisisAtSwissStation
                 Vector2 vel = Utils.Convert(dude.GetLinearVelocity());
 
                 // Which way are we facing  (add in a is X(mouse) > X(dude) condition??)
-                if (dudeObject.Position.X * CASSWorld.SCALE < Mouse.GetState().X)
-                    dudeObject.facingRight = true;
-                else if (dudeObject.Position.X * CASSWorld.SCALE >= Mouse.GetState().X)
-                    dudeObject.facingRight = false;
+                //Vector2 screenOffset = (CASSWorld.SCALE * dudeObject.Position);
                 
+                /*
+                int offsetX = (int)((dudeObject.Position.X * CASSWorld.SCALE) / 1024); 
+                Console.WriteLine("{0}  {1}", offsetX, Mouse.GetState().X);
+                if (dudeObject.Position.X * CASSWorld.SCALE < (Mouse.GetState().X + offsetX*1024))
+                    dudeObject.facingRight = true;
+                else if (dudeObject.Position.X * CASSWorld.SCALE >= (Mouse.GetState().X + offsetX *1024))
+                    dudeObject.facingRight = false;
+                 */
+
+                //making him flip towards the cursor, works with sidescrolling, need to fix magic numbers
+                if (dudeObject.Position.X * CASSWorld.SCALE >= (.5* GameEngine.GAME_WINDOW_WIDTH) && dudeObject.Position.X * CASSWorld.SCALE <= 3584)
+                {
+                    if ((.5 * GameEngine.GAME_WINDOW_WIDTH) < Mouse.GetState().X)
+                        dudeObject.facingRight = true;
+                    else if ((.5 * GameEngine.GAME_WINDOW_WIDTH) >= Mouse.GetState().X)
+                        dudeObject.facingRight = false;
+                }
+                else
+                {
+                    float dudescreenX = (dudeObject.Position.X * CASSWorld.SCALE) % (GameEngine.GAME_WINDOW_WIDTH); 
+                    if (dudescreenX < Mouse.GetState().X)
+                        dudeObject.facingRight = true;
+                    else if (dudescreenX >= Mouse.GetState().X)
+                        dudeObject.facingRight = false;
+                }
+
+
+
                 if (moveForce.X < 0)
                     dudeObject.facingRight = false;
                 else if (moveForce.X > 0)

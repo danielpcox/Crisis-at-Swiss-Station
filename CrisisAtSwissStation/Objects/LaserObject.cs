@@ -130,7 +130,7 @@ namespace CrisisAtSwissStation
 
         public void Draw(Vector2 offset)
         {
-            primitiveBatch.Begin(PrimitiveType.LineList);
+            primitiveBatch.Begin(PrimitiveType.LineList);            
 
             if (interference != null)
             {
