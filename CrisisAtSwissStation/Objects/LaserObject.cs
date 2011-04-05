@@ -16,19 +16,26 @@ namespace CrisisAtSwissStation
         private Box2DX.Dynamics.World world;
         private float SCALE;
         private DudeObject dude;
-        private bool canIDraw, canIErase;
-        private Vector2 original, adjustment, end;
-        private float mouseX, mouseY;
+        private bool canIDraw, canIErase, amDrawing;
+        private Vector2 original, adjustment, end, offset, startpoint, endpoint;
+        private float mouseX, mouseY, guyPos;
+        private int currentSection, numSections, sectionTimer;
         Box2DX.Collision.Shape interference;
         //Box2DX.Collision.Shape[] interference;
-        
+        private Vector2[] sections;
         PrimitiveBatch primitiveBatch;
+        private Texture2D sectionTex;
 
-        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude)
+        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, Texture2D mySection, int amnSections)
         {               
             world = myWorld;
             dude = myDude;
-
+            sectionTex = mySection;
+            numSections = amnSections;
+            sections = new Vector2[numSections];
+            currentSection = 0;
+            sectionTimer = 0;
+            amDrawing = false;
             //interference = new Box2DX.Collision.Shape[20];
 
             SCALE = CASSWorld.SCALE;
@@ -42,8 +49,17 @@ namespace CrisisAtSwissStation
         public bool canErase()
         { return canIErase; }
 
+        public void startDrawing()
+        { amDrawing = true; }
+
+        public void finishDrawing()
+        { amDrawing = false; }
+
         public void Update(float mX, float mY)
         {
+            guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
+            offset = new Vector2(guyPos, 0);
+
             mouseX = mX * SCALE;
             mouseY = mY * SCALE;
             if (dude.isRight() == true)
@@ -125,26 +141,56 @@ namespace CrisisAtSwissStation
                 canIErase = false;
             }
             else { canIDraw = true; }*/
+
+            startpoint = original + adjustment + offset;
+            endpoint = new Vector2(mouseX, mouseY);
+
+            int totalx = (int)(endpoint.X - startpoint.X);
+            int totaly = (int)(endpoint.Y - startpoint.Y);
+            int xincr = totalx/numSections;
+            int yincr = totaly/numSections;
+            for (int i = 0; i < numSections; i++)
+            {
+                sections[i] = new Vector2(startpoint.X+ (i * xincr), startpoint.Y + (i * yincr));
+            }
+
             
         }
 
-        public void Draw(Vector2 offset)
-        {
+        public void Draw()
+        {           
+            
             primitiveBatch.Begin(PrimitiveType.LineList);            
 
             if (interference != null)
             {
-                primitiveBatch.AddVertex(original + adjustment +offset, OUT_SIGHT);
-                primitiveBatch.AddVertex(new Vector2(mouseX,mouseY), OUT_SIGHT);
+                primitiveBatch.AddVertex(startpoint, OUT_SIGHT);
+                primitiveBatch.AddVertex(endpoint, OUT_SIGHT);
             }
             else
             {
-                primitiveBatch.AddVertex(original + adjustment +offset, IN_SIGHT);
-                primitiveBatch.AddVertex(new Vector2(mouseX,mouseY), IN_SIGHT);
+                primitiveBatch.AddVertex(startpoint, IN_SIGHT);
+                primitiveBatch.AddVertex(endpoint, IN_SIGHT);
             }
 
             primitiveBatch.End();
 
+            if (amDrawing == true)
+            {
+                GameEngine.Instance.SpriteBatch.Begin();
+                //Console.WriteLine("{0} {1}", sections[currentSection].X, sections[currentSection].Y);
+                CrisisAtSwissStation.Utils.DrawLine(GameEngine.Instance.SpriteBatch, sectionTex, sections[currentSection], sections[currentSection + 1], Color.Gold);
+                GameEngine.Instance.SpriteBatch.End();
+
+                sectionTimer++;
+                if (sectionTimer > 5)
+                {
+                    sectionTimer = 0;
+                    currentSection++;
+                    if (currentSection > numSections - 2)
+                        currentSection = 0;
+                }
+            }
         }
 
       
