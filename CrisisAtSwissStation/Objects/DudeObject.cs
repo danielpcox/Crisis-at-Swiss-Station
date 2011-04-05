@@ -159,8 +159,8 @@ namespace CrisisAtSwissStation
 
             //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
             spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
-            spriteBatch.Draw(armTexture, screenOffset + new Vector2(5,5), null, Color.White, Angle, origin, 1, flip, 0);
-
+            spriteBatch.Draw(armTexture, screenOffset + new Vector2(2,10), null, Color.White, Angle, origin, .8f, flip, 0);
+           
             spriteBatch.End();
 
 
