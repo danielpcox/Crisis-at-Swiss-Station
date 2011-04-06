@@ -477,7 +477,11 @@ namespace CrisisAtSwissStation.LevelEditor
                         mouse.Y > obj.Position.Y && mouse.Y < (obj.Position.Y + texture.Height))*/
                     if (bb.Contains(Conversion.PointToPoint(mouse)))
                     {
-                        world.Objects.Remove(obj);
+                        //world.Objects.Remove(obj);
+                        if (!(obj is DudeObject))
+                        {
+                            world.RemoveObject(obj);
+                        }
 
                         if (obj == currentlySelectedObject)
                         {
