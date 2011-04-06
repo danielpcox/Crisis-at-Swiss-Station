@@ -46,6 +46,7 @@ namespace CrisisAtSwissStation
         private static Texture2D bottomTexture;
 
         private static Texture2D holeTexture;
+        private static Texture2D holeObjectTexture;
 
         private static Texture2D movingPlatformTexture;
         private bool movPlat;
@@ -70,7 +71,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(10f, 10f);
+        private static Vector2 dudePosition = new Vector2(7f, 15f); 
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -93,10 +94,10 @@ namespace CrisisAtSwissStation
         private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
         private BoxObject bottom1,bottom2,bottom3,bottom4;
 
-        private static Vector2 hole1Position = new Vector2(12f, 14.7f);
+        private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private  BoxObject hole1;
 
-        private static Vector2 movPlatform1Position = new Vector2(10f, 13f);
+        private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
         private BoxObject movPlatform1;
         /*
         private static Vector2[][] platforms = new Vector2[][]
@@ -132,7 +133,7 @@ namespace CrisisAtSwissStation
         DudeObject dude;
         BoxObject arm;
         SensorObject winDoor;
-        LaserObject laser;
+        LaserObject laser;    
 
         public ScrollingWorld()
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
@@ -159,9 +160,11 @@ namespace CrisisAtSwissStation
             //float s = CASSWorld.SCALE;
            // AddObject(new HackObject(World, (int)(1024/s), (int)(38/s), 0, (int)(730/s),.1f));
 
+            // Create laser
+            laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
 
             // Create dude
-            dude = new DudeObject(World, dudeTexture, dudeObjectTexture, armTexture, dudeSensorName);
+            dude = new DudeObject(World, this, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
@@ -209,12 +212,12 @@ namespace CrisisAtSwissStation
             bottom4.Position = bottomPosition + new Vector2(60.9f, 0f); 
             AddObject(bottom4);
 
-            hole1 = new BoxObject(World, holeTexture, 0, .5f, 0);
+            hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
             hole1.Position = hole1Position;
             AddObject(hole1);
 
             movPlatform1 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);
-            Box2DX.Collision.MassData infmass = new Box2DX.Collision.MassData();
+            //Box2DX.Collision.MassData infmass = new Box2DX.Collision.MassData();
             //infmass = movPlatform1.Body.;
             //infmass.Mass = 0;
             //movPlatform1.Body.SetMass(0f);
@@ -237,7 +240,9 @@ namespace CrisisAtSwissStation
                    // temp.Y = y;
                     //blobs[i] = temp;
                     //blobs.Insert(i,new Vector2(x, y));
-                    blobs.Add(new Vector2(x, y));
+                    Vector2 addition = getGameCoords(new Vector2(x, y));
+                    Console.WriteLine("{0}", addition);
+                    blobs.Add(addition);
                     i++;
                 }
                 i++;
@@ -300,11 +305,45 @@ namespace CrisisAtSwissStation
             platformTexture = content.Load<Texture2D>("platformTexture");
             bottomTexture = content.Load<Texture2D>("bottomTexture");
 
-            holeTexture = content.Load<Texture2D>("hole_tile");
+            holeTexture = content.Load<Texture2D>("big_hole_strip");
+            holeObjectTexture = content.Load<Texture2D>("hole_tile2");
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
           
         }
+
+
+        
+        public Vector2 getScreenOrigin()
+        {
+            if (dude.Position.X * CASSWorld.SCALE <= GAME_WIDTH/2)
+                return new Vector2(0, 0);
+            else if (dude.Position.X * CASSWorld.SCALE >= 4096 - GAME_WIDTH / 2)
+            {
+                return new Vector2((4096 - GAME_WIDTH) / CASSWorld.SCALE, 0);
+            }
+            else
+            {
+                return new Vector2(dude.Position.X -((GAME_WIDTH/2)/CASSWorld.SCALE),0);
+            }
+
+        }
+
+        //for Game to screen, subtract getscreenorigin from your game coords, and then multiply by scale
+        public Vector2 getScreenCoords(Vector2 myGameCoords)
+        {
+
+            return (myGameCoords - getScreenOrigin()) * CASSWorld.SCALE;
+
+        }
+        
+        //for screen to game, use getScreenOrigin() plus scaled screen coords
+        public Vector2 getGameCoords(Vector2 myScreenCoords)
+        {
+            return (getScreenOrigin() + (myScreenCoords / CASSWorld.SCALE));
+
+        }
+
 
         public override void Simulate(float dt)
         {
@@ -331,14 +370,16 @@ namespace CrisisAtSwissStation
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
             bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
-            mousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
+            Vector2 scaledMousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
+            Vector2 mouseGamePosition = getScreenOrigin() + scaledMousePosition;
+            //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
             //ERASING
             if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
-                aabb.LowerBound = Utils.Convert(mousePosition - new Vector2(0.1f));// + screenOffset); //TODO Diana: fix this
-                aabb.UpperBound = Utils.Convert(mousePosition + new Vector2(0.1f));// + screenOffset); //TODO Diana: fix this
+                aabb.LowerBound = Utils.Convert(mouseGamePosition - new Vector2(0.1f));// + screenOffset); //TODO Diana: fix this
+                aabb.UpperBound = Utils.Convert(mouseGamePosition + new Vector2(0.1f));// + screenOffset); //TODO Diana: fix this
 
                 Shape[] shapes = new Shape[1];
                 int nHit = World.Query(aabb, shapes, 1);
@@ -365,10 +406,11 @@ namespace CrisisAtSwissStation
                 laser.startDrawing();
 
                 // if we're holding down the mouse button
-                Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
-                if (dotPositions.Count == 0 || (mousepos - dotPositions[dotPositions.Count - 1]).Length() > PAINTING_GRANULARITY)
+                //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
+                if (dotPositions.Count == 0 || ( getScreenCoords(mouseGamePosition) - getScreenCoords(dotPositions[dotPositions.Count - 1])).Length() > PAINTING_GRANULARITY)
                 { // according to the granularity constraint for paintings,
-                    dotPositions.Add(new Vector2(mouse.X, mouse.Y) + screenOffset); // add a point in a new painting
+                    //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
+                    dotPositions.Add(new Vector2(mouseGamePosition.X, mouseGamePosition.Y)); //+ screenOffset); // add a point in a new painting
                     numDrawLeft--;
                     finishDraw = true;
                 }
@@ -387,9 +429,10 @@ namespace CrisisAtSwissStation
                 {
                     // Query a small box around the mouse
                     AABB aabb = new AABB();
-                    Vector2 gamepos = new Vector2(pos.X / CASSWorld.SCALE, pos.Y / CASSWorld.SCALE) + screenOffset;
-                    aabb.LowerBound = Utils.Convert(gamepos - new Vector2(0.1f));
-                    aabb.UpperBound = Utils.Convert(gamepos + new Vector2(0.1f));
+                    //Vector2 gamepos = new Vector2(pos.X / CASSWorld.SCALE, pos.Y / CASSWorld.SCALE) + screenOffset;
+                    //Vector2 gamepos = new Vector2(pos.X, pos.Y);
+                    aabb.LowerBound = Utils.Convert(pos - new Vector2(0.1f));
+                    aabb.UpperBound = Utils.Convert(pos + new Vector2(0.1f));
 
                     Box2DX.Collision.Shape[] shapes = new Box2DX.Collision.Shape[1];
                     int nHit = World.Query(aabb, shapes, 1);
@@ -440,7 +483,7 @@ namespace CrisisAtSwissStation
 
             prevms = mouse;
 
-            laser.Update(mousePosition.X, mousePosition.Y);
+            laser.Update(scaledMousePosition.X, scaledMousePosition.Y);
 
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
@@ -500,13 +543,14 @@ namespace CrisisAtSwissStation
 
             base.Draw(device, cameraTransform);
 
-            GameEngine.Instance.SpriteBatch.Begin();                   
-            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, mousePosition * CASSWorld.SCALE,
+            GameEngine.Instance.SpriteBatch.Begin();   
+            MouseState mouse = Mouse.GetState();            
+            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture,  new Vector2(mouse.X, mouse.Y),
                 null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
                 SpriteEffects.None, 0);
             foreach (Vector2 dotpos in dotPositions)
             {
-                GameEngine.Instance.SpriteBatch.Draw(paintTexture, dotpos - halfdotsize - screenOffset, Color.Red);
+                GameEngine.Instance.SpriteBatch.Draw(paintTexture, getScreenCoords(dotpos) - halfdotsize - screenOffset, Color.Red);
             }
             GameEngine.Instance.SpriteBatch.End();
             

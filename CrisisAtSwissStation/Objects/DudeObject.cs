@@ -42,7 +42,7 @@ namespace CrisisAtSwissStation
 
         //animation stuff
         private Rectangle sourceRect;
-        private Vector2 origin;
+        private Vector2 animOrigin, armOrigin;
         private float walkTimer;
         private float walkInterval;
         private int xFrame;
@@ -52,12 +52,15 @@ namespace CrisisAtSwissStation
         private Texture2D animTexture;
         private Texture2D armTexture;
         private int myGameTime;
-      
+        private LaserObject myLaser; //for arm rotation only
+        private float armAngle;
+
+        ScrollingWorld myWorld;
 
         /**
          * Creates a new dude
          */
-        public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
+        public DudeObject(World world, ScrollingWorld theWorld, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, LaserObject Laser, string groundSensorName)
         : base(world, objectTexture, .5f, 0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
@@ -68,6 +71,11 @@ namespace CrisisAtSwissStation
 
             // Make a dude controller
             controllers.Add(new DudeController());
+
+            myLaser = Laser;
+            armAngle = 0;
+
+            myWorld = theWorld;
 
             //animation stuff
             myGameTime = 0;
@@ -80,7 +88,8 @@ namespace CrisisAtSwissStation
             spriteWidth = 100;
             spriteHeight = 100;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            animOrigin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            armOrigin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2) - new Vector2(10,18);
 
 
             // Ground Sensor
@@ -129,6 +138,12 @@ namespace CrisisAtSwissStation
             // Apply cooldowns
             jumpCooldown = Math.Max(0, jumpCooldown - 1);
 
+            MouseState mouse = Mouse.GetState();
+            Vector2 start = myWorld.getScreenCoords(Position);
+            Vector2 end = new Vector2(mouse.X,mouse.Y);
+            //Console.WriteLine("{0} {1} {2} {3}", end.Y, start.Y, end.X, start.X);
+            armAngle = (float)Math.Atan((end.Y - start.Y) / (end.X - start.X));
+            //Console.WriteLine("{0}",armAngle);
             //animation stuff
             myGameTime++;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
@@ -158,9 +173,16 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("X {0} Y {1}",sourceRect.Width, sourceRect.Height);
 
             //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
-            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
-            spriteBatch.Draw(armTexture, screenOffset + new Vector2(2,10), null, Color.White, Angle, origin, .8f, flip, 0);
-           
+            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, animOrigin, 1, flip, 0);
+
+            //arm code
+            if(facingRight)
+                spriteBatch.Draw(armTexture, screenOffset + new Vector2(-10,0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
+            else
+                spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
+            
+            //Console.WriteLine("{0}", armAngle);
+
             spriteBatch.End();
 
 
@@ -229,6 +251,8 @@ namespace CrisisAtSwissStation
                     //dudeObject.walkAnimation(dudeObject.getTime());
                         if (dudeObject.Grounded) 
                         dudeObject.walkAnimation();
+                        else
+                        dudeObject.fallAnimation();
                 }
                 else if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
                 {
@@ -238,14 +262,20 @@ namespace CrisisAtSwissStation
                     //dudeObject.walkAnimation(dudeObject.getTime());
                     if (dudeObject.Grounded)
                         dudeObject.walkAnimation();
+                    else
+                        dudeObject.fallAnimation();
 
                 }
                 else
                 {
                     if (dudeObject.Grounded)                                   
                         dudeObject.standAnimation();
+                    else
+                        dudeObject.fallAnimation();
                     
                 }
+                if (dudeObject.Body.GetLinearVelocity().X == 0 && dudeObject.Body.GetLinearVelocity().Y == 0)
+                    dudeObject.standAnimation();
                 
             
                 if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
@@ -325,9 +355,17 @@ namespace CrisisAtSwissStation
 
         private void standAnimation()
         {
-            xFrame = 4;
-            yFrame = 1;
+            xFrame = 0;
+            yFrame = 2;
            // Console.WriteLine("Stand called");
+            //myGameTime = 0;
+        }
+
+        private void fallAnimation()
+        {
+            xFrame = 2;
+            yFrame = 2;
+            // Console.WriteLine("Stand called");
             //myGameTime = 0;
         }
 

@@ -18,7 +18,7 @@ namespace CrisisAtSwissStation
         private DudeObject dude;
         private bool canIDraw, canIErase, amDrawing;
         private Vector2 original, adjustment, end, offset, startpoint, endpoint;
-        private float mouseX, mouseY, guyPos;
+        private float mouseX, mouseY, guyPos,lambda;
         private int currentSection, numSections, sectionTimer;
         Box2DX.Collision.Shape interference;
         //Box2DX.Collision.Shape[] interference;
@@ -35,6 +35,7 @@ namespace CrisisAtSwissStation
             sections = new Vector2[numSections];
             currentSection = 0;
             sectionTimer = 0;
+            lambda = 0;
             amDrawing = false;
             //interference = new Box2DX.Collision.Shape[20];
 
@@ -55,8 +56,19 @@ namespace CrisisAtSwissStation
         public void finishDrawing()
         { amDrawing = false; }
 
+        public float getLambda()
+        { return lambda; }
+
+        public Vector2 getStart()
+        { return startpoint; }
+
+        public Vector2 getEnd()
+        { return endpoint; }
+
         public void Update(float mX, float mY)
         {
+            //Console.WriteLine("{0} {1}", mX, mY);
+
             guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
             offset = new Vector2(guyPos, 0);
 
@@ -76,7 +88,7 @@ namespace CrisisAtSwissStation
             myseg.P1 = new Box2DX.Common.Vec2(gunpos.X / SCALE, gunpos.Y / SCALE);
             myseg.P2 = new Box2DX.Common.Vec2(end.X / SCALE, end.Y / SCALE);
 
-            float lambda = 1;
+            lambda = 1;
             Box2DX.Common.Vec2 normal;
 
             //for (int i = 0; i < interference.Length; i++)
@@ -104,7 +116,7 @@ namespace CrisisAtSwissStation
                 tempseg.P1 = new Box2DX.Common.Vec2(end.X / SCALE, end.Y / SCALE);
                 tempseg.P2 = p;
                 interference = world.RaycastOne(tempseg, out lambda, out normal, false, null);
-
+                
                 if (interference == null)
                 {
                     end.X = SCALE * p.X;
@@ -142,7 +154,8 @@ namespace CrisisAtSwissStation
             }
             else { canIDraw = true; }*/
 
-            startpoint = original + adjustment + offset;
+            //startpoint = original + adjustment + offset;
+            startpoint = original + offset;
             endpoint = new Vector2(mouseX, mouseY);
 
             int totalx = (int)(endpoint.X - startpoint.X);
