@@ -193,7 +193,9 @@ namespace CrisisAtSwissStation
         SensorObject winDoor;
         LaserObject laser;
 
-        public ScrollingWorld()
+        string worldName;
+
+        public ScrollingWorld(string worldName = "")
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
             movPlat1 = true;
@@ -203,9 +205,14 @@ namespace CrisisAtSwissStation
             gameLevelWidth = background.Width;
             gameLevelHeight = background.Height;
             numDrawLeft = 0; // HACK HACK HACK
+
+            this.worldName = worldName;
+            numDrawLeft = 0; // HACK HACK HACK
+
             // Create win door
-           // public SensorObject(World world, Texture2D myTexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
-            winDoor = new SensorObject(World, winDoorAnimTexture, winTexture,93,99,20,5);
+	    // HACK HACK - this will break door animation until a fix is created
+            //winDoor = new SensorObject(World, winDoorAnimTexture, winTexture,93,99,20,5);
+            winDoor = new SensorObject(World, "WinDoor");
             winDoor.Position = winDoorPos;
             AddObject(winDoor);
 
@@ -227,8 +234,10 @@ namespace CrisisAtSwissStation
             laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
 
             // Create dude
-            dude = new DudeObject(World, this, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
-            dude.Position = dudePosition; // hole1Position + new Vector2(-10,-5);
+            //dude = new DudeObject(World, dudeTexture, dudeObjectTexture, armTexture, dudeSensorName);
+            //dude = new DudeObject(World, this, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
+            dude = new DudeObject(World, "DudeFilmstrip", "Dude", "arm", dudeSensorName);
+            dude.Position = dudePosition;
             AddObject(dude);
 
             // Create the dude's arm
@@ -237,10 +246,6 @@ namespace CrisisAtSwissStation
             arm.Position = dudePosition;
             AddObject(arm);
             */
-
-            
-           
-
 
             //Left pillar (walls)
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
@@ -468,6 +473,17 @@ namespace CrisisAtSwissStation
             lamp1.Position = lamp1Position;
             AddObject(lamp1);
 
+
+	    /*
+            platform = new BoxObject(World, "platformTexture", 0, .1f, 0);
+            platform.Position = platformPosition;
+            AddObject(platform);
+
+            bottom = new BoxObject(World, "bottomTexture", 0, .5f, 0);
+            bottom.Position = bottomPosition;
+            AddObject(bottom);
+	    */
+
             // Create laser
             laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
 
@@ -604,7 +620,8 @@ namespace CrisisAtSwissStation
                 i++;
             }
             //Console.WriteLine("{0}", blobs.Count);
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
+            //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
+            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             */
 
             // Create rope bridge
@@ -638,6 +655,8 @@ namespace CrisisAtSwissStation
 
         public static void LoadContent(ContentManager content)
         {
+            // all of this is obsoleted by GameEngine.TextureList
+
             groundTexture = content.Load<Texture2D>("EarthTile02");
             //dudeTexture = content.Load<Texture2D>("Dude");
             dudeTexture = content.Load<Texture2D>("newDudeFilmstrip");
@@ -645,7 +664,7 @@ namespace CrisisAtSwissStation
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
             winDoorAnimTexture = content.Load<Texture2D>("door_strip");
-            ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
+            //ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
             barrierTexture2 = content.Load<Texture2D>("Barrier1");
             //paintTexture = content.Load<Texture2D>("paint");
@@ -936,7 +955,7 @@ namespace CrisisAtSwissStation
                     // create the painting as an object in the world
                     if (dotPositions.Count > 1)
                         //this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dp2));
-                        this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dotPositions));
+                        this.AddObject(new PaintedObject(World, "paint", "paintedsegment", dotPositions));
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
@@ -950,6 +969,18 @@ namespace CrisisAtSwissStation
 
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
+        }
+
+        public Texture2D Background
+        {
+            get
+            {
+                return background;
+            }
+            set
+            {
+                background = value;
+            }
         }
 
         /**

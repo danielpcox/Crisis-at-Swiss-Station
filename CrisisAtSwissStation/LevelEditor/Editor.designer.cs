@@ -64,30 +64,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createNewWorld = new System.Windows.Forms.ToolStripMenuItem();
-            this.createNewRoomToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_Save = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mi_Load_World = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_Load_Room = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_room = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_goToRoom = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteRoomFromWorldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.mi_Insert_Room = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_merge_room = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.renameCurrentRoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_change_background = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_door = new System.Windows.Forms.ToolStripMenuItem();
-            this.mi_link_door = new System.Windows.Forms.ToolStripMenuItem();
-            this.renameDoorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menu_debug = new System.Windows.Forms.ToolStripMenuItem();
-            this.showDoorStatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.verifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tool_Insertion = new System.Windows.Forms.ToolStripButton();
             this.tool_Selection = new System.Windows.Forms.ToolStripButton();
@@ -120,7 +103,7 @@
             this.panel_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Main.Location = new System.Drawing.Point(0, 0);
             this.panel_Main.Name = "panel_Main";
-            this.panel_Main.Size = new System.Drawing.Size(1005, 608);
+            this.panel_Main.Size = new System.Drawing.Size(1282, 772);
             this.panel_Main.TabIndex = 0;
             // 
             // splitContainer1
@@ -137,8 +120,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.pb_Level);
-            this.splitContainer1.Size = new System.Drawing.Size(1005, 608);
-            this.splitContainer1.SplitterDistance = 196;
+            this.splitContainer1.Size = new System.Drawing.Size(1282, 772);
+            this.splitContainer1.SplitterDistance = 250;
             this.splitContainer1.TabIndex = 1;
             // 
             // splitContainer2
@@ -158,8 +141,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel_TextureList);
-            this.splitContainer2.Size = new System.Drawing.Size(196, 608);
-            this.splitContainer2.SplitterDistance = 390;
+            this.splitContainer2.Size = new System.Drawing.Size(250, 772);
+            this.splitContainer2.SplitterDistance = 495;
             this.splitContainer2.TabIndex = 0;
             // 
             // panel_EditOptions
@@ -168,7 +151,7 @@
             this.panel_EditOptions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_EditOptions.Location = new System.Drawing.Point(0, 49);
             this.panel_EditOptions.Name = "panel_EditOptions";
-            this.panel_EditOptions.Size = new System.Drawing.Size(192, 337);
+            this.panel_EditOptions.Size = new System.Drawing.Size(246, 442);
             this.panel_EditOptions.TabIndex = 12;
             // 
             // tabctrl_TexProp
@@ -179,7 +162,7 @@
             this.tabctrl_TexProp.Location = new System.Drawing.Point(0, 0);
             this.tabctrl_TexProp.Name = "tabctrl_TexProp";
             this.tabctrl_TexProp.SelectedIndex = 0;
-            this.tabctrl_TexProp.Size = new System.Drawing.Size(192, 337);
+            this.tabctrl_TexProp.Size = new System.Drawing.Size(246, 442);
             this.tabctrl_TexProp.TabIndex = 1;
             // 
             // tab_Objects
@@ -188,7 +171,7 @@
             this.tab_Objects.Location = new System.Drawing.Point(4, 22);
             this.tab_Objects.Name = "tab_Objects";
             this.tab_Objects.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_Objects.Size = new System.Drawing.Size(184, 311);
+            this.tab_Objects.Size = new System.Drawing.Size(238, 416);
             this.tab_Objects.TabIndex = 0;
             this.tab_Objects.Text = "Objects";
             this.tab_Objects.UseVisualStyleBackColor = true;
@@ -210,7 +193,7 @@
             this.gb_ObjTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gb_ObjTypes.Location = new System.Drawing.Point(3, 3);
             this.gb_ObjTypes.Name = "gb_ObjTypes";
-            this.gb_ObjTypes.Size = new System.Drawing.Size(178, 305);
+            this.gb_ObjTypes.Size = new System.Drawing.Size(232, 410);
             this.gb_ObjTypes.TabIndex = 0;
             this.gb_ObjTypes.TabStop = false;
             this.gb_ObjTypes.Text = "Object Types";
@@ -501,13 +484,10 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.menu_room,
-            this.menu_door,
-            this.menu_debug});
+            this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 25);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(192, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(246, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menu_Main";
             // 
@@ -515,13 +495,11 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createNewWorld,
-            this.createNewRoomToolStripMenuItem1,
             this.toolStripSeparator1,
             this.mi_Save,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator3,
             this.mi_Load_World,
-            this.mi_Load_Room,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -535,14 +513,6 @@
             this.createNewWorld.Size = new System.Drawing.Size(215, 22);
             this.createNewWorld.Text = "Create New World";
             this.createNewWorld.Click += new System.EventHandler(this.mi_New_World_Click);
-            // 
-            // createNewRoomToolStripMenuItem1
-            // 
-            this.createNewRoomToolStripMenuItem1.Name = "createNewRoomToolStripMenuItem1";
-            this.createNewRoomToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.createNewRoomToolStripMenuItem1.Size = new System.Drawing.Size(215, 22);
-            this.createNewRoomToolStripMenuItem1.Text = "Create New Room";
-            this.createNewRoomToolStripMenuItem1.Click += new System.EventHandler(this.mi_New_Room_Click);
             // 
             // toolStripSeparator1
             // 
@@ -576,13 +546,6 @@
             this.mi_Load_World.Text = "Load World...";
             this.mi_Load_World.Click += new System.EventHandler(this.mi_Load_World_Click);
             // 
-            // mi_Load_Room
-            // 
-            this.mi_Load_Room.Name = "mi_Load_Room";
-            this.mi_Load_Room.Size = new System.Drawing.Size(215, 22);
-            this.mi_Load_Room.Text = "Load Room...";
-            this.mi_Load_Room.Click += new System.EventHandler(this.mi_Load_Room_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -595,123 +558,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // menu_room
-            // 
-            this.menu_room.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_goToRoom,
-            this.deleteRoomFromWorldToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.mi_Insert_Room,
-            this.mi_merge_room,
-            this.toolStripSeparator5,
-            this.renameCurrentRoomToolStripMenuItem,
-            this.menu_change_background});
-            this.menu_room.Name = "menu_room";
-            this.menu_room.Size = new System.Drawing.Size(51, 20);
-            this.menu_room.Text = "Room";
-            // 
-            // mi_goToRoom
-            // 
-            this.mi_goToRoom.Name = "mi_goToRoom";
-            this.mi_goToRoom.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
-            this.mi_goToRoom.Size = new System.Drawing.Size(274, 22);
-            this.mi_goToRoom.Text = "Go to Room";
-            this.mi_goToRoom.Click += new System.EventHandler(this.goToRoomToolStripMenuItem_Click);
-            // 
-            // deleteRoomFromWorldToolStripMenuItem
-            // 
-            this.deleteRoomFromWorldToolStripMenuItem.Name = "deleteRoomFromWorldToolStripMenuItem";
-            this.deleteRoomFromWorldToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.deleteRoomFromWorldToolStripMenuItem.Text = "Delete Room from World";
-            this.deleteRoomFromWorldToolStripMenuItem.Click += new System.EventHandler(this.deleteRoomFromWorldToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(271, 6);
-            // 
-            // mi_Insert_Room
-            // 
-            this.mi_Insert_Room.Name = "mi_Insert_Room";
-            this.mi_Insert_Room.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.mi_Insert_Room.Size = new System.Drawing.Size(274, 22);
-            this.mi_Insert_Room.Text = "Insert Room Into World";
-            this.mi_Insert_Room.Click += new System.EventHandler(this.createNewRoomToolStripMenuItem_Click);
-            // 
-            // mi_merge_room
-            // 
-            this.mi_merge_room.Name = "mi_merge_room";
-            this.mi_merge_room.Size = new System.Drawing.Size(274, 22);
-            this.mi_merge_room.Text = "Merge Room Into World";
-            this.mi_merge_room.Click += new System.EventHandler(this.mi_merge_room_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(271, 6);
-            // 
-            // renameCurrentRoomToolStripMenuItem
-            // 
-            this.renameCurrentRoomToolStripMenuItem.Name = "renameCurrentRoomToolStripMenuItem";
-            this.renameCurrentRoomToolStripMenuItem.Size = new System.Drawing.Size(274, 22);
-            this.renameCurrentRoomToolStripMenuItem.Text = "Rename Current Room";
-            this.renameCurrentRoomToolStripMenuItem.Click += new System.EventHandler(this.renameCurrentRoomToolStripMenuItem_Click);
-            // 
-            // menu_change_background
-            // 
-            this.menu_change_background.Name = "menu_change_background";
-            this.menu_change_background.Size = new System.Drawing.Size(274, 22);
-            this.menu_change_background.Text = "Change Background of Current Room";
-            this.menu_change_background.Click += new System.EventHandler(this.menu_change_background_Click);
-            // 
-            // menu_door
-            // 
-            this.menu_door.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mi_link_door,
-            this.renameDoorToolStripMenuItem});
-            this.menu_door.Name = "menu_door";
-            this.menu_door.Size = new System.Drawing.Size(45, 20);
-            this.menu_door.Text = "Door";
-            // 
-            // mi_link_door
-            // 
-            this.mi_link_door.Name = "mi_link_door";
-            this.mi_link_door.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.mi_link_door.Size = new System.Drawing.Size(174, 22);
-            this.mi_link_door.Text = "Link Door...";
-            this.mi_link_door.Click += new System.EventHandler(this.linkDoorToolStripMenuItem_Click);
-            // 
-            // renameDoorToolStripMenuItem
-            // 
-            this.renameDoorToolStripMenuItem.Name = "renameDoorToolStripMenuItem";
-            this.renameDoorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.renameDoorToolStripMenuItem.Text = "Rename Door...";
-            this.renameDoorToolStripMenuItem.Click += new System.EventHandler(this.renameDoorToolStripMenuItem_Click);
-            // 
-            // menu_debug
-            // 
-            this.menu_debug.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showDoorStatesToolStripMenuItem,
-            this.verifyToolStripMenuItem});
-            this.menu_debug.Name = "menu_debug";
-            this.menu_debug.Size = new System.Drawing.Size(54, 20);
-            this.menu_debug.Text = "Debug";
-            // 
-            // showDoorStatesToolStripMenuItem
-            // 
-            this.showDoorStatesToolStripMenuItem.Name = "showDoorStatesToolStripMenuItem";
-            this.showDoorStatesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
-            this.showDoorStatesToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.showDoorStatesToolStripMenuItem.Text = "Show Door States...";
-            this.showDoorStatesToolStripMenuItem.Click += new System.EventHandler(this.showDoorStatesToolStripMenuItem_Click);
-            // 
-            // verifyToolStripMenuItem
-            // 
-            this.verifyToolStripMenuItem.Name = "verifyToolStripMenuItem";
-            this.verifyToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.verifyToolStripMenuItem.Text = "Verify...";
-            this.verifyToolStripMenuItem.Click += new System.EventHandler(this.verifyToolStripMenuItem_Click);
-            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -719,7 +565,7 @@
             this.tool_Selection});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(192, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(246, 25);
             this.toolStrip1.TabIndex = 11;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -749,7 +595,7 @@
             this.panel_TextureList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_TextureList.Location = new System.Drawing.Point(0, 0);
             this.panel_TextureList.Name = "panel_TextureList";
-            this.panel_TextureList.Size = new System.Drawing.Size(192, 210);
+            this.panel_TextureList.Size = new System.Drawing.Size(246, 269);
             this.panel_TextureList.TabIndex = 0;
             // 
             // lb_TextureList
@@ -758,7 +604,7 @@
             this.lb_TextureList.FormattingEnabled = true;
             this.lb_TextureList.Location = new System.Drawing.Point(0, 0);
             this.lb_TextureList.Name = "lb_TextureList";
-            this.lb_TextureList.Size = new System.Drawing.Size(192, 210);
+            this.lb_TextureList.Size = new System.Drawing.Size(246, 269);
             this.lb_TextureList.TabIndex = 0;
             // 
             // pb_Level
@@ -766,10 +612,10 @@
             this.pb_Level.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pb_Level.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pb_Level.Location = new System.Drawing.Point(0, 0);
-            this.pb_Level.MaximumSize = new System.Drawing.Size(800, 600);
+            this.pb_Level.MaximumSize = new System.Drawing.Size(1024, 768);
             this.pb_Level.MinimumSize = new System.Drawing.Size(800, 600);
             this.pb_Level.Name = "pb_Level";
-            this.pb_Level.Size = new System.Drawing.Size(800, 600);
+            this.pb_Level.Size = new System.Drawing.Size(1024, 768);
             this.pb_Level.TabIndex = 0;
             this.pb_Level.TabStop = false;
             this.pb_Level.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_Level_Paint);
@@ -782,7 +628,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1005, 608);
+            this.ClientSize = new System.Drawing.Size(1282, 772);
             this.Controls.Add(this.panel_Main);
             this.Name = "Editor";
             this.Text = "Editor";
@@ -827,17 +673,7 @@
         private System.Windows.Forms.ToolStripMenuItem mi_Load_World;
         private System.Windows.Forms.ToolStripMenuItem createNewWorld;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menu_room;
-        private System.Windows.Forms.ToolStripMenuItem mi_goToRoom;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mi_Insert_Room;
-        private System.Windows.Forms.ToolStripMenuItem renameCurrentRoomToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem menu_door;
-        private System.Windows.Forms.ToolStripMenuItem renameDoorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mi_link_door;
-        private System.Windows.Forms.ToolStripMenuItem menu_debug;
-        private System.Windows.Forms.ToolStripMenuItem showDoorStatesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem verifyToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tool_Insertion;
         private System.Windows.Forms.ToolStripButton tool_Selection;
@@ -863,16 +699,9 @@
         private System.Windows.Forms.Label lbl_Rotation;
         private System.Windows.Forms.CheckBox cbox_Scripted;
         private System.Windows.Forms.TextBox tb_Script;
-        private System.Windows.Forms.ToolStripMenuItem createNewRoomToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem mi_merge_room;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem mi_Load_Room;
-        private System.Windows.Forms.ToolStripMenuItem deleteRoomFromWorldToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripMenuItem menu_change_background;
         private System.Windows.Forms.RadioButton rb_VictoryTest;
         private System.Windows.Forms.RadioButton rb_SavePoint;
         private System.Windows.Forms.TextBox tb_SLevel;

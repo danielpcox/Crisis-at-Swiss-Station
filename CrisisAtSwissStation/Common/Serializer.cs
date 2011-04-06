@@ -13,7 +13,7 @@ namespace CrisisAtSwissStation.Common
     {
 
         //-------------Serialization for the world-----------------------------------------------
-        public static void Serialize(CASSWorld world, string filename)
+        public static void Serialize(ScrollingWorld world, string filename)
         {
                 FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
 
@@ -29,9 +29,9 @@ namespace CrisisAtSwissStation.Common
                 }
             }
         
-        public static CASSWorld DeSerialize(string filename)
+        public static ScrollingWorld DeSerialize(string filename)
         {
-            CASSWorld world;
+            ScrollingWorld world;
 
             // Check for existance of file
             if (!File.Exists(filename))
@@ -47,7 +47,7 @@ namespace CrisisAtSwissStation.Common
                 {
                     //The actual game serialization couldn't handle the upgrade to 4.0 :(
                     BinaryFormatter formatter = new BinaryFormatter();
-                    world = (CASSWorld) formatter.Deserialize(fs);
+                    world = (ScrollingWorld) formatter.Deserialize(fs);
    
                 }
                 finally

@@ -2,6 +2,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using CrisisAtSwissStation.Common;
 
 namespace CrisisAtSwissStation
 {
@@ -16,7 +17,7 @@ namespace CrisisAtSwissStation
          * specified density, friction, and restitution coefficient.
          */
         public RopeBridge(World world, Texture2D texture, float y, float x1, float x2, float density, float friction, float restitution)
-            : base(world, texture, density, friction, restitution,1,false)
+            : base(world, "DISABLED", density, friction, restitution)
         {
             width = texture.Width / CASSWorld.SCALE;
     

@@ -49,7 +49,11 @@ namespace CrisisAtSwissStation
             : base(world)
         {
             // Initialize
-            this.texture = texture;
+            this.texture = GameEngine.TextureList[textureName];
+            TextureFilename = textureName;
+            Height = texture.Height;
+            Width = texture.Width;
+            boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
             
             // Determine dimensions
             float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);

@@ -27,9 +27,15 @@ namespace CrisisAtSwissStation
 
 
 
-        public SensorObject(World world, Texture2D texture)
-            : base(world, texture, 0, 0, 0,1,false)
+        //public SensorObject(World world, Texture2D texture)
+        //    : base(world, texture, 0, 0, 0,1,false)
+        public SensorObject(World world, string texturename)
+            : base(world, texturename, 0, 0, 0)
         {
+            Texture2D texture = GameEngine.TextureList[texturename];
+            TextureFilename = texturename;
+            boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
+
             shapes[0].IsSensor = true;
             animTexture = null;
         }

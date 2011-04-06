@@ -169,10 +169,11 @@ namespace CrisisAtSwissStation
             failure = Content.Load<Texture2D>("failure");
             audioManager.LoadContent(Content);
 
-            DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Content\\Art");
-            FileInfo[] fileList = di.GetFiles("*.xnb", SearchOption.AllDirectories);
+            DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Content"); //
+            FileInfo[] fileList = di.GetFiles("*.xnb", SearchOption.AllDirectories);                  //
             string test  = fileList[1].DirectoryName;
             string test2 = fileList[1].Name;
+            string test3 = fileList[1].FullName;
             //DirectoryInfo di = new DirectoryInfo(Editor.CurrDirHack());
             //FileInfo[] fileList = di.GetFiles("*.png", SearchOption.AllDirectories);
 
@@ -183,12 +184,21 @@ namespace CrisisAtSwissStation
              */
             foreach (FileInfo file in fileList)
             {
-                int dirIndex = file.DirectoryName.LastIndexOf("\\Content\\Art") + 9; // Index to remove head of directory
-                string fullName = file.DirectoryName.Substring(dirIndex) + "\\" + file.Name.Replace(".xnb", ""); // Art\...\..., without .png
-                textureList.Add(fullName, Content.Load<Texture2D>(fullName));
+                string dirname = file.DirectoryName + "\\";
+                int dirIndex = dirname.LastIndexOf("\\Content") + 9; // Index to remove head of directory
+                string fullName = dirname.Substring(dirIndex) + file.Name.Replace(".xnb", ""); // Art\...\..., without .png
+                //string fullName = file.DirectoryName.Substring(dirIndex) + "\\" + file.Name.Replace(".xnb", ""); // Art\...\..., without .png
+                try
+                {
+                    Texture2D tex = Content.Load<Texture2D>(fullName);
+                    //Console.WriteLine("***" + fullName + "***"); // DEBUG
+                    textureList.Add(fullName, tex);
+                }
+                catch(ContentLoadException)
+                {
+                }
             }
          
-
             // TODO : change this to something more appropriate
             //painting texture
             paintTexture = Content.Load<Texture2D>("paint");
@@ -205,7 +215,7 @@ namespace CrisisAtSwissStation
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            textureList.Clear();
         }
 
         /// <summary>
@@ -233,8 +243,10 @@ namespace CrisisAtSwissStation
                 this.Exit();
 
             if (ks.IsKeyDown(Keys.L))
+            {
                 editor = new CrisisAtSwissStation.LevelEditor.Editor();
                 editor.Show();
+            }
 
             // toggle mute if they press 'm' 
             if (ks.IsKeyDown(Keys.M) && lastKeyboardState.IsKeyUp(Keys.M))

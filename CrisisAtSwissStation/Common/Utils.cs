@@ -3,7 +3,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
-
 using System;
 
 namespace CrisisAtSwissStation.Common
@@ -124,5 +123,7 @@ namespace CrisisAtSwissStation.Common
             ms.Close();
             ms = null;
         }
+
+
     }
 }

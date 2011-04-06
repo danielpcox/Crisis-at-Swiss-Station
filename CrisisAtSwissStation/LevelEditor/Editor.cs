@@ -51,7 +51,7 @@ namespace CrisisAtSwissStation.LevelEditor
 
         private Image texture;
         private string textureDir;
-        private CASSWorld world;
+        private ScrollingWorld world;
 
         string currdir = CurrDirHack();
 
@@ -82,12 +82,6 @@ namespace CrisisAtSwissStation.LevelEditor
             b_Front.Enabled = false;
             tb_SLevel.Enabled = false;
 
-
-            //Only enable this menu item if the currently selected object is a door. When we start,
-            // we don't have a currently selected item, so disable this menu item.
-            menu_door.Enabled = false;
-            menu_room.Enabled = false;
-            menu_debug.Enabled = false;
         }
 
 
@@ -289,8 +283,8 @@ namespace CrisisAtSwissStation.LevelEditor
                 }
                 else
                 {
-                    x_drag_transform = (int)(e.X - currentlySelectedObject.Position.X);
-                    y_drag_transform = (int)(e.Y - currentlySelectedObject.Position.Y);
+                    x_drag_transform = (int)(e.X - (currentlySelectedObject.Position.X * CASSWorld.SCALE));
+                    y_drag_transform = (int)(e.Y - (currentlySelectedObject.Position.Y * CASSWorld.SCALE));
 
                     toDrag = true;
 
@@ -319,7 +313,7 @@ namespace CrisisAtSwissStation.LevelEditor
                     int new_Y = (e.Location.Y - y_drag_transform);
 
                     currentlySelectedObject.Position =
-                        new Vector2(new_X, new_Y);
+                        new Vector2(new_X / CASSWorld.SCALE, new_Y / CASSWorld.SCALE);
                 }
                 else if (toResize)
                 {
@@ -435,7 +429,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 }
                 */
 
-                SetScriptingFields();
+                //SetScriptingFields();
             }
             else
             {
@@ -499,7 +493,7 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 if (rb_Doors.Checked)
                 {
-                    makeDoor(mouse);
+                    //makeDoor(mouse);
                 }
                 else
                 {
@@ -530,8 +524,9 @@ namespace CrisisAtSwissStation.LevelEditor
                 mp.X -= (texture.Width / 2);
                 mp.Y -= (texture.Height / 2);
 
-                BoxObject platform = new BoxObject(world.World, GameEngine.TextureList[texName], 0, .1f, 0);
-                platform.Position = Conversion.DrawPointToVector2(mp);
+                BoxObject platform = new BoxObject(world.World, texName, 0, .1f, 0);
+                Vector2 gameposition = Conversion.DrawPointToVector2(mp);
+                platform.Position = new Vector2(gameposition.X / CASSWorld.SCALE, gameposition.Y / CASSWorld.SCALE);
 
                 world.AddObject(platform);
             }
@@ -574,7 +569,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 else if (currentState == State.EDITING_WORLD)
                 {
 
-                    verifyInvariants(false);
+                    //verifyInvariants(false);
 
                     Serializer.Serialize(world, currentFileName);
                 }
@@ -586,7 +581,7 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             if (currentState != State.NO_EDITS)
             {
-                verifyInvariants(false);
+                //verifyInvariants(false);
 
                 //Allow the user to choose a name and a location
                 SaveFileDialog dialog = new SaveFileDialog();
@@ -648,13 +643,15 @@ namespace CrisisAtSwissStation.LevelEditor
                 if (loadWorld)
                 {
                     world = Serializer.DeSerialize(dialog.FileName);
-                    switchRooms(world.CurrentRoom);
+                    switchRooms();
                 }
+                    /*
                 else
                 {
                     currentlySelectedRoom = Serializer.DeserializeRoom(dialog.FileName);
                     switchRooms(currentlySelectedRoom);
                 }
+                */
 
                 currentFileName = dialog.FileName;
 
@@ -673,28 +670,11 @@ namespace CrisisAtSwissStation.LevelEditor
             //Create the world.
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                world = new GameWorld(dialog.UserInput);
+                world = new ScrollingWorld(dialog.UserInput);
 
                 enableEditing(true);
 
-                switchRooms(world.CurrentRoom);
-            }
-        }
-
-        //Creates a new empty room and allows editing
-        private void mi_New_Room_Click(object sender, EventArgs e)
-        {
-            //Get the new room from the user.
-            StringPromptDialog dialog = new StringPromptDialog("Enter the name of the room: ");
-
-            //Create the world.
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                currentlySelectedRoom = new Room(dialog.UserInput);
-
-                enableEditing(false);
-
-                switchRooms(currentlySelectedRoom);
+                switchRooms();
             }
         }
 
@@ -709,405 +689,24 @@ namespace CrisisAtSwissStation.LevelEditor
             if (editingWorld)
             {
                 currentState = State.EDITING_WORLD;
-                menu_room.Enabled = true;
-                mi_goToRoom.Enabled = true;
-                mi_Insert_Room.Enabled = true;
-                mi_merge_room.Enabled = true;
-                mi_link_door.Enabled = true;
-                deleteRoomFromWorldToolStripMenuItem.Enabled = true;
                 rb_Player.Enabled = true;
             }
-            else
-            {
-                currentState = State.EDITING_ROOM;
-                menu_room.Enabled = true;
-                mi_goToRoom.Enabled = false;
-                mi_Insert_Room.Enabled = false;
-                mi_merge_room.Enabled = false;
-                mi_link_door.Enabled = false;
-                deleteRoomFromWorldToolStripMenuItem.Enabled = false;
-                rb_Player.Enabled = false;
-            }
-
-            menu_debug.Enabled = true;
 
         }
         //------------End of saving/loading functions-------------------------------------------------------
 
 
-        //------------Functions for working with doors------------------------------------------------------
-
-        //If the currently selected object is a door, then pops up a prompt asking for the new name for the
-        //   door, verifies that it is unique, and renames the door.
-        private void renameDoorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentlySelectedObject != null &&
-                currentlySelectedObject is Door)
-            {
-                StringPromptDialog dialog = new StringPromptDialog("Enter the new name: ");
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (isDoorNameUnique(dialog.UserInput))
-                    {
-                        ((Door)currentlySelectedObject).name = dialog.UserInput;
-                    }
-                    else
-                    {
-                        showMessage("Uniqueness Error", "A door with that name already exists in the room");
-                    }
-                }
-            }
-        }
-
-        //Call back for linking the 
-        private void linkDoorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentState == State.EDITING_WORLD &&
-                currentlySelectedObject != null &&
-                currentlySelectedObject is Door)
-            {
-                Door A = ((Door)currentlySelectedObject);
-
-                //First, pop up the menu and get whichever door the user selects.
-                string title = "Currently selected door: " +
-                    A.name + " in room " + currentlySelectedRoom.name;
-
-                RoomSelectDialog dialog = new RoomSelectDialog(world, false, title);
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    Door B = dialog.SelectedDoor;
-
-                    A.Link = null;
-                    B.Link = null;
-
-                    A.Link = B;
-                    B.Link = A;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns true if the door is uniquly named in the room it is in.
-        /// </summary>
-        private bool isDoorNameUnique(string name)
-        {
-            foreach (Door door in currentlySelectedRoom.Doors)
-            {
-                if (door.name == name)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        //Creates a door at the location of the user click.
-        private void makeDoor(DrawPoint pt)
-        {
-            //First, get name for door
-            StringPromptDialog dialog = new StringPromptDialog("Please enter the name of the door");
-
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                if (isDoorNameUnique(dialog.UserInput))
-                {
-                    //Create the door
-                    Vector2 postition = new Vector2(
-                        pt.X - (EditorConstants.DEFAULT_DOOR_SIZE / 2),
-                        pt.Y - (EditorConstants.DEFAULT_DOOR_SIZE / 2));
-
-                    string boundsFile = currdir + "\\Art\\Doors\\Door.tri";
-
-                    Door door = new Door(postition, boundsFile, dialog.UserInput, currentlySelectedRoom);
-
-
-                    //Add it to the current room
-                    currentlySelectedRoom.AddObject(door);
-
-                }
-                else
-                {
-                    showMessage("Name Entry Error",
-                        "A door already exists in the current room with the name " + dialog.UserInput);
-                }
-            }
-        }
-
-        //Draws a door
-        private void drawDoor(Door door, PaintEventArgs e)
-        {
-            SolidBrush brush =
-                new SolidBrush(
-                    Color.FromArgb(
-                        Convert.ToInt32(
-                            EditorConstants.DOOR_COLOR, 16)));
-
-            RectangleF rect =
-                Conversion.RectToRect(door.getBBRelativeToWorld());
-
-            e.Graphics.FillRectangle(brush, rect);
-
-            e.Graphics.DrawImage(Image.FromFile(currdir + "\\Art\\Players\\target.png"),
-                door.TargetPosition.X - EditorConstants.DOOR_TARGET_WIDTH / 2.0f,
-                door.TargetPosition.Y - EditorConstants.DOOR_TARGET_WIDTH / 2.0f,
-                EditorConstants.DOOR_TARGET_WIDTH,
-                EditorConstants.DOOR_TARGET_WIDTH);
-        }
-
-        private void showDoorStatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentState != State.NO_EDITS)
-            {
-                string message = "";
-
-                if (currentState == State.EDITING_WORLD)
-                {
-                    foreach (Room room in world.Rooms)
-                    {
-                        message += getDoorStatesInRoom(room);
-                    }
-                }
-                else
-                {
-                    message += getDoorStatesInRoom(currentlySelectedRoom);
-                }
-
-
-                if (message == "")
-                    message = "No doors in the world!";
-
-                showMessage("Door states", message);
-            }
-        }
-
-        private string getDoorStatesInRoom(Room room)
-        {
-            string message = "";
-
-            foreach (Door door in room.Doors)
-            {
-                message += door.toString(room.name) + "\n";
-            }
-
-            return message;
-        }
-
-        //------------End of functions for working with doors-----------------------------------------------
-
-
-
-        //------------Functions for creating, switching, renaming, etc  rooms-------------------------------
-        
-        private void deleteRoomFromWorldToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if(currentState == State.EDITING_WORLD){
-                if(world.Rooms.Count <= 1){
-                    showMessage("Room Delete Error", "There is only one room, you cannot delete any more!");
-
-                }else{
-                    RoomSelectDialog dialog = new RoomSelectDialog(world, true, "Select room to delete.");
-
-                    if(dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        Room toDelete = dialog.SelectedRoom;
-
-                        //First, remove the room from the list if rooms.
-                        world.Rooms.Remove(toDelete);
-
-                        //Next, clear all the links into this room from other doors.
-                        foreach(Door door in toDelete.Doors)
-                        {
-                            if(door.Link != null)
-                            {
-                                door.Link.Link = null;
-                            }
-                        }
-
-                        //Finally, if this was the room with the player, set the world's
-                        // starting room to null.
-                        if(toDelete == world.CurrentRoom)
-                        {
-                            world.CurrentRoom = null;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void goToRoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentState == State.EDITING_WORLD)
-            {
-                string title = "Currently Selected Room: " + currentlySelectedRoom.name;
-                RoomSelectDialog dialog = new RoomSelectDialog(world, true, title);
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    switchRooms(dialog.SelectedRoom);
-                    pb_Level.Refresh();
-                }
-            }
-        }
-
-        //Trys and creates a new room. Pops up a RoomCreateDialog.
-        private void createNewRoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentState == State.EDITING_WORLD)
-            {
-                StringPromptDialog dialog =
-                    new StringPromptDialog("Please enter the name of the room");
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (isRoomNameUnique(dialog.UserInput))
-                    {
-
-                        Room room = new Room(dialog.UserInput);
-                        world.Rooms.Add(room);
-                        switchRooms(room);
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            "A room already exists with the name " + dialog.UserInput,
-                            "Name Entry Error",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                    }
-                }
-            }
-        }
-
         //Switches the current room to the room toSwitchTo. This involves repainting the paint screen, 
         //changing the title of the editor, making sure our currentlySelectedObject is null so we don't get
         //null pointers, and update the room being edited.
-        private void switchRooms(Room toSwitchTo)
+        //private void switchRooms(Room toSwitchTo)
+        private void switchRooms()
         {
             currentlySelectedObject = null;
-            menu_door.Enabled = false;
 
-            currentlySelectedRoom = toSwitchTo;
             updateTitle();
             pb_Level.Refresh();
         }
-
-
-        //Renames the current room. The callback for the "Rename current room..." option under
-        //the room menu
-        private void renameCurrentRoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (currentState != State.NO_EDITS)
-            {
-                StringPromptDialog dialog = new StringPromptDialog("Please enter the new name:");
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (currentState == State.EDITING_ROOM || isRoomNameUnique(dialog.UserInput))
-                    {
-                        currentlySelectedRoom.name = dialog.UserInput;
-                        updateTitle();
-                    }
-                    else
-                    {
-                        showMessage("Name Entry Error", "A room already exists with the name " + dialog.UserInput);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns true if there is a room in the world with a name of the passed arguement.
-        /// </summary>
-        private bool isRoomNameUnique(string name)
-        {
-            foreach (Room room in world.Rooms)
-            {
-                if (room.name == name)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        private void mi_merge_room_Click(object sender, EventArgs e)
-        {
-            //Get the room we want to load
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Room Files | *.room";
-            dialog.InitialDirectory = ".";
-            dialog.Title = "Choose the room you want to merge";
-
-            DialogResult result = dialog.ShowDialog();
-
-            //If the result was ok, load the resultant file, otherwise, just return.
-            if (result == DialogResult.OK)
-            {
-                Room toMerge = Serializer.DeserializeRoom(dialog.FileName);
-
-                //Check if it's name is unique
-                while (!isRoomNameUnique(toMerge.name))
-                {
-                    StringPromptDialog name_dialog =
-                        new StringPromptDialog(
-                            "Room named "
-                            + toMerge.name
-                            + " name already exists, enter new name!");
-
-                    if (name_dialog.ShowDialog() == DialogResult.OK)
-                    {
-                        toMerge.name = name_dialog.UserInput;
-                    }
-                    else
-                    {
-                        return;
-                    }
-                }
-
-                //Add the room to the list.
-                world.Rooms.Add(toMerge);
-
-                switchRooms(toMerge);
-            }
-        }
-
-        private void menu_change_background_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "PNG Files | *.png";
-            dialog.InitialDirectory = ".";
-            dialog.Title = "Choose the new background image";
-
-            if(dialog.ShowDialog() == DialogResult.OK)
-            {
-                string filename = dialog.FileName;
-
-                if (!filename.Contains(".png"))
-                {
-                    MessageBox.Show("Background image must be .png.", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else if (!filename.Contains("Art\\Backgrounds\\"))
-                {
-                    MessageBox.Show("Background image must be in the Art\\Backgrounds folder.", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                int startindex = filename.IndexOf("Art\\Backgrounds\\");
-                filename = filename.Substring(startindex).Replace(".png", "");
-                Console.WriteLine("New background: " + filename);
-                currentlySelectedRoom.BackgroundFilename = filename;
-            }
-        }
-
-
-        //------------ End of Functions for creating and switching rooms----------------------------
-
 
 
         //------------ Functions for drawing on the drawing pane------------------------------------
@@ -1119,8 +718,7 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 //Draw the background image
 
-                string background_file = currdir + "\\" + 
-                    currentlySelectedRoom.BackgroundFilename + ".png";
+                string background_file = currdir + "\\" + world.Background.Name;
 
                 //System.Drawing.Image image = Image.FromFile(background_file);
                 //e.Graphics.DrawImage(image, 0, 0, pb_Level.Width, pb_Level.Height);
@@ -1152,24 +750,19 @@ namespace CrisisAtSwissStation.LevelEditor
 
 
                 //Now actually draw the images on the screen.
-                foreach (SpaceObject obj in currentlySelectedRoom.Objects)
+                foreach (PhysicsObject obj in world.Objects)
                 {
-                    if (obj is Door)
-                    {
-                        drawDoor((Door)obj, e);
-                    }
-                    else
-                    {
-                        drawSpaceObject(obj, e);
-                    }
+                    drawPhysicsObject(obj, e);
                 }
 
                 //Finally, if the room is the current room of the world, then draw the player, if it exists.
+                /*
                 if (currentState == State.EDITING_WORLD && world.CurrentRoom == currentlySelectedRoom
                     && world.player != null)
                 {
-                    drawSpaceObject(world.player, e);
+                    drawPhysicsObject(world.player, e);
                 }
+                */
             }
 
             else
@@ -1181,10 +774,11 @@ namespace CrisisAtSwissStation.LevelEditor
 
 
         //Draws an arbitrary space object to the drawing pane. 
-        // Note: Won't work for doors.
-        private void drawSpaceObject(SpaceObject obj, PaintEventArgs e)
+        private void drawPhysicsObject(PhysicsObject obj, PaintEventArgs e)
         {
-            Image img = Image.FromFile(currdir + "\\" + obj.TextureName + ".png");
+            //Console.WriteLine(obj.TextureFilename + ".png");
+            //Console.WriteLine(currdir + "\\" + obj.TextureFilename + ".png");
+            Image img = Image.FromFile(currdir + "\\" + obj.TextureFilename + ".png");
 
             //In order to do rotations and scaling in windows forms, we need to determine where
             // the upper right, upper left, and lower left corners map to. We determine these, and
@@ -1192,27 +786,27 @@ namespace CrisisAtSwissStation.LevelEditor
 
 
             //Find the new point for the upper-left corner
-            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(0, 0));
+            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(0, 0) - new Vector2(obj.Width / 2, obj.Height / 2));
 
 
             //Find the new point for the upper-right corner
-            float x_ur = obj.getOriginalWidth();
-            float y_ur = 0;
+            float x_ur = obj.Width / 2;
+            float y_ur = 0 - obj.Height / 2;
 
             DrawPoint upper_right = Conversion.Vector2ToDrawPoint(
                 obj.mapPointOnImage(x_ur, y_ur));
 
 
             //Find the new point for the lower-left corner
-            float x_ll = 0;
-            float y_ll = obj.getOriginalHeight();
+            float x_ll = 0 - obj.Width / 2;
+            float y_ll = obj.Height / 2;
 
             DrawPoint lower_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(x_ll, y_ll));
 
 
             //Define the point mapping.
             DrawPoint[] destmapping = {upper_left, upper_right, lower_left};
-            DrawRect srcrect = new DrawRect(0,0,img.Width / obj.NumberOfFrames,img.Height);
+            DrawRect srcrect = new DrawRect(0,0,img.Width,img.Height);
 
             //Draw the image with the specified position and scaling.
             e.Graphics.DrawImage(img, destmapping, srcrect, GraphicsUnit.Pixel);
@@ -1225,7 +819,7 @@ namespace CrisisAtSwissStation.LevelEditor
         /// </summary>
         private void updateTitle()
         {
-            this.Text = "Currently Selected Room: " + currentlySelectedRoom.name;
+            this.Text = "TEXT!";
         }
 
         private void refreshResizeObjectBox()
@@ -1259,106 +853,6 @@ namespace CrisisAtSwissStation.LevelEditor
         }
 
 
-
-        //---------Vefification code -------------------------------------------------------------------
-        //These functions below are used to make sure that certain key invariants of the game are enforced.
-        //Whenever the user saves or clicks "verify" under the debug menu, these functions find any violations
-        //of these invariants, and displays them in a pop-up message. 
-        //Right now, these invariants are:
-        //
-        //A player must exist.
-        //No door may be unlinked.
-        //Doors must be linked to each other.
-
-        /// <summary>
-        /// The start of the invariant checking process.
-        /// </summary>
-        /// <param name="displayIfOK">Whether or not to display a message if no invariants are broken. True
-        /// means display.</param>
-        private void verifyInvariants(bool displayIfOK)
-        {
-            string errors = "";
-
-            if (currentState != State.NO_EDITS)
-            {
-                if (currentState == State.EDITING_WORLD && world.player == null)
-                {
-                    errors += "There is no player in the world! The game will not run without a player. \n\n";
-                }
-
-                //Check for badly linked doors.
-                errors += verifyDoors();
-
-                //Display the errors if they exist
-                if (errors != "")
-                {
-                    showMessage("Invariants broken!", errors);
-
-                }
-                else if (displayIfOK)
-                {
-                    showMessage("No broken invariants!", "No broken invariants!");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Checks the doors invariants.
-        /// </summary>
-        /// <returns>A human-readable list of all door invariants broken. Returns the empty string
-        /// if there are no broken invariants.</returns>
-        private string verifyDoors()
-        {
-            string errors = "";
-
-            if (currentState == State.EDITING_WORLD)
-            {
-                //Look at every door in every room.
-                foreach (Room room in world.Rooms)
-                {
-                    errors += verifyDoorsInRoom(room);
-                }
-            }
-            else if (currentState == State.EDITING_ROOM)
-            {
-                errors += verifyDoorsInRoom(currentlySelectedRoom);
-            }
-
-
-            return errors;
-        }
-
-
-        private string verifyDoorsInRoom(Room room)
-        {
-            string errors = "";
-
-            foreach (Door door in room.Doors)
-            {
-                //The link is null
-                if (door.Link == null)
-                {
-                    errors += "Door " + door.name + " in room " + room.name + " has a null link!\n\n";
-
-                }
-                else if (door.Link.Link != door)
-                {
-                    errors += "Door " + door.name +
-                        " in room " + room.name +
-                        " links to door " + door.Link.name +
-                        " which does not link back!";
-                }
-            }
-            return errors;
-        }
-
-        private void verifyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            verifyInvariants(true);
-        }
-
-        //------------End of verification stuff----------------------------------------------------------------
-
         /// <summary>
         /// Apply properties in text box to currently selected object.
         /// </summary>
@@ -1366,8 +860,10 @@ namespace CrisisAtSwissStation.LevelEditor
         /// <param name="e"></param>
         private void b_ApplyProperties_Click(object sender, EventArgs e)
         {
+            
             // If we've selected an object and text is valid,
             // apply these new settings
+            /*
             if (currentlySelectedObject != null && AreObjPropertiesValid())
             {
                 if (currentlySelectedObject is HazardStatic)
@@ -1399,57 +895,13 @@ namespace CrisisAtSwissStation.LevelEditor
             }
 
            pb_Level.Refresh();
+            */
         }
 
         // Predicate<string> delegate to remove empty strings
         public static bool IsEmptyString(string s)
         {
             return s == "";
-        }
-
-        /// <summary>
-        /// Parse script line by line.
-        /// </summary>
-        private void ParseScript()
-        {
-            Dynamic dyn = (Dynamic)currentlySelectedObject;
-            int atindex = -1; // If -1, @ token was not found
-            dyn.Instructions.Clear();
-
-            // Mark flag to enable scripted movement
-            dyn.IsScripted = cbox_Scripted.Checked;
-
-            // Parse instructions and send to object
-            Regex reg = new Regex(EditorConstants.WINFORM_NEWLINE);
-            List<string> instructions = new List<string>(reg.Split(tb_Script.Text));
-            instructions.RemoveAll(IsEmptyString);
-
-            for (int i = 0; i < instructions.Count; i++)
-            {
-                string line = instructions[i];
-                Instruction inst = new Instruction();
-
-                if (line[0] == '@')
-                {
-                    atindex = dyn.Instructions.Count;
-                    line = line.Substring(1);
-                    if (inst.Initialize(line))
-                        dyn.Instructions.Add(inst);
-
-                }
-                else if (line == "goto @" && atindex > -1)
-                {
-                    line = "goto " + atindex;
-                    if (inst.Initialize(line))
-                        dyn.Instructions.Add(inst);
-                }
-                else
-                {
-                    if (inst.Initialize(line))
-                        dyn.Instructions.Add(inst);
-                }
-
-            }
         }
 
         private void tb_Rotation_Leave(object sender, EventArgs e)
@@ -1467,14 +919,17 @@ namespace CrisisAtSwissStation.LevelEditor
             int dummyInt;
             int dummyInt2;
 
+            /*
             bool rotationCorrect = float.TryParse(tb_Rotation.Text, out dummyFloat);
             bool slevelCorrect = int.TryParse(tb_SLevel.Text, out dummyInt2) || 
                 (!(currentlySelectedObject is Survivor || currentlySelectedObject is VanishWall));
             bool damageCorrect = int.TryParse(tb_Damage.Text, out dummyInt) ||
                 (!(currentlySelectedObject is HazardStatic)
                 && !(currentlySelectedObject is HazardDynamic));
+            */
 
-            return rotationCorrect && damageCorrect && slevelCorrect;
+            //return rotationCorrect && damageCorrect && slevelCorrect;
+            return true;
         }
 
         private void tb_Damage_Leave(object sender, EventArgs e)
@@ -1508,6 +963,7 @@ namespace CrisisAtSwissStation.LevelEditor
         }
 
         //This handles scripts for dynamic objects - basic string parsing
+        /*
         private void SetScriptingFields()
         {
             tb_Script.Text = "";
@@ -1585,6 +1041,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 tb_Script.Text += s;
             }
         }
+        */
 
         private void cbox_Scripted_CheckedChanged(object sender, EventArgs e)
         {
@@ -1595,8 +1052,8 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             if (currentlySelectedObject != null)
             {
-                currentlySelectedRoom.Objects.Remove(currentlySelectedObject);
-                currentlySelectedRoom.Objects.Add(currentlySelectedObject);
+                world.Objects.Remove(currentlySelectedObject);
+                world.Objects.Add(currentlySelectedObject);
             }
         }
     }

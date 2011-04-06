@@ -26,6 +26,7 @@ namespace CrisisAtSwissStation
         {
             // Initialize
             this.texture = texture;
+            TextureFilename = texture.Name;
 
             scale = myScale;
 

@@ -34,6 +34,7 @@ namespace CrisisAtSwissStation
             this.texture = texture;
             Height = texture.Height;
             Width = texture.Width;
+            TextureFilename = texture.Name;
 
             Debug.Assert(points.Length >= 3);
 

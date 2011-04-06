@@ -36,6 +36,9 @@ namespace CrisisAtSwissStation
         float width = 10f;
         float height = 10f; // 10 for DEBUGging purposes
 
+        string textureFilename = null;
+        protected Rectangle boundingBox;
+
         /**
          * Creates a new physics object
          */
@@ -171,6 +174,18 @@ namespace CrisisAtSwissStation
             }
         }
 
+        public string TextureFilename
+        {
+            get
+            {
+                return textureFilename;
+            }
+            set
+            {
+                textureFilename = value;
+            }
+        }
+
         public Point getCenterPoint(){
             Point center = getBBRelativeToWorld().Center;
 
@@ -218,7 +233,7 @@ namespace CrisisAtSwissStation
 
             newPoint = newPoint + center;
 
-            newPoint = newPoint + Position;
+            newPoint = newPoint + (Position * CASSWorld.SCALE);
 
             return newPoint;
         }
@@ -233,20 +248,20 @@ namespace CrisisAtSwissStation
 
         //The stretch in the horizontal direction. Scales the y-axis of the bounding box
         protected float horizontalScale = 1.0f;
-        /// <summary>
-        /// The stretch in the horizontal direction.
-        /// </summary>
+
         //The axis-aligned bounding box of the sprite. This provides a very loose bound for the sprite object.
-        protected Rectangle boundingBox;
 
         public Rectangle getBBRelativeToWorld()
         {
+
             List<Vector2> newPts = new List<Vector2>();
 
-            newPts.Add(mapPointOnImage(boundingBox.X * horizontalScale, boundingBox.Y));
-            newPts.Add(mapPointOnImage(boundingBox.X * horizontalScale, Height + boundingBox.Y));
-            newPts.Add(mapPointOnImage(Width + boundingBox.X * horizontalScale, boundingBox.Y));
-            newPts.Add(mapPointOnImage(Height + boundingBox.X * horizontalScale, Height + boundingBox.Y));
+            Vector2 halfDim = new Vector2(Width / 2, Height / 2);
+
+            newPts.Add(mapPointOnImage(boundingBox.X, boundingBox.Y) - halfDim);
+            newPts.Add(mapPointOnImage(boundingBox.X, Height + boundingBox.Y) - halfDim);
+            newPts.Add(mapPointOnImage(Width + boundingBox.X, boundingBox.Y) - halfDim);
+            newPts.Add(mapPointOnImage(Height + boundingBox.X, Height + boundingBox.Y) - halfDim);
 
             float max_y = newPts[0].Y;
             float min_y = newPts[0].Y;
