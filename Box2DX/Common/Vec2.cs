@@ -28,6 +28,7 @@ namespace Box2DX.Common
 	/// <summary>
 	/// A 2D column vector.
 	/// </summary>
+    [Serializable]
 	public struct Vec2
 	{
 		public float X, Y;

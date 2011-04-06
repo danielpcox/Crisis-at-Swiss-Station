@@ -30,6 +30,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// This structure is used to build circle shapes.
 	/// </summary>
+    [Serializable]
 	public class CircleDef : ShapeDef
 	{
 		public Vec2 LocalPosition;
@@ -46,6 +47,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// A circle shape.
 	/// </summary>
+    [Serializable]
 	public class CircleShape : Shape
 	{
 		// Local position in parent body

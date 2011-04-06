@@ -14,6 +14,8 @@ using Box2DX.Dynamics;
 
 namespace CrisisAtSwissStation
 {
+
+    [Serializable]
     public class ScrollingWorld : CASSWorld
     {
         // Dimensions of the game world
@@ -26,61 +28,109 @@ namespace CrisisAtSwissStation
         public const float PAINTING_GRANULARITY = 20f; // how far apart points in a painting need to be for us to store them both
 
         // Content in the game world
+        // HACK - these are all deprecated by GameEngine.TextureList
+
+        [NonSerialized]
         private static Texture2D groundTexture;
+        [NonSerialized]
         private static Texture2D dudeTexture;
+        [NonSerialized]
         private static Texture2D armTexture;
+        [NonSerialized]
         private static Texture2D dudeObjectTexture;
+        [NonSerialized]
         private static Texture2D winTexture;
+        [NonSerialized]
         private static Texture2D ropeBridgeTexture;
+        [NonSerialized]
         private static Texture2D barrierTexture;
+	[NonSerialized]
         private static Texture2D barrierTexture2;
+        [NonSerialized]
         private static Texture2D paintTexture;
+        [NonSerialized]
         private static Texture2D paintedSegmentTexture;
+        [NonSerialized]
         private static Texture2D crosshairTexture;
+        [NonSerialized]
         private static Texture2D background;
 
+        [NonSerialized]
         private static Texture2D bigBoxTexture;
+        [NonSerialized]
         private static Texture2D littleBoxTexture;
+        [NonSerialized]
         private static Texture2D leftPipeTexture;
+        [NonSerialized]
         private static Texture2D rightPipeTexture;
+        [NonSerialized]
         private static Texture2D platformTexture;
+        [NonSerialized]
         private static Texture2D bottom1Texture;
+        [NonSerialized]
         private static Texture2D bottom2Texture;
 
+        [NonSerialized]
         private static Texture2D holeTexture;
+        [NonSerialized]
         private static Texture2D holeObjectTexture;
 
+        [NonSerialized]
         private static Texture2D movingPlatformTexture;
+        [NonSerialized]
         private static Texture2D brokenMovingPlatformTexture;
+        [NonSerialized]
         private static Texture2D brokenMovingPlatformAnimTexture;
 
+        [NonSerialized]
         private static Texture2D pipeAssemblyTexture;
+        [NonSerialized]
         private static Texture2D window1Texture;
+        [NonSerialized]
         private static Texture2D window2Texture;
+        [NonSerialized]
         private static Texture2D window3Texture;
+        [NonSerialized]
         private static Texture2D window4Texture;
+        [NonSerialized]
         private static Texture2D window5Texture;
+        [NonSerialized]
         private static Texture2D straightPipeTexture;
+        [NonSerialized]
         private static Texture2D straightPipeTileTexture;
+        [NonSerialized]
         private static Texture2D groundPlatformTexture;
+        [NonSerialized]
         private static Texture2D pulleyPlatformTexture;
+        [NonSerialized]
         private static Texture2D pulleyPlatformLongTexture;
+        [NonSerialized]
         private static Texture2D pulleyChainTexture;
+        [NonSerialized]
         private static Texture2D pistonAssemblyTexture;
+        [NonSerialized]
         private static Texture2D pistonHeadTexture;
+        [NonSerialized]
         private static Texture2D tableTexture;
+        [NonSerialized]
         private static Texture2D fanAnimTexture;
+        [NonSerialized]
         private static Texture2D fanTexture;
 
+        [NonSerialized]
         private static Texture2D lampTexture;
+        [NonSerialized]
         private static Texture2D lampAnimTexture;
 
+        [NonSerialized]
         private static Texture2D winDoorAnimTexture;
 
         private bool movPlat1;
         private bool pistonMove;
         //private bool movPlat2;
         //private bool mov;
+        //[NonSerialized]
+        //private static Texture2D bottomTexture;
 
         /*
         // Wall vertices
@@ -90,6 +140,7 @@ namespace CrisisAtSwissStation
           new Vector2(1,  1), new Vector2(1, 12),
           new Vector2(0, 12), new Vector2(0,  0)
         };
+
         private static Vector2[] wall2 = new Vector2[]
         {
           new Vector2(16,   0), new Vector2(16, 12),
@@ -178,9 +229,12 @@ namespace CrisisAtSwissStation
 
         int gameLevelWidth;
         int gameLevelHeight;
+        [NonSerialized]
         Vector2 mousePosition;
         List<Vector2> dotPositions = new List<Vector2>();
+        [NonSerialized]
         Vector2 halfdotsize;
+        [NonSerialized]
         MouseState prevms;
         public static float numDrawLeft;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
@@ -191,7 +245,7 @@ namespace CrisisAtSwissStation
         DudeObject dude;
         BoxObject arm;
         SensorObject winDoor;
-        LaserObject laser;
+        public LaserObject laser;
 
         string worldName;
 
@@ -653,6 +707,12 @@ namespace CrisisAtSwissStation
 
         }
 
+        public void reloadNonSerializedAssets()
+        {
+            AudioManager audio = GameEngine.AudioManager;
+            audio.Play(AudioManager.MusicSelection.EarlyLevelv2);
+        }
+
         public static void LoadContent(ContentManager content)
         {
             // all of this is obsoleted by GameEngine.TextureList
@@ -986,6 +1046,7 @@ namespace CrisisAtSwissStation
         /**
          * Listens to contacts to apply demo level-specific things
          */
+        [Serializable]
         private class PlatformContactListener : ContactListener
         {
             ScrollingWorld world;
@@ -1102,6 +1163,7 @@ namespace CrisisAtSwissStation
             return dude.Position;
         }
 
+        [Serializable]
         private class PlatformBoundaryListener : BoundaryListener
         {
             ScrollingWorld world;
@@ -1135,5 +1197,6 @@ namespace CrisisAtSwissStation
                     world.Fail();
             }
         }
+
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using CrisisAtSwissStation.Common;
 
 using Forms = System.Windows.Forms; // alias as Forms so that we don't get collisions with keyboard stuff
 
@@ -289,7 +290,11 @@ namespace CrisisAtSwissStation
             {
                 // Uses C# reflection to construct a new world with minimal code
                 //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
-                currentWorld = new ScrollingWorld();
+
+                //currentWorld = new ScrollingWorld();
+                currentWorld = Serializer.DeSerialize("C:\\Users\\danielpcox\\Desktop\\asdf.world");
+                currentWorld.reloadNonSerializedAssets();
+
                 countdown = 0;
             }
 

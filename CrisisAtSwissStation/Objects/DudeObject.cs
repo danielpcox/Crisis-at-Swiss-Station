@@ -18,6 +18,7 @@ namespace CrisisAtSwissStation
      * technical name of which is a "Dude."
      * Our dude can move left and right, jump, and draw and erase.
      */
+    [Serializable]
     public class DudeObject : BoxObject
     {
        
@@ -50,8 +51,13 @@ namespace CrisisAtSwissStation
         private int yFrame;
         private int spriteWidth;
         private int spriteHeight;
+        [NonSerialized]
         private Texture2D animTexture;
+        protected string animTextureName;
+        [NonSerialized]
         private Texture2D armTexture;
+        protected string armTextureName;
+
         private int myGameTime;
         private LaserObject myLaser; //for arm rotation only
         private float armAngle;
@@ -147,6 +153,9 @@ namespace CrisisAtSwissStation
         public DudeObject(World world, string texturename, string objectTexturename, string armTexturename, string groundSensorName)
         : base(world, objectTexturename, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
+            this.armTextureName = armTexturename;
+            this.animTextureName = texturename;
+
             Texture2D objectTexture = GameEngine.TextureList[objectTexturename];
             Texture2D texture = GameEngine.TextureList[texturename];
             Texture2D armTexture = GameEngine.TextureList[armTexturename];
@@ -221,6 +230,14 @@ namespace CrisisAtSwissStation
 
             //animation stuff
             //base.(world, texture, 1.0f, 0.0f, 0.0f);
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            this.texture = GameEngine.TextureList[animTextureName];
+            this.animTexture = GameEngine.TextureList[animTextureName];
+            this.armTexture = GameEngine.TextureList[armTextureName];
+            base.reloadNonSerializedAssets();
         }
 
         /**
@@ -325,6 +342,7 @@ namespace CrisisAtSwissStation
         /**
          * Controller for a dude
          */
+        [Serializable]
         private class DudeController : Controller
         {
             /**

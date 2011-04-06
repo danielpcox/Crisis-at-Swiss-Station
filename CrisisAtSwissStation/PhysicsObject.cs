@@ -1,4 +1,5 @@
-﻿using Box2DX.Collision;
+﻿using System;
+using Box2DX.Collision;
 using Box2DX.Dynamics;
 using Box2DX.Dynamics.Controllers;
 
@@ -10,6 +11,7 @@ using CrisisAtSwissStation.Common;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public abstract class PhysicsObject
     {
         // The world we live in
@@ -256,7 +258,7 @@ namespace CrisisAtSwissStation
 
             List<Vector2> newPts = new List<Vector2>();
 
-            Vector2 halfDim = new Vector2(Width / 2, Height / 2);
+            Vector2 halfDim = new Vector2(Width / 2, Height / 2); // this is a hack to place the objects at their center correctly
 
             newPts.Add(mapPointOnImage(boundingBox.X, boundingBox.Y) - halfDim);
             newPts.Add(mapPointOnImage(boundingBox.X, Height + boundingBox.Y) - halfDim);

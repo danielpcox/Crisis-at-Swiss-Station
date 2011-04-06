@@ -8,6 +8,7 @@ using Box2DX.Collision;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class LaserObject
     {
         private Color IN_SIGHT = Color.Red;
@@ -23,6 +24,8 @@ namespace CrisisAtSwissStation
         Box2DX.Collision.Shape interference;
         //Box2DX.Collision.Shape[] interference;
         private Vector2[] sections;
+        
+        [NonSerialized]
         PrimitiveBatch primitiveBatch;
         private Texture2D sectionTex;
 
@@ -42,6 +45,11 @@ namespace CrisisAtSwissStation
             SCALE = CASSWorld.SCALE;
             primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
             
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
         }
 
         public bool canDraw()

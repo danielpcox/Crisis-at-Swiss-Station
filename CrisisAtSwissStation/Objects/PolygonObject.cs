@@ -11,12 +11,14 @@ using CrisisAtSwissStation.Common;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class PolygonObject : PhysicsObject
     {
         // Drawable vertices
         VertexPositionTexture[] vertices;
 
         // Texture
+        [NonSerialized]
         Texture2D texture;
 
         /**
@@ -49,6 +51,11 @@ namespace CrisisAtSwissStation
 
             CreateShapes(triangles, density, friction, restitution);
             CreateDrawable(triangles);
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            Texture2D texture = GameEngine.TextureList[TextureFilename];
         }
 
         private void Split(LinkedList<int> polygon, Vector2[] points, List<Vector2[]> triangles)

@@ -11,6 +11,7 @@ namespace Box2DX.Dynamics.Controllers
 	/// A controller edge is used to connect bodies and controllers together
 	/// in a bipartite graph.
 	/// </summary>
+    [Serializable]
 	public class ControllerEdge
 	{
 		public Controller controller;		// provides quick access to other end of this edge.
@@ -25,6 +26,7 @@ namespace Box2DX.Dynamics.Controllers
 	/// Base class for controllers. Controllers are a convience for encapsulating common
 	/// per-step functionality.
 	/// </summary>
+    [Serializable]
 	public abstract class Controller: IDisposable
 	{
 		internal Controller _prev;

@@ -29,6 +29,7 @@ namespace Box2DX.Common
 	/// A transform contains translation and rotation.
 	/// It is used to represent the position and orientation of rigid frames.
 	/// </summary>
+    [Serializable]
 	public struct XForm
 	{
 		public Vec2 Position;

@@ -1,4 +1,6 @@
-﻿using Box2DX.Collision;
+using System;
+
+using Box2DX.Collision;
 using Box2DX.Dynamics;
 using Box2DX.Dynamics.Controllers;
 
@@ -12,6 +14,7 @@ using System.Diagnostics;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class SensorObject : BoxObject
     {
         private Rectangle sourceRect;

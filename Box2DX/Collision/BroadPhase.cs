@@ -52,12 +52,14 @@ namespace Box2DX.Collision
 	public delegate float SortKeyFunc(object shape);
 
 #warning "CAS"
+    [Serializable]
 	public class BoundValues
 	{
 		public ushort[/*2*/] LowerValues = new ushort[2];
 		public ushort[/*2*/] UpperValues = new ushort[2];
 	}
 #warning "CAS"
+    [Serializable]
 	public class Bound
 	{
 		public bool IsLower { get { return (Value & (ushort)1) == (ushort)0; } }
@@ -77,6 +79,7 @@ namespace Box2DX.Collision
 		}
 	}
 #warning "CAS"
+    [Serializable]
 	public class Proxy
 	{
 		public ushort[/*2*/] LowerBounds = new ushort[2], UpperBounds = new ushort[2];
@@ -93,6 +96,7 @@ namespace Box2DX.Collision
 		public bool IsValid { get { return OverlapCount != BroadPhase.Invalid; } }
 	}
 
+    [Serializable]
 	public class BroadPhase
 	{
 #if TARGET_FLOAT32_IS_FIXED

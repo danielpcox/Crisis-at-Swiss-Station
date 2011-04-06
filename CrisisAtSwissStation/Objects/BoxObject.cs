@@ -1,4 +1,5 @@
-﻿using Box2DX.Collision;
+﻿using System;
+using Box2DX.Collision;
 using Box2DX.Dynamics;
 
 using Microsoft.Xna.Framework;
@@ -12,9 +13,11 @@ namespace CrisisAtSwissStation
      * that has a rectangular shape.  Its dimensions
      * are determined by the size of the texture provided.
      */
+    [Serializable]
     public class BoxObject : PhysicsObject
     {
         // The box texture
+        [NonSerialized]
         protected Texture2D texture;
         private float scale;
 
@@ -66,6 +69,11 @@ namespace CrisisAtSwissStation
             shape.Friction = friction;
             shape.Restitution = restitution;
             shapes.Add(shape);
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            this.texture = GameEngine.TextureList[TextureFilename];
         }
 
         /**

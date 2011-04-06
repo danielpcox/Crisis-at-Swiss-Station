@@ -1,4 +1,5 @@
-﻿using Box2DX.Collision;
+﻿using System;
+using Box2DX.Collision;
 using Box2DX.Dynamics;
 
 using Microsoft.Xna.Framework;
@@ -12,9 +13,11 @@ namespace CrisisAtSwissStation
      * Dimension is taken from the width of the texture.
      * Texture provided should be square to avoid distortion.
      */
+    [Serializable]
     public class CircleObject : PhysicsObject
     {
         // The circle texture
+        [NonSerialized]
         protected Texture2D texture;
         private float scale;
 
@@ -40,6 +43,11 @@ namespace CrisisAtSwissStation
             shape.Friction = friction;
             shape.Restitution = restitution;
             shapes.Add(shape);
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            this.texture = GameEngine.TextureList[TextureFilename];
         }
 
         /**

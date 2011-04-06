@@ -28,6 +28,7 @@ namespace Box2DX.Common
 	/// <summary>
 	/// A 2-by-2 matrix. Stored in column-major order.
 	/// </summary>
+    [Serializable]
 	public struct Mat22
 	{
 		public Vec2 Col1, Col2;

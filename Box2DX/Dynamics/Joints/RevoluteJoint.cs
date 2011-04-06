@@ -56,6 +56,7 @@ namespace Box2DX.Dynamics
 	/// 2. if you add/remove shapes from a body and recompute the mass,
 	///    the joints will be broken.
 	/// </summary>
+    [Serializable]
 	public class RevoluteJointDef : JointDef
 	{
 		public RevoluteJointDef()

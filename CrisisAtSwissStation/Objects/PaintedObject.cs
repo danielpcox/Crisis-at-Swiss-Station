@@ -20,6 +20,7 @@ namespace CrisisAtSwissStation
     /**
      * Defines an object drawn by the user with the mouse.
      */
+    [Serializable]
     public class PaintedObject : CircleObject
     {
         // physical parameters for each blob in a PaintedObject
@@ -30,7 +31,10 @@ namespace CrisisAtSwissStation
 
         List<Vec2> vertices = new List<Vec2>(); // we need this for drawing between the vertices
 
+        [NonSerialized]
         Texture2D segmentTexture;
+
+        protected string blobTextureName;
 
         int numBlobs = 0;
 
@@ -112,6 +116,8 @@ namespace CrisisAtSwissStation
 
             Texture2D segmenttexture = GameEngine.TextureList[segmenttexturename];
             Texture2D blobtexture = GameEngine.TextureList[blobtexturename];
+
+            this.blobTextureName = blobtexturename;
             TextureFilename = segmenttexturename;
 
             //boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
@@ -244,9 +250,16 @@ namespace CrisisAtSwissStation
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
         }*/
-        
 
-        //Not fixed for side scrolling!!!!!!!!!!!!
+        public void reloadNonSerializedAssets()
+        {
+            Texture2D segmenttexture = GameEngine.TextureList[TextureFilename];
+            //Texture2D blobtexture = GameEngine.TextureList[this.blobTextureName];
+
+            segmentTexture = segmenttexture;
+            base.reloadNonSerializedAssets();
+        }
+        
         // DEBUG : so, Box2DX for some reason didn't want to add shapes to an object on the fly.
         // temporary solution: blast the old object and create a whole new one
         public void AddToShapes(List<Vector2> blobs)

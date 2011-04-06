@@ -28,6 +28,7 @@ using Box2DX.Common;
 
 namespace Box2DX.Dynamics
 {
+    [Serializable]
 	public class NullContact : Contact
 	{
 		public NullContact() { }
