@@ -223,6 +223,11 @@ namespace CrisisAtSwissStation
             return myGameTime;
         }
 
+        public ScrollingWorld getWorld()
+        {
+            return myWorld;
+        }
+
         /**
          * Controller for a dude
          */

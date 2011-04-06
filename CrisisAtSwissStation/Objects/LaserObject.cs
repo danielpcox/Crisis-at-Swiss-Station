@@ -65,12 +65,9 @@ namespace CrisisAtSwissStation
         public Vector2 getEnd()
         { return endpoint; }
 
-        public void Update(float mX, float mY)
+        public void Update(float mX, float mY, Vector2 offset)
         {
             //Console.WriteLine("{0} {1}", mX, mY);
-
-            guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.SCREEN_WIDTH / 2);
-            offset = new Vector2(guyPos, 0);
 
             mouseX = mX * SCALE;
             mouseY = mY * SCALE;
@@ -79,8 +76,20 @@ namespace CrisisAtSwissStation
             else
                 adjustment = new Vector2(-12.5f, -6f);
 
+            int guyScreenPos = 0;
+            if (dude.Position.X * CASSWorld.SCALE <= GameEngine.SCREEN_WIDTH / 2)
+                guyScreenPos = (int)(dude.getWorld().getScreenCoords(dude.Position).X);
+            else if (dude.Position.X * CASSWorld.SCALE >= 4096 - GameEngine.SCREEN_WIDTH / 2)
+            {
+                guyScreenPos = (int)(dude.getWorld().getScreenCoords(dude.Position).X); ;
+            }
+            else
+            {
+                guyScreenPos = GameEngine.SCREEN_WIDTH / 2;
+            }
+
             original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
-            end = new Vector2((mX+ dude.Position.X)*SCALE - 512, mY * SCALE);
+            end = new Vector2((mX+ dude.Position.X)*SCALE - guyScreenPos, mY * SCALE);
 
             Vector2 gunpos = original + adjustment;
 

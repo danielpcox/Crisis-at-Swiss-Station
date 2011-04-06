@@ -360,6 +360,21 @@ namespace CrisisAtSwissStation
 
         }
 
+        public Vector2 getCameraCoords()
+        {
+            if (dude.Position.X * CASSWorld.SCALE <= SCREEN_WIDTH / 2)
+            {
+                return new Vector2(0,0);
+            }
+            else if (dude.Position.X * CASSWorld.SCALE >= gameLevelWidth - SCREEN_WIDTH / 2)
+            {
+                return new Vector2((-gameLevelWidth + (SCREEN_WIDTH )), 0);
+            }
+            else
+            {
+                return new Vector2(-dude.Position.X * CASSWorld.SCALE + (SCREEN_WIDTH / 2), 0);
+            }
+        }
 
         public override void Simulate(float dt)
         {
@@ -514,7 +529,7 @@ namespace CrisisAtSwissStation
 
             prevms = mouse;
 
-            laser.Update(scaledMousePosition.X, scaledMousePosition.Y);
+            laser.Update(scaledMousePosition.X, scaledMousePosition.Y, getCameraCoords());
 
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
@@ -567,7 +582,7 @@ namespace CrisisAtSwissStation
 
         public override void Draw(GraphicsDevice device, Matrix camera)
         {
-            float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.SCREEN_WIDTH / 2);
+            float guyPos = getCameraCoords().X;
             Matrix cameraTransform = Matrix.CreateTranslation(guyPos, 0.0f, 0.0f);
 
             GameEngine.Instance.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
