@@ -22,7 +22,7 @@ namespace CrisisAtSwissStation
        
 
         //dude's jump impulse
-        public static float jumpImpulse = -2.7f;
+        public static float jumpImpulse = -3f;
 
 
         private const int JUMP_COOLDOWN = 30;
@@ -176,12 +176,17 @@ namespace CrisisAtSwissStation
             spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, animOrigin, 1, flip, 0);
 
             //arm code
-            if(facingRight)
-                spriteBatch.Draw(armTexture, screenOffset + new Vector2(-10,0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
+            if (facingRight)
+                spriteBatch.Draw(armTexture, screenOffset + new Vector2(-10, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
             else
+            {
+                if (armAngle < -1.5 ) armAngle = -armAngle;//for corner cases
+                 // if (armAngle > 1.5) armAngle = -armAngle;
                 spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
-            
+                // spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin - new Vector2(-10, -10), .8f, flip, 0);
+            }
             //Console.WriteLine("{0}", armAngle);
+         
 
             spriteBatch.End();
 

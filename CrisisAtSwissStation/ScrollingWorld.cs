@@ -50,7 +50,8 @@ namespace CrisisAtSwissStation
 
         private static Texture2D movingPlatformTexture;
         private bool movPlat;
-
+        private bool movPlat2;
+        private bool mov;
         
 
         // Wall vertices
@@ -99,6 +100,10 @@ namespace CrisisAtSwissStation
 
         private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
         private BoxObject movPlatform1;
+
+        private static Vector2 movPlatform2Position = new Vector2(47f, 10f);
+        private BoxObject movPlatform2;
+
         /*
         private static Vector2[][] platforms = new Vector2[][]
         {
@@ -126,7 +131,7 @@ namespace CrisisAtSwissStation
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
         MouseState prevms;
-        public static int numDrawLeft = 0; //yeah yeah, bad coding style...im tired :(
+        public static int numDrawLeft;
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
@@ -139,8 +144,10 @@ namespace CrisisAtSwissStation
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
             movPlat = true;
+            movPlat2 = true;
+            mov = true;
 
-            numDrawLeft = 0; // HACK HACK HACK
+            numDrawLeft = 1000; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
             winDoor.Position = winDoorPos + new Vector2(61.5f, .05f); 
@@ -196,6 +203,8 @@ namespace CrisisAtSwissStation
             platform.Position = platformPosition + new Vector2(61.5f, 0f); 
             AddObject(platform);
 
+        
+
             bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0);
             bottom1.Position = bottomPosition;
             AddObject(bottom1);
@@ -217,12 +226,15 @@ namespace CrisisAtSwissStation
             AddObject(hole1);
 
             movPlatform1 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);
+            movPlatform2 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);
             //Box2DX.Collision.MassData infmass = new Box2DX.Collision.MassData();
             //infmass = movPlatform1.Body.;
             //infmass.Mass = 0;
             //movPlatform1.Body.SetMass(0f);
             movPlatform1.Position = movPlatform1Position;
             AddObject(movPlatform1);
+            movPlatform2.Position = movPlatform2Position;
+            AddObject(movPlatform2);
 
             // Create laser
             laser = new LaserObject(World, dude,paintedSegmentTexture,10);
@@ -363,6 +375,22 @@ namespace CrisisAtSwissStation
                 movPlatform1.Position = movPlatform1.Position - new Vector2(.05f, 0);
                 if (movPlatform1.Position.X <10 )
                     movPlat = true;
+            }
+            if (mov)
+            {
+                if (movPlat2 == true)
+                {
+                    movPlatform2.Position = movPlatform2.Position - new Vector2(0, 0.05f);
+                    if (movPlatform2.Position.Y < 0)
+                        movPlat2 = false;
+                }
+                else
+                {
+                    movPlatform2.Position = movPlatform2.Position + new Vector2(0, 0.05f);
+
+                    if (movPlatform2.Position.Y > 14.4)
+                        movPlat2 = true;
+                }
             }
 
             dude.Grounded = false; // unrelated to the following
@@ -523,6 +551,9 @@ namespace CrisisAtSwissStation
                 if ((object1 == world.winDoor && object2 == world.dude) ||
                     (object2 == world.winDoor && object1 == world.dude))
                     world.Win();
+
+                if ((object1 == world.movPlatform2 && object2 == world.dude) ||
+                   (object2 == world.movPlatform2 && object1 == world.dude)) world.mov = false;
 
                 //ronnie added as hole test
                //if (object1 == world.hole1 && object2 == world.dude)
