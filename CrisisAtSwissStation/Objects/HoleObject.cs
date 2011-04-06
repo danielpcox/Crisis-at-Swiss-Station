@@ -34,7 +34,7 @@ namespace CrisisAtSwissStation
             //animation stuff
             myGameTime = 0;
             animateTimer = 0;
-            animateInterval = 50;
+            animateInterval = 40;
             animTexture = mytexture;                   
             xFrame = 0;
             yFrame = 0;

@@ -71,7 +71,7 @@ namespace CrisisAtSwissStation
 
         private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(7f, 15f);
+        private static Vector2 dudePosition = new Vector2(7f, 15f); 
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -164,7 +164,7 @@ namespace CrisisAtSwissStation
             laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
 
             // Create dude
-            dude = new DudeObject(World, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
+            dude = new DudeObject(World, this, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
             dude.Position = dudePosition;
             AddObject(dude);
 
@@ -240,7 +240,9 @@ namespace CrisisAtSwissStation
                    // temp.Y = y;
                     //blobs[i] = temp;
                     //blobs.Insert(i,new Vector2(x, y));
-                    blobs.Add(new Vector2(x, y));
+                    Vector2 addition = getGameCoords(new Vector2(x, y));
+                    Console.WriteLine("{0}", addition);
+                    blobs.Add(addition);
                     i++;
                 }
                 i++;
@@ -311,7 +313,7 @@ namespace CrisisAtSwissStation
         }
 
 
-        //for screen to game, use this function plsu scaled mouse
+        
         public Vector2 getScreenOrigin()
         {
             if (dude.Position.X * CASSWorld.SCALE <= GAME_WIDTH/2)
@@ -327,14 +329,20 @@ namespace CrisisAtSwissStation
 
         }
 
-
+        //for Game to screen, subtract getscreenorigin from your game coords, and then multiply by scale
         public Vector2 getScreenCoords(Vector2 myGameCoords)
         {
 
             return (myGameCoords - getScreenOrigin()) * CASSWorld.SCALE;
 
         }
-        //for Game to screen, subtract getscreenorigin from your game coords, and then multiply by scale
+        
+        //for screen to game, use getScreenOrigin() plus scaled screen coords
+        public Vector2 getGameCoords(Vector2 myScreenCoords)
+        {
+            return (getScreenOrigin() + (myScreenCoords / CASSWorld.SCALE));
+
+        }
 
 
         public override void Simulate(float dt)

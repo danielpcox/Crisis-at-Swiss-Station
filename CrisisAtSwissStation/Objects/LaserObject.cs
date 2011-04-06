@@ -154,7 +154,8 @@ namespace CrisisAtSwissStation
             }
             else { canIDraw = true; }*/
 
-            startpoint = original + adjustment + offset;
+            //startpoint = original + adjustment + offset;
+            startpoint = original + offset;
             endpoint = new Vector2(mouseX, mouseY);
 
             int totalx = (int)(endpoint.X - startpoint.X);
