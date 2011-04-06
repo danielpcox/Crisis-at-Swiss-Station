@@ -49,9 +49,10 @@ namespace CrisisAtSwissStation
         private static Texture2D holeObjectTexture;
 
         private static Texture2D movingPlatformTexture;
+        private static Texture2D brokenMovingPlatformTexture;
         private bool movPlat;
         private bool movPlat2;
-        private bool mov;
+        private bool mov;       
         
 
         // Wall vertices
@@ -201,9 +202,7 @@ namespace CrisisAtSwissStation
 
             platform = new BoxObject(World, platformTexture, 0, .1f, 0);
             platform.Position = platformPosition + new Vector2(61.5f, 0f); 
-            AddObject(platform);
-
-        
+            AddObject(platform);        
 
             bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0);
             bottom1.Position = bottomPosition;
@@ -321,6 +320,7 @@ namespace CrisisAtSwissStation
             holeObjectTexture = content.Load<Texture2D>("hole_tile2");
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
+            brokenMovingPlatformTexture = content.Load<Texture2D>("broken_moving_platform");
           
         }
 
@@ -364,7 +364,7 @@ namespace CrisisAtSwissStation
            // screenOffset = new Vector2(guyPos, 0);
 
             //hackish code to make the platform move
-            if (movPlat == true)
+            if (movPlat)
             {
                 movPlatform1.Position = movPlatform1.Position + new Vector2(.05f, 0);
                 if (movPlatform1.Position.X > 20)
@@ -570,6 +570,12 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
             GameEngine.Instance.SpriteBatch.Draw(background, new Vector2(0, 0), Color.White);
+
+            //nonfunctional art stuff
+            //GameEngine.Instance.SpriteBatch.Draw(brokenMovingPlatformTexture, getScreenCoords(new Vector2(.1f, 13.6f)), Color.White);
+
+
+
             GameEngine.Instance.SpriteBatch.End();
 
             base.Draw(device, cameraTransform);
