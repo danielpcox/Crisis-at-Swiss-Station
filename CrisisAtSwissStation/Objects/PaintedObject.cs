@@ -34,6 +34,9 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         Texture2D segmentTexture;
 
+        [NonSerialized]
+        Texture2D blobTexture;
+
         protected string blobTextureName;
 
         int numBlobs = 0;
@@ -123,6 +126,7 @@ namespace CrisisAtSwissStation
             //boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
 
             segmentTexture = segmenttexture;
+            blobTexture = blobtexture;
 
             radius = (float)blobtexture.Width / (2 * CASSWorld.SCALE);
 
@@ -253,10 +257,16 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
+            /*foreach (Vec2 vert in vertices)
+            {
+                Console.WriteLine(Utils.Convert(vert));
+            }*/ // DEBUG
+
             Texture2D segmenttexture = GameEngine.TextureList[TextureFilename];
-            //Texture2D blobtexture = GameEngine.TextureList[this.blobTextureName];
+            Texture2D blobtexture = GameEngine.TextureList[this.blobTextureName];
 
             segmentTexture = segmenttexture;
+            blobTexture = blobtexture;
             base.reloadNonSerializedAssets();
         }
         
@@ -271,7 +281,7 @@ namespace CrisisAtSwissStation
             //    totalblobs.Add(Utils.Convert(shape.LocalPosition));
             //}
 
-            float radius = (float)texture.Width / (2 * CASSWorld.SCALE);
+            float radius = (float)blobTexture.Width / (2 * CASSWorld.SCALE);
 
             foreach (Vector2 blobpos in blobs)
             {
@@ -297,7 +307,7 @@ namespace CrisisAtSwissStation
          */
         public override void Draw(Matrix cameraTransform)
         {
-            Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
+            Vector2 origin = new Vector2(blobTexture.Width, blobTexture.Height) / 2;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
@@ -331,7 +341,7 @@ namespace CrisisAtSwissStation
                 Vector2 screenpos = ((Position + rotatedpos) * CASSWorld.SCALE);
                 Vector2 screenpos2 = ((Position + rotatedpos2) * CASSWorld.SCALE);
                 // Draw blob at point
-                spriteBatch.Draw(texture, screenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
+                spriteBatch.Draw(blobTexture, screenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 
                 // Draw segment between points
                 CrisisAtSwissStation.Common.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, INSTASTEEL_COLOR);
@@ -342,7 +352,7 @@ namespace CrisisAtSwissStation
             Vector2 lastrotatedpos = new Vector2((float)(lastlocalpos.Length() * System.Math.Cos(lasttheta)), (float)(lastlocalpos.Length() * System.Math.Sin(lasttheta)));
             Vector2 lastscreenpos = ((Position + lastrotatedpos) * CASSWorld.SCALE);
             // Draw blob at point
-            spriteBatch.Draw(texture, lastscreenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
+            spriteBatch.Draw(blobTexture, lastscreenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 
             spriteBatch.End();
         }
