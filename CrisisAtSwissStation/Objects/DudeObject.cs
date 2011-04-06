@@ -302,16 +302,16 @@ namespace CrisisAtSwissStation
                  */
 
                 //making him flip towards the cursor, works with sidescrolling, need to fix magic numbers
-                if (dudeObject.Position.X * CASSWorld.SCALE >= (.5* GameEngine.GAME_WINDOW_WIDTH) && dudeObject.Position.X * CASSWorld.SCALE <= 3584)
+                if (dudeObject.Position.X * CASSWorld.SCALE >= (.5* GameEngine.SCREEN_WIDTH) && dudeObject.Position.X * CASSWorld.SCALE <= 3584)
                 {
-                    if ((.5 * GameEngine.GAME_WINDOW_WIDTH) < Mouse.GetState().X)
+                    if ((.5 * GameEngine.SCREEN_WIDTH) < Mouse.GetState().X)
                         dudeObject.facingRight = true;
-                    else if ((.5 * GameEngine.GAME_WINDOW_WIDTH) >= Mouse.GetState().X)
+                    else if ((.5 * GameEngine.SCREEN_WIDTH) >= Mouse.GetState().X)
                         dudeObject.facingRight = false;
                 }
                 else
                 {
-                    float dudescreenX = (dudeObject.Position.X * CASSWorld.SCALE) % (GameEngine.GAME_WINDOW_WIDTH); 
+                    float dudescreenX = (dudeObject.Position.X * CASSWorld.SCALE) % (GameEngine.SCREEN_WIDTH); 
                     if (dudescreenX < Mouse.GetState().X)
                         dudeObject.facingRight = true;
                     else if (dudescreenX >= Mouse.GetState().X)

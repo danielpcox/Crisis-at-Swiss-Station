@@ -69,7 +69,7 @@ namespace CrisisAtSwissStation
         {
             //Console.WriteLine("{0} {1}", mX, mY);
 
-            guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
+            guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.SCREEN_WIDTH / 2);
             offset = new Vector2(guyPos, 0);
 
             mouseX = mX * SCALE;

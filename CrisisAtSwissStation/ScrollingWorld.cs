@@ -20,8 +20,8 @@ namespace CrisisAtSwissStation
         public const float WIDTH = 80.0f; //16.0f originally, then 20f, now changed for side scrolling
         public const float HEIGHT = 15.0f; //12.0f
         private const float GRAVITY = 9.8f;
-        public const int GAME_WIDTH = GameEngine.GAME_WINDOW_WIDTH; // how big the game is in pixels, regardless of the size of the game window
-        public const int GAME_HEIGHT = GameEngine.GAME_WINDOW_HEIGHT; // how big the game is in pixels, regardless of the size of the game window
+        public const int SCREEN_WIDTH = GameEngine.SCREEN_WIDTH;
+        public const int SCREEN_HEIGHT = GameEngine.SCREEN_HEIGHT;
 
         public const float PAINTING_GRANULARITY = 20f; // how far apart points in a painting need to be for us to store them both
 
@@ -127,6 +127,8 @@ namespace CrisisAtSwissStation
             //{ new Vector2(10,10), new Vector2(11, 10), new Vector2(11,11f), new Vector2(10, 11f) },
         }; 
         */
+        int gameLevelWidth;
+        int gameLevelHeight;
         Vector2 mousePosition;
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
@@ -147,6 +149,8 @@ namespace CrisisAtSwissStation
             movPlat2 = true;
             mov = true;
 
+            gameLevelWidth = background.Width;
+            gameLevelHeight = background.Height;
             numDrawLeft = 1000; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
@@ -328,15 +332,15 @@ namespace CrisisAtSwissStation
         
         public Vector2 getScreenOrigin()
         {
-            if (dude.Position.X * CASSWorld.SCALE <= GAME_WIDTH/2)
+            if (dude.Position.X * CASSWorld.SCALE <= SCREEN_WIDTH/2)
                 return new Vector2(0, 0);
-            else if (dude.Position.X * CASSWorld.SCALE >= 4096 - GAME_WIDTH / 2)
+            else if (dude.Position.X * CASSWorld.SCALE >= gameLevelWidth - SCREEN_WIDTH / 2)
             {
-                return new Vector2((4096 - GAME_WIDTH) / CASSWorld.SCALE, 0);
+                return new Vector2((gameLevelWidth - SCREEN_WIDTH) / CASSWorld.SCALE, 0);
             }
             else
             {
-                return new Vector2(dude.Position.X -((GAME_WIDTH/2)/CASSWorld.SCALE),0);
+                return new Vector2(dude.Position.X -((SCREEN_WIDTH/2)/CASSWorld.SCALE),0);
             }
 
         }
@@ -397,7 +401,7 @@ namespace CrisisAtSwissStation
 
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
-            bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.GAME_WINDOW_WIDTH && mouse.Y < GameEngine.GAME_WINDOW_HEIGHT && mouse.Y > 0;
+            bool mouseinbounds = mouse.X > 0 && mouse.X < GameEngine.SCREEN_WIDTH && mouse.Y < GameEngine.SCREEN_HEIGHT && mouse.Y > 0;
             Vector2 scaledMousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
             Vector2 mouseGamePosition = getScreenOrigin() + scaledMousePosition;
             //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
@@ -406,8 +410,8 @@ namespace CrisisAtSwissStation
             { // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
-                aabb.LowerBound = Utils.Convert(mouseGamePosition - new Vector2(0.1f));// + screenOffset); //TODO Diana: fix this
-                aabb.UpperBound = Utils.Convert(mouseGamePosition + new Vector2(0.1f));// + screenOffset); //TODO Diana: fix this
+                aabb.LowerBound = Utils.Convert(mouseGamePosition - new Vector2(0.1f));
+                aabb.UpperBound = Utils.Convert(mouseGamePosition + new Vector2(0.1f));
 
                 Shape[] shapes = new Shape[1];
                 int nHit = World.Query(aabb, shapes, 1);
@@ -438,7 +442,7 @@ namespace CrisisAtSwissStation
                 if (dotPositions.Count == 0 || ( getScreenCoords(mouseGamePosition) - getScreenCoords(dotPositions[dotPositions.Count - 1])).Length() > PAINTING_GRANULARITY)
                 { // according to the granularity constraint for paintings,
                     //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
-                    dotPositions.Add(new Vector2(mouseGamePosition.X, mouseGamePosition.Y)); //+ screenOffset); // add a point in a new painting
+                    dotPositions.Add(new Vector2(mouseGamePosition.X, mouseGamePosition.Y)); // add a point in a new painting
                     numDrawLeft--;
                     finishDraw = true;
                 }
@@ -479,7 +483,6 @@ namespace CrisisAtSwissStation
                 laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
-                // TODO Diana: add something about screen offset?
                 if (false)//overlapped != null)
                 {
                     foreach (Vector2 pos in dotPositions)
@@ -564,7 +567,7 @@ namespace CrisisAtSwissStation
 
         public override void Draw(GraphicsDevice device, Matrix camera)
         {
-            float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
+            float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.SCREEN_WIDTH / 2);
             Matrix cameraTransform = Matrix.CreateTranslation(guyPos, 0.0f, 0.0f);
 
             GameEngine.Instance.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
