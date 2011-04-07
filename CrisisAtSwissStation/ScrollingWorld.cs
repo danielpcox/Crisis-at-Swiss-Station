@@ -100,10 +100,11 @@ namespace CrisisAtSwissStation
 
         private static Vector2 rightPipePosition = new Vector2(16.35f, 6.37f);
         private BoxObject rightPipe;
+        */
 
         private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
         private BoxObject platform;
-        */
+
         private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
         private BoxObject bottom1, bottom2, bottom3, bottom4;
 
@@ -153,7 +154,9 @@ namespace CrisisAtSwissStation
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
         MouseState prevms;
-        public static int numDrawLeft;
+        public static float numDrawLeft;
+        float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
+        Vector2 prevMousePos;
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
@@ -196,7 +199,7 @@ namespace CrisisAtSwissStation
 
             // Create dude
             dude = new DudeObject(World, this, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
-            dude.Position = dudePosition;
+            dude.Position = dudePosition; // hole1Position + new Vector2(-10,-5);
             AddObject(dude);
 
             // Create the dude's arm
@@ -210,7 +213,7 @@ namespace CrisisAtSwissStation
            
 
 
-            //Left and Right pillars (walls)
+            //Left pillar (walls)
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition;
             AddObject(pillar);
@@ -228,8 +231,8 @@ namespace CrisisAtSwissStation
             pillar.Position = pillarPosition + new Vector2(0, -14.8f);
             AddObject(pillar);
              */
+
             //right pillar now
-          
             pillar2 = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar2.Position = pillarPosition + new Vector2(81.9f, 0);
             AddObject(pillar2);
@@ -264,11 +267,10 @@ namespace CrisisAtSwissStation
             rightPipe = new BoxObject(World, rightPipeTexture, 0, .1f, 0);
             rightPipe.Position = rightPipePosition + new Vector2(61.5f, 0f); 
             AddObject(rightPipe);
-
-            platform = new BoxObject(World, platformTexture, 0, .1f, 0);
+            */
+            platform = new BoxObject(World, platformTexture, 0, .1f, 0, 1, false);
             platform.Position = platformPosition + new Vector2(61.5f, 0f); 
             AddObject(platform);        
-            */
 
             straightPipe1 = new BoxObject(World, straightPipeTexture, 0, .5f, 0,1,false);
             straightPipe1.Position = straightPipe1Position;            
@@ -351,10 +353,6 @@ namespace CrisisAtSwissStation
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
 
-            bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0, 1, false);
-            bottom1.Position = bottomPosition;
-            AddObject(bottom1);
-            
             bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom1.Position = bottomPosition;
             AddObject(bottom1);
@@ -365,7 +363,7 @@ namespace CrisisAtSwissStation
 
             bottom3 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom3.Position = bottomPosition + new Vector2(40.6f, 0f);
-            AddObject(bottom3);
+            //AddObject(bottom3);
 
             bottom4 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom4.Position = bottomPosition + new Vector2(60.9f, 0f);
@@ -388,7 +386,7 @@ namespace CrisisAtSwissStation
             top.Position = topPosition + new Vector2(60.9f, 0f);
             AddObject(top);*/
 
-            hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
+            hole1 = new HoleObject(World, holeTexture, holeObjectTexture);
 
             hole1.Position = hole1Position;
             AddObject(hole1);
@@ -619,12 +617,13 @@ namespace CrisisAtSwissStation
             /*
              leftPipeTexture = content.Load<Texture2D>("leftPipeTexture");
              rightPipeTexture = content.Load<Texture2D>("rightPipeTexture");
-             platformTexture = content.Load<Texture2D>("platformTexture");*/
+            */
+             platformTexture = content.Load<Texture2D>("platformTexture");
             bottomTexture = content.Load<Texture2D>("bottomTexture");
 
 
             holeTexture = content.Load<Texture2D>("big_hole_strip");
-            holeObjectTexture = content.Load<Texture2D>("hole_tile2");
+            holeObjectTexture = content.Load<Texture2D>("hole_tile");
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
             brokenMovingPlatformTexture = content.Load<Texture2D>("broken_moving_platform");
@@ -759,7 +758,7 @@ namespace CrisisAtSwissStation
                     {
                         this.RemoveObject(po);
                         PaintedObject painto = (PaintedObject)po;
-                        numDrawLeft += painto.getNumBlobs();
+                        numDrawLeft += painto.getAmountOfInstasteel();
                     }
                 }
             }
@@ -767,18 +766,43 @@ namespace CrisisAtSwissStation
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
-            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY)
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
 
                 // if we're holding down the mouse button
                 //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
-                if (dotPositions.Count == 0 || (getScreenCoords(mouseGamePosition) - getScreenCoords(dotPositions[dotPositions.Count - 1])).Length() > PAINTING_GRANULARITY)
+                
+                if (dotPositions.Count == 0 || ( getScreenCoords(mouseGamePosition) - getScreenCoords(dotPositions[dotPositions.Count - 1])).Length() > PAINTING_GRANULARITY)
                 { // according to the granularity constraint for paintings,
-                    //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
-                    dotPositions.Add(new Vector2(mouseGamePosition.X, mouseGamePosition.Y)); // add a point in a new painting
-                    numDrawLeft--;
+                    float drawDist = 0;
+                    Vector2 drawPos = mouseGamePosition;
+
+                    // make sure there is enough insta-steel to make it to the next point. if not, adjust the point
+                    if (dotPositions.Count > 0)
+                    {
+                        drawDist = Vector2.Distance(drawPos * CASSWorld.SCALE, prevMousePos);
+                        if (drawDist > numDrawLeft)
+                        {
+                            Vector2 relativePos = prevMousePos - (drawPos * CASSWorld.SCALE);
+                            relativePos = relativePos * (numDrawLeft / drawDist);
+                            drawPos = (prevMousePos + relativePos) / CASSWorld.SCALE;
+                            drawDist = numDrawLeft;
+                        }
+                    }
+                    dotPositions.Add(drawPos);
+                    if (dotPositions.Count == 1)
+                    {
+                        lengthCurDrawing = 0;
+                    }
+                    else
+                    {
+                        numDrawLeft -= drawDist;
+                        lengthCurDrawing += drawDist;
+                    }
+                    
+                    prevMousePos = drawPos * CASSWorld.SCALE;
                     finishDraw = true;
                 }
 
@@ -786,7 +810,7 @@ namespace CrisisAtSwissStation
                 //laser.finishDrawing();
 
             }
-            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > 0 || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
+            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > PAINTING_GRANULARITY || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
             {
                 if (!laser.canDraw())
                     drawingInterrupted = true;
@@ -955,8 +979,23 @@ namespace CrisisAtSwissStation
             public override void Violation(Body body)
             {
                 PhysicsObject obj = body.GetUserData() as PhysicsObject;
-                obj.Die();
 
+                // code to fill up a hole
+                int fillradius = 4;
+                if (obj is PaintedObject)
+                {
+                    foreach (PhysicsObject hole in this.world.Objects)
+                    {
+                        if (hole is HoleObject && obj.Position.X < hole.Position.X + fillradius && obj.Position.X > hole.Position.X - fillradius )
+                        {
+                            ((HoleObject)hole).Filled += ((PaintedObject)obj).Length;
+                            //Console.WriteLine("Filled: "); Console.WriteLine(((HoleObject)hole).Filled); // DEBUG
+                        }
+                    }
+                }
+
+                // code to kill the object that fell off, and to fail you if that object was you
+                obj.Die();
                 if (obj == world.dude)
                     world.Fail();
             }
