@@ -98,10 +98,11 @@ namespace CrisisAtSwissStation
 
         private static Vector2 rightPipePosition = new Vector2(16.35f, 6.37f);
         private BoxObject rightPipe;
+        */
 
         private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
         private BoxObject platform;
-        */
+
         private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
         private BoxObject bottom1, bottom2, bottom3, bottom4;
 
@@ -255,11 +256,10 @@ namespace CrisisAtSwissStation
             rightPipe = new BoxObject(World, rightPipeTexture, 0, .1f, 0);
             rightPipe.Position = rightPipePosition + new Vector2(61.5f, 0f); 
             AddObject(rightPipe);
-
-            platform = new BoxObject(World, platformTexture, 0, .1f, 0);
+            */
+            platform = new BoxObject(World, platformTexture, 0, .1f, 0, 1, false);
             platform.Position = platformPosition + new Vector2(61.5f, 0f); 
             AddObject(platform);        
-            */
 
             straightPipe1 = new BoxObject(World, straightPipeTexture, 0, .5f, 0,1,false);
             straightPipe1.Position = straightPipe1Position;            
@@ -563,7 +563,8 @@ namespace CrisisAtSwissStation
             /*
              leftPipeTexture = content.Load<Texture2D>("leftPipeTexture");
              rightPipeTexture = content.Load<Texture2D>("rightPipeTexture");
-             platformTexture = content.Load<Texture2D>("platformTexture");*/
+            */
+             platformTexture = content.Load<Texture2D>("platformTexture");
             bottomTexture = content.Load<Texture2D>("bottomTexture");
 
 
