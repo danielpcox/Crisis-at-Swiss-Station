@@ -101,7 +101,9 @@ namespace CrisisAtSwissStation
         { get { return bodyDef; } }
 
         public Body Body
-        { get { return body; } }
+        {
+            get { return body; }
+        }
 
         public bool Dead
         { get { return isDead; } }
