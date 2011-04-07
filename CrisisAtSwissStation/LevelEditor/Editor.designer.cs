@@ -47,7 +47,7 @@
             this.rb_HazardStatic = new System.Windows.Forms.RadioButton();
             this.rb_WallDynamic = new System.Windows.Forms.RadioButton();
             this.rb_WallStatic = new System.Windows.Forms.RadioButton();
-            this.rb_Player = new System.Windows.Forms.RadioButton();
+            this.rb_Platforms = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
             this.b_Front = new System.Windows.Forms.Button();
             this.tb_SLevel = new System.Windows.Forms.TextBox();
@@ -189,7 +189,7 @@
             this.gb_ObjTypes.Controls.Add(this.rb_HazardStatic);
             this.gb_ObjTypes.Controls.Add(this.rb_WallDynamic);
             this.gb_ObjTypes.Controls.Add(this.rb_WallStatic);
-            this.gb_ObjTypes.Controls.Add(this.rb_Player);
+            this.gb_ObjTypes.Controls.Add(this.rb_Platforms);
             this.gb_ObjTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gb_ObjTypes.Location = new System.Drawing.Point(3, 3);
             this.gb_ObjTypes.Name = "gb_ObjTypes";
@@ -208,6 +208,7 @@
             this.rb_Vanish_Walls.TabStop = true;
             this.rb_Vanish_Walls.Text = "Vanish Walls";
             this.rb_Vanish_Walls.UseVisualStyleBackColor = true;
+            this.rb_Vanish_Walls.Visible = false;
             this.rb_Vanish_Walls.CheckedChanged += new System.EventHandler(this.rb_Vanish_Walls_CheckedChanged);
             // 
             // rb_SavePoint
@@ -220,6 +221,7 @@
             this.rb_SavePoint.TabStop = true;
             this.rb_SavePoint.Text = "Save Point";
             this.rb_SavePoint.UseVisualStyleBackColor = true;
+            this.rb_SavePoint.Visible = false;
             this.rb_SavePoint.CheckedChanged += new System.EventHandler(this.rb_SavePoint_CheckedChanged);
             // 
             // rb_VictoryTest
@@ -232,6 +234,7 @@
             this.rb_VictoryTest.TabStop = true;
             this.rb_VictoryTest.Text = "Victory Test";
             this.rb_VictoryTest.UseVisualStyleBackColor = true;
+            this.rb_VictoryTest.Visible = false;
             this.rb_VictoryTest.CheckedChanged += new System.EventHandler(this.rb_VictoryTest_CheckedChanged);
             // 
             // rb_Doors
@@ -244,6 +247,7 @@
             this.rb_Doors.TabStop = true;
             this.rb_Doors.Text = "Doors";
             this.rb_Doors.UseVisualStyleBackColor = true;
+            this.rb_Doors.Visible = false;
             this.rb_Doors.CheckedChanged += new System.EventHandler(this.rb_Doors_CheckedChanged);
             // 
             // rb_Handlebars
@@ -256,6 +260,7 @@
             this.rb_Handlebars.TabStop = true;
             this.rb_Handlebars.Text = "Handlebars";
             this.rb_Handlebars.UseVisualStyleBackColor = true;
+            this.rb_Handlebars.Visible = false;
             this.rb_Handlebars.CheckedChanged += new System.EventHandler(this.rb_Handlebars_CheckedChanged_1);
             // 
             // rb_Survivors
@@ -268,6 +273,7 @@
             this.rb_Survivors.TabStop = true;
             this.rb_Survivors.Text = "Survivors";
             this.rb_Survivors.UseVisualStyleBackColor = true;
+            this.rb_Survivors.Visible = false;
             this.rb_Survivors.CheckedChanged += new System.EventHandler(this.rb_Survivors_CheckedChanged);
             // 
             // rb_Parts
@@ -280,6 +286,7 @@
             this.rb_Parts.TabStop = true;
             this.rb_Parts.Text = "Parts";
             this.rb_Parts.UseVisualStyleBackColor = true;
+            this.rb_Parts.Visible = false;
             this.rb_Parts.CheckedChanged += new System.EventHandler(this.rb_Parts_CheckedChanged_1);
             // 
             // rb_HazardDynamic
@@ -292,6 +299,7 @@
             this.rb_HazardDynamic.TabStop = true;
             this.rb_HazardDynamic.Text = "Hazard - Dynamic";
             this.rb_HazardDynamic.UseVisualStyleBackColor = true;
+            this.rb_HazardDynamic.Visible = false;
             this.rb_HazardDynamic.CheckedChanged += new System.EventHandler(this.rb_HazardDynamic_CheckedChanged_1);
             // 
             // rb_HazardStatic
@@ -304,6 +312,7 @@
             this.rb_HazardStatic.TabStop = true;
             this.rb_HazardStatic.Text = "Hazard - Static";
             this.rb_HazardStatic.UseVisualStyleBackColor = true;
+            this.rb_HazardStatic.Visible = false;
             this.rb_HazardStatic.CheckedChanged += new System.EventHandler(this.rb_HazardStatic_CheckedChanged_1);
             // 
             // rb_WallDynamic
@@ -316,6 +325,7 @@
             this.rb_WallDynamic.TabStop = true;
             this.rb_WallDynamic.Text = "Wall - Dynamic";
             this.rb_WallDynamic.UseVisualStyleBackColor = true;
+            this.rb_WallDynamic.Visible = false;
             this.rb_WallDynamic.CheckedChanged += new System.EventHandler(this.rb_WallDynamic_CheckedChanged_1);
             // 
             // rb_WallStatic
@@ -328,19 +338,20 @@
             this.rb_WallStatic.TabStop = true;
             this.rb_WallStatic.Text = "Wall - Static";
             this.rb_WallStatic.UseVisualStyleBackColor = true;
+            this.rb_WallStatic.Visible = false;
             this.rb_WallStatic.CheckedChanged += new System.EventHandler(this.rb_WallStatic_CheckedChanged);
             // 
-            // rb_Player
+            // rb_Platforms
             // 
-            this.rb_Player.AutoSize = true;
-            this.rb_Player.Location = new System.Drawing.Point(20, 19);
-            this.rb_Player.Name = "rb_Player";
-            this.rb_Player.Size = new System.Drawing.Size(54, 17);
-            this.rb_Player.TabIndex = 0;
-            this.rb_Player.TabStop = true;
-            this.rb_Player.Text = "Player";
-            this.rb_Player.UseVisualStyleBackColor = true;
-            this.rb_Player.CheckedChanged += new System.EventHandler(this.rb_Player_CheckedChanged);
+            this.rb_Platforms.AutoSize = true;
+            this.rb_Platforms.Location = new System.Drawing.Point(20, 19);
+            this.rb_Platforms.Name = "rb_Platforms";
+            this.rb_Platforms.Size = new System.Drawing.Size(68, 17);
+            this.rb_Platforms.TabIndex = 0;
+            this.rb_Platforms.TabStop = true;
+            this.rb_Platforms.Text = "Platforms";
+            this.rb_Platforms.UseVisualStyleBackColor = true;
+            this.rb_Platforms.CheckedChanged += new System.EventHandler(this.rb_Platforms_CheckedChanged);
             // 
             // tab_objProps
             // 
@@ -359,7 +370,7 @@
             this.tab_objProps.Location = new System.Drawing.Point(4, 22);
             this.tab_objProps.Name = "tab_objProps";
             this.tab_objProps.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_objProps.Size = new System.Drawing.Size(184, 311);
+            this.tab_objProps.Size = new System.Drawing.Size(238, 416);
             this.tab_objProps.TabIndex = 1;
             this.tab_objProps.Text = "Object Properties";
             this.tab_objProps.UseVisualStyleBackColor = true;
@@ -689,7 +700,7 @@
         private System.Windows.Forms.RadioButton rb_HazardStatic;
         private System.Windows.Forms.RadioButton rb_WallDynamic;
         private System.Windows.Forms.RadioButton rb_WallStatic;
-        private System.Windows.Forms.RadioButton rb_Player;
+        private System.Windows.Forms.RadioButton rb_Platforms;
         private System.Windows.Forms.TabPage tab_objProps;
         private System.Windows.Forms.Label lbl_DamageWarning;
         private System.Windows.Forms.Label lbl_RotationWarning;

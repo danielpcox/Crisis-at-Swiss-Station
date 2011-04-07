@@ -97,10 +97,11 @@ namespace CrisisAtSwissStation.LevelEditor
         }
 
         // Hardcoded to only show the player's icon
-        private void rb_Player_CheckedChanged(object sender, EventArgs e)
+        private void rb_Platforms_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_Player.Checked)
+            if (rb_Platforms.Checked)
             {
+                /*
                 textureDir = "Art\\Players\\";
                 //PopulateTextureList(textureDir);
 
@@ -113,6 +114,9 @@ namespace CrisisAtSwissStation.LevelEditor
                 {
                     lb_TextureList.SelectedIndex = 0;
                 }
+                */
+                textureDir = "";
+                PopulateTextureList(textureDir);
             }
         }
 
@@ -505,6 +509,7 @@ namespace CrisisAtSwissStation.LevelEditor
 
                     if (textureName != null)
                     {
+                        Console.WriteLine(currdir + "\\" + textureDir + textureName.ToString());
                         texture = Image.FromFile(currdir + "\\" + textureDir + textureName.ToString());
 
                         MakeSpaceObject(textureDir + textureName.ToString(), texture, mouse);
@@ -522,7 +527,7 @@ namespace CrisisAtSwissStation.LevelEditor
             //int numberOfFrames = SpaceObject.GetNumberOfFrames(texName);
 
             //Much repeated code to account for each possible object
-            if (rb_WallStatic.Checked)
+            if (rb_Platforms.Checked)
             {
                 //mp.X -= (texture.Width / (numberOfFrames * 2));
                 mp.X -= (texture.Width / 2);
@@ -669,17 +674,17 @@ namespace CrisisAtSwissStation.LevelEditor
         private void mi_New_World_Click(object sender, EventArgs e)
         {
             //Get the new room from the user.
-            StringPromptDialog dialog = new StringPromptDialog("Enter the name of the first room: ");
+            //StringPromptDialog dialog = new StringPromptDialog("Enter the name of the first room: ");
 
             //Create the world.
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                world = new ScrollingWorld(dialog.UserInput);
+            //if (dialog.ShowDialog() == DialogResult.OK)
+            //{
+                world = new ScrollingWorld("Placeholder");
 
                 enableEditing(true);
 
                 switchRooms();
-            }
+            //}
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -693,7 +698,7 @@ namespace CrisisAtSwissStation.LevelEditor
             if (editingWorld)
             {
                 currentState = State.EDITING_WORLD;
-                rb_Player.Enabled = true;
+                rb_Platforms.Enabled = true;
             }
 
         }
