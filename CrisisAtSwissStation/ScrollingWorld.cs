@@ -354,7 +354,7 @@ namespace CrisisAtSwissStation
             
             //PLAYS THE SONG!!!  (It resets at the beginning of the level)
             AudioManager audio = GameEngine.AudioManager;
-            audio.Play(AudioManager.MusicSelection.EarlyLevelv2);
+            audio.Play(AudioManager.MusicSelection.Destruction);
 
         }
 
