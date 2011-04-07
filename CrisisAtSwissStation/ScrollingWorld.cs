@@ -434,6 +434,27 @@ namespace CrisisAtSwissStation
 
             //group1
 
+            
+            float startx = .3f, endx = 1.5f, starty = 4f, spacing = .5f;
+            List<Vector2> blobs = new List<Vector2>();
+            blobs.Add(new Vector2(startx, starty));
+            blobs.Add(new Vector2(endx,starty));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            blobs.Clear();
+            blobs.Add(new Vector2(startx, starty + .2f));
+            blobs.Add(new Vector2(endx, starty + .2f));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs, 5));
+            blobs.Clear();
+            blobs.Add(new Vector2(startx, starty + .4f));
+            blobs.Add(new Vector2(endx, starty + .4f));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs, 5));
+            blobs.Clear();
+            blobs.Add(new Vector2(startx, starty + .6f));
+            blobs.Add(new Vector2(endx, starty + .6f));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs, 5));
+            blobs.Clear();
+
+            /*
             float startx = .3f, endx = 1.5f, starty = 4f, spacing = .5f;
             List<Vector2> blobs = new List<Vector2>();
             for (float x = startx; x <= endx; x += spacing)
@@ -443,7 +464,7 @@ namespace CrisisAtSwissStation
             AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
 
             blobs.Clear();
-
+           
             for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty+.2f));
@@ -465,8 +486,25 @@ namespace CrisisAtSwissStation
                 blobs.Add(new Vector2(x, starty+.6f));
             }
             AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-
+            */
             //group2
+            startx = 3.5f; endx = 5.2f; starty = 13f;
+            blobs.Add(new Vector2(startx, starty));
+            blobs.Add(new Vector2(endx, starty));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            blobs.Clear();
+            blobs.Add(new Vector2(startx, starty + .2f));
+            blobs.Add(new Vector2(endx, starty + .2f));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            blobs.Clear();
+            blobs.Add(new Vector2(startx, starty + .4f));
+            blobs.Add(new Vector2(endx, starty + .4f));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            blobs.Clear();
+            blobs.Add(new Vector2(startx, starty + .6f));
+            blobs.Add(new Vector2(endx, starty + .6f));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            /*
             startx = 3.5f; endx = 5.2f; starty = 13f;
             blobs.Clear();
             for (float x = startx; x <= endx; x += spacing)
@@ -498,7 +536,7 @@ namespace CrisisAtSwissStation
                 blobs.Add(new Vector2(x, starty + .6f));
             }
             AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-
+          */
 
 
             /*
