@@ -210,7 +210,7 @@ namespace CrisisAtSwissStation
            
 
 
-            //Left and Right pillars (walls)
+            //Left pillar (walls)
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition;
             AddObject(pillar);
@@ -228,8 +228,8 @@ namespace CrisisAtSwissStation
             pillar.Position = pillarPosition + new Vector2(0, -14.8f);
             AddObject(pillar);
              */
+
             //right pillar now
-          
             pillar2 = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar2.Position = pillarPosition + new Vector2(81.9f, 0);
             AddObject(pillar2);
