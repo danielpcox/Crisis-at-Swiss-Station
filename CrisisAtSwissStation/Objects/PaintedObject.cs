@@ -96,6 +96,17 @@ namespace CrisisAtSwissStation
             numBlobs++;
         }
 
+        public int Length
+        {
+            get
+            {
+                return numBlobs;
+            }
+            set
+            {
+                numBlobs = value;
+            }
+        }
         //Constructor for insta-steel generated in the level
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs, int numBlobs)
             : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
