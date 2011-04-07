@@ -385,7 +385,6 @@ namespace CrisisAtSwissStation
             AddObject(top);*/
 
             hole1 = new HoleObject(World, holeTexture, holeObjectTexture);
-
             hole1.Position = hole1Position;
             AddObject(hole1);
 
