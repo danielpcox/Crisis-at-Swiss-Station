@@ -101,7 +101,7 @@ namespace CrisisAtSwissStation
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(55f, 15f); //was 2.5 now 55
+        private static Vector2 dudePosition = new Vector2(2.5f, 15f); //was 2.5 now 55
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -754,7 +754,7 @@ namespace CrisisAtSwissStation
             pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
 
 
-            Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
+            //Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             //ronnies 2 line attempt at fixing drawing
             //float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
             // screenOffset = new Vector2(guyPos, 0);
