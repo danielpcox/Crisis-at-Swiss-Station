@@ -61,6 +61,7 @@ namespace CrisisAtSwissStation
         private static Texture2D pistonHeadTexture;
 
         private bool movPlat1;
+        private bool pistonMove;
         //private bool movPlat2;
         //private bool mov;
 
@@ -685,6 +686,20 @@ namespace CrisisAtSwissStation
 
                 if (movPlatform1.Position.Y > 14.2f)
                     movPlat1 = true;
+            }
+
+            //new Vector2(14.5f, 13.3f);
+            if (pistonMove == true)
+            {
+                pistonHead.Position = pistonHead.Position - new Vector2(.01f, 0);
+                if (pistonHead.Position.X < 14.5f)
+                    pistonMove = false;
+            }
+            else
+            {
+                pistonHead.Position = pistonHead.Position + new Vector2(.2f, 0);                
+                if (pistonHead.Position.X > 16.5f)
+                    pistonMove= true;
             }
 
 
