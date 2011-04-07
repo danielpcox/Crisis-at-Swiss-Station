@@ -127,7 +127,7 @@ namespace CrisisAtSwissStation
                 origin = new Vector2(texture.Width/2, texture.Height/2);
 
                // Console.WriteLine(origin);
-                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
+                spriteBatch.Draw(texture, screenOffset + new Vector2(30, 10) , null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
 
             }
 
