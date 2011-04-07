@@ -75,6 +75,7 @@ namespace CrisisAtSwissStation
 
         public override void Draw(Matrix cameraTransform)
         {
+
             //animation stuff
             Vector2 screenOffset = (CASSWorld.SCALE * Position);
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;

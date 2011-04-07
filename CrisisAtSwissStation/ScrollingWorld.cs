@@ -75,6 +75,8 @@ namespace CrisisAtSwissStation
         private static Texture2D lampTexture;
         private static Texture2D lampAnimTexture;
 
+        private static Texture2D winDoorAnimTexture;
+
         private bool movPlat1;
         private bool pistonMove;
         //private bool movPlat2;
@@ -99,7 +101,7 @@ namespace CrisisAtSwissStation
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 15f); //was 2.5 now 55
+        private static Vector2 dudePosition = new Vector2(55f, 15f); //was 2.5 now 55
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -202,7 +204,8 @@ namespace CrisisAtSwissStation
             gameLevelHeight = background.Height;
             numDrawLeft = 0; // HACK HACK HACK
             // Create win door
-            winDoor = new SensorObject(World, winTexture);
+           // public SensorObject(World world, Texture2D myTexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
+            winDoor = new SensorObject(World, winDoorAnimTexture, winTexture,93,99,20,5);
             winDoor.Position = winDoorPos;
             AddObject(winDoor);
 
@@ -642,6 +645,7 @@ namespace CrisisAtSwissStation
             armTexture = content.Load<Texture2D>("arm");
             dudeObjectTexture = content.Load<Texture2D>("DudeObject");
             winTexture = content.Load<Texture2D>("WinDoor");
+            winDoorAnimTexture = content.Load<Texture2D>("door_strip");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
             barrierTexture2 = content.Load<Texture2D>("Barrier1");
@@ -999,7 +1003,10 @@ namespace CrisisAtSwissStation
                         }
                     }
                     if (allHolesFilled)
+                    {
+                        world.winDoor.makeAnimate();
                         world.Win();
+                    }
                 }
 
                 if ((object1 == world.pistonHead && object2 == world.table) ||
