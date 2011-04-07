@@ -91,7 +91,7 @@ namespace CrisisAtSwissStation
             original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
             end = new Vector2((mX+ dude.Position.X)*SCALE - guyScreenPos, mY * SCALE);
 
-            Vector2 gunpos = original + adjustment;
+            Vector2 gunpos = original; //+ adjustment;
 
             Box2DX.Collision.Segment myseg = new Segment();
             myseg.P1 = new Box2DX.Common.Vec2(gunpos.X / SCALE, gunpos.Y / SCALE);
