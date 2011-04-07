@@ -201,7 +201,7 @@ namespace CrisisAtSwissStation
             {
                 GameEngine.Instance.SpriteBatch.Begin();
                 //Console.WriteLine("{0} {1}", sections[currentSection].X, sections[currentSection].Y);
-                CrisisAtSwissStation.Utils.DrawLine(GameEngine.Instance.SpriteBatch, sectionTex, sections[currentSection], sections[currentSection + 1], Color.Gold);
+                CrisisAtSwissStation.Utils.DrawLine(GameEngine.Instance.SpriteBatch, sectionTex, sections[currentSection], sections[currentSection + 1], PaintedObject.INSTASTEEL_COLOR);
                 GameEngine.Instance.SpriteBatch.End();
 
                 sectionTimer++;

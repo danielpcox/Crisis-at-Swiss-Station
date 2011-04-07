@@ -25,7 +25,7 @@ namespace CrisisAtSwissStation
         private const float POB_DENSITY = 1.0f;
         private const float POB_FRICTION = 0.5f;
         private const float POB_RESTITUTION = 0.0f;
-        private Color INSTASTEEL_COLOR = Color.Gray;
+        public static Color INSTASTEEL_COLOR = Color.Gray;
 
         List<Vec2> vertices = new List<Vec2>(); // we need this for drawing between the vertices
 
@@ -33,6 +33,8 @@ namespace CrisisAtSwissStation
 
         int numBlobs = 0;
 
+        float amountOfInstasteel; //how much insta-steel is in the object
+        
         float radius = 0f;
 
         /**
@@ -53,6 +55,7 @@ namespace CrisisAtSwissStation
                 //Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
                 Vector2 localpos = blobs[i]  - Position;
                 Vector2 localpos2 = blobs[i+1]- Position;
+                amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
 
                 // add a circle fixture to this object at each point
                 /*
@@ -187,6 +190,11 @@ namespace CrisisAtSwissStation
         public int getNumBlobs()
         {
             return numBlobs;
+        }
+
+        public float getAmountOfInstasteel()
+        {
+            return amountOfInstasteel;
         }
 
         /**

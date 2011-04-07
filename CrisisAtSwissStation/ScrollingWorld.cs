@@ -134,7 +134,9 @@ namespace CrisisAtSwissStation
         List<Vector2> dotPositions = new List<Vector2>();
         Vector2 halfdotsize;
         MouseState prevms;
-        public static int numDrawLeft;
+        public static float numDrawLeft;
+        float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
+        Vector2 prevMousePos;
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
@@ -439,7 +441,7 @@ namespace CrisisAtSwissStation
                     {
                         this.RemoveObject(po);
                         PaintedObject painto = (PaintedObject)po;
-                        numDrawLeft += painto.getNumBlobs();
+                        numDrawLeft += painto.getAmountOfInstasteel();
                     }
                 }
             }
@@ -447,18 +449,29 @@ namespace CrisisAtSwissStation
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
-            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > 0)
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY)
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
 
                 // if we're holding down the mouse button
                 //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
+                
                 if (dotPositions.Count == 0 || ( getScreenCoords(mouseGamePosition) - getScreenCoords(dotPositions[dotPositions.Count - 1])).Length() > PAINTING_GRANULARITY)
                 { // according to the granularity constraint for paintings,
-                    //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
                     dotPositions.Add(new Vector2(mouseGamePosition.X, mouseGamePosition.Y)); // add a point in a new painting
-                    numDrawLeft--;
+                    if (dotPositions.Count == 1)
+                    {
+                        lengthCurDrawing = 0;
+                    }
+                    else
+                    {
+                        float drawDist = Vector2.Distance(mouseGamePosition * CASSWorld.SCALE, prevMousePos);
+                        numDrawLeft -= drawDist;
+                        lengthCurDrawing += drawDist;
+                    }
+                    
+                    prevMousePos = mouseGamePosition * CASSWorld.SCALE;
                     finishDraw = true;
                 }
 
@@ -466,7 +479,7 @@ namespace CrisisAtSwissStation
                 //laser.finishDrawing();
                 
             }
-            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > 0 || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
+            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > PAINTING_GRANULARITY || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
             {
                 if (!laser.canDraw())
                     drawingInterrupted = true;
