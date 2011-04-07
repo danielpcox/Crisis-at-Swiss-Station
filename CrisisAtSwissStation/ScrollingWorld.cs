@@ -416,9 +416,10 @@ namespace CrisisAtSwissStation
             //creating insta steel already in the level
 
             //group1
-            float startx = .3f, endx = 1.5f,starty = 4f;
+
+            float startx = .3f, endx = 1.5f, starty = 4f, spacing = .5f;
             List<Vector2> blobs = new List<Vector2>();
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty));
             }
@@ -426,7 +427,7 @@ namespace CrisisAtSwissStation
 
             blobs.Clear();
 
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty+.2f));
             }
@@ -434,7 +435,7 @@ namespace CrisisAtSwissStation
 
             blobs.Clear();
 
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty+.4f));
             }
@@ -442,7 +443,7 @@ namespace CrisisAtSwissStation
 
             blobs.Clear();
 
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty+.6f));
             }
@@ -451,7 +452,7 @@ namespace CrisisAtSwissStation
             //group2
             startx = 3.5f; endx = 5.2f; starty = 13f;
             blobs.Clear();
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty));
             }
@@ -459,7 +460,7 @@ namespace CrisisAtSwissStation
 
             blobs.Clear();
 
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty + .2f));
             }
@@ -467,7 +468,7 @@ namespace CrisisAtSwissStation
 
             blobs.Clear();
 
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty + .4f));
             }
@@ -475,12 +476,11 @@ namespace CrisisAtSwissStation
 
             blobs.Clear();
 
-            for (float x = startx; x <= endx; x += .1f)
+            for (float x = startx; x <= endx; x += spacing)
             {
                 blobs.Add(new Vector2(x, starty + .6f));
             }
             AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-
 
 
 
