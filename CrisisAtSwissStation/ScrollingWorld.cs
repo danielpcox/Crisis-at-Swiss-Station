@@ -969,9 +969,27 @@ namespace CrisisAtSwissStation
                     (world.dude != shape2.GetBody().GetUserData()))
                     world.dude.Grounded = true;
 
+                PhysicsObject obj;
+                bool allHolesFilled = true;
                 if ((object1 == world.winDoor && object2 == world.dude) ||
                     (object2 == world.winDoor && object1 == world.dude))
-                    world.Win();
+                {
+                    // this will need to be changed when we move to the level editor model...
+                    if (object1 == world.winDoor)
+                        obj = world.winDoor;
+                    else
+                        obj = world.dude;
+
+                    foreach (PhysicsObject hole in this.world.Objects)
+                    {
+                        if (hole is HoleObject && ((HoleObject)hole).Filled < HoleObject.MAX_FILL)
+                        {
+                            allHolesFilled = false;
+                        }
+                    }
+                    if (allHolesFilled)
+                        world.Win();
+                }
 
                 if ((object1 == world.pistonHead && object2 == world.table) ||
                     (object2 == world.table && object1 == world.pistonHead))
