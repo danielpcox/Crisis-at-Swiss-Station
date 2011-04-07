@@ -316,7 +316,7 @@ namespace CrisisAtSwissStation
             //Draw IS label 
             spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(50, 140), Color.Red);
             //Draw IS amount
-            spriteBatch.DrawString(spriteFont, ((int)ScrollingWorld.numDrawLeft).ToString(), new Vector2(155, 140), Color.Yellow);
+           // spriteBatch.DrawString(spriteFont, ((int)ScrollingWorld.numDrawLeft).ToString(), new Vector2(155, 140), Color.Yellow);
 
             //Draw Jump label 
             spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(50, 200), Color.Red);
@@ -337,8 +337,8 @@ namespace CrisisAtSwissStation
 
             
             spriteBatch.End();
-            instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
-            jumpTextBox.Draw(spriteBatch, 255);
+            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+           // jumpTextBox.Draw(spriteBatch, 255);
             base.Draw(gameTime);
         }
     }
