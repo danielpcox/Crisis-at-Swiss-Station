@@ -44,13 +44,15 @@ namespace CrisisAtSwissStation
         private static Texture2D leftPipeTexture;
         private static Texture2D rightPipeTexture;
         private static Texture2D platformTexture;
-        private static Texture2D bottomTexture;
+        private static Texture2D bottom1Texture;
+        private static Texture2D bottom2Texture;
 
         private static Texture2D holeTexture;
         private static Texture2D holeObjectTexture;
 
         private static Texture2D movingPlatformTexture;
         private static Texture2D brokenMovingPlatformTexture;
+        private static Texture2D brokenMovingPlatformAnimTexture;
 
         private static Texture2D pipeAssemblyTexture;
         private static Texture2D window1Texture;
@@ -69,6 +71,9 @@ namespace CrisisAtSwissStation
         private static Texture2D tableTexture;
         private static Texture2D fanAnimTexture;
         private static Texture2D fanTexture;
+
+        private static Texture2D lampTexture;
+        private static Texture2D lampAnimTexture;
 
         private bool movPlat1;
         private bool pistonMove;
@@ -94,7 +99,7 @@ namespace CrisisAtSwissStation
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 15f);
+        private static Vector2 dudePosition = new Vector2(55f, 15f); //was 2.5
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -115,8 +120,9 @@ namespace CrisisAtSwissStation
         private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
         private BoxObject platform;
 
-        private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
-        private BoxObject bottom1, bottom2, bottom3, bottom4;
+        private static Vector2 bottom1Position = new Vector2(22.75f, 15f);
+        private static Vector2 bottom2Position = new Vector2(65.58f, 15f);
+        private BoxObject bottom1, bottom2;
 
         private static Vector2 straightPipe1Position = new Vector2(9.5f, 9.3f);
         private static Vector2 straightPipe2Position = new Vector2(3.1f, 5.5f);
@@ -157,10 +163,12 @@ namespace CrisisAtSwissStation
         private static Vector2 fan1Position = new Vector2(20.33f, 2f);
         private FanObject fan1;
 
+        private static Vector2 lamp1Position = new Vector2(3.1f, 1.32f);
+        private AnimationObject lamp1;        
 
+        private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.3f);
+        private AnimationObject brokenMovingPlatform1;
 
-        private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.18f);
-        private BoxObject brokenMovingPlatform1;
         private static Vector2 pillarPosition = new Vector2(0.035f, 7f);
         private BoxObject pillar;
         private BoxObject pillar2;        
@@ -366,8 +374,8 @@ namespace CrisisAtSwissStation
             //Box2DX.Common.Vec2 groundAnchor2 = Utils.Convert(new Vector2(18.2f, 10.0f));
             jointDef1.Initialize(pulleyPipe2.Body, pulleyPipe1.Body, groundAnchor1, groundAnchor2, anchor1, anchor2, .5f);
             */
-           jointDef1.Length1 = 2f;
-           jointDef1.Length2 = 5f;
+            jointDef1.Length1 = 2f;
+            jointDef1.Length2 = 5f;
             jointDef1.MaxLength1 = 5f;
             jointDef1.MaxLength2 = 5f;
             
@@ -381,21 +389,14 @@ namespace CrisisAtSwissStation
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
 
-            bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
-            bottom1.Position = bottomPosition;
+            bottom1 = new BoxObject(World, bottom1Texture, 0, .5f, 0,1,false);
+            bottom1.Position = bottom1Position;
             AddObject(bottom1);
 
-            bottom2 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
-            bottom2.Position = bottomPosition + new Vector2(20.3f, 0f);
-            AddObject(bottom2);
-
-            bottom3 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
-            bottom3.Position = bottomPosition + new Vector2(40.6f, 0f);
-            //AddObject(bottom3);
-
-            bottom4 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
-            bottom4.Position = bottomPosition + new Vector2(60.9f, 0f);
-            AddObject(bottom4);
+            bottom2 = new BoxObject(World, bottom2Texture, 0, .5f, 0,1,false);
+            bottom2.Position = bottom2Position;
+            AddObject(bottom2);            
+          
 
             //omgar its a ceiling!!
             top = new BoxObject(World, barrierTexture2, 0, .5f, 0,1,false);
@@ -454,10 +455,15 @@ namespace CrisisAtSwissStation
             */
             // END DEBUG
             
-            
-            brokenMovingPlatform1 = new BoxObject(World, brokenMovingPlatformTexture, 0, .5f, 0,1,false);
+            //public AnimationObject( World world, Texture2D mytexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
+
+            brokenMovingPlatform1 = new AnimationObject(World, brokenMovingPlatformAnimTexture,brokenMovingPlatformTexture, 89,32,20,8);
             brokenMovingPlatform1.Position = brokenMovingPlatform1Position;
             AddObject(brokenMovingPlatform1);
+
+            lamp1 = new AnimationObject(World, lampAnimTexture, lampTexture, 312, 120, 20, 8);
+            lamp1.Position = lamp1Position;
+            AddObject(lamp1);
 
             // Create laser
             laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
@@ -472,19 +478,19 @@ namespace CrisisAtSwissStation
             List<Vector2> blobs = new List<Vector2>();
             blobs.Add(new Vector2(startx, starty));
             blobs.Add(new Vector2(endx,starty));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .2f));
             blobs.Add(new Vector2(endx, starty + .2f));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs, 5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .4f));
             blobs.Add(new Vector2(endx, starty + .4f));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs, 5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .6f));
             blobs.Add(new Vector2(endx, starty + .6f));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs, 5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
 
             /*
@@ -524,19 +530,19 @@ namespace CrisisAtSwissStation
             startx = 3.5f; endx = 5.2f; starty = 13f;
             blobs.Add(new Vector2(startx, starty));
             blobs.Add(new Vector2(endx, starty));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .2f));
             blobs.Add(new Vector2(endx, starty + .2f));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .4f));
             blobs.Add(new Vector2(endx, starty + .4f));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .6f));
             blobs.Add(new Vector2(endx, starty + .6f));
-            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs,5));
+            AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
             /*
             startx = 3.5f; endx = 5.2f; starty = 13f;
             blobs.Clear();
@@ -654,7 +660,8 @@ namespace CrisisAtSwissStation
              rightPipeTexture = content.Load<Texture2D>("rightPipeTexture");
             */
              platformTexture = content.Load<Texture2D>("platformTexture");
-            bottomTexture = content.Load<Texture2D>("bottomTexture");
+            bottom1Texture = content.Load<Texture2D>("bottomTexture2273");
+            bottom2Texture = content.Load<Texture2D>("bottomTexture1636");
 
 
             holeTexture = content.Load<Texture2D>("big_hole_strip");
@@ -662,6 +669,7 @@ namespace CrisisAtSwissStation
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
             brokenMovingPlatformTexture = content.Load<Texture2D>("broken_moving_platform");
+            brokenMovingPlatformAnimTexture = content.Load<Texture2D>("broken_strip");
 
             straightPipeTexture = content.Load<Texture2D>("straight_pipe");
             straightPipeTileTexture = content.Load<Texture2D>("straight_pipe_tile");
@@ -672,6 +680,9 @@ namespace CrisisAtSwissStation
             pistonAssemblyTexture = content.Load<Texture2D>("piston_end");
             pistonHeadTexture = content.Load<Texture2D>("piston");
             tableTexture = content.Load<Texture2D>("table");
+
+            lampTexture = content.Load<Texture2D>("light");
+            lampAnimTexture = content.Load<Texture2D>("light_strip");
        
 
             pipeAssemblyTexture = content.Load<Texture2D>("pipe_steam_part");
@@ -739,7 +750,7 @@ namespace CrisisAtSwissStation
             pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
 
 
-            //Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
+            Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             //ronnies 2 line attempt at fixing drawing
             //float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
             // screenOffset = new Vector2(guyPos, 0);
@@ -1020,7 +1031,7 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(16.2f * CASSWorld.SCALE, 4.5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(17.6f * CASSWorld.SCALE, 9.7f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pipeAssemblyTexture, new Vector2(0f * CASSWorld.SCALE, 5.9f * CASSWorld.SCALE), Color.White);
-            GameEngine.Instance.SpriteBatch.Draw(window1Texture, new Vector2(5f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window1Texture, new Vector2(5.5f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window2Texture, new Vector2(25f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window3Texture, new Vector2(35f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window4Texture, new Vector2(45f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
