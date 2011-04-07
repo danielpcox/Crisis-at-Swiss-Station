@@ -95,11 +95,11 @@ namespace CrisisAtSwissStation
           new Vector2( 8,  1),  new Vector2( 8,  0)
         }; 
         */
-        private static Vector2 winDoorPos = new Vector2(19f, 4.38f);
+        private static Vector2 winDoorPos = new Vector2(60f, 13.65f);
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(55f, 15f); //was 2.5
+        private static Vector2 dudePosition = new Vector2(2.5f, 15f); //was 2.5 now 55
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -161,7 +161,7 @@ namespace CrisisAtSwissStation
         private CircleObject table;
 
         private static Vector2 fan1Position = new Vector2(20.33f, 2f);
-        private FanObject fan1;
+        private AnimationObject fan1;
 
         private static Vector2 lamp1Position = new Vector2(3.1f, 1.32f);
         private AnimationObject lamp1;        
@@ -203,7 +203,7 @@ namespace CrisisAtSwissStation
             numDrawLeft = 0; // HACK HACK HACK
             // Create win door
             winDoor = new SensorObject(World, winTexture);
-            winDoor.Position = winDoorPos + new Vector2(61.5f, .05f);
+            winDoor.Position = winDoorPos;
             AddObject(winDoor);
 
             // Create ground pieces
@@ -419,7 +419,7 @@ namespace CrisisAtSwissStation
             table.Position = tablePosition;
             AddObject(table);
 
-            fan1 = new FanObject(World, fanAnimTexture, fanTexture);
+            fan1 = new AnimationObject(World, fanAnimTexture, fanTexture, 200, 200, 20, 7);
             fan1.Position = fan1Position;
             AddObject(fan1);
 
@@ -1015,8 +1015,8 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.Draw(pipeAssemblyTexture, new Vector2(0f * CASSWorld.SCALE, 5.9f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window1Texture, new Vector2(5.5f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window2Texture, new Vector2(25f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
-            GameEngine.Instance.SpriteBatch.Draw(window3Texture, new Vector2(35f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
-            GameEngine.Instance.SpriteBatch.Draw(window4Texture, new Vector2(45f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window3Texture, new Vector2(38f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window4Texture, new Vector2(51f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
 
             GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(9.7f * CASSWorld.SCALE, 12.6f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
             //(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
