@@ -96,6 +96,9 @@ namespace CrisisAtSwissStation
         private static Vector2 bottomPosition = new Vector2(10.3f, 15f);
         private BoxObject bottom1,bottom2,bottom3,bottom4;
 
+        private static Vector2 topPosition = new Vector2(10.3f, 0f);
+        private BoxObject top;
+
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private  BoxObject hole1;
 
@@ -104,6 +107,10 @@ namespace CrisisAtSwissStation
 
         private static Vector2 movPlatform2Position = new Vector2(47f, 10f);
         private BoxObject movPlatform2;
+
+        private static Vector2 pillarPosition = new Vector2(0.025f, 14f);
+        private BoxObject pillar;
+
 
         /*
         private static Vector2[][] platforms = new Vector2[][]
@@ -188,6 +195,44 @@ namespace CrisisAtSwissStation
             */
 
             //create bottom platforms
+
+
+            //Left and Right pillars (walls)
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition;
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -3.7f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -7.4f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -11.1f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -14.8f);
+            AddObject(pillar);
+            //right pillar now
+            pillarPosition = new Vector2(81.9f, 14);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition;
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -3.7f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -7.4f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -11.1f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0);
+            pillar.Position = pillarPosition + new Vector2(0, -14.8f);
+            AddObject(pillar);
+            
+
+
             bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
             bigBox.Position = bigBoxPosition + new Vector2(61.5f, .05f); 
             AddObject(bigBox);
@@ -223,6 +268,23 @@ namespace CrisisAtSwissStation
             bottom4 = new BoxObject(World, bottomTexture, 0, .5f, 0);
             bottom4.Position = bottomPosition + new Vector2(60.9f, 0f); 
             AddObject(bottom4);
+
+            //omgar its a ceiling!!
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            top.Position = topPosition;
+            AddObject(top);
+
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            top.Position = topPosition + new Vector2(20.3f, 0f);
+            AddObject(top);
+
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            top.Position = topPosition + new Vector2(40.6f, 0f);
+            AddObject(top);
+
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0);
+            top.Position = topPosition + new Vector2(60.9f, 0f);
+            AddObject(top);
 
             hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
             hole1.Position = hole1Position;
@@ -292,7 +354,7 @@ namespace CrisisAtSwissStation
             
             //PLAYS THE SONG!!!  (It resets at the beginning of the level)
             AudioManager audio = GameEngine.AudioManager;
-            audio.Play(AudioManager.MusicSelection.EarlyLevelv2);
+            audio.Play(AudioManager.MusicSelection.Destruction);
 
         }
 
