@@ -15,7 +15,7 @@ namespace CrisisAtSwissStation
     public class HoleObject : BoxObject
     {
 
-        const float MAX_FILL = 300f; // the amount of instasteel you must drop into the hole before it is completely filled
+        public const float MAX_FILL = 300f; // the amount of instasteel you must drop into the hole before it is completely filled
 
         //private static Texture2D thisTexture;
 
@@ -48,7 +48,7 @@ namespace CrisisAtSwissStation
             spriteHeight = 500;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
-
+            
         }
 
         public float Filled
@@ -64,9 +64,13 @@ namespace CrisisAtSwissStation
         }
 
         bool destroyedBody = false;
+        Body tempBody;
+        bool replacedBody = false;
 
         public override void Update(CASSWorld world, float dt)
         {
+
+          
             //animation stuff
             myGameTime++;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
@@ -91,8 +95,15 @@ namespace CrisisAtSwissStation
             // gotta delete the hole Body so we fall through the hole
             if (!destroyedBody)
             {
-                world.World.DestroyBody(Body);
+                tempBody = Body;
+                //world.World.DestroyBody(Body);
+                RemoveFromWorld();
                 destroyedBody = true;
+            }
+            else if (Filled >= MAX_FILL && !replacedBody)
+            {
+                AddToWorld();
+                replacedBody = true;
             }
 
             //base.Update(world, dt);
@@ -108,13 +119,16 @@ namespace CrisisAtSwissStation
                               RasterizerState.CullCounterClockwise, null, cameraTransform);           
             if (Filled < MAX_FILL)
             {
+                
                 spriteBatch.Draw(animTexture, screenOffset+ (new Vector2(0,-4.325f) * CASSWorld.SCALE), sourceRect, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
             }
             else
             {
                 origin = new Vector2(texture.Width/2, texture.Height/2);
-                Console.WriteLine(origin);
+
+               // Console.WriteLine(origin);
                 spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
+
             }
 
             spriteBatch.End();       

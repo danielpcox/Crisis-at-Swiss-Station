@@ -110,6 +110,8 @@ namespace CrisisAtSwissStation
                 amountOfInstasteel = value;
             }
         }
+       
+         /*
         //Constructor for insta-steel generated in the level
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs, int numBlobs)
             : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1)
@@ -128,7 +130,7 @@ namespace CrisisAtSwissStation
                 Vector2 localpos = blobs[i] - Position;
                 Vector2 localpos2 = blobs[i + 1] - Position;
                 amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
-
+        */
                 // add a circle fixture to this object at each point
                 /*
                 CircleDef circle = new CircleDef();
@@ -139,7 +141,7 @@ namespace CrisisAtSwissStation
                 circle.Restitution = POB_RESTITUTION;
                 shapes.Add(circle);
                 */
-
+        /*
                 float scaledTextureWidth = segmentTexture.Width / CASSWorld.SCALE;
 
                 Vector2 shapeVec = localpos2 - localpos;
@@ -168,8 +170,8 @@ namespace CrisisAtSwissStation
             Vector2 lastlocalpos = blobs[blobs.Count - 1] - Position;
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
-        }
-
+        }*/
+        
 
         //Not fixed for side scrolling!!!!!!!!!!!!
         // DEBUG : so, Box2DX for some reason didn't want to add shapes to an object on the fly.
