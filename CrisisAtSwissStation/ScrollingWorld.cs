@@ -52,6 +52,12 @@ namespace CrisisAtSwissStation
         private static Texture2D movingPlatformTexture;
         private static Texture2D brokenMovingPlatformTexture;
 
+        private static Texture2D pipeAssemblyTexture;
+        private static Texture2D window1Texture;
+        private static Texture2D window2Texture;
+        private static Texture2D window3Texture;
+        private static Texture2D window4Texture;
+        private static Texture2D window5Texture;
         private static Texture2D straightPipeTexture;
         private static Texture2D straightPipeTileTexture;
         private static Texture2D groundPlatformTexture;
@@ -60,6 +66,9 @@ namespace CrisisAtSwissStation
         private static Texture2D pulleyChainTexture;
         private static Texture2D pistonAssemblyTexture;
         private static Texture2D pistonHeadTexture;
+        private static Texture2D tableTexture;
+        private static Texture2D fanAnimTexture;
+        private static Texture2D fanTexture;
 
         private bool movPlat1;
         private bool pistonMove;
@@ -115,10 +124,12 @@ namespace CrisisAtSwissStation
         private static Vector2 straightPipe5Position = new Vector2(18.0f, 4.5f);
         private static Vector2 straightPipe6Position = new Vector2(13.6f, 7f);
         private static Vector2 straightPipe7Position = new Vector2(12.8f, 12f);
-        private static Vector2 straightPipe8Position = new Vector2(16f, 11.2f);
+        private static Vector2 straightPipe8Position = new Vector2(15.8f, 11.5f);
         private static Vector2 straightPipe9Position = new Vector2(19.3f, 9.35f);
+        private static Vector2 straightPipe10Position = new Vector2(20.5f, 11f);
+        private static Vector2 straightPipe11Position = new Vector2(25f, 13.3f);
         private BoxObject straightPipe1, straightPipe2, straightPipe3, straightPipe4, straightPipe5, straightPipe6, straightPipe7;
-        private BoxObject straightPipe8,straightPipe9;
+        private BoxObject straightPipe8, straightPipe9, straightPipe10, straightPipe11;
 
         private static Vector2 pulleyPipe1Position = new Vector2(16.8f, 4.35f);
         private static Vector2 pulleyPipe2Position = new Vector2(18.2f, 12f);
@@ -130,7 +141,7 @@ namespace CrisisAtSwissStation
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private BoxObject hole1;
         
-        private static Vector2 pistonHeadPosition = new Vector2(14.5f, 13.3f);
+        private static Vector2 pistonHeadPosition = new Vector2(12f, 13.2f);
         private BoxObject pistonHead;
 
         //private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
@@ -139,13 +150,19 @@ namespace CrisisAtSwissStation
         private static Vector2 movPlatform1Position = new Vector2(8.3f, 10f);
         private BoxObject movPlatform1;
 
+        private static Vector2 tablePosition = new Vector2(15.6f, 13f);
+        private CircleObject table;
+
+        private static Vector2 fan1Position = new Vector2(20.33f, 2f);
+        private FanObject fan1;
+
+
+
         private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.18f);
         private BoxObject brokenMovingPlatform1;
         private static Vector2 pillarPosition = new Vector2(0.035f, 7f);
         private BoxObject pillar;
-        private BoxObject pillar2;
-
-
+        private BoxObject pillar2;        
      
 
         int gameLevelWidth;
@@ -302,7 +319,7 @@ namespace CrisisAtSwissStation
             straightPipe7.Position = straightPipe7Position;
             AddObject(straightPipe7);
 
-            straightPipe8 = new BoxObject(World, straightPipeTileTexture, 0, .5f, 0, .9f,false);
+            straightPipe8 = new BoxObject(World, straightPipeTileTexture, 0, .5f, 0, .4f,false);
             straightPipe8.Position = straightPipe8Position;
             straightPipe8.Angle = 1.57f;
             AddObject(straightPipe8);
@@ -310,6 +327,16 @@ namespace CrisisAtSwissStation
             straightPipe9 = new BoxObject(World, straightPipeTileTexture, 0, .5f, 0, 1f,false);
             straightPipe9.Position = straightPipe9Position;
             AddObject(straightPipe9);
+
+            straightPipe10 = new BoxObject(World, straightPipeTileTexture, 0, .5f, 0, 1.3f, false);
+            straightPipe10.Position = straightPipe10Position;
+            straightPipe10.Angle = 1.57f;
+            AddObject(straightPipe10);
+
+            straightPipe11 = new BoxObject(World, straightPipeTileTexture, 0, .5f, 0, 1.3f, false);
+            straightPipe11.Position = straightPipe11Position;
+            straightPipe11.Angle = 1.57f;
+            AddObject(straightPipe11);
 
             pulleyPipe1 = new BoxObject(World, pulleyPlatformTexture, 1f, .5f, 0, .7f,true);
             pulleyPipe1.Position = pulleyPipe1Position;
@@ -348,7 +375,7 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
 
-            pistonHead = new BoxObject(World, pistonHeadTexture, 0, .5f, 0, .8f, false);
+            pistonHead = new BoxObject(World, pistonHeadTexture, 0, .5f, 0, .5f, false);
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
 
@@ -389,8 +416,15 @@ namespace CrisisAtSwissStation
             top.Position = topPosition + new Vector2(60.9f, 0f);
             AddObject(top);*/
 
-            hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
+            table = new CircleObject(World, tableTexture, 1f, .5f, 0,.3f);
+            table.Position = tablePosition;
+            AddObject(table);
 
+            fan1 = new FanObject(World, fanAnimTexture, fanTexture);
+            fan1.Position = fan1Position;
+            AddObject(fan1);
+
+            hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
             hole1.Position = hole1Position;
             AddObject(hole1);
 
@@ -600,8 +634,18 @@ namespace CrisisAtSwissStation
             pulleyChainTexture = content.Load<Texture2D>("pulleytrack");
             pistonAssemblyTexture = content.Load<Texture2D>("piston_end");
             pistonHeadTexture = content.Load<Texture2D>("piston");
+            tableTexture = content.Load<Texture2D>("table");
+       
 
+            pipeAssemblyTexture = content.Load<Texture2D>("pipe_steam_part");
+            window1Texture = content.Load<Texture2D>("window1");
+            window2Texture = content.Load<Texture2D>("window2");
+            window3Texture = content.Load<Texture2D>("window3");
+            window4Texture = content.Load<Texture2D>("window4");
+            window5Texture = content.Load<Texture2D>("window5");
 
+            fanAnimTexture =  content.Load<Texture2D>("fan_strip");
+            fanTexture = content.Load<Texture2D>("fan");
         }
 
 
@@ -698,13 +742,13 @@ namespace CrisisAtSwissStation
             if (pistonMove == true)
             {
                 pistonHead.Position = pistonHead.Position - new Vector2(.01f, 0);
-                if (pistonHead.Position.X < 14.5f)
+                if (pistonHead.Position.X < 12f)
                     pistonMove = false;
             }
             else
             {
                 pistonHead.Position = pistonHead.Position + new Vector2(.2f, 0);                
-                if (pistonHead.Position.X > 16.5f)
+                if (pistonHead.Position.X > 13f)
                     pistonMove= true;
             }
 
@@ -867,6 +911,10 @@ namespace CrisisAtSwissStation
                     (object2 == world.winDoor && object1 == world.dude))
                     world.Win();
 
+                if ((object1 == world.pistonHead && object2 == world.table) ||
+                    (object2 == world.table && object1 == world.pistonHead))
+                    world.table.Body.ApplyForce(Utils.Convert(new Vector2(200,0)),world.table.Body.GetWorldCenter());
+
                 /*if ((object1 == world.movPlatform2 && object2 == world.dude) ||
                    (object2 == world.movPlatform2 && object1 == world.dude))
                 { world.Fail(); object2.Position = dudePosition; }//you got squished //world.mov = false;*/
@@ -891,7 +939,13 @@ namespace CrisisAtSwissStation
             //GameEngine.Instance.SpriteBatch.Draw(brokenMovingPlatformTexture, new Vector2(.1f*CASSWorld.SCALE, 13.6f*CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(16.2f * CASSWorld.SCALE, 4.5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(17.6f * CASSWorld.SCALE, 9.7f * CASSWorld.SCALE), Color.White);
-            GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(10f * CASSWorld.SCALE, 12.3f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), .8f, SpriteEffects.None, 0);
+            GameEngine.Instance.SpriteBatch.Draw(pipeAssemblyTexture, new Vector2(0f * CASSWorld.SCALE, 5.9f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window1Texture, new Vector2(5f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window2Texture, new Vector2(25f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window3Texture, new Vector2(35f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+            GameEngine.Instance.SpriteBatch.Draw(window4Texture, new Vector2(45f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
+
+            GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(9.7f * CASSWorld.SCALE, 12.6f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
             //(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
             GameEngine.Instance.SpriteBatch.End();
 

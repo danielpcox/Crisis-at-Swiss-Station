@@ -16,18 +16,21 @@ namespace CrisisAtSwissStation
     {
         // The circle texture
         protected Texture2D texture;
+        private float scale;
 
         /**
          * Creates a new circle object.
          */
-        public CircleObject(World world, Texture2D texture, float density, float friction, float restitution)
+        public CircleObject(World world, Texture2D texture, float density, float friction, float restitution,float myScale)
             : base(world)
         {
             // Initialize
             this.texture = texture;
 
+            scale = myScale;
+
             // Determine dimension
-            float radius = (float)texture.Width / (2 * CASSWorld.SCALE);
+            float radius = (float)texture.Width / (2 * CASSWorld.SCALE) * scale;
 
             // Create collision shape
             CircleDef shape = new CircleDef();
@@ -49,7 +52,7 @@ namespace CrisisAtSwissStation
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
 
-            spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
 
             spriteBatch.End();
 

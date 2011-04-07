@@ -39,7 +39,7 @@ namespace CrisisAtSwissStation
          * Creates a new drawn object
          */
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs)
-            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
+            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION,1f)
         {
             segmentTexture = segmenttexture;
             //Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
