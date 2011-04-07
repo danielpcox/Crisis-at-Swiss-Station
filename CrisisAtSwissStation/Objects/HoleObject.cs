@@ -27,7 +27,7 @@ namespace CrisisAtSwissStation
         private int myGameTime, animateTimer, animateInterval;
 
         public HoleObject(World world, Texture2D mytexture, Texture2D objectTexture)
-            : base(world, objectTexture, 0f, .5f, 0.0f)
+            : base(world, objectTexture, 0f, .5f, 0.0f,1,false)
         {
             //thisTexture = mytexture;
 
