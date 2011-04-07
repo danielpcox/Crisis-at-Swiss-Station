@@ -82,6 +82,7 @@ namespace Box2DX.Collision
 	/// Contact ids to facilitate warm starting.
 	/// </summary>
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+    [Serializable]
 	public struct ContactID
 	{
 		[System.Runtime.InteropServices.FieldOffset(0)]
