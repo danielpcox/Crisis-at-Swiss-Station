@@ -99,15 +99,15 @@ namespace CrisisAtSwissStation
             numBlobs++;
         }
 
-        public int Length
+        public float Length
         {
             get
             {
-                return numBlobs;
+                return amountOfInstasteel;
             }
             set
             {
-                numBlobs = value;
+                amountOfInstasteel = value;
             }
         }
         //Constructor for insta-steel generated in the level
