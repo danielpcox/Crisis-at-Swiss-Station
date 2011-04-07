@@ -103,6 +103,7 @@ namespace CrisisAtSwissStation
             else if (Filled >= MAX_FILL && !replacedBody)
             {
                 AddToWorld();
+                Position = Position + new Vector2(0.35f, 0.2f);
                 replacedBody = true;
             }
 
@@ -127,7 +128,7 @@ namespace CrisisAtSwissStation
                 origin = new Vector2(texture.Width/2, texture.Height/2);
 
                // Console.WriteLine(origin);
-                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
+                spriteBatch.Draw(texture, screenOffset  , null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
 
             }
 

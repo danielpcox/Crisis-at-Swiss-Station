@@ -319,9 +319,9 @@ namespace CrisisAtSwissStation
             spriteBatch.DrawString(spriteFont, ((int)ScrollingWorld.numDrawLeft).ToString(), new Vector2(155, 140), Color.Yellow);
 
             //Draw Jump label 
-            spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(50, 200), Color.Red);
+           // spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(50, 200), Color.Red);
             //Draw Jump amount
-            spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(115, 200), Color.Yellow);
+           // spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(115, 200), Color.Yellow);
 
 
             if (currentWorld.Succeeded && !currentWorld.Failed)
@@ -337,8 +337,8 @@ namespace CrisisAtSwissStation
 
             
             spriteBatch.End();
-            instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
-            jumpTextBox.Draw(spriteBatch, 255);
+            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+           // jumpTextBox.Draw(spriteBatch, 255);
             base.Draw(gameTime);
         }
     }
