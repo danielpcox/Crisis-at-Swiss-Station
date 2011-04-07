@@ -121,6 +121,9 @@ namespace CrisisAtSwissStation
         private static Vector2 pulleyPipe2Position = new Vector2(18.2f, 12f);
         private BoxObject pulleyPipe1,pulleyPipe2;
 
+        private static Vector2 topPosition = new Vector2(10.3f, 0f);
+        private BoxObject top;
+
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private BoxObject hole1;
 
@@ -132,6 +135,11 @@ namespace CrisisAtSwissStation
 
         private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.18f);
         private BoxObject brokenMovingPlatform1;
+        private static Vector2 pillarPosition = new Vector2(0.025f, 14f);
+        private BoxObject pillar;
+
+
+     
 
         int gameLevelWidth;
         int gameLevelHeight;
@@ -192,8 +200,46 @@ namespace CrisisAtSwissStation
             AddObject(arm);
             */
 
-            /*
-            //create bottom platforms
+            
+           
+
+
+            //Left and Right pillars (walls)
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition;
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -3.7f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -7.4f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -11.1f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -14.8f);
+            AddObject(pillar);
+            //right pillar now
+            pillarPosition = new Vector2(81.9f, 14);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition;
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -3.7f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -7.4f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -11.1f);
+            AddObject(pillar);
+            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar.Position = pillarPosition + new Vector2(0, -14.8f);
+            AddObject(pillar);
+            
+
+/*
             bigBox = new BoxObject(World, bigBoxTexture, 0, .1f, 0);
             bigBox.Position = bigBoxPosition + new Vector2(61.5f, .05f); 
             AddObject(bigBox);
@@ -308,7 +354,25 @@ namespace CrisisAtSwissStation
             bottom4.Position = bottomPosition + new Vector2(60.9f, 0f);
             AddObject(bottom4);
 
-            hole1 = new HoleObject(World, holeTexture, holeObjectTexture);
+            //omgar its a ceiling!!
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
+            top.Position = topPosition;
+            AddObject(top);
+
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
+            top.Position = topPosition + new Vector2(20.3f, 0f);
+            AddObject(top);
+
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
+            top.Position = topPosition + new Vector2(40.6f, 0f);
+            AddObject(top);
+
+            top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
+            top.Position = topPosition + new Vector2(60.9f, 0f);
+            AddObject(top);
+
+            hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
+
             hole1.Position = hole1Position;
             AddObject(hole1);
 
@@ -472,7 +536,7 @@ namespace CrisisAtSwissStation
 
             //PLAYS THE SONG!!!  (It resets at the beginning of the level)
             AudioManager audio = GameEngine.AudioManager;
-            audio.Play(AudioManager.MusicSelection.EarlyLevelv2);
+            audio.Play(AudioManager.MusicSelection.Destruction);
 
         }
 
