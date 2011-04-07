@@ -38,7 +38,8 @@ namespace CrisisAtSwissStation
         public enum MusicSelection
         {
             EarlyLevelv2,
-            Tension
+            Tension,
+            Destruction
            
         }
 
@@ -61,6 +62,7 @@ namespace CrisisAtSwissStation
             //Music
             songs.Add(MusicSelection.EarlyLevelv2, content.Load<Song>("EarlyLevelv2"));
             songs.Add(MusicSelection.Tension, content.Load<Song>("Tension(Lab 3)"));
+            songs.Add(MusicSelection.Destruction, content.Load<Song>("Destruction(v1)"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.VictoryTrumpets, content.Load<SoundEffect>("VictoryTrumpets"));
