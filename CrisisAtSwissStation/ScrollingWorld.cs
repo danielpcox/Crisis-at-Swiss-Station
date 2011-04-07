@@ -128,7 +128,7 @@ namespace CrisisAtSwissStation
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private BoxObject hole1;
         
-        private static Vector2 pistonHeadPosition = new Vector2(14.5f, 13.0f);
+        private static Vector2 pistonHeadPosition = new Vector2(14.5f, 13.3f);
         private BoxObject pistonHead;
 
         //private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
@@ -311,7 +311,7 @@ namespace CrisisAtSwissStation
             AddObject(pulleyPipe1);
 
             pulleyPipe2 = new BoxObject(World, pulleyPlatformLongTexture, 1f, .5f, 0, .35f,true);
-            pulleyPipe2.Position = pulleyPipe2Position;
+            pulleyPipe2.Position = pulleyPipe2Position;            
             AddObject(pulleyPipe2);
             
             PulleyJointDef jointDef1 = new PulleyJointDef();
@@ -342,7 +342,7 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
 
-            pistonHead = new BoxObject(World, pistonHeadTexture, 0, .5f, 0, 1, false);
+            pistonHead = new BoxObject(World, pistonHeadTexture, 0, .5f, 0, .8f, false);
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
 
@@ -647,7 +647,11 @@ namespace CrisisAtSwissStation
 
         public override void Simulate(float dt)
         {
-            Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
+            pulleyPipe1.Position = new Vector2(16.8f,pulleyPipe1.Position.Y);
+            pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
+
+
+            //Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             //ronnies 2 line attempt at fixing drawing
             //float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
             // screenOffset = new Vector2(guyPos, 0);
@@ -866,7 +870,7 @@ namespace CrisisAtSwissStation
             //GameEngine.Instance.SpriteBatch.Draw(brokenMovingPlatformTexture, new Vector2(.1f*CASSWorld.SCALE, 13.6f*CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(16.2f * CASSWorld.SCALE, 4.5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(17.6f * CASSWorld.SCALE, 9.7f * CASSWorld.SCALE), Color.White);
-            GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(12.8f * CASSWorld.SCALE, 13.0f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
+            GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(10f * CASSWorld.SCALE, 12.3f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), .8f, SpriteEffects.None, 0);
             //(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
             GameEngine.Instance.SpriteBatch.End();
 
