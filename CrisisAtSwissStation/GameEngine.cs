@@ -194,9 +194,10 @@ namespace CrisisAtSwissStation
 
             // TODO: XBox controls
             KeyboardState ks = Keyboard.GetState();
-            bool next = ks.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N);
-            bool prev = ks.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P);
+            //bool next = ks.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N);
+            //bool prev = ks.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P);
             bool reset = ks.IsKeyDown(Keys.R) && lastKeyboardState.IsKeyUp(Keys.R);
+            bool next;
            
             // exit when they press escape
             if (ks.IsKeyDown(Keys.Escape))
@@ -239,7 +240,7 @@ namespace CrisisAtSwissStation
             }
             
             // Current world is invalid for some reason - construct a new one!
-            if (next || prev || reset || currentWorld == null)
+            if (reset || currentWorld == null)
             {
                 // Uses C# reflection to construct a new world with minimal code
                 //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
