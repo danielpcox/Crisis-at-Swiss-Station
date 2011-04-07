@@ -197,7 +197,7 @@ namespace CrisisAtSwissStation
 
             // Create dude
             dude = new DudeObject(World, this, dudeTexture, dudeObjectTexture, armTexture, laser, dudeSensorName);
-            dude.Position = dudePosition;
+            dude.Position = dudePosition; // hole1Position + new Vector2(-10,-5);
             AddObject(dude);
 
             // Create the dude's arm
@@ -351,10 +351,6 @@ namespace CrisisAtSwissStation
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
 
-            bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0, 1, false);
-            bottom1.Position = bottomPosition;
-            AddObject(bottom1);
-            
             bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom1.Position = bottomPosition;
             AddObject(bottom1);
@@ -365,7 +361,7 @@ namespace CrisisAtSwissStation
 
             bottom3 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom3.Position = bottomPosition + new Vector2(40.6f, 0f);
-            AddObject(bottom3);
+            //AddObject(bottom3);
 
             bottom4 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom4.Position = bottomPosition + new Vector2(60.9f, 0f);
@@ -388,7 +384,7 @@ namespace CrisisAtSwissStation
             top.Position = topPosition + new Vector2(60.9f, 0f);
             AddObject(top);*/
 
-            hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
+            hole1 = new HoleObject(World, holeTexture, holeObjectTexture);
 
             hole1.Position = hole1Position;
             AddObject(hole1);
@@ -587,7 +583,7 @@ namespace CrisisAtSwissStation
 
 
             holeTexture = content.Load<Texture2D>("big_hole_strip");
-            holeObjectTexture = content.Load<Texture2D>("hole_tile2");
+            holeObjectTexture = content.Load<Texture2D>("hole_tile");
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
             brokenMovingPlatformTexture = content.Load<Texture2D>("broken_moving_platform");
@@ -918,8 +914,23 @@ namespace CrisisAtSwissStation
             public override void Violation(Body body)
             {
                 PhysicsObject obj = body.GetUserData() as PhysicsObject;
-                obj.Die();
 
+                // code to fill up a hole
+                int fillradius = 4;
+                if (obj is PaintedObject)
+                {
+                    foreach (PhysicsObject hole in this.world.Objects)
+                    {
+                        if (hole is HoleObject && obj.Position.X < hole.Position.X + fillradius && obj.Position.X > hole.Position.X - fillradius )
+                        {
+                            ((HoleObject)hole).Filled += ((PaintedObject)obj).Length;
+                            //Console.WriteLine("Filled: "); Console.WriteLine(((HoleObject)hole).Filled); // DEBUG
+                        }
+                    }
+                }
+
+                // code to kill the object that fell off, and to fail you if that object was you
+                obj.Die();
                 if (obj == world.dude)
                     world.Fail();
             }

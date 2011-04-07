@@ -95,6 +95,17 @@ namespace CrisisAtSwissStation
             numBlobs++;
         }
 
+        public int Length
+        {
+            get
+            {
+                return numBlobs;
+            }
+            set
+            {
+                numBlobs = value;
+            }
+        }
 
         //Not fixed for side scrolling!!!!!!!!!!!!
         // DEBUG : so, Box2DX for some reason didn't want to add shapes to an object on the fly.
