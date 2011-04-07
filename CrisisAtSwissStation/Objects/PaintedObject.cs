@@ -25,7 +25,7 @@ namespace CrisisAtSwissStation
         private const float POB_DENSITY = 1.0f;
         private const float POB_FRICTION = 0.5f;
         private const float POB_RESTITUTION = 0.0f;
-        private Color INSTASTEEL_COLOR = Color.Gray;
+        public static Color INSTASTEEL_COLOR = Color.Gray;
 
         List<Vec2> vertices = new List<Vec2>(); // we need this for drawing between the vertices
 
@@ -33,6 +33,8 @@ namespace CrisisAtSwissStation
 
         int numBlobs = 0;
 
+        float amountOfInstasteel; //how much insta-steel is in the object
+        
         float radius = 0f;
 
         /**
@@ -41,6 +43,7 @@ namespace CrisisAtSwissStation
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs)
             : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION,1f)
         {
+          
             segmentTexture = segmenttexture;
             //Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
             Position = blobs[0];
@@ -53,6 +56,7 @@ namespace CrisisAtSwissStation
                 //Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
                 Vector2 localpos = blobs[i]  - Position;
                 Vector2 localpos2 = blobs[i+1]- Position;
+                amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
 
                 // add a circle fixture to this object at each point
                 /*
@@ -91,6 +95,77 @@ namespace CrisisAtSwissStation
             }
             // add the last vertex
             Vector2 lastlocalpos = blobs[blobs.Count - 1]- Position;
+            vertices.Add(Utils.Convert(lastlocalpos));
+            numBlobs++;
+        }
+
+        public float Length
+        {
+            get
+            {
+                return amountOfInstasteel;
+            }
+            set
+            {
+                amountOfInstasteel = value;
+            }
+        }
+        //Constructor for insta-steel generated in the level
+        public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs, int numBlobs)
+            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1)
+        {
+            this.numBlobs = numBlobs;
+            segmentTexture = segmenttexture;
+            //Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
+            Position = blobs[0];
+            radius = (float)blobtexture.Width / (2 * CASSWorld.SCALE);
+
+            //foreach (Vector2 blobpos in blobs)
+            for (int i = 0; i < blobs.Count - 1; i++)
+            {
+                // Vector2 localpos = (blobs[i] / CASSWorld.SCALE) - Position;
+                //Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
+                Vector2 localpos = blobs[i] - Position;
+                Vector2 localpos2 = blobs[i + 1] - Position;
+                amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
+
+                // add a circle fixture to this object at each point
+                /*
+                CircleDef circle = new CircleDef();
+                circle.LocalPosition = Utils.Convert(localpos);
+                circle.Radius = radius;
+                circle.Density = POB_DENSITY;
+                circle.Friction = POB_FRICTION;
+                circle.Restitution = POB_RESTITUTION;
+                shapes.Add(circle);
+                */
+
+                float scaledTextureWidth = segmentTexture.Width / CASSWorld.SCALE;
+
+                Vector2 shapeVec = localpos2 - localpos;
+                shapeVec.Normalize();
+                Vector2 cornerOrtho = new Vector2(-shapeVec.Y, shapeVec.X);// * segmentTexture.Width / 2;
+                // manually calculate the positions of each corner of the box/line between localpos and localpos2
+                Vector2[] cornerpoints = new Vector2[] {               // if box were lying flat...
+                    localpos - cornerOrtho * scaledTextureWidth / 2, // lower-left corner
+                    localpos2 - cornerOrtho * scaledTextureWidth / 2, // lower-right corner
+                    localpos2 + cornerOrtho * scaledTextureWidth / 2, // upper-right corner
+                    localpos + cornerOrtho * scaledTextureWidth / 2 // upper-left corner
+                };
+
+                LinkedList<int> polygon = new LinkedList<int>();
+                for (int j = 0; j < cornerpoints.Length; j++)
+                    polygon.AddLast(j);
+                // Triangles generated
+                List<Vector2[]> triangles = new List<Vector2[]>();
+                Split(polygon, cornerpoints, triangles);
+                CreateShapes(triangles, POB_DENSITY, POB_FRICTION, POB_RESTITUTION);
+
+                vertices.Add(Utils.Convert(localpos)); // that is, vertices of the curve approximation
+                numBlobs++;
+            }
+            // add the last vertex
+            Vector2 lastlocalpos = blobs[blobs.Count - 1] - Position;
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
         }
@@ -187,6 +262,11 @@ namespace CrisisAtSwissStation
         public int getNumBlobs()
         {
             return numBlobs;
+        }
+
+        public float getAmountOfInstasteel()
+        {
+            return amountOfInstasteel;
         }
 
         /**

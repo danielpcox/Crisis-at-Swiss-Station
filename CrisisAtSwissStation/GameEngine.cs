@@ -197,19 +197,21 @@ namespace CrisisAtSwissStation
             bool next = ks.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N);
             bool prev = ks.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P);
             bool reset = ks.IsKeyDown(Keys.R) && lastKeyboardState.IsKeyUp(Keys.R);
-            lastKeyboardState = ks;
-            
+           
             // exit when they press escape
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
 
             // toggle mute if they press 'm' 
-            if (ks.IsKeyDown(Keys.M))
+            if (ks.IsKeyDown(Keys.M) && lastKeyboardState.IsKeyUp(Keys.M))
                 audioManager.Mute();
 
             // Move to next track if they press 'x'
-            if (ks.IsKeyDown(Keys.X))
+            if (ks.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
                 audioManager.PlayNext();
+
+            lastKeyboardState = ks;
+            
 
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {
@@ -268,7 +270,7 @@ namespace CrisisAtSwissStation
 
                 if (parseWin)
                 {
-                     ScrollingWorld.numDrawLeft = Int32.Parse(temp);
+                     ScrollingWorld.numDrawLeft = (float) Int32.Parse(temp);
                 }
             }
 
@@ -313,7 +315,7 @@ namespace CrisisAtSwissStation
             //Draw IS label 
             spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(50, 140), Color.Red);
             //Draw IS amount
-            spriteBatch.DrawString(spriteFont, ScrollingWorld.numDrawLeft.ToString(), new Vector2(155, 140), Color.Yellow);
+            spriteBatch.DrawString(spriteFont, ((int)ScrollingWorld.numDrawLeft).ToString(), new Vector2(155, 140), Color.Yellow);
 
             //Draw Jump label 
             spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(50, 200), Color.Red);
@@ -323,8 +325,6 @@ namespace CrisisAtSwissStation
 
             if (currentWorld.Succeeded && !currentWorld.Failed)
             {
-                //Currently plays the victory trumpets... a lot.
-                //audioManager.Play(AudioManager.SFXSelection.VictoryTrumpets);
                 spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - victory.Width) / 2,
                     (graphics.PreferredBackBufferHeight - victory.Height) / 2), Color.White);
             }
