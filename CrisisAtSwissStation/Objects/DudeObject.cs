@@ -61,7 +61,7 @@ namespace CrisisAtSwissStation
          * Creates a new dude
          */
         public DudeObject(World world, ScrollingWorld theWorld, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, LaserObject Laser, string groundSensorName)
-        : base(world, objectTexture, .5f, 0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
+        : base(world, objectTexture, .5f, 0f, 0.0f,1,false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             // Initialize
             isGrounded = false;            
