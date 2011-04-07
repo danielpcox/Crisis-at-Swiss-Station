@@ -33,6 +33,7 @@ namespace CrisisAtSwissStation
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
+        private static Texture2D barrierTexture2;
         private static Texture2D paintTexture;
         private static Texture2D paintedSegmentTexture;
         private static Texture2D crosshairTexture;
@@ -57,7 +58,8 @@ namespace CrisisAtSwissStation
         private static Texture2D pulleyPlatformTexture;
         private static Texture2D pulleyPlatformLongTexture;
         private static Texture2D pulleyChainTexture;
-
+        private static Texture2D pistonAssemblyTexture;
+        private static Texture2D pistonHeadTexture;
 
         private bool movPlat1;
         //private bool movPlat2;
@@ -121,11 +123,14 @@ namespace CrisisAtSwissStation
         private static Vector2 pulleyPipe2Position = new Vector2(18.2f, 12f);
         private BoxObject pulleyPipe1,pulleyPipe2;
 
-        private static Vector2 topPosition = new Vector2(10.3f, 0f);
+        private static Vector2 topPosition = new Vector2(41f, 0f);
         private BoxObject top;
 
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private BoxObject hole1;
+        
+        private static Vector2 pistonHeadPosition = new Vector2(14.5f, 13.3f);
+        private BoxObject pistonHead;
 
         //private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
         //private BoxObject movPlatform1;
@@ -135,8 +140,9 @@ namespace CrisisAtSwissStation
 
         private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.18f);
         private BoxObject brokenMovingPlatform1;
-        private static Vector2 pillarPosition = new Vector2(0.025f, 14f);
+        private static Vector2 pillarPosition = new Vector2(0.035f, 7f);
         private BoxObject pillar;
+        private BoxObject pillar2;
 
 
      
@@ -208,6 +214,7 @@ namespace CrisisAtSwissStation
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition;
             AddObject(pillar);
+            /*
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -3.7f);
             AddObject(pillar);
@@ -220,11 +227,13 @@ namespace CrisisAtSwissStation
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -14.8f);
             AddObject(pillar);
+             */
             //right pillar now
-            pillarPosition = new Vector2(81.9f, 14);
-            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
-            pillar.Position = pillarPosition;
-            AddObject(pillar);
+          
+            pillar2 = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar2.Position = pillarPosition + new Vector2(81.9f, 0);
+            AddObject(pillar2);
+            /*
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -3.7f);
             AddObject(pillar);
@@ -236,7 +245,7 @@ namespace CrisisAtSwissStation
             AddObject(pillar);
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -14.8f);
-            AddObject(pillar);
+            AddObject(pillar);*/
             
 
 /*
@@ -307,7 +316,7 @@ namespace CrisisAtSwissStation
             AddObject(pulleyPipe1);
 
             pulleyPipe2 = new BoxObject(World, pulleyPlatformLongTexture, 1f, .5f, 0, .35f,true);
-            pulleyPipe2.Position = pulleyPipe2Position;
+            pulleyPipe2.Position = pulleyPipe2Position;            
             AddObject(pulleyPipe2);
             
             PulleyJointDef jointDef1 = new PulleyJointDef();
@@ -338,6 +347,14 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
 
+            pistonHead = new BoxObject(World, pistonHeadTexture, 0, .5f, 0, .8f, false);
+            pistonHead.Position = pistonHeadPosition;
+            AddObject(pistonHead);
+
+            bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0, 1, false);
+            bottom1.Position = bottomPosition;
+            AddObject(bottom1);
+            
             bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom1.Position = bottomPosition;
             AddObject(bottom1);
@@ -355,10 +372,10 @@ namespace CrisisAtSwissStation
             AddObject(bottom4);
 
             //omgar its a ceiling!!
-            top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
+            top = new BoxObject(World, barrierTexture2, 0, .5f, 0,1,false);
             top.Position = topPosition;
             AddObject(top);
-
+            /*
             top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             top.Position = topPosition + new Vector2(20.3f, 0f);
             AddObject(top);
@@ -369,7 +386,7 @@ namespace CrisisAtSwissStation
 
             top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             top.Position = topPosition + new Vector2(60.9f, 0f);
-            AddObject(top);
+            AddObject(top);*/
 
             hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
 
@@ -550,6 +567,7 @@ namespace CrisisAtSwissStation
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
+            barrierTexture2 = content.Load<Texture2D>("Barrier1");
             //paintTexture = content.Load<Texture2D>("paint");
             paintTexture = content.Load<Texture2D>("paint");
             paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
@@ -579,6 +597,8 @@ namespace CrisisAtSwissStation
             pulleyPlatformTexture = content.Load<Texture2D>("pulley_platform");
             pulleyPlatformLongTexture = content.Load<Texture2D>("pulley_platform_long");
             pulleyChainTexture = content.Load<Texture2D>("pulleytrack");
+            pistonAssemblyTexture = content.Load<Texture2D>("piston_end");
+            pistonHeadTexture = content.Load<Texture2D>("piston");
 
 
         }
@@ -633,7 +653,11 @@ namespace CrisisAtSwissStation
 
         public override void Simulate(float dt)
         {
-            Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
+            pulleyPipe1.Position = new Vector2(16.8f,pulleyPipe1.Position.Y);
+            pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
+
+
+            //Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             //ronnies 2 line attempt at fixing drawing
             //float guyPos = -dude.Position.X * CASSWorld.SCALE + (GameEngine.GAME_WINDOW_WIDTH / 2);
             // screenOffset = new Vector2(guyPos, 0);
@@ -852,9 +876,8 @@ namespace CrisisAtSwissStation
             //GameEngine.Instance.SpriteBatch.Draw(brokenMovingPlatformTexture, new Vector2(.1f*CASSWorld.SCALE, 13.6f*CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(16.2f * CASSWorld.SCALE, 4.5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(17.6f * CASSWorld.SCALE, 9.7f * CASSWorld.SCALE), Color.White);
-
-
-
+            GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(10f * CASSWorld.SCALE, 12.3f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), .8f, SpriteEffects.None, 0);
+            //(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
             GameEngine.Instance.SpriteBatch.End();
 
             base.Draw(device, cameraTransform);
