@@ -530,8 +530,8 @@ namespace CrisisAtSwissStation.LevelEditor
             if (rb_Platforms.Checked)
             {
                 //mp.X -= (texture.Width / (numberOfFrames * 2));
-                mp.X -= (texture.Width / 2);
-                mp.Y -= (texture.Height / 2);
+                //mp.X -= (texture.Width / 2);
+                //mp.Y -= (texture.Height / 2);
 
                 BoxObject platform = new BoxObject(world.World, texName, 0, .1f, 0);
                 Vector2 gameposition = Conversion.DrawPointToVector2(mp);

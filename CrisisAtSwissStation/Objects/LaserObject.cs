@@ -98,6 +98,7 @@ namespace CrisisAtSwissStation
 
             original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
             end = new Vector2((mX+ dude.Position.X)*SCALE - guyScreenPos, mY * SCALE);
+            //end = new Vector2(mX*SCALE, mY * SCALE);
 
             Vector2 gunpos = original; //+ adjustment;
 
