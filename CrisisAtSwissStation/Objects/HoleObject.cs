@@ -15,7 +15,7 @@ namespace CrisisAtSwissStation
     public class HoleObject : BoxObject
     {
 
-        const float MAX_FILL = 300f; // the amount of instasteel you must drop into the hole before it is completely filled
+        public const float MAX_FILL = 300f; // the amount of instasteel you must drop into the hole before it is completely filled
 
         //private static Texture2D thisTexture;
 
