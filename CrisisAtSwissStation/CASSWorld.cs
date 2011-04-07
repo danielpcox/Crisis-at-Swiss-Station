@@ -70,6 +70,14 @@ namespace CrisisAtSwissStation
             }
             tempObjects.Clear();
         }
+        
+        public List<PhysicsObject> Objects
+        {
+            get
+            {
+                return objects;
+            }
+        }
 
         /**
          * Draws all objects in the physics world
