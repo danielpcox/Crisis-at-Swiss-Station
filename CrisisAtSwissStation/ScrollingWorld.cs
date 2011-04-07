@@ -623,7 +623,7 @@ namespace CrisisAtSwissStation
 
 
             holeTexture = content.Load<Texture2D>("big_hole_strip");
-            holeObjectTexture = content.Load<Texture2D>("hole_tile");
+            holeObjectTexture = content.Load<Texture2D>("hole_tile_sealed");
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
             brokenMovingPlatformTexture = content.Load<Texture2D>("broken_moving_platform");
