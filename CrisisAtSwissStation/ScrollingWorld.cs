@@ -33,6 +33,7 @@ namespace CrisisAtSwissStation
         private static Texture2D winTexture;
         private static Texture2D ropeBridgeTexture;
         private static Texture2D barrierTexture;
+        private static Texture2D barrierTexture2;
         private static Texture2D paintTexture;
         private static Texture2D paintedSegmentTexture;
         private static Texture2D crosshairTexture;
@@ -123,7 +124,7 @@ namespace CrisisAtSwissStation
         private static Vector2 pulleyPipe2Position = new Vector2(18.2f, 12f);
         private BoxObject pulleyPipe1,pulleyPipe2;
 
-        private static Vector2 topPosition = new Vector2(10.3f, 0f);
+        private static Vector2 topPosition = new Vector2(41f, 0f);
         private BoxObject top;
 
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
@@ -140,8 +141,9 @@ namespace CrisisAtSwissStation
 
         private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.18f);
         private BoxObject brokenMovingPlatform1;
-        private static Vector2 pillarPosition = new Vector2(0.025f, 14f);
+        private static Vector2 pillarPosition = new Vector2(0.035f, 7f);
         private BoxObject pillar;
+        private BoxObject pillar2;
 
 
      
@@ -213,6 +215,7 @@ namespace CrisisAtSwissStation
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition;
             AddObject(pillar);
+            /*
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -3.7f);
             AddObject(pillar);
@@ -225,11 +228,13 @@ namespace CrisisAtSwissStation
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -14.8f);
             AddObject(pillar);
+             */
             //right pillar now
-            pillarPosition = new Vector2(81.9f, 14);
-            pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
-            pillar.Position = pillarPosition;
-            AddObject(pillar);
+          
+            pillar2 = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
+            pillar2.Position = pillarPosition + new Vector2(81.9f, 0);
+            AddObject(pillar2);
+            /*
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -3.7f);
             AddObject(pillar);
@@ -241,7 +246,7 @@ namespace CrisisAtSwissStation
             AddObject(pillar);
             pillar = new BoxObject(World, barrierTexture, 0, .1f, 0,1,false);
             pillar.Position = pillarPosition + new Vector2(0, -14.8f);
-            AddObject(pillar);
+            AddObject(pillar);*/
             
 
 /*
@@ -367,10 +372,10 @@ namespace CrisisAtSwissStation
             AddObject(bottom4);
 
             //omgar its a ceiling!!
-            top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
+            top = new BoxObject(World, barrierTexture2, 0, .5f, 0,1,false);
             top.Position = topPosition;
             AddObject(top);
-
+            /*
             top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             top.Position = topPosition + new Vector2(20.3f, 0f);
             AddObject(top);
@@ -381,7 +386,7 @@ namespace CrisisAtSwissStation
 
             top = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             top.Position = topPosition + new Vector2(60.9f, 0f);
-            AddObject(top);
+            AddObject(top);*/
 
             hole1 = new HoleObject(World, holeTexture,holeObjectTexture);
 
@@ -562,6 +567,7 @@ namespace CrisisAtSwissStation
             winTexture = content.Load<Texture2D>("WinDoor");
             ropeBridgeTexture = content.Load<Texture2D>("RopeBridge");
             barrierTexture = content.Load<Texture2D>("Barrier");
+            barrierTexture2 = content.Load<Texture2D>("Barrier1");
             //paintTexture = content.Load<Texture2D>("paint");
             paintTexture = content.Load<Texture2D>("paint");
             paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
