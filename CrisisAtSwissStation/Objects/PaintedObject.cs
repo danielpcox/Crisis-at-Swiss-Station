@@ -41,7 +41,7 @@ namespace CrisisAtSwissStation
          * Creates a new drawn object
          */
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs)
-            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
+            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION,1f)
         {
           
             segmentTexture = segmenttexture;
@@ -99,20 +99,20 @@ namespace CrisisAtSwissStation
             numBlobs++;
         }
 
-        public int Length
+        public float Length
         {
             get
             {
-                return numBlobs;
+                return amountOfInstasteel;
             }
             set
             {
-                numBlobs = value;
+                amountOfInstasteel = value;
             }
         }
         //Constructor for insta-steel generated in the level
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs, int numBlobs)
-            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
+            : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1)
         {
             this.numBlobs = numBlobs;
             segmentTexture = segmenttexture;
