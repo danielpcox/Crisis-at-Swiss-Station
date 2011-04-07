@@ -338,8 +338,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Barrier1.jpg">
-      <Name>Barrier1</Name>
+    <Compile Include="piston.png">
+      <Name>piston</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="piston_end.png">
+      <Name>piston_end</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
