@@ -48,7 +48,7 @@ namespace CrisisAtSwissStation
             spriteHeight = 500;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
-
+            
         }
 
         public float Filled
@@ -67,6 +67,8 @@ namespace CrisisAtSwissStation
 
         public override void Update(CASSWorld world, float dt)
         {
+
+          
             //animation stuff
             myGameTime++;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
@@ -114,7 +116,8 @@ namespace CrisisAtSwissStation
             {
                 origin = new Vector2(texture.Width/2, texture.Height/2);
                 Console.WriteLine(origin);
-                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
+                spriteBatch.Draw(texture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0); 
+               
             }
 
             spriteBatch.End();
