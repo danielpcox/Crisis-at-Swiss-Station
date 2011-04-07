@@ -15,7 +15,7 @@ namespace CrisisAtSwissStation
     public class HoleObject : BoxObject
     {
 
-        const float MAX_FILL = 20f; // the amount of instasteel you must drop into the hole before it is completely filled
+        const float MAX_FILL = 300f; // the amount of instasteel you must drop into the hole before it is completely filled
 
         //private static Texture2D thisTexture;
 
@@ -64,6 +64,8 @@ namespace CrisisAtSwissStation
         }
 
         bool destroyedBody = false;
+        Body tempBody;
+        bool replacedBody = false;
 
         public override void Update(CASSWorld world, float dt)
         {
@@ -93,8 +95,15 @@ namespace CrisisAtSwissStation
             // gotta delete the hole Body so we fall through the hole
             if (!destroyedBody)
             {
-                world.World.DestroyBody(Body);
+                tempBody = Body;
+                //world.World.DestroyBody(Body);
+                RemoveFromWorld();
                 destroyedBody = true;
+            }
+            else if (Filled >= MAX_FILL && !replacedBody)
+            {
+                AddToWorld();
+                replacedBody = true;
             }
 
             //base.Update(world, dt);
@@ -110,6 +119,7 @@ namespace CrisisAtSwissStation
                               RasterizerState.CullCounterClockwise, null, cameraTransform);           
             if (Filled < MAX_FILL)
             {
+                
                 spriteBatch.Draw(animTexture, screenOffset+ (new Vector2(0,-4.325f) * CASSWorld.SCALE), sourceRect, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
             }
             else
@@ -120,20 +130,7 @@ namespace CrisisAtSwissStation
                
             }
 
-            spriteBatch.End();
-
-            /*
-            Vector2 screenOffset = (CASSWorld.SCALE * Position);
-            Vector2 origin = new Vector2(thisTexture.Width, thisTexture.Height) / 2;
-
-            SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
-                              RasterizerState.CullCounterClockwise, null, cameraTransform);
-
-            spriteBatch.Draw(thisTexture, screenOffset, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);            
-
-            spriteBatch.End();
-             */
+            spriteBatch.End();       
         
         }
 
