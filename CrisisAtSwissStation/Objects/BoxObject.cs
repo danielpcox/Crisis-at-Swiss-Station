@@ -16,19 +16,25 @@ namespace CrisisAtSwissStation
     {
         // The box texture
         protected Texture2D texture;
+        private float scale;
 
         /**
          * Creates a new box object
          */
-        public BoxObject(World world, Texture2D texture, float density, float friction, float restitution)
+        public BoxObject(World world, Texture2D texture, float density, float friction, float restitution, float myScale, bool isPulley)
             : base(world)
         {
             // Initialize
             this.texture = texture;
+
+            scale = myScale;
+
+            if (isPulley)
+                BodyDef.FixedRotation = true;
             
             // Determine dimensions
-            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
-            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
+            float halfWidth = ((float)texture.Width / (2 * CASSWorld.SCALE)) * scale;
+            float halfHeight = ((float)texture.Height / (2 * CASSWorld.SCALE)) * scale;
 
             // Create the collision shape
             PolygonDef shape = new PolygonDef();
@@ -38,7 +44,8 @@ namespace CrisisAtSwissStation
             shape.Restitution = restitution;
             shapes.Add(shape);
         }
-
+        
+        
         /**
          * Draws the object on the screen using a sprite batch.
          */
@@ -51,8 +58,8 @@ namespace CrisisAtSwissStation
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
-
-            spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, 1, SpriteEffects.None, 0);
+            
+            spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
 
             spriteBatch.End();
         }
