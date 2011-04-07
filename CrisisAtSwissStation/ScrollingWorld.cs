@@ -57,7 +57,8 @@ namespace CrisisAtSwissStation
         private static Texture2D pulleyPlatformTexture;
         private static Texture2D pulleyPlatformLongTexture;
         private static Texture2D pulleyChainTexture;
-
+        private static Texture2D pistonAssemblyTexture;
+        private static Texture2D pistonHeadTexture;
 
         private bool movPlat1;
         //private bool movPlat2;
@@ -126,6 +127,9 @@ namespace CrisisAtSwissStation
 
         private static Vector2 hole1Position = new Vector2(47f, 14.7f);
         private BoxObject hole1;
+        
+        private static Vector2 pistonHeadPosition = new Vector2(14.5f, 13.0f);
+        private BoxObject pistonHead;
 
         //private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
         //private BoxObject movPlatform1;
@@ -338,6 +342,14 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
 
+            pistonHead = new BoxObject(World, pistonHeadTexture, 0, .5f, 0, 1, false);
+            pistonHead.Position = pistonHeadPosition;
+            AddObject(pistonHead);
+
+            bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0, 1, false);
+            bottom1.Position = bottomPosition;
+            AddObject(bottom1);
+            
             bottom1 = new BoxObject(World, bottomTexture, 0, .5f, 0,1,false);
             bottom1.Position = bottomPosition;
             AddObject(bottom1);
@@ -579,6 +591,8 @@ namespace CrisisAtSwissStation
             pulleyPlatformTexture = content.Load<Texture2D>("pulley_platform");
             pulleyPlatformLongTexture = content.Load<Texture2D>("pulley_platform_long");
             pulleyChainTexture = content.Load<Texture2D>("pulleytrack");
+            pistonAssemblyTexture = content.Load<Texture2D>("piston_end");
+            pistonHeadTexture = content.Load<Texture2D>("piston");
 
 
         }
@@ -852,9 +866,8 @@ namespace CrisisAtSwissStation
             //GameEngine.Instance.SpriteBatch.Draw(brokenMovingPlatformTexture, new Vector2(.1f*CASSWorld.SCALE, 13.6f*CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(16.2f * CASSWorld.SCALE, 4.5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(17.6f * CASSWorld.SCALE, 9.7f * CASSWorld.SCALE), Color.White);
-
-
-
+            GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(12.8f * CASSWorld.SCALE, 13.0f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
+            //(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
             GameEngine.Instance.SpriteBatch.End();
 
             base.Draw(device, cameraTransform);
