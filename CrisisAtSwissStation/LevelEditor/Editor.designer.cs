@@ -99,6 +99,7 @@
             // 
             // panel_Main
             // 
+            this.panel_Main.AutoScroll = true;
             this.panel_Main.Controls.Add(this.splitContainer1);
             this.panel_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_Main.Location = new System.Drawing.Point(0, 0);
@@ -119,6 +120,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.AutoScroll = true;
             this.splitContainer1.Panel2.Controls.Add(this.pb_Level);
             this.splitContainer1.Size = new System.Drawing.Size(1282, 772);
             this.splitContainer1.SplitterDistance = 250;
@@ -623,10 +625,11 @@
             this.pb_Level.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pb_Level.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pb_Level.Location = new System.Drawing.Point(0, 0);
-            this.pb_Level.MaximumSize = new System.Drawing.Size(1024, 768);
+            this.pb_Level.MaximumSize = new System.Drawing.Size(4096, 768);
             this.pb_Level.MinimumSize = new System.Drawing.Size(800, 600);
             this.pb_Level.Name = "pb_Level";
             this.pb_Level.Size = new System.Drawing.Size(1024, 768);
+            this.pb_Level.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pb_Level.TabIndex = 0;
             this.pb_Level.TabStop = false;
             this.pb_Level.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_Level_Paint);
@@ -639,6 +642,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1282, 772);
             this.Controls.Add(this.panel_Main);
             this.Name = "Editor";
@@ -646,6 +650,7 @@
             this.panel_Main.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -677,7 +682,6 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Panel panel_TextureList;
         private System.Windows.Forms.ListBox lb_TextureList;
-        private System.Windows.Forms.PictureBox pb_Level;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mi_Save;
@@ -720,6 +724,7 @@
         private System.Windows.Forms.TextBox tb_Rotation;
         private System.Windows.Forms.Button b_Front;
         private System.Windows.Forms.RadioButton rb_Vanish_Walls;
+        public System.Windows.Forms.PictureBox pb_Level;
 
 
 
