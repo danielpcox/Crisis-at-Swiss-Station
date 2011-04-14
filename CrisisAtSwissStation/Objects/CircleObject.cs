@@ -21,15 +21,19 @@ namespace CrisisAtSwissStation
         protected Texture2D texture;
         private float scale;
 
+        string textureName;
+
         /**
          * Creates a new circle object.
          */
-        public CircleObject(World world, Texture2D texture, float density, float friction, float restitution,float myScale)
+        public CircleObject(World world, string texturename, float density, float friction, float restitution,float myScale)
             : base(world)
         {
+            textureName = texturename;
+
             // Initialize
-            this.texture = texture;
-            TextureFilename = texture.Name;
+            this.texture = GameEngine.TextureList[texturename];
+            TextureFilename = texturename;
 
             scale = myScale;
 

@@ -24,6 +24,7 @@ namespace CrisisAtSwissStation
         /**
          * Creates a new box object
          */
+        /*
         public BoxObject(World world, Texture2D texture, float density, float friction, float restitution, float myScale, bool isPulley)
             : base(world)
         {
@@ -47,16 +48,23 @@ namespace CrisisAtSwissStation
             shape.Restitution = restitution;
             shapes.Add(shape);
         }
+        */
 
-        public BoxObject(World world, string textureName, float density, float friction, float restitution)
+        public BoxObject(World world, string textureName, float density, float friction, float restitution, float myScale, bool isPulley)
             : base(world)
         {
             // Initialize
+            //Console.WriteLine(textureName);
             this.texture = GameEngine.TextureList[textureName];
             TextureFilename = textureName;
             Height = texture.Height;
             Width = texture.Width;
             boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
+
+            scale = myScale;
+
+            if (isPulley)
+                BodyDef.FixedRotation = true;
             
             // Determine dimensions
             float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);

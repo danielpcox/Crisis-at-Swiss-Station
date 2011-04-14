@@ -48,6 +48,7 @@ namespace CrisisAtSwissStation
         /**
          * Creates a new drawn object - HACK HACK - obsolete. remove when its reference in ScrollingWorld is removed
          */
+        /*
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs)
             : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION,1f)
         {
@@ -65,17 +66,6 @@ namespace CrisisAtSwissStation
                 Vector2 localpos = blobs[i]  - Position;
                 Vector2 localpos2 = blobs[i+1]- Position;
                 amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
-
-                // add a circle fixture to this object at each point
-                /*
-                CircleDef circle = new CircleDef();
-                circle.LocalPosition = Common.Utils.Convert(localpos);
-                circle.Radius = radius;
-                circle.Density = POB_DENSITY;
-                circle.Friction = POB_FRICTION;
-                circle.Restitution = POB_RESTITUTION;
-                shapes.Add(circle);
-                */
 
                 float scaledTextureWidth = segmentTexture.Width / CASSWorld.SCALE;
 
@@ -107,13 +97,13 @@ namespace CrisisAtSwissStation
             Vector2 lastlocalpos = blobs[blobs.Count - 1]- Position;
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
-        }
+        }*/
 
         /**
          * Creates a new drawn object
          */
         public PaintedObject(World world, string blobtexturename, string segmenttexturename, List<Vector2> blobs)
-            : base(world, GameEngine.TextureList[blobtexturename], POB_DENSITY, POB_FRICTION, POB_RESTITUTION)
+            : base(world, blobtexturename, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 0)
         {
             Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
 

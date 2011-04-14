@@ -85,13 +85,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Barrier.jpg">
-      <Name>Barrier</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="PhysicsFont.spritefont">
       <Name>PhysicsFont</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -453,16 +446,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="bg1_long.png">
-      <Name>bg1_long</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="dude_animation.bmp">
-      <Name>dude_animation</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="floor.png">
       <Name>floor</Name>
       <Importer>TextureImporter</Importer>
@@ -478,18 +461,52 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="hole_tileable.png">
-      <Name>hole_tileable</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="jumpFilmstrip.bmp">
-      <Name>jumpFilmstrip</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="stand.png">
       <Name>stand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="background%28old%29.png">
+      <Name>background%28old%29</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="newDudeFilmstrip_WORKING.png">
+      <Name>newDudeFilmstrip_WORKING</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="newDudeFilmstrip_NEWEST_BUT_WRONG_TYPE.bmp">
+      <Name>newDudeFilmstrip_NEWEST_BUT_WRONG_TYPE</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="newDudeFilmstrip_OLD.bmp">
+      <Name>newDudeFilmstrip_OLD</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="poster.png">
+      <Name>poster</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="stairbit.png">
+      <Name>stairbit</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="vent box.png">
+      <Name>vent box</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Barrier.png">
+      <Name>Barrier</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

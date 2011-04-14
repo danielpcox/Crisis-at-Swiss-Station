@@ -67,13 +67,10 @@ namespace CrisisAtSwissStation
         /**
          * Creates a new dude // HACK HACK - this constructor is obsolete, and needs to be removed when the reference to it in ScrollingWorld is
          */
+        /*
         public DudeObject(World world, ScrollingWorld theWorld, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, LaserObject Laser, string groundSensorName)
         : base(world, objectTexture, .5f, 0f, 0.0f,1,false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
-            Texture2D objectTexture = GameEngine.TextureList[objectTexturename];
-            Texture2D texture = GameEngine.TextureList[texturename];
-            Texture2D armTexture = GameEngine.TextureList[armTexturename];
-
             Height = objectTexture.Height;
             Width = objectTexture.Width;
 
@@ -82,7 +79,6 @@ namespace CrisisAtSwissStation
             // Initialize
             isGrounded = false;
 
-            TextureFilename = objectTexturename;
             // BodyDef options
             BodyDef.FixedRotation = true;
 
@@ -124,12 +120,6 @@ namespace CrisisAtSwissStation
 
 
             //animation stuff
-            /*
-            // Compute dimensions of the ground sensor
-            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
-            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
-            Vector2 sensorCenter = new Vector2(0, halfHeight);
-             */
             float halfWidth = (float)objectTexture.Width / (2 * CASSWorld.SCALE);
             float halfHeight = (float)objectTexture.Height / (2 * CASSWorld.SCALE);
             Vector2 sensorCenter = new Vector2(0, halfHeight); 
@@ -144,14 +134,14 @@ namespace CrisisAtSwissStation
 
             //animation stuff
             //base.(world, texture, 1.0f, 0.0f, 0.0f);
-        }
+        } */
 
         /**
          * Creates a new dude
          */
         //public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
-        public DudeObject(World world, string texturename, string objectTexturename, string armTexturename, string groundSensorName)
-        : base(world, objectTexturename, .5f, 0.0f, 0.0f) //: base(world, texture, 1.0f, 0.0f, 0.0f)
+        public DudeObject(World world, ScrollingWorld theWorld, string texturename, string objectTexturename, string armTexturename, LaserObject Laser, string groundSensorName)
+        : base(world, objectTexturename, .5f, 0.0f, 0.0f, 1, false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             this.armTextureName = armTexturename;
             this.animTextureName = texturename;
@@ -234,6 +224,7 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
+            Console.WriteLine(animTextureName);
             this.texture = GameEngine.TextureList[animTextureName];
             this.animTexture = GameEngine.TextureList[animTextureName];
             this.armTexture = GameEngine.TextureList[armTextureName];

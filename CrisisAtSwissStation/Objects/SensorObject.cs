@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Color = Microsoft.Xna.Framework.Color;
 
-using System;
 using System.Diagnostics;
 
 namespace CrisisAtSwissStation
@@ -24,35 +23,34 @@ namespace CrisisAtSwissStation
         private int spriteWidth;
         private int spriteHeight;     
         private int numFrames;
+        [NonSerialized]
         private Texture2D animTexture;
         private int myGameTime, animateTimer, animateInterval;
-        private bool animate;        
+        private bool animate;
 
+        public string animTextureName;
 
 
         //public SensorObject(World world, Texture2D texture)
         //    : base(world, texture, 0, 0, 0,1,false)
-        public SensorObject(World world, string texturename)
-            : base(world, texturename, 0, 0, 0)
+        public SensorObject(World world, string animTexturename, string objectTextureName, int sprWidth, int sprHeight, int animInt, int myNumFrames)
+            : base(world, objectTextureName, 0, 0, 0, 1, false)
         {
-            Texture2D texture = GameEngine.TextureList[texturename];
-            TextureFilename = texturename;
-            boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
+            TextureFilename = objectTextureName;
 
-            shapes[0].IsSensor = true;
-            animTexture = null;
-        }
+            animTexture = GameEngine.TextureList[animTexturename];
+            //Texture2D objectTexture = GameEngine.TextureList[objectTextureName];
 
-        public SensorObject(World world, Texture2D myTexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
-            : base(world, objectTexture, 0, 0, 0, 1, false)
-        {
+            //Texture2D texture = GameEngine.TextureList[texturename];
+            //TextureFilename = texturename;
+            //boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
+
             shapes[0].IsSensor = true;
 
             animate = false;
             myGameTime = 0;
             animateTimer = 0;
             animateInterval = animInt;
-            animTexture = myTexture;           
             xFrame = 0;
             yFrame = 0;
             numFrames = myNumFrames;
@@ -60,8 +58,11 @@ namespace CrisisAtSwissStation
             spriteHeight = sprHeight;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+        }
 
-
+        public void reloadNonSerializedAssets()
+        {
+            animTexture = GameEngine.TextureList[animTextureName];
         }
 
         public void makeAnimate()

@@ -162,6 +162,18 @@ namespace CrisisAtSwissStation
                 {
                     ((PaintedObject)obj).reloadNonSerializedAssets();
                 }
+                else if (obj is SensorObject)
+                {
+                    ((SensorObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is HoleObject)
+                {
+                    ((HoleObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is AnimationObject)
+                {
+                    ((AnimationObject)obj).reloadNonSerializedAssets();
+                }
             }
 
             // misc

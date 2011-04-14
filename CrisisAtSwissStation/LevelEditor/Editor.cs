@@ -66,7 +66,7 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             InitializeComponent();
 
-            Size pbLevelSize = new Size(GameEngine.GAME_WINDOW_WIDTH, GameEngine.GAME_WINDOW_HEIGHT);
+            Size pbLevelSize = new Size(GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT);
 
             pb_Level.MaximumSize = (pb_Level.MinimumSize = (pb_Level.Size = pbLevelSize));
             this.FormBorderStyle = FormBorderStyle.FixedSingle;  
@@ -509,7 +509,7 @@ namespace CrisisAtSwissStation.LevelEditor
 
                     if (textureName != null)
                     {
-                        Console.WriteLine(currdir + "\\" + textureDir + textureName.ToString());
+                        //Console.WriteLine(currdir + "\\" + textureDir + textureName.ToString());
                         texture = Image.FromFile(currdir + "\\" + textureDir + textureName.ToString());
 
                         MakeSpaceObject(textureDir + textureName.ToString(), texture, mouse);
@@ -533,7 +533,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 //mp.X -= (texture.Width / 2);
                 //mp.Y -= (texture.Height / 2);
 
-                BoxObject platform = new BoxObject(world.World, texName, 0, .1f, 0);
+                BoxObject platform = new BoxObject(world.World, texName, 0, .1f, 0, 1, false);
                 Vector2 gameposition = Conversion.DrawPointToVector2(mp);
                 platform.Position = new Vector2(gameposition.X / CASSWorld.SCALE, gameposition.Y / CASSWorld.SCALE);
 

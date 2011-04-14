@@ -141,9 +141,11 @@
     <Compile Include="LevelEditor\StringPromptDialog.designer.cs">
       <DependentUpon>StringPromptDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects\AnimationObject.cs" />
     <Compile Include="Objects\BoxObject.cs" />
     <Compile Include="Objects\CircleObject.cs" />
     <Compile Include="Objects\HackObject.cs" />
+    <Compile Include="Objects\HoleObject.cs" />
     <Compile Include="Objects\LaserObject.cs" />
     <Compile Include="Objects\PaintedObject.cs" />
     <Compile Include="Objects\DudeObject.cs" />
