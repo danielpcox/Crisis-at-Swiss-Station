@@ -223,8 +223,7 @@ namespace CrisisAtSwissStation
             float cos_theta = (float)System.Math.Cos(Angle);
             float sin_theta = (float)System.Math.Sin(Angle);
 
-            Vector2 center = new Vector2(boundingBox.Center.X * horizontalScale,
-                boundingBox.Center.Y);
+            Vector2 center = new Vector2(boundingBox.Center.X, boundingBox.Center.Y);
 
             newPoint = newPoint - center;
 
@@ -234,6 +233,7 @@ namespace CrisisAtSwissStation
                 );
 
             newPoint = newPoint + center;
+
 
             newPoint = newPoint + (Position * CASSWorld.SCALE);
 

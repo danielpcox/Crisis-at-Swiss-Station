@@ -19,7 +19,7 @@ namespace CrisisAtSwissStation
         // The box texture
         [NonSerialized]
         protected Texture2D texture;
-        private float scale;
+        public float scale;
 
         /**
          * Creates a new box object
@@ -57,9 +57,9 @@ namespace CrisisAtSwissStation
             //Console.WriteLine(textureName);
             this.texture = GameEngine.TextureList[textureName];
             TextureFilename = textureName;
-            Height = texture.Height;
-            Width = texture.Width;
-            boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
+            Height = texture.Height * myScale;
+            Width = texture.Width * myScale;
+            boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Width, (int)Height);
 
             scale = myScale;
 
@@ -67,8 +67,8 @@ namespace CrisisAtSwissStation
                 BodyDef.FixedRotation = true;
             
             // Determine dimensions
-            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE);
-            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE);
+            float halfWidth = (float)texture.Width / (2 * CASSWorld.SCALE) * scale ;
+            float halfHeight = (float)texture.Height / (2 * CASSWorld.SCALE) * scale;
 
             // Create the collision shape
             PolygonDef shape = new PolygonDef();

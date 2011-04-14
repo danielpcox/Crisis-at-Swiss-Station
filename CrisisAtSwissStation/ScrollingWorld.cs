@@ -363,6 +363,7 @@ namespace CrisisAtSwissStation
             straightPipe1 = new BoxObject(World, "straight_pipe", 0, .5f, 0,1,false);
             straightPipe1.Position = straightPipe1Position;            
             straightPipe1.Angle = 1.57f;
+            //straightPipe1.Angle = 3.14f;
             AddObject(straightPipe1);
 
             straightPipe2 = new BoxObject(World, "ground_like_platform", 0, .5f, 0,.6f,false);
@@ -485,7 +486,7 @@ namespace CrisisAtSwissStation
             fan1.Position = fan1Position;
             AddObject(fan1);
 
-            hole1 = new HoleObject(World, "hole_strip", "hole");
+            hole1 = new HoleObject(World, "big_hole_strip", "hole");
             hole1.Position = hole1Position;
             AddObject(hole1);
 

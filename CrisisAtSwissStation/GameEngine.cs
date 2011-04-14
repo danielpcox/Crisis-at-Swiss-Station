@@ -387,7 +387,7 @@ namespace CrisisAtSwissStation
 
             
             spriteBatch.End();
-            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+            instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
            // jumpTextBox.Draw(spriteBatch, 255);
             base.Draw(gameTime);
         }
