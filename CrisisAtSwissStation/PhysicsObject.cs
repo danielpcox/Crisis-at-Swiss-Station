@@ -220,17 +220,22 @@ namespace CrisisAtSwissStation
 
             //The next thing we do is rotate. Since the origin for the rotation is the center, we need to 
             //untranslate the image (we did this in the line above), and then retranslate it to the center.
-            float cos_theta = (float)System.Math.Cos(Angle);
-            float sin_theta = (float)System.Math.Sin(Angle);
+            //float cos_theta = (float)System.Math.Cos(Angle);
+            //float sin_theta = (float)System.Math.Sin(Angle);
 
             Vector2 center = new Vector2(boundingBox.Center.X, boundingBox.Center.Y);
-
             newPoint = newPoint - center;
+            
+            double theta = System.Math.Atan2(newPoint.Y, newPoint.X) + Angle;
+            Vector2 rotatedpos = new Vector2((float)(newPoint.Length() * System.Math.Cos(theta)), (float)(newPoint.Length() * System.Math.Sin(theta)));
+            newPoint = rotatedpos;
 
+            /*
             newPoint = new Vector2(
                 newPoint.X * cos_theta - newPoint.Y * sin_theta,
                 newPoint.X * sin_theta + newPoint.Y * cos_theta
                 );
+             * */
 
             newPoint = newPoint + center;
 
@@ -259,11 +264,11 @@ namespace CrisisAtSwissStation
             List<Vector2> newPts = new List<Vector2>();
 
             Vector2 halfDim = new Vector2(Width / 2, Height / 2); // this is a hack to place the objects at their center correctly
-
+            
             newPts.Add(mapPointOnImage(boundingBox.X, boundingBox.Y) - halfDim);
             newPts.Add(mapPointOnImage(boundingBox.X, Height + boundingBox.Y) - halfDim);
             newPts.Add(mapPointOnImage(Width + boundingBox.X, boundingBox.Y) - halfDim);
-            newPts.Add(mapPointOnImage(Height + boundingBox.X, Height + boundingBox.Y) - halfDim);
+            newPts.Add(mapPointOnImage(Width + boundingBox.X, Height + boundingBox.Y) - halfDim);
 
             float max_y = newPts[0].Y;
             float min_y = newPts[0].Y;

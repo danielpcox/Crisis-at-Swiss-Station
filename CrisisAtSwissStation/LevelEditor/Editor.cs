@@ -793,24 +793,26 @@ namespace CrisisAtSwissStation.LevelEditor
             // the upper right, upper left, and lower left corners map to. We determine these, and
             // tell the graphics to draw the image.
 
+            XnaRectangle bb = obj.getBBRelativeToWorld();
 
             //Find the new point for the upper-left corner
-            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(0, 0) - new Vector2(obj.Width / 2, obj.Height / 2));
-
+            //DrawPoint upper_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(0, 0) - new Vector2(obj.Width / 2, obj.Height / 2));
+            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X, bb.Y));
 
             //Find the new point for the upper-right corner
             float x_ur = obj.Width / 2;
             float y_ur = 0 - obj.Height / 2;
 
-            DrawPoint upper_right = Conversion.Vector2ToDrawPoint(
-                obj.mapPointOnImage(x_ur, y_ur));
+            //DrawPoint upper_right = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(x_ur, y_ur));
+            DrawPoint upper_right = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width, bb.Y));
 
 
             //Find the new point for the lower-left corner
             float x_ll = 0 - obj.Width / 2;
             float y_ll = obj.Height / 2;
 
-            DrawPoint lower_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(x_ll, y_ll));
+            //DrawPoint lower_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(x_ll, y_ll));
+            DrawPoint lower_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X, bb.Y + bb.Height));
 
 
             //Define the point mapping.
