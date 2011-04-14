@@ -66,7 +66,8 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             InitializeComponent();
 
-            Size pbLevelSize = new Size(GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT);
+            //Size pbLevelSize = new Size(GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT);
+            Size pbLevelSize = new Size(4096, 768);
 
             pb_Level.MaximumSize = (pb_Level.MinimumSize = (pb_Level.Size = pbLevelSize));
             this.FormBorderStyle = FormBorderStyle.FixedSingle;  

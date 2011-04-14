@@ -516,7 +516,7 @@
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.fileToolStripMenuItem.Text = "World";
             // 
             // createNewWorld
@@ -598,7 +598,7 @@
             this.tool_Selection.Image = ((System.Drawing.Image)(resources.GetObject("tool_Selection.Image")));
             this.tool_Selection.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_Selection.Name = "tool_Selection";
-            this.tool_Selection.Size = new System.Drawing.Size(42, 22);
+            this.tool_Selection.Size = new System.Drawing.Size(40, 22);
             this.tool_Selection.Text = "Select";
             this.tool_Selection.Click += new System.EventHandler(this.tool_Selection_Click);
             // 
@@ -622,14 +622,9 @@
             // 
             // pb_Level
             // 
-            this.pb_Level.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.pb_Level.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pb_Level.Location = new System.Drawing.Point(0, 0);
-            this.pb_Level.MaximumSize = new System.Drawing.Size(4096, 768);
-            this.pb_Level.MinimumSize = new System.Drawing.Size(800, 600);
             this.pb_Level.Name = "pb_Level";
-            this.pb_Level.Size = new System.Drawing.Size(1024, 768);
-            this.pb_Level.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pb_Level.Size = new System.Drawing.Size(4096, 768);
             this.pb_Level.TabIndex = 0;
             this.pb_Level.TabStop = false;
             this.pb_Level.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_Level_Paint);
@@ -650,7 +645,6 @@
             this.panel_Main.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
@@ -724,7 +718,7 @@
         private System.Windows.Forms.TextBox tb_Rotation;
         private System.Windows.Forms.Button b_Front;
         private System.Windows.Forms.RadioButton rb_Vanish_Walls;
-        public System.Windows.Forms.PictureBox pb_Level;
+        private System.Windows.Forms.PictureBox pb_Level;
 
 
 
