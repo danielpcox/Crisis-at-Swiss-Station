@@ -103,9 +103,9 @@ namespace CrisisAtSwissStation
          * Creates a new drawn object
          */
         public PaintedObject(World world, string blobtexturename, string segmenttexturename, List<Vector2> blobs)
-            : base(world, blobtexturename, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 0)
+            : base(world, blobtexturename, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1f)
         {
-            Position = blobs[0] / CASSWorld.SCALE; // position of the painting is the first blob in it
+            Position = blobs[0]; // CASSWorld.SCALE; // position of the painting is the first blob in it
 
             Texture2D segmenttexture = GameEngine.TextureList[segmenttexturename];
             Texture2D blobtexture = GameEngine.TextureList[blobtexturename];

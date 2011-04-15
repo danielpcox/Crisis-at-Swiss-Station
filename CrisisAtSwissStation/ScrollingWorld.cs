@@ -948,7 +948,7 @@ namespace CrisisAtSwissStation
                         {
                             Vector2 relativePos = prevMousePos - (drawPos * CASSWorld.SCALE);
                             relativePos = relativePos * (numDrawLeft / drawDist);
-                            drawPos = (prevMousePos + relativePos) / CASSWorld.SCALE;
+                            drawPos = (prevMousePos - relativePos) / CASSWorld.SCALE;
                             drawDist = numDrawLeft;
                         }
                     }
