@@ -462,7 +462,7 @@ namespace CrisisAtSwissStation
           
 
             //omgar its a ceiling!!
-            top = new BoxObject(World, "Barrier", 0, .5f, 0,1,false);
+            top = new BoxObject(World, "Barrier1", 0, .5f, 0,1,false);
             top.Position = topPosition;
             AddObject(top);
             /*
