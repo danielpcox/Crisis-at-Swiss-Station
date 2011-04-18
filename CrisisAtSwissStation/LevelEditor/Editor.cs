@@ -413,9 +413,9 @@ namespace CrisisAtSwissStation.LevelEditor
                 b_ApplyProperties.Enabled = true;
                 b_Front.Enabled = true;
                 tb_SLevel.Enabled = false;
-                /*
-                tb_Rotation.Text = (currentlySelectedObject.Rotation * 180.0f / MathHelper.Pi).ToString();
+                tb_Rotation.Text = (currentlySelectedObject.Angle * 180.0f / MathHelper.Pi).ToString();
 
+                /*
                 if (currentlySelectedObject is HazardStatic)
                 {
                     tb_Damage.Text = ((HazardStatic)currentlySelectedObject).Damage.ToString();
@@ -895,41 +895,14 @@ namespace CrisisAtSwissStation.LevelEditor
         private void b_ApplyProperties_Click(object sender, EventArgs e)
         {
             
-            // If we've selected an object and text is valid,
             // apply these new settings
-            /*
             if (currentlySelectedObject != null && AreObjPropertiesValid())
             {
-                if (currentlySelectedObject is HazardStatic)
-                {
-                    ((HazardStatic)currentlySelectedObject).Damage = int.Parse(tb_Damage.Text);
-                }
-                else if (currentlySelectedObject is HazardDynamic)
-                {
-                    ((HazardDynamic)currentlySelectedObject).Damage = int.Parse(tb_Damage.Text);
-                }
-                else if (currentlySelectedObject is Survivor)
-                {
-                    ((Survivor)currentlySelectedObject).SLevel = int.Parse(tb_SLevel.Text);
-                }
-                else if (currentlySelectedObject is VanishWall)
-                {
-                    ((VanishWall)currentlySelectedObject).VLevel = int.Parse(tb_SLevel.Text);
-                }
-
                 float newRotation = float.Parse(tb_Rotation.Text);
-                currentlySelectedObject.Rotate(currentlySelectedObject.Rotation + MathHelper.ToRadians(newRotation));
-                if (currentlySelectedObject is Dynamic)
-                    ((Dynamic)currentlySelectedObject).OriginalRotation = -currentlySelectedObject.Rotation;
-            }
-
-            if (cbox_Scripted.Enabled)
-            {
-                ParseScript();
+                currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
             }
 
            pb_Level.Refresh();
-            */
         }
 
         // Predicate<string> delegate to remove empty strings
