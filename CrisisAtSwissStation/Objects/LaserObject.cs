@@ -27,6 +27,7 @@ namespace CrisisAtSwissStation
         
         [NonSerialized]
         PrimitiveBatch primitiveBatch;
+        [NonSerialized]
         private Texture2D sectionTex;
 
         public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, Texture2D mySection, int amnSections)
