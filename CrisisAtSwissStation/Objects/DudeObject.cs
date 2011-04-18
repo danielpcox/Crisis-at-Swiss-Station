@@ -224,7 +224,6 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
-            Console.WriteLine(animTextureName);
             this.texture = GameEngine.TextureList[animTextureName];
             this.animTexture = GameEngine.TextureList[animTextureName];
             this.armTexture = GameEngine.TextureList[armTextureName];

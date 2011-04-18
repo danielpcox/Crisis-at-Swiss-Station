@@ -1,12 +1,4 @@
-﻿/* TODO:
- * 
- * Beta:     
- *      Smooth rotation.
- * 
- *      Change background
- * */
-
-using System;
+﻿using System;
 using System.IO;
 using System.Text.RegularExpressions; // For string tokenizing
 using System.Collections.Generic;
@@ -705,7 +697,7 @@ namespace CrisisAtSwissStation.LevelEditor
             //Create the world.
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                world = new ScrollingWorld(dialog.Text);
+                world = new ScrollingWorld(dialog.UserInput);
 
                 enableEditing(true);
 

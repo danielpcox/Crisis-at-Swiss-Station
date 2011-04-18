@@ -622,7 +622,7 @@
             // 
             this.pb_Level.Location = new System.Drawing.Point(0, 0);
             this.pb_Level.Name = "pb_Level";
-            this.pb_Level.Size = new System.Drawing.Size(4096, 768);
+            this.pb_Level.Size = new System.Drawing.Size(1024, 768);
             this.pb_Level.TabIndex = 0;
             this.pb_Level.TabStop = false;
             this.pb_Level.Paint += new System.Windows.Forms.PaintEventHandler(this.pb_Level_Paint);

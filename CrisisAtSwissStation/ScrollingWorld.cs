@@ -252,9 +252,8 @@ namespace CrisisAtSwissStation
         public ScrollingWorld(string backgroundname = "background")
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
-            backgroundName = backgroundname;
+            backgroundName = "Art\\Backgrounds\\" + backgroundname;
             background = GameEngine.TextureList[backgroundName];
-            Console.WriteLine(backgroundName);
 
             movPlat1 = true;
             //movPlat2 = true;
@@ -262,7 +261,6 @@ namespace CrisisAtSwissStation
 
             gameLevelWidth = background.Width;
             gameLevelHeight = background.Height;
-            numDrawLeft = 0; // HACK HACK HACK
 
             numDrawLeft = 0; // HACK HACK HACK
 
@@ -725,7 +723,6 @@ namespace CrisisAtSwissStation
         {
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.EarlyLevelv2);
-            Console.WriteLine(backgroundName);
             background = GameEngine.TextureList[backgroundName];
         }
 
