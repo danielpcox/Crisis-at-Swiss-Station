@@ -1104,5 +1104,10 @@ namespace CrisisAtSwissStation.LevelEditor
                 world.Objects.Add(currentlySelectedObject);
             }
         }
+
+        private void Editor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GameEngine.level_editor_open = false;
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace CrisisAtSwissStation
         //textbox for setting Jump
         TextBox jumpTextBox;
 
+        public static bool level_editor_open = false;
 
         Forms.Form editor;
        
@@ -243,10 +244,11 @@ namespace CrisisAtSwissStation
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            if (ks.IsKeyDown(Keys.L))
+            if (ks.IsKeyDown(Keys.L) && !GameEngine.level_editor_open)
             {
                 editor = new CrisisAtSwissStation.LevelEditor.Editor();
                 editor.Show();
+                GameEngine.level_editor_open = true;
             }
 
             // toggle mute if they press 'm' 
