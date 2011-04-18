@@ -904,26 +904,45 @@ namespace CrisisAtSwissStation.LevelEditor
                 currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
                 float newScale = float.Parse(tb_Scale.Text);
                 currentlySelectedObject.Width = (currentlySelectedObject.Width / currentlySelectedObject.scale) * newScale;
+
                 if (currentlySelectedObject is CircleObject)
+                {
                     currentlySelectedObject.Height = currentlySelectedObject.Width;
+
+                    float radius = (float)currentlySelectedObject.Width / (2 * CASSWorld.SCALE);
+
+                    // circle objects only
+                    currentlySelectedObject.RemoveFromWorld();
+                    CircleDef shape = new CircleDef();
+                    shape.Radius = radius;
+                    // HACK HACK HACK - this won't work for objects that have more than one shape!
+                    shape.Density = currentlySelectedObject.shapes[0].Density;
+                    shape.Friction = currentlySelectedObject.shapes[0].Friction;
+                    shape.Restitution = currentlySelectedObject.shapes[0].Restitution;
+                    currentlySelectedObject.shapes.Clear(); // get rid of the old, unscaled shape
+                    currentlySelectedObject.shapes.Add(shape); // add the new one
+                    currentlySelectedObject.AddToWorld();
+                }
                 else
+                {
                     currentlySelectedObject.Height = (currentlySelectedObject.Height / currentlySelectedObject.scale) * newScale;
+                    // Determine dimensions
+                    float halfWidth = (float)currentlySelectedObject.Width / (2 * CASSWorld.SCALE);
+                    float halfHeight = (float)currentlySelectedObject.Height / (2 * CASSWorld.SCALE);
 
-                // Determine dimensions
-                float halfWidth = (float)currentlySelectedObject.Width / (2 * CASSWorld.SCALE);
-                float halfHeight = (float)currentlySelectedObject.Height / (2 * CASSWorld.SCALE);
-
-                currentlySelectedObject.RemoveFromWorld();
-                // Create the collision shape
-                PolygonDef shape = new PolygonDef();
-                shape.SetAsBox(halfWidth, halfHeight);
-                // HACK HACK HACK - this won't work for objects that have more than one shape!
-                shape.Density = currentlySelectedObject.shapes[0].Density;
-                shape.Friction = currentlySelectedObject.shapes[0].Friction;
-                shape.Restitution = currentlySelectedObject.shapes[0].Restitution;
-                currentlySelectedObject.shapes.Clear(); // get rid of the old, unscaled shape
-                currentlySelectedObject.shapes.Add(shape); // add the new one
-                currentlySelectedObject.AddToWorld();
+                    // box object only...
+                    currentlySelectedObject.RemoveFromWorld();
+                    // Create the collision shape
+                    PolygonDef shape = new PolygonDef();
+                    shape.SetAsBox(halfWidth, halfHeight);
+                    // HACK HACK HACK - this won't work for objects that have more than one shape!
+                    shape.Density = currentlySelectedObject.shapes[0].Density;
+                    shape.Friction = currentlySelectedObject.shapes[0].Friction;
+                    shape.Restitution = currentlySelectedObject.shapes[0].Restitution;
+                    currentlySelectedObject.shapes.Clear(); // get rid of the old, unscaled shape
+                    currentlySelectedObject.shapes.Add(shape); // add the new one
+                    currentlySelectedObject.AddToWorld();
+                }
 
                 currentlySelectedObject.scale = newScale;
             }
