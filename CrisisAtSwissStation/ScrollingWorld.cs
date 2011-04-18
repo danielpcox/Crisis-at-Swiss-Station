@@ -266,7 +266,7 @@ namespace CrisisAtSwissStation
             // Create win door
 	    // HACK HACK - this will break door animation until a fix is created
             //winDoor = new SensorObject(World, winDoorAnimTexture, winTexture,93,99,20,5);
-            winDoor = new SensorObject(World, "WinDoor", "door_strip", 93, 99, 20, 5);
+            winDoor = new SensorObject(World, "door_strip", "WinDoor", 93, 99, 20, 5);
             winDoor.Position = winDoorPos;
             AddObject(winDoor);
 

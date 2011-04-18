@@ -39,6 +39,7 @@ namespace CrisisAtSwissStation
             TextureFilename = objectTextureName;
 
             animTexture = GameEngine.TextureList[animTexturename];
+            animTextureName = animTexturename;
             //Texture2D objectTexture = GameEngine.TextureList[objectTextureName];
 
             //Texture2D texture = GameEngine.TextureList[texturename];

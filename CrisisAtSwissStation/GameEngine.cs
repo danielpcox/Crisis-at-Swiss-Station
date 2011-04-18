@@ -292,7 +292,7 @@ namespace CrisisAtSwissStation
                 //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
 
                 currentWorld = new ScrollingWorld();
-                //currentWorld = Serializer.DeSerialize("C:\\Users\\danielpcox\\Desktop\\asdf.world");
+                //currentWorld = Serializer.DeSerialize("Content\\Worlds\\asdf.world");
                 //currentWorld.reloadNonSerializedAssets();
 
                 countdown = 0;
