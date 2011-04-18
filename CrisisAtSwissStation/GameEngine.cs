@@ -291,9 +291,11 @@ namespace CrisisAtSwissStation
                 // Uses C# reflection to construct a new world with minimal code
                 //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
 
-                currentWorld = new ScrollingWorld();
-                //currentWorld = Serializer.DeSerialize("Content\\Worlds\\asdf.world");
-                //currentWorld.reloadNonSerializedAssets();
+                string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
+
+                //currentWorld = new ScrollingWorld();
+                currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\original.world");
+                currentWorld.reloadNonSerializedAssets();
 
                 countdown = 0;
             }
