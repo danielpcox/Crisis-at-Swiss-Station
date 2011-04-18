@@ -19,7 +19,6 @@ namespace CrisisAtSwissStation
         // The circle texture
         [NonSerialized]
         protected Texture2D texture;
-        private float scale;
 
         string textureName;
 

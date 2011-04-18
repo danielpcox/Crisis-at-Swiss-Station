@@ -50,7 +50,7 @@
             this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
             this.b_Front = new System.Windows.Forms.Button();
-            this.tb_SLevel = new System.Windows.Forms.TextBox();
+            this.tb_Scale = new System.Windows.Forms.TextBox();
             this.lbl_SLevel = new System.Windows.Forms.Label();
             this.tb_Script = new System.Windows.Forms.TextBox();
             this.cbox_Scripted = new System.Windows.Forms.CheckBox();
@@ -356,7 +356,7 @@
             // tab_objProps
             // 
             this.tab_objProps.Controls.Add(this.b_Front);
-            this.tab_objProps.Controls.Add(this.tb_SLevel);
+            this.tab_objProps.Controls.Add(this.tb_Scale);
             this.tab_objProps.Controls.Add(this.lbl_SLevel);
             this.tab_objProps.Controls.Add(this.tb_Script);
             this.tab_objProps.Controls.Add(this.cbox_Scripted);
@@ -386,22 +386,22 @@
             this.b_Front.UseVisualStyleBackColor = true;
             this.b_Front.Click += new System.EventHandler(this.b_Front_Click);
             // 
-            // tb_SLevel
+            // tb_Scale
             // 
-            this.tb_SLevel.Location = new System.Drawing.Point(108, 70);
-            this.tb_SLevel.Name = "tb_SLevel";
-            this.tb_SLevel.Size = new System.Drawing.Size(100, 20);
-            this.tb_SLevel.TabIndex = 14;
-            this.tb_SLevel.Text = "0";
+            this.tb_Scale.Location = new System.Drawing.Point(108, 70);
+            this.tb_Scale.Name = "tb_Scale";
+            this.tb_Scale.Size = new System.Drawing.Size(100, 20);
+            this.tb_Scale.TabIndex = 14;
+            this.tb_Scale.Text = "0";
             // 
             // lbl_SLevel
             // 
             this.lbl_SLevel.AutoSize = true;
             this.lbl_SLevel.Location = new System.Drawing.Point(3, 70);
             this.lbl_SLevel.Name = "lbl_SLevel";
-            this.lbl_SLevel.Size = new System.Drawing.Size(75, 13);
+            this.lbl_SLevel.Size = new System.Drawing.Size(34, 13);
             this.lbl_SLevel.TabIndex = 13;
-            this.lbl_SLevel.Text = "Survivor Level";
+            this.lbl_SLevel.Text = "Scale";
             // 
             // tb_Script
             // 
@@ -711,7 +711,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.RadioButton rb_VictoryTest;
         private System.Windows.Forms.RadioButton rb_SavePoint;
-        private System.Windows.Forms.TextBox tb_SLevel;
+        private System.Windows.Forms.TextBox tb_Scale;
         private System.Windows.Forms.Label lbl_SLevel;
         private System.Windows.Forms.TextBox tb_Rotation;
         private System.Windows.Forms.Button b_Front;

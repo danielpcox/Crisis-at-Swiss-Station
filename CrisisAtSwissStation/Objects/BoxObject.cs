@@ -19,7 +19,6 @@ namespace CrisisAtSwissStation
         // The box texture
         [NonSerialized]
         protected Texture2D texture;
-        public float scale;
 
         /**
          * Creates a new box object

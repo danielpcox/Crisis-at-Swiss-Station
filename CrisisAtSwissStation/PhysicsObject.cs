@@ -37,6 +37,7 @@ namespace CrisisAtSwissStation
 
         float width = 10f;
         float height = 10f; // 10 for DEBUGging purposes
+        public float scale = 1f;
 
         string textureFilename = null;
         protected Rectangle boundingBox;

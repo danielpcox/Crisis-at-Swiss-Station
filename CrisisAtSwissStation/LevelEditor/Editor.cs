@@ -81,7 +81,7 @@ namespace CrisisAtSwissStation.LevelEditor
             tb_Rotation.Enabled = false;
             b_ApplyProperties.Enabled = false;
             b_Front.Enabled = false;
-            tb_SLevel.Enabled = false;
+            tb_Scale.Enabled = false;
 
         }
 
@@ -412,8 +412,9 @@ namespace CrisisAtSwissStation.LevelEditor
                 tb_Rotation.Enabled = true;
                 b_ApplyProperties.Enabled = true;
                 b_Front.Enabled = true;
-                tb_SLevel.Enabled = false;
+                tb_Scale.Enabled = true;
                 tb_Rotation.Text = (currentlySelectedObject.Angle * 180.0f / MathHelper.Pi).ToString();
+                tb_Scale.Text = currentlySelectedObject.scale.ToString();
 
                 /*
                 if (currentlySelectedObject is HazardStatic)
@@ -440,12 +441,12 @@ namespace CrisisAtSwissStation.LevelEditor
                 // Clear all the properties fields
                 tb_Damage.Text = "";
                 tb_Rotation.Text = "";
-                tb_SLevel.Text = "";
+                tb_Scale.Text = "";
                 b_ApplyProperties.Enabled = false;
                 b_Front.Enabled = false;
                 tb_Damage.Enabled = false;
                 tb_Rotation.Enabled = false;
-                tb_SLevel.Enabled = false;
+                tb_Scale.Enabled = false;
 
                 tb_Script.Text = "";
                 tb_Script.Enabled = false;
@@ -749,7 +750,6 @@ namespace CrisisAtSwissStation.LevelEditor
             if (currentState != State.NO_EDITS)
             {
                 //Draw the background image
-
                 string background_file = currdir + "\\" + world.backgroundName + ".png";
 
                 System.Drawing.Image image = Image.FromFile(background_file);
@@ -900,6 +900,13 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 float newRotation = float.Parse(tb_Rotation.Text);
                 currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
+                float newScale = float.Parse(tb_Scale.Text);
+                currentlySelectedObject.Width = (currentlySelectedObject.Width / currentlySelectedObject.scale) * newScale;
+                if (currentlySelectedObject is CircleObject)
+                    currentlySelectedObject.Height = currentlySelectedObject.Width;
+                else
+                    currentlySelectedObject.Height = (currentlySelectedObject.Height / currentlySelectedObject.scale) * newScale;
+                currentlySelectedObject.scale = newScale;
             }
 
            pb_Level.Refresh();
