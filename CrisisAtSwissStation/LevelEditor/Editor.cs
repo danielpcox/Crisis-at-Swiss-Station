@@ -668,6 +668,8 @@ namespace CrisisAtSwissStation.LevelEditor
                     world = Serializer.DeSerialize(dialog.FileName);
                     switchRooms();
                 }
+                Size pbLevelSize = new Size(world.Background.Width, world.Background.Height);
+                pb_Level.MaximumSize = (pb_Level.MinimumSize = (pb_Level.Size = pbLevelSize));
                     /*
                 else
                 {
@@ -698,6 +700,8 @@ namespace CrisisAtSwissStation.LevelEditor
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 world = new ScrollingWorld(dialog.UserInput);
+                Size pbLevelSize = new Size(world.Background.Width, world.Background.Height);
+                pb_Level.MaximumSize = (pb_Level.MinimumSize = (pb_Level.Size = pbLevelSize));
 
                 enableEditing(true);
 
