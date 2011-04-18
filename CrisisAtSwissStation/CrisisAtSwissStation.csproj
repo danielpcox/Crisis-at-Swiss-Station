@@ -126,6 +126,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioManager.cs" />
+    <Compile Include="HorizontalMovingObject.cs" />
+    <Compile Include="MovingObject.cs" />
     <Compile Include="Objects\AnimationObject.cs" />
     <Compile Include="Objects\BoxObject.cs" />
     <Compile Include="Objects\CircleObject.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="Objects\SensorObject.cs" />
+    <Compile Include="SwitchObject.cs" />
     <Compile Include="TextBox.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ScrollingWorld.cs" />

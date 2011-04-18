@@ -4,29 +4,34 @@ using Box2DX.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color; // Stupid Box2DX name collision!
-
 namespace CrisisAtSwissStation
 {
     /**
-     * A BoxObject is a physical object in the world
-     * that has a rectangular shape.  Its dimensions
-     * are determined by the size of the texture provided.
-     */
-    public class BoxObject : PhysicsObject
+    * A BoxObject is a physical object in the world
+    * that has a rectangular shape.  Its dimensions
+    * are determined by the size of the texture provided.
+    */
+    public class HorizontalMovingObject : PhysicsObject
     {
-       
+        public bool isMoving = true;
+        private Vector2 myForce;
+        private SwitchObject mySwitch;
         // The box texture
         protected Texture2D texture;
         private float scale;
-
+        private float bound1;//lower bound
+        private float bound2;//upper bound
         /**
          * Creates a new box object
          */
-        public BoxObject(World world, Texture2D texture, float density, float friction, float restitution, float myScale, bool isPulley)
+        public HorizontalMovingObject(World world, Texture2D texture, float density, float friction, float restitution, float myScale, bool isPulley, Vector2 myForce, float bound1, float bound2)
             : base(world)
         {
-
-           
+            this.bound1 = bound1;
+            this.bound2 = bound2;
+            this.myForce = myForce;
+            this.mySwitch = mySwitch;
+            BodyDef.IsBullet = true;
             // Initialize
             this.texture = texture;
 
@@ -34,7 +39,7 @@ namespace CrisisAtSwissStation
 
             if (isPulley)
                 BodyDef.FixedRotation = true;
-            
+
             // Determine dimensions
             float halfWidth = ((float)texture.Width / (2 * CASSWorld.SCALE)) * scale;
             float halfHeight = ((float)texture.Height / (2 * CASSWorld.SCALE)) * scale;
@@ -46,10 +51,43 @@ namespace CrisisAtSwissStation
             shape.Friction = friction;
             shape.Restitution = restitution;
             shapes.Add(shape);
+
         }
 
-       
-        
+        public override void Update(CASSWorld world, float dt)
+        {
+
+           // if (mySwitch.switchOn)
+           // {
+
+
+                if (isMoving == true)
+                {
+                    Position = Position + new Vector2(.035f, 0);
+                    //movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
+                    if (this.Position.X > bound2)
+                    {
+                        isMoving = false;
+                       // mySwitch.switchOn = false;
+                    }
+
+                }
+                else
+                {
+                    //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
+                    Position = Position - new Vector2(.035f, 0);
+                    if (this.Position.X < bound1)
+                       // mySwitch.switchOn = true;
+                    isMoving = true;
+                }
+
+           // }
+
+            base.Update(world, dt);
+
+        }
+
+
         /**
          * Draws the object on the screen using a sprite batch.
          */
@@ -58,11 +96,11 @@ namespace CrisisAtSwissStation
             base.Draw(cameraTransform);
 
             Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
-           
+
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
-            
+
             spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
 
             spriteBatch.End();

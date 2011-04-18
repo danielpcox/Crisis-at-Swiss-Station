@@ -62,6 +62,7 @@ namespace CrisisAtSwissStation
 
         public void AddToWorld()
         {
+            
             body = world.CreateBody(bodyDef);
             foreach (ShapeDef shape in shapes)
                 body.CreateShape(shape);

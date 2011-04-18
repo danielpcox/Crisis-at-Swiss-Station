@@ -16,6 +16,9 @@ namespace CrisisAtSwissStation
 {
     public class ScrollingWorld : CASSWorld
     {
+
+        
+
         // Dimensions of the game world
         public const float WIDTH = 80.0f; //16.0f originally, then 20f, now changed for side scrolling
         public const float HEIGHT = 15.0f; //12.0f
@@ -101,7 +104,7 @@ namespace CrisisAtSwissStation
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 15f); //was 2.5 now 55
+        private static Vector2 dudePosition = new Vector2(55f, 15f); //was 2.5 now 55
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -157,7 +160,10 @@ namespace CrisisAtSwissStation
         //private BoxObject movPlatform1;
 
         private static Vector2 movPlatform1Position = new Vector2(8.3f, 10f);
-        private BoxObject movPlatform1;
+        private MovingObject movPlatform1;
+
+        private static Vector2 movPlatform2Position = new Vector2(35f,14f);
+        private HorizontalMovingObject movPlatform2;
 
         private static Vector2 tablePosition = new Vector2(15.6f, 13f);
         private CircleObject table;
@@ -169,7 +175,7 @@ namespace CrisisAtSwissStation
         private AnimationObject lamp1;        
 
         private static Vector2 brokenMovingPlatform1Position = new Vector2(1f, 14.3f);
-        private AnimationObject brokenMovingPlatform1;
+        private SwitchObject brokenMovingPlatform1;
 
         private static Vector2 pillarPosition = new Vector2(0.035f, 7f);
         private BoxObject pillar;
@@ -196,6 +202,7 @@ namespace CrisisAtSwissStation
         public ScrollingWorld()
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
+           
             movPlat1 = true;
             //movPlat2 = true;
             //mov = true;
@@ -430,12 +437,7 @@ namespace CrisisAtSwissStation
             hole1.Position = hole1Position;
             AddObject(hole1);
 
-            movPlatform1 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0,1,false);
-            //movPlatform2 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);          
-            //movPlatform1.Position = movPlatform1Position;
-            //AddObject(movPlatform1);
-            movPlatform1.Position = movPlatform1Position;
-            AddObject(movPlatform1);
+           
 
             //DEBUG
             /*
@@ -460,9 +462,20 @@ namespace CrisisAtSwissStation
             
             //public AnimationObject( World world, Texture2D mytexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
 
-            brokenMovingPlatform1 = new AnimationObject(World, brokenMovingPlatformAnimTexture,brokenMovingPlatformTexture, 89,32,20,8);
+            brokenMovingPlatform1 = new SwitchObject(World, brokenMovingPlatformAnimTexture,brokenMovingPlatformTexture, 89,32,20,8);
             brokenMovingPlatform1.Position = brokenMovingPlatform1Position;
             AddObject(brokenMovingPlatform1);
+
+            movPlatform1 = new MovingObject(World, movingPlatformTexture, 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
+            movPlatform2 = new HorizontalMovingObject(World, movingPlatformTexture, 0f, 0.5f, 0, 1, false, new Vector2(0, -11500), 34f, 36f);
+            //movPlatform2 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);          
+            //movPlatform1.Position = movPlatform1Position;
+            //AddObject(movPlatform1);
+            //movPlatform1.Body.SetBullet(true);
+            movPlatform1.Position = movPlatform1Position;
+            movPlatform2.Position = movPlatform2Position;
+            AddObject(movPlatform1);
+            AddObject(movPlatform2);
 
             lamp1 = new AnimationObject(World, lampAnimTexture, lampTexture, 312, 120, 20, 8);
             lamp1.Position = lamp1Position;
@@ -776,19 +789,43 @@ namespace CrisisAtSwissStation
             //if (mov==false)
             //{ movPlat2 = true; }
               */
+
+
+
+
+          
+
+            //Hackie Moving Platform Code
+            /*
             if (movPlat1 == true)
             {
-                movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
-                if (movPlatform1.Position.Y < 4.5f)
+
+                movPlatform2.Position = movPlatform2.Position + new Vector2(.035f, 0);
+               // dude.Position = dude.Position + new Vector2(0.05f, 0);
+                if (movPlatform2.Position.X > 36){
+
+                   
                     movPlat1 = false;
+                  
+                }
+
             }
             else
             {
-                movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
 
-                if (movPlatform1.Position.Y > 14.2f)
+                movPlatform2.Position = movPlatform2.Position - new Vector2(.035f, 0);
+             //   dude.Position = dude.Position - new Vector2(0.05f, 0);
+                if (movPlatform2.Position.X < 34f)
+                {
+                    
                     movPlat1 = true;
+                }
             }
+            */
+
+
+
+
 
             //new Vector2(14.5f, 13.3f);
             if (pistonMove == true)
@@ -982,7 +1019,44 @@ namespace CrisisAtSwissStation
                 }
                 if (ScrollingWorld.dudeSensorName.Equals(shape1.UserData) &&
                     (world.dude != shape2.GetBody().GetUserData()))
+                {
                     world.dude.Grounded = true;
+                }
+
+                //Generalized Switch Checking Code!!
+                foreach (PhysicsObject switchObj in this.world.Objects)
+                {
+                    if (switchObj is SwitchObject)
+                    {
+                        if ((object1 == switchObj && object2 == world.dude) ||
+                          (object2 == switchObj && object1 == world.dude))
+                            ((SwitchObject)switchObj).switchOn = true;
+                    }
+                    //Generalized Horizontal Platform checking code!!
+                    else if (switchObj is HorizontalMovingObject)
+                    {
+                        //horizontal platform work
+                        if ((object1 == switchObj && object2 == world.dude) ||
+                           (object2 == switchObj && object1 == world.dude))
+                        {
+                            if (world.dude.Grounded)
+                            {
+                                if (world.movPlatform2.isMoving)
+                                {
+                                    world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
+                                }
+                                // world.dude.Position = world.dude.Position + new Vector2(0.05f, 0);
+                                else
+                                {
+                                    world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
+                                }
+                                //world.dude.Position = world.dude.Position - new Vector2(0.05f, 0);
+                            }
+                        }
+                    }
+               
+                }
+
 
                 PhysicsObject obj;
                 bool allHolesFilled = true;
@@ -1012,10 +1086,8 @@ namespace CrisisAtSwissStation
                 if ((object1 == world.pistonHead && object2 == world.table) ||
                     (object2 == world.table && object1 == world.pistonHead))
                     world.table.Body.ApplyForce(Utils.Convert(new Vector2(200,0)),world.table.Body.GetWorldCenter());
-
-                /*if ((object1 == world.movPlatform2 && object2 == world.dude) ||
-                   (object2 == world.movPlatform2 && object1 == world.dude))
-                { world.Fail(); object2.Position = dudePosition; }//you got squished //world.mov = false;*/
+                
+               
 
                 //ronnie added as hole test
                 //if (object1 == world.hole1 && object2 == world.dude)
@@ -1098,6 +1170,7 @@ namespace CrisisAtSwissStation
                         }
                     }
                 }
+                
 
                 // code to kill the object that fell off, and to fail you if that object was you
                 obj.Die();
