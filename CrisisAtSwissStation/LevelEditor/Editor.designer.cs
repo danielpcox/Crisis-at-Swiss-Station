@@ -516,7 +516,7 @@
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.fileToolStripMenuItem.Text = "World";
             // 
             // createNewWorld
@@ -598,7 +598,7 @@
             this.tool_Selection.Image = ((System.Drawing.Image)(resources.GetObject("tool_Selection.Image")));
             this.tool_Selection.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_Selection.Name = "tool_Selection";
-            this.tool_Selection.Size = new System.Drawing.Size(40, 22);
+            this.tool_Selection.Size = new System.Drawing.Size(42, 22);
             this.tool_Selection.Text = "Select";
             this.tool_Selection.Click += new System.EventHandler(this.tool_Selection_Click);
             // 

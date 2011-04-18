@@ -207,7 +207,7 @@ namespace CrisisAtSwissStation
 
 
             // Load world assets
-            ScrollingWorld.LoadContent(Content);
+            //ScrollingWorld.LoadContent(Content);
         }
 
         /// <summary>

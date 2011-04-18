@@ -19,10 +19,11 @@ namespace CrisisAtSwissStation.LevelEditor
             set;
         }
 
-        public StringPromptDialog(string title)
+        public StringPromptDialog(string title, string text)
         {
             InitializeComponent();
-            this.Text = "";
+            this.Text = text;
+            name_TextBox.Text = text;
             label.Text = title;
         }
 

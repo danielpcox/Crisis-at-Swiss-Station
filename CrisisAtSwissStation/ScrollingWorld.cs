@@ -55,6 +55,8 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private static Texture2D background;
 
+        public string backgroundName;
+
         [NonSerialized]
         private static Texture2D bigBoxTexture;
         [NonSerialized]
@@ -247,11 +249,13 @@ namespace CrisisAtSwissStation
         SensorObject winDoor;
         public LaserObject laser;
 
-        string worldName;
-
-        public ScrollingWorld(string worldName = "")
+        public ScrollingWorld(string backgroundname = "background")
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
+            backgroundName = backgroundname;
+            background = GameEngine.TextureList[backgroundName];
+            Console.WriteLine(backgroundName);
+
             movPlat1 = true;
             //movPlat2 = true;
             //mov = true;
@@ -260,7 +264,6 @@ namespace CrisisAtSwissStation
             gameLevelHeight = background.Height;
             numDrawLeft = 0; // HACK HACK HACK
 
-            this.worldName = worldName;
             numDrawLeft = 0; // HACK HACK HACK
 
             // Create win door
@@ -707,6 +710,8 @@ namespace CrisisAtSwissStation
             World.SetContactListener(new PlatformContactListener(this));
             World.SetBoundaryListener(new PlatformBoundaryListener(this));
 
+            paintTexture = GameEngine.TextureList["paint"];
+
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
 
 
@@ -720,6 +725,8 @@ namespace CrisisAtSwissStation
         {
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.EarlyLevelv2);
+            Console.WriteLine(backgroundName);
+            background = GameEngine.TextureList[backgroundName];
         }
 
         public static void LoadContent(ContentManager content)
@@ -1135,6 +1142,8 @@ namespace CrisisAtSwissStation
 
             //nonfunctional art stuff
             //GameEngine.Instance.SpriteBatch.Draw(brokenMovingPlatformTexture, new Vector2(.1f*CASSWorld.SCALE, 13.6f*CASSWorld.SCALE), Color.White);
+
+            /* // DEBUG - replace these in a more sustainable way later
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(16.2f * CASSWorld.SCALE, 4.5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pulleyChainTexture, new Vector2(17.6f * CASSWorld.SCALE, 9.7f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(pipeAssemblyTexture, new Vector2(0f * CASSWorld.SCALE, 5.9f * CASSWorld.SCALE), Color.White);
@@ -1142,8 +1151,9 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.Draw(window2Texture, new Vector2(25f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window3Texture, new Vector2(38f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
             GameEngine.Instance.SpriteBatch.Draw(window4Texture, new Vector2(51f * CASSWorld.SCALE, .5f * CASSWorld.SCALE), Color.White);
-
             GameEngine.Instance.SpriteBatch.Draw(pistonAssemblyTexture, new Vector2(9.7f * CASSWorld.SCALE, 12.6f * CASSWorld.SCALE), null, Color.White, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+            */
+
             //(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
             GameEngine.Instance.SpriteBatch.End();
 
@@ -1151,6 +1161,7 @@ namespace CrisisAtSwissStation
 
             GameEngine.Instance.SpriteBatch.Begin();
             MouseState mouse = Mouse.GetState();
+            crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
             GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
                 null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
                 SpriteEffects.None, 0);

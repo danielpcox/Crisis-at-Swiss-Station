@@ -97,7 +97,6 @@ namespace CrisisAtSwissStation.LevelEditor
             }
         }
 
-        // Hardcoded to only show the player's icon
         private void rb_Platforms_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_Platforms.Checked)
@@ -605,8 +604,8 @@ namespace CrisisAtSwissStation.LevelEditor
                     dialog.Filter = "Room Files | *.room";
                 }
 
-
-                dialog.InitialDirectory = ".";
+                //dialog.InitialDirectory = ".";
+                dialog.InitialDirectory = CurrDirHack() + "\\Worlds";
                 dialog.Title = "Choose the file to save.";
 
 
@@ -667,6 +666,10 @@ namespace CrisisAtSwissStation.LevelEditor
 
                 enableEditing(loadWorld);
 
+                Texture2D backgroundTexture = GameEngine.TextureList[world.backgroundName];
+
+                pb_Level.Width = backgroundTexture.Width;
+                pb_Level.Height = backgroundTexture.Height;
                 pb_Level.Refresh();
             }
         }
@@ -674,18 +677,18 @@ namespace CrisisAtSwissStation.LevelEditor
         //Creates a new game world and allows editing
         private void mi_New_World_Click(object sender, EventArgs e)
         {
-            //Get the new room from the user.
-            //StringPromptDialog dialog = new StringPromptDialog("Enter the name of the first room: ");
+            //Get the background name from the user
+            StringPromptDialog dialog = new StringPromptDialog("Enter the name of the background texture: ", "background");
 
             //Create the world.
-            //if (dialog.ShowDialog() == DialogResult.OK)
-            //{
-                world = new ScrollingWorld("Placeholder");
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                world = new ScrollingWorld(dialog.Text);
 
                 enableEditing(true);
 
                 switchRooms();
-            //}
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -728,10 +731,10 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 //Draw the background image
 
-                string background_file = currdir + "\\" + world.Background.Name;
+                string background_file = currdir + "\\" + world.backgroundName + ".png";
 
-                //System.Drawing.Image image = Image.FromFile(background_file);
-                //e.Graphics.DrawImage(image, 0, 0, pb_Level.Width, pb_Level.Height);
+                System.Drawing.Image image = Image.FromFile(background_file);
+                e.Graphics.DrawImage(image, 0, 0, pb_Level.Width, pb_Level.Height);
 
                 //Draw some stuff to draw around the currently selected object, if there is one
                 if (currentlySelectedObject != null)
