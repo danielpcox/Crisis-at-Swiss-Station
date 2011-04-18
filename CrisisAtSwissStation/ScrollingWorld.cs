@@ -285,7 +285,7 @@ namespace CrisisAtSwissStation
             // AddObject(new HackObject(World, (int)(1024/s), (int)(38/s), 0, (int)(730/s),.1f));
 
             // Create laser
-            laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
+            laser = new LaserObject(World, dude, "paintedsegment", 10);
 
             // Create dude
             //dude = new DudeObject(World, dudeTexture, dudeObjectTexture, armTexture, dudeSensorName);
@@ -540,7 +540,7 @@ namespace CrisisAtSwissStation
 	    */
 
             // Create laser
-            laser = new LaserObject(World, dude, paintedSegmentTexture, 10);
+            laser = new LaserObject(World, dude, "paintedsegment", 10);
 
 
             //creating insta steel already in the level

@@ -29,12 +29,14 @@ namespace CrisisAtSwissStation
         PrimitiveBatch primitiveBatch;
         [NonSerialized]
         private Texture2D sectionTex;
+        private string sectionTextureName;
 
-        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, Texture2D mySection, int amnSections)
+        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, string sectionTexturename, int amnSections)
         {               
             world = myWorld;
             dude = myDude;
-            sectionTex = mySection;
+            sectionTex = GameEngine.TextureList[sectionTexturename];
+            sectionTextureName = sectionTexturename;
             numSections = amnSections;
             sections = new Vector2[numSections];
             currentSection = 0;
@@ -51,6 +53,7 @@ namespace CrisisAtSwissStation
         public void reloadNonSerializedAssets()
         {
             primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
+            sectionTex = GameEngine.TextureList[sectionTextureName];
         }
 
         public bool canDraw()

@@ -148,6 +148,7 @@ namespace Box2DX.Dynamics
 	/// The pulley also enforces a maximum length limit on both sides. This is
 	/// useful to prevent one side of the pulley hitting the top.
 	/// </summary>
+    [Serializable]
 	public class PulleyJoint : Joint
 	{
 		public static readonly float MinPulleyLength = 2.0f;
