@@ -343,13 +343,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Barrier1.jpg">
-      <Name>Barrier1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="table.png">
       <Name>table</Name>
       <Importer>TextureImporter</Importer>
@@ -507,6 +500,13 @@
   <ItemGroup>
     <Compile Include="Barrier.png">
       <Name>Barrier</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Barrier1.png">
+      <Name>Barrier1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
