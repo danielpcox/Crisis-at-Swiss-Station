@@ -24,7 +24,7 @@ namespace CrisisAtSwissStation
         private Body body;
 
         // Our shapes
-        protected List<ShapeDef> shapes = new List<ShapeDef>();
+        public List<ShapeDef> shapes = new List<ShapeDef>();
 
         // Our controllers
         protected List<Controller> controllers = new List<Controller>();
