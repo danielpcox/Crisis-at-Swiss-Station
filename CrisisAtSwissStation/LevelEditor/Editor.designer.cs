@@ -45,9 +45,9 @@
             this.rb_Parts = new System.Windows.Forms.RadioButton();
             this.rb_HazardDynamic = new System.Windows.Forms.RadioButton();
             this.rb_HazardStatic = new System.Windows.Forms.RadioButton();
-            this.rb_WallDynamic = new System.Windows.Forms.RadioButton();
-            this.rb_WallStatic = new System.Windows.Forms.RadioButton();
-            this.rb_Platforms = new System.Windows.Forms.RadioButton();
+            this.rb_SensorObjects = new System.Windows.Forms.RadioButton();
+            this.rb_BoxObjects = new System.Windows.Forms.RadioButton();
+            this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
             this.b_Front = new System.Windows.Forms.Button();
             this.tb_SLevel = new System.Windows.Forms.TextBox();
@@ -189,9 +189,9 @@
             this.gb_ObjTypes.Controls.Add(this.rb_Parts);
             this.gb_ObjTypes.Controls.Add(this.rb_HazardDynamic);
             this.gb_ObjTypes.Controls.Add(this.rb_HazardStatic);
-            this.gb_ObjTypes.Controls.Add(this.rb_WallDynamic);
-            this.gb_ObjTypes.Controls.Add(this.rb_WallStatic);
-            this.gb_ObjTypes.Controls.Add(this.rb_Platforms);
+            this.gb_ObjTypes.Controls.Add(this.rb_SensorObjects);
+            this.gb_ObjTypes.Controls.Add(this.rb_BoxObjects);
+            this.gb_ObjTypes.Controls.Add(this.rb_AnimationObjects);
             this.gb_ObjTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gb_ObjTypes.Location = new System.Drawing.Point(3, 3);
             this.gb_ObjTypes.Name = "gb_ObjTypes";
@@ -317,43 +317,41 @@
             this.rb_HazardStatic.Visible = false;
             this.rb_HazardStatic.CheckedChanged += new System.EventHandler(this.rb_HazardStatic_CheckedChanged_1);
             // 
-            // rb_WallDynamic
+            // rb_SensorObjects
             // 
-            this.rb_WallDynamic.AutoSize = true;
-            this.rb_WallDynamic.Location = new System.Drawing.Point(20, 66);
-            this.rb_WallDynamic.Name = "rb_WallDynamic";
-            this.rb_WallDynamic.Size = new System.Drawing.Size(96, 17);
-            this.rb_WallDynamic.TabIndex = 2;
-            this.rb_WallDynamic.TabStop = true;
-            this.rb_WallDynamic.Text = "Wall - Dynamic";
-            this.rb_WallDynamic.UseVisualStyleBackColor = true;
-            this.rb_WallDynamic.Visible = false;
-            this.rb_WallDynamic.CheckedChanged += new System.EventHandler(this.rb_WallDynamic_CheckedChanged_1);
+            this.rb_SensorObjects.AutoSize = true;
+            this.rb_SensorObjects.Location = new System.Drawing.Point(20, 66);
+            this.rb_SensorObjects.Name = "rb_SensorObjects";
+            this.rb_SensorObjects.Size = new System.Drawing.Size(94, 17);
+            this.rb_SensorObjects.TabIndex = 2;
+            this.rb_SensorObjects.TabStop = true;
+            this.rb_SensorObjects.Text = "SensorObjects";
+            this.rb_SensorObjects.UseVisualStyleBackColor = true;
+            this.rb_SensorObjects.CheckedChanged += new System.EventHandler(this.rb_SensorObjects_CheckedChanged);
             // 
-            // rb_WallStatic
+            // rb_BoxObjects
             // 
-            this.rb_WallStatic.AutoSize = true;
-            this.rb_WallStatic.Location = new System.Drawing.Point(20, 42);
-            this.rb_WallStatic.Name = "rb_WallStatic";
-            this.rb_WallStatic.Size = new System.Drawing.Size(82, 17);
-            this.rb_WallStatic.TabIndex = 1;
-            this.rb_WallStatic.TabStop = true;
-            this.rb_WallStatic.Text = "Wall - Static";
-            this.rb_WallStatic.UseVisualStyleBackColor = true;
-            this.rb_WallStatic.Visible = false;
-            this.rb_WallStatic.CheckedChanged += new System.EventHandler(this.rb_WallStatic_CheckedChanged);
+            this.rb_BoxObjects.AutoSize = true;
+            this.rb_BoxObjects.Location = new System.Drawing.Point(20, 42);
+            this.rb_BoxObjects.Name = "rb_BoxObjects";
+            this.rb_BoxObjects.Size = new System.Drawing.Size(79, 17);
+            this.rb_BoxObjects.TabIndex = 1;
+            this.rb_BoxObjects.TabStop = true;
+            this.rb_BoxObjects.Text = "BoxObjects";
+            this.rb_BoxObjects.UseVisualStyleBackColor = true;
+            this.rb_BoxObjects.CheckedChanged += new System.EventHandler(this.rb_BoxObjects_CheckedChanged);
             // 
-            // rb_Platforms
+            // rb_AnimationObjects
             // 
-            this.rb_Platforms.AutoSize = true;
-            this.rb_Platforms.Location = new System.Drawing.Point(20, 19);
-            this.rb_Platforms.Name = "rb_Platforms";
-            this.rb_Platforms.Size = new System.Drawing.Size(68, 17);
-            this.rb_Platforms.TabIndex = 0;
-            this.rb_Platforms.TabStop = true;
-            this.rb_Platforms.Text = "Platforms";
-            this.rb_Platforms.UseVisualStyleBackColor = true;
-            this.rb_Platforms.CheckedChanged += new System.EventHandler(this.rb_Platforms_CheckedChanged);
+            this.rb_AnimationObjects.AutoSize = true;
+            this.rb_AnimationObjects.Location = new System.Drawing.Point(20, 19);
+            this.rb_AnimationObjects.Name = "rb_AnimationObjects";
+            this.rb_AnimationObjects.Size = new System.Drawing.Size(107, 17);
+            this.rb_AnimationObjects.TabIndex = 0;
+            this.rb_AnimationObjects.TabStop = true;
+            this.rb_AnimationObjects.Text = "AnimationObjects";
+            this.rb_AnimationObjects.UseVisualStyleBackColor = true;
+            this.rb_AnimationObjects.CheckedChanged += new System.EventHandler(this.rb_AnimationObjects_CheckedChanged);
             // 
             // tab_objProps
             // 
@@ -696,9 +694,9 @@
         private System.Windows.Forms.RadioButton rb_Parts;
         private System.Windows.Forms.RadioButton rb_HazardDynamic;
         private System.Windows.Forms.RadioButton rb_HazardStatic;
-        private System.Windows.Forms.RadioButton rb_WallDynamic;
-        private System.Windows.Forms.RadioButton rb_WallStatic;
-        private System.Windows.Forms.RadioButton rb_Platforms;
+        private System.Windows.Forms.RadioButton rb_SensorObjects;
+        private System.Windows.Forms.RadioButton rb_BoxObjects;
+        private System.Windows.Forms.RadioButton rb_AnimationObjects;
         private System.Windows.Forms.TabPage tab_objProps;
         private System.Windows.Forms.Label lbl_DamageWarning;
         private System.Windows.Forms.Label lbl_RotationWarning;

@@ -35,6 +35,9 @@ namespace CrisisAtSwissStation
             this.texture = GameEngine.TextureList[texturename];
             TextureFilename = texturename;
 
+            Width = texture.Width * myScale;
+            Height = Width;
+
             scale = myScale;
 
             // Determine dimension

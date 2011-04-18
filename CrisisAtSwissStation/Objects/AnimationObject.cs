@@ -33,6 +33,7 @@ namespace CrisisAtSwissStation
             : base(world, objectTexturename, 0f, .5f, 0.0f, 1, false)
         {
             animTextureName = animTexturename;
+            //Console.WriteLine("***" + animTexturename + "***");
             animTexture = GameEngine.TextureList[animTexturename];
 
             myGameTime = 0;

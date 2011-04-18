@@ -1162,6 +1162,7 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.Begin();
             MouseState mouse = Mouse.GetState();
             crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
+            paintTexture = GameEngine.TextureList["paint"]; // HACK HACK HACK handle this in a more sustainable way soon
             GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
                 null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
                 SpriteEffects.None, 0);

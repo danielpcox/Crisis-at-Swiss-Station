@@ -294,7 +294,7 @@ namespace CrisisAtSwissStation
                 string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
 
                 //currentWorld = new ScrollingWorld();
-                currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\original.world");
+                currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\asdf.world");
                 currentWorld.reloadNonSerializedAssets();
 
                 countdown = 0;

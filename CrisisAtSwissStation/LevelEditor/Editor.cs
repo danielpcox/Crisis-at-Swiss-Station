@@ -88,18 +88,18 @@ namespace CrisisAtSwissStation.LevelEditor
 
         //------The following are callbacks for when the user selects a new type of object in the radio button
         // list. They populate the list of textures.
-        private void rb_WallStatic_CheckedChanged(object sender, EventArgs e)
+        private void rb_BoxObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_WallStatic.Checked)
+            if (rb_BoxObjects.Checked)
             {
-                textureDir = "Art\\Static Walls\\";
+                textureDir = "Art\\Objects\\BoxObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
 
-        private void rb_Platforms_CheckedChanged(object sender, EventArgs e)
+        private void rb_AnimationObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_Platforms.Checked)
+            if (rb_AnimationObjects.Checked)
             {
                 /*
                 textureDir = "Art\\Players\\";
@@ -115,16 +115,16 @@ namespace CrisisAtSwissStation.LevelEditor
                     lb_TextureList.SelectedIndex = 0;
                 }
                 */
-                textureDir = "";
+                textureDir = "Art\\Objects\\AnimationObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
 
-        private void rb_WallDynamic_CheckedChanged_1(object sender, EventArgs e)
+        private void rb_SensorObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_WallDynamic.Checked)
+            if (rb_SensorObjects.Checked)
             {
-                textureDir = "Art\\Dynamic Walls\\";
+                textureDir = "Art\\Objects\\SensorObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
@@ -499,11 +499,7 @@ namespace CrisisAtSwissStation.LevelEditor
             // Add an object.
             if (e.Button == MouseButtons.Left)
             {
-                if (rb_Doors.Checked)
-                {
-                    //makeDoor(mouse);
-                }
-                else
+                if (rb_AnimationObjects.Checked)
                 {
                     object textureName = lb_TextureList.SelectedItem;
 
@@ -524,20 +520,27 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             texName = texName.Replace(".png", "");
 
+            string[] lastname_ary= (string[])texName.Split('\\');
+            string lastname = lastname_ary[lastname_ary.Length-1];
+
+            string texStripName = texName.Replace(lastname,"strips\\"+lastname) + "_strip";
+
             //int numberOfFrames = SpaceObject.GetNumberOfFrames(texName);
 
             //Much repeated code to account for each possible object
-            if (rb_Platforms.Checked)
+            if (rb_AnimationObjects.Checked)
             {
-                //mp.X -= (texture.Width / (numberOfFrames * 2));
-                //mp.X -= (texture.Width / 2);
-                //mp.Y -= (texture.Height / 2);
+                AnimationObject ao;
+                if (lastname == "fan")
+                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 7);
+                else if (lastname == "broken_platform")
+                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
+                else // if (texName == "light")
+                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
+                Vector2 screenposition = Conversion.DrawPointToVector2(mp);
+                ao.Position = new Vector2(screenposition.X / CASSWorld.SCALE, screenposition.Y / CASSWorld.SCALE);
 
-                BoxObject platform = new BoxObject(world.World, texName, 0, .1f, 0, 1, false);
-                Vector2 gameposition = Conversion.DrawPointToVector2(mp);
-                platform.Position = new Vector2(gameposition.X / CASSWorld.SCALE, gameposition.Y / CASSWorld.SCALE);
-
-                world.AddObject(platform);
+                world.AddObject(ao);
             }
             
                 /*
@@ -702,7 +705,7 @@ namespace CrisisAtSwissStation.LevelEditor
             if (editingWorld)
             {
                 currentState = State.EDITING_WORLD;
-                rb_Platforms.Enabled = true;
+                rb_AnimationObjects.Enabled = true;
             }
 
         }
