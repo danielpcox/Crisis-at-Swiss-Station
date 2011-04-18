@@ -499,17 +499,14 @@ namespace CrisisAtSwissStation.LevelEditor
             // Add an object.
             if (e.Button == MouseButtons.Left)
             {
-                if (rb_AnimationObjects.Checked)
+                object textureName = lb_TextureList.SelectedItem;
+
+                if (textureName != null)
                 {
-                    object textureName = lb_TextureList.SelectedItem;
+                    //Console.WriteLine(currdir + "\\" + textureDir + textureName.ToString());
+                    texture = Image.FromFile(currdir + "\\" + textureDir + textureName.ToString());
 
-                    if (textureName != null)
-                    {
-                        //Console.WriteLine(currdir + "\\" + textureDir + textureName.ToString());
-                        texture = Image.FromFile(currdir + "\\" + textureDir + textureName.ToString());
-
-                        MakeSpaceObject(textureDir + textureName.ToString(), texture, mouse);
-                    }
+                    MakeSpaceObject(textureDir + textureName.ToString(), texture, mouse);
                 }
             }
 
@@ -527,20 +524,39 @@ namespace CrisisAtSwissStation.LevelEditor
 
             //int numberOfFrames = SpaceObject.GetNumberOfFrames(texName);
 
-            //Much repeated code to account for each possible object
+            Vector2 screenposition = Conversion.DrawPointToVector2(mp);
+            Vector2 gameposition = new Vector2(screenposition.X / CASSWorld.SCALE, screenposition.Y / CASSWorld.SCALE);
+
             if (rb_AnimationObjects.Checked)
             {
                 AnimationObject ao;
+                // TODO : i'm not a fan of these ifs, since the only thing that's changing are those last two numbers
+                //        having to do with the animation. is there a way they could be passed in, or even better,
+                //        derived from the strip image?
                 if (lastname == "fan")
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 7);
                 else if (lastname == "broken_platform")
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
                 else // if (texName == "light")
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
-                Vector2 screenposition = Conversion.DrawPointToVector2(mp);
-                ao.Position = new Vector2(screenposition.X / CASSWorld.SCALE, screenposition.Y / CASSWorld.SCALE);
 
+                ao.Position = gameposition;
                 world.AddObject(ao);
+            }
+            else if (rb_BoxObjects.Checked)
+            {
+                BoxObject bo;
+                bo = new BoxObject(world.World, texName, 0, .5f, 0, 1, false);
+                bo.Position = gameposition;
+                world.AddObject(bo);
+            }
+            else if (rb_SensorObjects.Checked)
+            {
+                SensorObject so;
+                // HACK - hard-coded for the win-door
+                so = new SensorObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 5);
+                so.Position = gameposition;
+                world.AddObject(so);
             }
             
                 /*
