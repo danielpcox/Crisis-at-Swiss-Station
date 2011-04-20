@@ -31,6 +31,7 @@ namespace Box2DX.Dynamics
 	/// <summary>
 	// Delegate of World.
 	/// </summary>
+    [Serializable]
 	public class ContactManager : PairCallback
 	{
 		public World _world;

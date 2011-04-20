@@ -33,6 +33,7 @@ namespace Box2DX.Dynamics
 	/// body is destroyed. Implement this listener so that you
 	/// may nullify references to these joints and shapes.
 	/// </summary>
+    [Serializable]
 	public abstract class DestructionListener
 	{
 		/// <summary>
@@ -51,6 +52,7 @@ namespace Box2DX.Dynamics
 	/// <summary>
 	/// This is called when a body's shape passes outside of the world boundary.
 	/// </summary>
+    [Serializable]
 	public abstract class BoundaryListener
 	{
 		/// <summary>
@@ -64,6 +66,7 @@ namespace Box2DX.Dynamics
 	/// Implement this class to provide collision filtering. In other words, you can implement
 	/// this class if you want finer control over contact creation.
 	/// </summary>
+    [Serializable]
 	public class ContactFilter
 	{
 		/// <summary>
@@ -97,6 +100,7 @@ namespace Box2DX.Dynamics
 		}
 	}
 
+    [Serializable]
 	public class WorldCallback
 	{
 		/// <summary>
@@ -117,6 +121,7 @@ namespace Box2DX.Dynamics
 	/// @warning The contact separation is the last computed value.
 	/// @warning You cannot create/destroy Box2D entities inside these callbacks.
 	/// </summary>
+    [Serializable]
 	public abstract class ContactListener
 	{
 		/// <summary>
@@ -160,6 +165,7 @@ namespace Box2DX.Dynamics
 	/// Implement and register this class with a b2World to provide debug drawing of physics
 	/// entities in your game.
 	/// </summary>
+    [Serializable]
 	public abstract class DebugDraw
 	{
 		[Flags]

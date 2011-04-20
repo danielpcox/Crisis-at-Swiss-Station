@@ -80,6 +80,7 @@ namespace Box2DX.Dynamics
 	/// maintained in each attached body. Each joint has two joint
 	/// nodes, one for each attached body.
 	/// </summary>
+    [Serializable]
 	public class JointEdge
 	{
 		/// <summary>
@@ -107,6 +108,7 @@ namespace Box2DX.Dynamics
 	/// <summary>
 	/// Joint definitions are used to construct joints.
 	/// </summary>
+    [Serializable]
 	public class JointDef
 	{
 		public JointDef()
@@ -148,6 +150,7 @@ namespace Box2DX.Dynamics
 	/// The base joint class. Joints are used to constraint two bodies together in
 	/// various fashions. Some joints also feature limits and motors.
 	/// </summary>
+    [Serializable]
 	public abstract class Joint
 	{
 		protected JointType _type;

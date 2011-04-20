@@ -46,6 +46,7 @@ namespace Box2DX.Dynamics
 	/// maintained in each attached body. Each contact has two contact
 	/// nodes, one for each attached body.
 	/// </summary>
+    [Serializable]
 	public class ContactEdge
 	{
 		/// <summary>
@@ -70,6 +71,7 @@ namespace Box2DX.Dynamics
 	/// <summary>
 	/// This structure is used to report contact points.
 	/// </summary>
+    [Serializable]
 	public class ContactPoint
 	{
 		/// <summary>
@@ -114,6 +116,7 @@ namespace Box2DX.Dynamics
 	/// <summary>
 	/// This structure is used to report contact point results.
 	/// </summary>
+    [Serializable]
 	public class ContactResult
 	{
 		/// <summary>
@@ -151,6 +154,7 @@ namespace Box2DX.Dynamics
 	/// AABB in the broad-phase (except if filtered). Therefore a contact object may exist
 	/// that has no contact points.
 	/// </summary>
+    [Serializable]
 	public abstract class Contact
 	{
 		[Flags]

@@ -33,6 +33,7 @@ namespace Box2DX.Collision
 	/// Convex polygon. The vertices must be in CCW order for a right-handed
 	/// coordinate system with the z-axis coming out of the screen.
 	/// </summary>
+    [Serializable]
 	public class PolygonDef : ShapeDef
 	{
 		/// <summary>
@@ -90,6 +91,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// A convex polygon.
 	/// </summary>
+    [Serializable]
 	public class PolygonShape : Shape, Collision.IGenericShape
 	{
 		// Local position of the polygon centroid.

@@ -28,6 +28,7 @@ using Box2DX.Common;
 
 namespace Box2DX.Dynamics
 {
+    [Serializable]
 	public class PolyAndCircleContact : Contact
 	{
 		public Manifold _manifold = new Manifold();

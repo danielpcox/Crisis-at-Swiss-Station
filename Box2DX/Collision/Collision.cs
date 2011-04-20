@@ -30,6 +30,7 @@ namespace Box2DX.Collision
 	// Structures and functions used for computing contact points, distance
 	// queries, and TOI queries.
 
+    [Serializable]
 	public partial class Collision
 	{
 		public static readonly byte NullFeature = Common.Math.UCHAR_MAX;
@@ -53,6 +54,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// The features that intersect to form the contact point.
 	/// </summary>
+    [Serializable]
 	public struct Features
 	{
 		/// <summary>
@@ -80,6 +82,7 @@ namespace Box2DX.Collision
 	/// Contact ids to facilitate warm starting.
 	/// </summary>
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+    [Serializable]
 	public struct ContactID
 	{
 		[System.Runtime.InteropServices.FieldOffset(0)]
@@ -100,6 +103,7 @@ namespace Box2DX.Collision
 	/// The point is stored in local coordinates because CCD
 	/// requires sub-stepping in which the separation is stale.
 	/// </summary>
+    [Serializable]
 	public class ManifoldPoint
 	{
 		/// <summary>
@@ -149,6 +153,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// A manifold for two touching convex shapes.
 	/// </summary>
+    [Serializable]
 	public class Manifold
 	{
 		/// <summary>
@@ -191,6 +196,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// A line segment.
 	/// </summary>
+    [Serializable]
 	public struct Segment
 	{
 		// Collision Detection in Interactive 3D Environments by Gino van den Bergen
@@ -269,6 +275,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// An axis aligned bounding box.
 	/// </summary>
+    [Serializable]
 	public struct AABB
 	{
 		/// Verify that the bounds are sorted.
@@ -298,6 +305,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// An oriented bounding box.
 	/// </summary>
+    [Serializable]
 	public struct OBB
 	{
 		/// <summary>

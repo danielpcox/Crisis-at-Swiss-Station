@@ -7,15 +7,18 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using CrisisAtSwissStation.Common;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class PolygonObject : PhysicsObject
     {
         // Drawable vertices
         VertexPositionTexture[] vertices;
 
         // Texture
+        [NonSerialized]
         Texture2D texture;
 
         /**
@@ -31,6 +34,9 @@ namespace CrisisAtSwissStation
             : base(world)
         {
             this.texture = texture;
+            Height = texture.Height;
+            Width = texture.Width;
+            TextureFilename = texture.Name;
 
             Debug.Assert(points.Length >= 3);
 
@@ -45,6 +51,11 @@ namespace CrisisAtSwissStation
 
             CreateShapes(triangles, density, friction, restitution);
             CreateDrawable(triangles);
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            Texture2D texture = GameEngine.TextureList[TextureFilename];
         }
 
         private void Split(LinkedList<int> polygon, Vector2[] points, List<Vector2[]> triangles)

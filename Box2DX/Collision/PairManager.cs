@@ -35,6 +35,7 @@ using Box2DX.Common;
 namespace Box2DX.Collision
 {
 #warning "CAS"
+    [Serializable]
 	public class Pair
 	{
 		[Flags]
@@ -63,12 +64,14 @@ namespace Box2DX.Collision
 		public PairStatus Status;
 	}
 
+    [Serializable]
 	public struct BufferedPair
 	{
 		public ushort ProxyId1;
 		public ushort ProxyId2;
 	}
 
+    [Serializable]
 	public abstract class PairCallback
 	{
 		// This should return the new pair user data. It is ok if the
@@ -80,6 +83,7 @@ namespace Box2DX.Collision
 		public abstract void PairRemoved(object proxyUserData1, object proxyUserData2, object pairUserData);
 	}
 
+    [Serializable]
 	public class PairManager
 	{
 		public static readonly ushort NullPair = Common.Math.USHRT_MAX;

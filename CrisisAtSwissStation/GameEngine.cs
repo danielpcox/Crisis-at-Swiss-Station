@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -10,6 +11,9 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using CrisisAtSwissStation.Common;
+
+using Forms = System.Windows.Forms; // alias as Forms so that we don't get collisions with keyboard stuff
 
 namespace CrisisAtSwissStation
 {
@@ -23,7 +27,16 @@ namespace CrisisAtSwissStation
         TextBox instaSteelTextBox;
         //textbox for setting Jump
         TextBox jumpTextBox;
+
+        public static bool level_editor_open = false;
+
+        Forms.Form editor;
        
+        private static Dictionary<string, Texture2D> textureList = new Dictionary<string, Texture2D>();
+        public static Dictionary<string, Texture2D> TextureList
+        {
+            get { return textureList; }
+        }
     
         // TODO : pretty much nothing about drawing should eventually be in this class - it should be moved into ScrollingWorld.cs
         // current and previous mouse state (for drawing)
@@ -158,8 +171,36 @@ namespace CrisisAtSwissStation
             failure = Content.Load<Texture2D>("failure");
             audioManager.LoadContent(Content);
 
-         
+            DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Content"); //
+            FileInfo[] fileList = di.GetFiles("*.xnb", SearchOption.AllDirectories);                  //
+            string test  = fileList[1].DirectoryName;
+            string test2 = fileList[1].Name;
+            string test3 = fileList[1].FullName;
+            //DirectoryInfo di = new DirectoryInfo(Editor.CurrDirHack());
+            //FileInfo[] fileList = di.GetFiles("*.png", SearchOption.AllDirectories);
 
+            /*
+             * Load each texture and take its accompanying string
+             * relative to the Content directory.  The string is what
+             * each SpaceObject stores from the level editor.
+             */
+            foreach (FileInfo file in fileList)
+            {
+                string dirname = file.DirectoryName + "\\";
+                int dirIndex = dirname.LastIndexOf("\\Content") + 9; // Index to remove head of directory
+                string fullName = dirname.Substring(dirIndex) + file.Name.Replace(".xnb", ""); // Art\...\..., without .png
+                //string fullName = file.DirectoryName.Substring(dirIndex) + "\\" + file.Name.Replace(".xnb", ""); // Art\...\..., without .png
+                try
+                {
+                    Texture2D tex = Content.Load<Texture2D>(fullName);
+                    //Console.WriteLine("***" + fullName + "***"); // DEBUG
+                    textureList.Add(fullName, tex);
+                }
+                catch(ContentLoadException)
+                {
+                }
+            }
+         
             // TODO : change this to something more appropriate
             //painting texture
             paintTexture = Content.Load<Texture2D>("paint");
@@ -167,7 +208,7 @@ namespace CrisisAtSwissStation
 
 
             // Load world assets
-            ScrollingWorld.LoadContent(Content);
+            //ScrollingWorld.LoadContent(Content);
         }
 
         /// <summary>
@@ -176,7 +217,7 @@ namespace CrisisAtSwissStation
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            textureList.Clear();
         }
 
         /// <summary>
@@ -202,6 +243,13 @@ namespace CrisisAtSwissStation
             // exit when they press escape
             if (ks.IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            if (ks.IsKeyDown(Keys.L) && !GameEngine.level_editor_open)
+            {
+                editor = new CrisisAtSwissStation.LevelEditor.Editor();
+                editor.Show();
+                GameEngine.level_editor_open = true;
+            }
 
             // toggle mute if they press 'm' 
             if (ks.IsKeyDown(Keys.M) && lastKeyboardState.IsKeyUp(Keys.M))
@@ -244,7 +292,13 @@ namespace CrisisAtSwissStation
             {
                 // Uses C# reflection to construct a new world with minimal code
                 //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
-                currentWorld = new ScrollingWorld();
+
+                string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
+
+                //currentWorld = new ScrollingWorld();
+                currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\asdf.world");
+                currentWorld.reloadNonSerializedAssets();
+
                 countdown = 0;
             }
 
@@ -337,7 +391,7 @@ namespace CrisisAtSwissStation
 
             
             spriteBatch.End();
-            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+            instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
            // jumpTextBox.Draw(spriteBatch, 255);
             base.Draw(gameTime);
         }

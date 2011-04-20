@@ -31,6 +31,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// This holds the mass data computed for a shape.
 	/// </summary>
+    [Serializable]
 	public struct MassData
 	{
 		/// <summary>
@@ -52,6 +53,7 @@ namespace Box2DX.Collision
 	/// <summary>
 	/// This holds contact filtering data.
 	/// </summary>
+    [Serializable]
 	public struct FilterData
 	{
 		/// <summary>
@@ -99,6 +101,7 @@ namespace Box2DX.Collision
 	/// A shape definition is used to construct a shape. This class defines an
 	/// abstract shape definition. You can reuse shape definitions safely.
 	/// </summary>
+    [Serializable]
 	public class ShapeDef
 	{
 		/// <summary>
@@ -159,6 +162,7 @@ namespace Box2DX.Collision
 	/// You can use shape for collision detection before they are attached to the world.
 	/// Warning: you cannot reuse shapes.
 	/// </summary>
+    [Serializable]
 	public abstract class Shape : IDisposable
 	{
 		#region Fields and Properties

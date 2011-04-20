@@ -25,6 +25,7 @@ using System.Text;
 
 namespace Box2DX.Common
 {
+    [Serializable]
 	public class Settings
 	{
 #if TARGET_FLOAT32_IS_FIXED

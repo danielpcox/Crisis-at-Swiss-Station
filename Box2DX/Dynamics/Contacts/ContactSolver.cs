@@ -32,6 +32,7 @@ using Box2DX.Common;
 namespace Box2DX.Dynamics
 {
 #warning "CAS"
+    [Serializable]
 	public class ContactConstraintPoint
 	{
 		public Vec2 LocalAnchor1;
@@ -48,6 +49,7 @@ namespace Box2DX.Dynamics
 	}
 
 #warning "CAS"
+    [Serializable]
 	public class ContactConstraint
 	{
 		public ContactConstraintPoint[] Points = new ContactConstraintPoint[Settings.MaxManifoldPoints];
@@ -68,6 +70,7 @@ namespace Box2DX.Dynamics
 		}
 	}
 
+    [Serializable]
 	public class ContactSolver : IDisposable
 	{
 		public TimeStep _step;

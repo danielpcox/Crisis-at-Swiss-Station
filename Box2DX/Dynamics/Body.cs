@@ -32,6 +32,7 @@ namespace Box2DX.Dynamics
 	/// A body definition holds all the data needed to construct a rigid body.
 	/// You can safely re-use body definitions.
 	/// </summary>
+    [Serializable]
 	public class BodyDef
 	{
 		/// <summary>
@@ -120,6 +121,7 @@ namespace Box2DX.Dynamics
 	/// <summary>
 	/// A rigid body.
 	/// </summary>
+    [Serializable]
 	public class Body : IDisposable
 	{
 

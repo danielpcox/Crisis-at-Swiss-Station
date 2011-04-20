@@ -27,6 +27,7 @@ using System.Text;
 
 namespace Box2DX.Common
 {
+    [Serializable]
 	public struct Sweep
 	{
 		public Vec2 LocalCenter;	//local center of mass position

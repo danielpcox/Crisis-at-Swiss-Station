@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Color = Microsoft.Xna.Framework.Color; // Stupid Box2DX name collision!
+using CrisisAtSwissStation.Common;
 
 using System;
 using System.Resources;
@@ -19,6 +20,7 @@ namespace CrisisAtSwissStation
     /**
      * Defines an object drawn by the user with the mouse.
      */
+    [Serializable]
     public class PaintedObject : CircleObject
     {
         // physical parameters for each blob in a PaintedObject
@@ -29,7 +31,13 @@ namespace CrisisAtSwissStation
 
         List<Vec2> vertices = new List<Vec2>(); // we need this for drawing between the vertices
 
+        [NonSerialized]
         Texture2D segmentTexture;
+
+        [NonSerialized]
+        Texture2D blobTexture;
+
+        protected string blobTextureName;
 
         int numBlobs = 0;
 
@@ -38,8 +46,9 @@ namespace CrisisAtSwissStation
         float radius = 0f;
 
         /**
-         * Creates a new drawn object
+         * Creates a new drawn object - HACK HACK - obsolete. remove when its reference in ScrollingWorld is removed
          */
+        /*
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs)
             : base(world, blobtexture, POB_DENSITY, POB_FRICTION, POB_RESTITUTION,1f)
         {
@@ -58,10 +67,72 @@ namespace CrisisAtSwissStation
                 Vector2 localpos2 = blobs[i+1]- Position;
                 amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
 
+                float scaledTextureWidth = segmentTexture.Width / CASSWorld.SCALE;
+
+                Vector2 shapeVec = localpos2 - localpos;
+                shapeVec.Normalize();
+                Vector2 cornerOrtho = new Vector2(-shapeVec.Y, shapeVec.X);// * segmentTexture.Width / 2;
+                // manually calculate the positions of each corner of the box/line between localpos and localpos2
+                Vector2[] cornerpoints = new Vector2[] {               // if box were lying flat...
+                    localpos - cornerOrtho * scaledTextureWidth / 2, // lower-left corner
+                    localpos2 - cornerOrtho * scaledTextureWidth / 2, // lower-right corner
+                    localpos2 + cornerOrtho * scaledTextureWidth / 2, // upper-right corner
+                    localpos + cornerOrtho * scaledTextureWidth / 2 // upper-left corner
+                };
+
+                LinkedList<int> polygon = new LinkedList<int>();
+                for (int j = 0; j < cornerpoints.Length; j++)
+                    polygon.AddLast(j);
+                // Triangles generated
+                List<Vector2[]> triangles = new List<Vector2[]>();
+                Split(polygon, cornerpoints, triangles);
+                CreateShapes(triangles, POB_DENSITY, POB_FRICTION, POB_RESTITUTION);
+
+                vertices.Add(Common.Utils.Convert(localpos)); // that is, vertices of the curve approximation
+                numBlobs++;
+            }
+            // add the last vertex
+            //Vector2 lastlocalpos = (blobs[blobs.Count - 1] / CASSWorld.SCALE) - Position;
+            //vertices.Add(Common.Utils.Convert(lastlocalpos));
+            Vector2 lastlocalpos = blobs[blobs.Count - 1]- Position;
+            vertices.Add(Utils.Convert(lastlocalpos));
+            numBlobs++;
+        }*/
+
+        /**
+         * Creates a new drawn object
+         */
+        public PaintedObject(World world, string blobtexturename, string segmenttexturename, List<Vector2> blobs)
+            : base(world, blobtexturename, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1f)
+        {
+            Position = blobs[0]; // CASSWorld.SCALE; // position of the painting is the first blob in it
+
+            Texture2D segmenttexture = GameEngine.TextureList[segmenttexturename];
+            Texture2D blobtexture = GameEngine.TextureList[blobtexturename];
+
+            this.blobTextureName = blobtexturename;
+            TextureFilename = segmenttexturename;
+
+            //boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
+
+            segmentTexture = segmenttexture;
+            blobTexture = blobtexture;
+
+            radius = (float)blobtexture.Width / (2 * CASSWorld.SCALE);
+
+            //foreach (Vector2 blobpos in blobs)
+            for (int i=0; i<blobs.Count-1; i++)
+            {
+               // Vector2 localpos = (blobs[i] / CASSWorld.SCALE) - Position;
+                //Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
+                Vector2 localpos = blobs[i]  - Position;
+                Vector2 localpos2 = blobs[i+1]- Position;
+                amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
+
                 // add a circle fixture to this object at each point
                 /*
                 CircleDef circle = new CircleDef();
-                circle.LocalPosition = Utils.Convert(localpos);
+                circle.LocalPosition = Common.Utils.Convert(localpos);
                 circle.Radius = radius;
                 circle.Density = POB_DENSITY;
                 circle.Friction = POB_FRICTION;
@@ -90,10 +161,12 @@ namespace CrisisAtSwissStation
                 Split(polygon, cornerpoints, triangles);
                 CreateShapes(triangles, POB_DENSITY, POB_FRICTION, POB_RESTITUTION);
 
-                vertices.Add(Utils.Convert(localpos)); // that is, vertices of the curve approximation
+                vertices.Add(Common.Utils.Convert(localpos)); // that is, vertices of the curve approximation
                 numBlobs++;
             }
             // add the last vertex
+            //Vector2 lastlocalpos = (blobs[blobs.Count - 1] / CASSWorld.SCALE) - Position;
+            //vertices.Add(Common.Utils.Convert(lastlocalpos));
             Vector2 lastlocalpos = blobs[blobs.Count - 1]- Position;
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
@@ -171,9 +244,22 @@ namespace CrisisAtSwissStation
             vertices.Add(Utils.Convert(lastlocalpos));
             numBlobs++;
         }*/
-        
 
-        //Not fixed for side scrolling!!!!!!!!!!!!
+        public void reloadNonSerializedAssets()
+        {
+            /*foreach (Vec2 vert in vertices)
+            {
+                Console.WriteLine(Utils.Convert(vert));
+            }*/ // DEBUG
+
+            Texture2D segmenttexture = GameEngine.TextureList[TextureFilename];
+            Texture2D blobtexture = GameEngine.TextureList[this.blobTextureName];
+
+            segmentTexture = segmenttexture;
+            blobTexture = blobtexture;
+            base.reloadNonSerializedAssets();
+        }
+        
         // DEBUG : so, Box2DX for some reason didn't want to add shapes to an object on the fly.
         // temporary solution: blast the old object and create a whole new one
         public void AddToShapes(List<Vector2> blobs)
@@ -185,7 +271,7 @@ namespace CrisisAtSwissStation
             //    totalblobs.Add(Utils.Convert(shape.LocalPosition));
             //}
 
-            float radius = (float)texture.Width / (2 * CASSWorld.SCALE);
+            float radius = (float)blobTexture.Width / (2 * CASSWorld.SCALE);
 
             foreach (Vector2 blobpos in blobs)
             {
@@ -211,7 +297,7 @@ namespace CrisisAtSwissStation
          */
         public override void Draw(Matrix cameraTransform)
         {
-            Vector2 origin = new Vector2(texture.Width, texture.Height) / 2;
+            Vector2 origin = new Vector2(blobTexture.Width, blobTexture.Height) / 2;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
@@ -236,8 +322,8 @@ namespace CrisisAtSwissStation
 
             for (int i = 0; i < vertices.Count - 1; i++)
             {
-                Vector2 localpos = Utils.Convert(vertices[i]);
-                Vector2 localpos2 = Utils.Convert(vertices[i + 1]);
+                Vector2 localpos = Common.Utils.Convert(vertices[i]);
+                Vector2 localpos2 = Common.Utils.Convert(vertices[i + 1]);
                 double theta = System.Math.Atan2(localpos.Y, localpos.X) + Angle;
                 double theta2 = System.Math.Atan2(localpos2.Y, localpos2.X) + Angle;
                 Vector2 rotatedpos = new Vector2((float)(localpos.Length() * System.Math.Cos(theta)), (float)(localpos.Length() * System.Math.Sin(theta)));
@@ -245,18 +331,18 @@ namespace CrisisAtSwissStation
                 Vector2 screenpos = ((Position + rotatedpos) * CASSWorld.SCALE);
                 Vector2 screenpos2 = ((Position + rotatedpos2) * CASSWorld.SCALE);
                 // Draw blob at point
-                spriteBatch.Draw(texture, screenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
+                spriteBatch.Draw(blobTexture, screenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 
                 // Draw segment between points
-                CrisisAtSwissStation.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, INSTASTEEL_COLOR);
+                CrisisAtSwissStation.Common.Utils.DrawLine(spriteBatch, segmentTexture, screenpos, screenpos2, INSTASTEEL_COLOR);
             }
             // Draw blob at last point
-            Vector2 lastlocalpos = Utils.Convert(vertices[vertices.Count - 1]);
+            Vector2 lastlocalpos = Common.Utils.Convert(vertices[vertices.Count - 1]);
             double lasttheta = System.Math.Atan2(lastlocalpos.Y, lastlocalpos.X) + Angle;
             Vector2 lastrotatedpos = new Vector2((float)(lastlocalpos.Length() * System.Math.Cos(lasttheta)), (float)(lastlocalpos.Length() * System.Math.Sin(lasttheta)));
             Vector2 lastscreenpos = ((Position + lastrotatedpos) * CASSWorld.SCALE);
             // Draw blob at point
-            spriteBatch.Draw(texture, lastscreenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
+            spriteBatch.Draw(blobTexture, lastscreenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 
             spriteBatch.End();
         }
@@ -279,9 +365,9 @@ namespace CrisisAtSwissStation
             foreach (Vector2[] triangle in triangles)
             {
                 PolygonDef polygon = new PolygonDef();
-                polygon.Vertices[0] = Utils.Convert(triangle[0]);
-                polygon.Vertices[1] = Utils.Convert(triangle[1]);
-                polygon.Vertices[2] = Utils.Convert(triangle[2]);
+                polygon.Vertices[0] = Common.Utils.Convert(triangle[0]);
+                polygon.Vertices[1] = Common.Utils.Convert(triangle[1]);
+                polygon.Vertices[2] = Common.Utils.Convert(triangle[2]);
                 polygon.VertexCount = 3;
                 polygon.Density = density;
                 polygon.Friction = friction;
@@ -360,7 +446,7 @@ namespace CrisisAtSwissStation
 
                         Vector2 b = p3 - p1;
                         float d = d1.X * d2.Y - d2.X * d1.Y;
-                        if (System.Math.Abs(d) < Utils.EPSILON)
+                        if (System.Math.Abs(d) < Common.Utils.EPSILON)
                             continue;
                         d = 1.0f / d;
 

@@ -42,6 +42,7 @@ namespace Box2DX.Dynamics
 	/// The world class manages all physics entities, dynamic simulation,
 	/// and asynchronous queries.
 	/// </summary>
+    [Serializable]
 	public class World : IDisposable
 	{
 		internal bool _lock;

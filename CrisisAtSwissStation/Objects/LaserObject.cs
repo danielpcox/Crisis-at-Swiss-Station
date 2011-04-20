@@ -8,6 +8,7 @@ using Box2DX.Collision;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class LaserObject
     {
         private Color IN_SIGHT = Color.Red;
@@ -23,14 +24,19 @@ namespace CrisisAtSwissStation
         Box2DX.Collision.Shape interference;
         //Box2DX.Collision.Shape[] interference;
         private Vector2[] sections;
+        
+        [NonSerialized]
         PrimitiveBatch primitiveBatch;
+        [NonSerialized]
         private Texture2D sectionTex;
+        private string sectionTextureName;
 
-        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, Texture2D mySection, int amnSections)
+        public LaserObject(Box2DX.Dynamics.World myWorld, DudeObject myDude, string sectionTexturename, int amnSections)
         {               
             world = myWorld;
             dude = myDude;
-            sectionTex = mySection;
+            sectionTex = GameEngine.TextureList[sectionTexturename];
+            sectionTextureName = sectionTexturename;
             numSections = amnSections;
             sections = new Vector2[numSections];
             currentSection = 0;
@@ -42,6 +48,12 @@ namespace CrisisAtSwissStation
             SCALE = CASSWorld.SCALE;
             primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
             
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
+            sectionTex = GameEngine.TextureList[sectionTextureName];
         }
 
         public bool canDraw()
@@ -90,6 +102,7 @@ namespace CrisisAtSwissStation
 
             original = new Vector2(dude.Position.X * SCALE, dude.Position.Y * SCALE);
             end = new Vector2((mX+ dude.Position.X)*SCALE - guyScreenPos, mY * SCALE);
+            //end = new Vector2(mX*SCALE, mY * SCALE);
 
             Vector2 gunpos = original; //+ adjustment;
 
@@ -201,7 +214,7 @@ namespace CrisisAtSwissStation
             {
                 GameEngine.Instance.SpriteBatch.Begin();
                 //Console.WriteLine("{0} {1}", sections[currentSection].X, sections[currentSection].Y);
-                CrisisAtSwissStation.Utils.DrawLine(GameEngine.Instance.SpriteBatch, sectionTex, sections[currentSection], sections[currentSection + 1], PaintedObject.INSTASTEEL_COLOR);
+                Common.Utils.DrawLine(GameEngine.Instance.SpriteBatch, sectionTex, sections[currentSection], sections[currentSection + 1], PaintedObject.INSTASTEEL_COLOR);
                 GameEngine.Instance.SpriteBatch.End();
 
                 sectionTimer++;

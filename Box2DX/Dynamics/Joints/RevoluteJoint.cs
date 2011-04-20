@@ -56,6 +56,7 @@ namespace Box2DX.Dynamics
 	/// 2. if you add/remove shapes from a body and recompute the mass,
 	///    the joints will be broken.
 	/// </summary>
+    [Serializable]
 	public class RevoluteJointDef : JointDef
 	{
 		public RevoluteJointDef()
@@ -140,6 +141,7 @@ namespace Box2DX.Dynamics
 	/// to drive the relative rotation about the shared point. A maximum motor torque
 	/// is provided so that infinite forces are not generated.
 	/// </summary>
+    [Serializable]
 	public class RevoluteJoint : Joint
 	{
 		public Vec2 _localAnchor1;	// relative

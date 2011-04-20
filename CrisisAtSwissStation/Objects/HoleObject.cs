@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class HoleObject : BoxObject
     {
 
@@ -26,22 +27,27 @@ namespace CrisisAtSwissStation
         private int yFrame;
         private int spriteWidth;
         private int spriteHeight;
+        [NonSerialized]
         private Texture2D animTexture;      
         private int myGameTime, animateTimer, animateInterval;
 
         private float filled = 0;
 
-        public HoleObject(World world, Texture2D mytexture, Texture2D objectTexture)
-            : base(world, objectTexture, 0f, .5f, 0.0f,1,false)
+        string animTextureName;
+
+        public HoleObject(World world, string animTexturename, string objectTexturename)
+            : base(world, objectTexturename, 0f, .5f, 0.0f,1,false)
         {
             //thisTexture = mytexture;
-            texture = objectTexture;
+            texture = GameEngine.TextureList[objectTexturename];
+            TextureFilename = objectTexturename;
+            animTexture = GameEngine.TextureList[animTexturename];
+            animTextureName = animTexturename;
 
             //animation stuff
             myGameTime = 0;
             animateTimer = 0;
             animateInterval = 40;
-            animTexture = mytexture;                   
             xFrame = 0;
             yFrame = 0;
             spriteWidth = 800;
@@ -49,6 +55,12 @@ namespace CrisisAtSwissStation
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
             
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            texture = GameEngine.TextureList[TextureFilename];
+            animTexture = GameEngine.TextureList[animTextureName];
         }
 
         public float Filled

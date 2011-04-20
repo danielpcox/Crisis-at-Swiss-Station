@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Color = Microsoft.Xna.Framework.Color; // Stupid Box2DX name collision!
+using CrisisAtSwissStation.Common;
 
 using System;
 using System.Diagnostics;
@@ -17,6 +18,7 @@ namespace CrisisAtSwissStation
      * technical name of which is a "Dude."
      * Our dude can move left and right, jump, and draw and erase.
      */
+    [Serializable]
     public class DudeObject : BoxObject
     {
        
@@ -49,8 +51,13 @@ namespace CrisisAtSwissStation
         private int yFrame;
         private int spriteWidth;
         private int spriteHeight;
+        [NonSerialized]
         private Texture2D animTexture;
+        protected string animTextureName;
+        [NonSerialized]
         private Texture2D armTexture;
+        protected string armTextureName;
+
         private int myGameTime;
         private LaserObject myLaser; //for arm rotation only
         private float armAngle;
@@ -58,14 +65,100 @@ namespace CrisisAtSwissStation
         ScrollingWorld myWorld;
 
         /**
-         * Creates a new dude
+         * Creates a new dude // HACK HACK - this constructor is obsolete, and needs to be removed when the reference to it in ScrollingWorld is
          */
+        /*
         public DudeObject(World world, ScrollingWorld theWorld, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, LaserObject Laser, string groundSensorName)
         : base(world, objectTexture, .5f, 0f, 0.0f,1,false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
-            // Initialize
-            isGrounded = false;            
+            Height = objectTexture.Height;
+            Width = objectTexture.Width;
 
+            boundingBox = new Rectangle((int)(Position.X * CASSWorld.SCALE), (int)(Position.Y * CASSWorld.SCALE), (int)Height, (int)Width);
+
+            // Initialize
+            isGrounded = false;
+
+            // BodyDef options
+            BodyDef.FixedRotation = true;
+
+            // Make a dude controller
+            controllers.Add(new DudeController());
+
+            myLaser = Laser;
+            armAngle = 0;
+
+            myWorld = theWorld;
+
+            //animation stuff
+            myGameTime = 0;
+            animTexture = texture;
+            this.armTexture = armTexture;
+            walkTimer = 0;
+            walkInterval = 5;
+            xFrame = 0;
+            yFrame = 0;
+            spriteWidth = 100;
+            spriteHeight = 100;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            animOrigin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            armOrigin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2) - new Vector2(10,18);
+
+
+            // Ground Sensor
+            // -------------
+            //   We only allow the dude to jump when he's
+            // on the ground.  After all, how can you jump
+            // when you're flying in the air?  (Unless you
+            // can double jump)
+            //   To determine whether or not the dude is on
+            // the ground, we create a thin sensor under his
+            // feet, which reports collisions with the world
+            // but has no collision response.
+            //   Game logic in PlatformWorld tells the dude
+            // whether or not he is grounded.
+
+
+            //animation stuff
+            float halfWidth = (float)objectTexture.Width / (2 * CASSWorld.SCALE);
+            float halfHeight = (float)objectTexture.Height / (2 * CASSWorld.SCALE);
+            Vector2 sensorCenter = new Vector2(0, halfHeight); 
+
+            // Create collision shape of the ground sensor
+            PolygonDef groundSensor = new PolygonDef();
+            groundSensor.Density = 1.0f;
+            groundSensor.IsSensor = true;
+            groundSensor.UserData = groundSensorName;
+            groundSensor.SetAsBox(halfWidth / 2, 0.05f, Utils.Convert(sensorCenter), 0);
+            shapes.Add(groundSensor);
+
+            //animation stuff
+            //base.(world, texture, 1.0f, 0.0f, 0.0f);
+        } */
+
+        /**
+         * Creates a new dude
+         */
+        //public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
+        public DudeObject(World world, ScrollingWorld theWorld, string texturename, string objectTexturename, string armTexturename, LaserObject Laser, string groundSensorName)
+        : base(world, objectTexturename, .5f, 0.0f, 0.0f, 1, false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
+        {
+            this.armTextureName = armTexturename;
+            this.animTextureName = texturename;
+
+            Texture2D objectTexture = GameEngine.TextureList[objectTexturename];
+            Texture2D texture = GameEngine.TextureList[texturename];
+            Texture2D armTexture = GameEngine.TextureList[armTexturename];
+
+            Height = objectTexture.Height;
+            Width = objectTexture.Width;
+
+            boundingBox = new Rectangle((int)(Position.X * CASSWorld.SCALE), (int)(Position.Y * CASSWorld.SCALE), (int)Height, (int)Width);
+
+            // Initialize
+            isGrounded = false;
+
+            TextureFilename = objectTexturename;
             // BodyDef options
             BodyDef.FixedRotation = true;
 
@@ -127,6 +220,14 @@ namespace CrisisAtSwissStation
 
             //animation stuff
             //base.(world, texture, 1.0f, 0.0f, 0.0f);
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            this.texture = GameEngine.TextureList[animTextureName];
+            this.animTexture = GameEngine.TextureList[animTextureName];
+            this.armTexture = GameEngine.TextureList[armTextureName];
+            base.reloadNonSerializedAssets();
         }
 
         /**
@@ -231,6 +332,7 @@ namespace CrisisAtSwissStation
         /**
          * Controller for a dude
          */
+        [Serializable]
         private class DudeController : Controller
         {
             /**

@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class AnimationObject : BoxObject
     {
         //animation stuff
@@ -22,18 +23,22 @@ namespace CrisisAtSwissStation
         private int spriteWidth;
         private int spriteHeight;     
         private int numFrames;
+        [NonSerialized]
         private Texture2D animTexture;
         private int myGameTime, animateTimer, animateInterval;
 
+        string animTextureName;
 
-        public AnimationObject( World world, Texture2D mytexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
-            : base(world, objectTexture, 0f, .5f, 0.0f, 1, false)
+        public AnimationObject( World world, string animTexturename, string objectTexturename, int sprWidth, int sprHeight, int animInt, int myNumFrames)
+            : base(world, objectTexturename, 0f, .5f, 0.0f, 1, false)
         {
+            animTextureName = animTexturename;
+            //Console.WriteLine("***" + animTexturename + "***");
+            animTexture = GameEngine.TextureList[animTexturename];
 
             myGameTime = 0;
             animateTimer = 0;
             animateInterval = animInt;
-            animTexture = mytexture;           
             xFrame = 0;
             yFrame = 0;
             numFrames = myNumFrames;
@@ -45,6 +50,10 @@ namespace CrisisAtSwissStation
 
         }
 
+        public void reloadNonSerializedAssets()
+        {
+            animTexture = GameEngine.TextureList[animTextureName];
+        }
 
         public override void Update(CASSWorld world, float dt)
         {
