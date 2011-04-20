@@ -33,6 +33,7 @@ namespace CrisisAtSwissStation
 
             animTexture = GameEngine.TextureList[mytexturename];
             animTextureName = mytexturename;
+            TextureFilename = objectTexturename;
 
             switchOn = false;
 

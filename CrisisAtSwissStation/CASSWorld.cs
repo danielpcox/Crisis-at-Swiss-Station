@@ -178,6 +178,15 @@ namespace CrisisAtSwissStation
                 {
                     ((MovingObject)obj).reloadNonSerializedAssets();
                 }
+                else if (obj is HorizontalMovingObject)
+                {
+                    ((HorizontalMovingObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is SwitchObject)
+                {
+                    ((SwitchObject)obj).reloadNonSerializedAssets();
+                }
+
             }
 
             // misc

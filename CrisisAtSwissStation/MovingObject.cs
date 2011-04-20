@@ -25,9 +25,7 @@ namespace CrisisAtSwissStation
         private float scale;
         private float bound1;//lower bound
         private float bound2;//upper bound
-
-        private string textureName;
-
+        
         /**
          * Creates a new box object
          */
@@ -35,6 +33,11 @@ namespace CrisisAtSwissStation
             : base(world)
         {
             texture = GameEngine.TextureList[texturename];
+            TextureFilename = texturename;
+
+            Height = texture.Height * myScale;
+            Width = texture.Width * myScale;
+            boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Width, (int)Height);
 
             this.bound1 = bound1;
             this.bound2 = bound2;
@@ -65,7 +68,7 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
-            texture = GameEngine.TextureList[textureName];
+            texture = GameEngine.TextureList[TextureFilename];
         }
 
         public override void Update(CASSWorld world, float dt)
