@@ -655,7 +655,9 @@ namespace CrisisAtSwissStation.LevelEditor
             //First, choose the file we want to load.
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = filter;
-            dialog.InitialDirectory = ".";
+            string currdir = CurrDirHack() + "\\Worlds";
+            Console.WriteLine("Current Directory " + currdir);
+            dialog.InitialDirectory = currdir; //".";
             dialog.Title = title;
 
             DialogResult result = dialog.ShowDialog();
@@ -873,7 +875,7 @@ namespace CrisisAtSwissStation.LevelEditor
         /// <returns></returns>
         public static string CurrDirHack()
         {
-            return (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
+            return (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
         }
 
         private void showMessage(string title, string text)
