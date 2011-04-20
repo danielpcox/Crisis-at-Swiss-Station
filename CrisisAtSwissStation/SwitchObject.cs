@@ -1,4 +1,5 @@
-﻿using Box2DX.Collision;
+﻿using System;
+using Box2DX.Collision;
 using Box2DX.Dynamics;
 
 using Microsoft.Xna.Framework;
@@ -7,6 +8,7 @@ using Color = Microsoft.Xna.Framework.Color; // Stupid Box2DX name collision!
 
 namespace CrisisAtSwissStation
 {
+    [Serializable]
     public class SwitchObject : BoxObject
     {
         public bool switchOn;
@@ -18,19 +20,26 @@ namespace CrisisAtSwissStation
         private int spriteWidth;
         private int spriteHeight;
         private int numFrames;
+        [NonSerialized]
         private Texture2D animTexture;
         private int myGameTime, animateTimer, animateInterval;
 
+        private string animTextureName;
 
-        public SwitchObject(World world, Texture2D mytexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
-            : base(world, objectTexture, 0f, .5f, 0.0f, 1, false)
+
+        public SwitchObject(World world, string mytexturename, string objectTexturename, int sprWidth, int sprHeight, int animInt, int myNumFrames)
+            : base(world, objectTexturename, 0f, .5f, 0.0f, 1, false)
         {
+
+            animTexture = GameEngine.TextureList[mytexturename];
+            animTextureName = mytexturename;
+
             switchOn = false;
 
             myGameTime = 0;
             animateTimer = 0;
             animateInterval = animInt;
-            animTexture = mytexture;
+            //animTexture = mytexture;
             xFrame = 0;
             yFrame = 0;
             numFrames = myNumFrames;
@@ -40,6 +49,11 @@ namespace CrisisAtSwissStation
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
 
+        }
+
+        public void reloadNonSerializedAssets()
+        {
+            animTexture = GameEngine.TextureList[animTextureName];
         }
 
 

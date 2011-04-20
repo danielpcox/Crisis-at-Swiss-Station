@@ -126,7 +126,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioManager.cs" />
+    <Compile Include="Common\Conversion.cs" />
+    <Compile Include="Common\Serializer.cs" />
     <Compile Include="HorizontalMovingObject.cs" />
+    <Compile Include="LevelEditor\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelEditor\Editor.designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LevelEditor\EditorConstants.cs" />
+    <Compile Include="LevelEditor\StringPromptDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelEditor\StringPromptDialog.Designer.cs">
+      <DependentUpon>StringPromptDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MovingObject.cs" />
     <Compile Include="Objects\AnimationObject.cs" />
     <Compile Include="Objects\BoxObject.cs" />

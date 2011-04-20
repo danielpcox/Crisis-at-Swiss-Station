@@ -174,6 +174,10 @@ namespace CrisisAtSwissStation
                 {
                     ((AnimationObject)obj).reloadNonSerializedAssets();
                 }
+                else if (obj is MovingObject)
+                {
+                    ((MovingObject)obj).reloadNonSerializedAssets();
+                }
             }
 
             // misc

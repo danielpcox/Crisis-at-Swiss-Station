@@ -4,6 +4,8 @@ using Box2DX.Dynamics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Color = Microsoft.Xna.Framework.Color; // Stupid Box2DX name collision!
+using CrisisAtSwissStation.Common;
+using System;
 namespace CrisisAtSwissStation
 {
     /**
@@ -11,22 +13,29 @@ namespace CrisisAtSwissStation
     * that has a rectangular shape.  Its dimensions
     * are determined by the size of the texture provided.
     */
+    [Serializable]
     public class HorizontalMovingObject : PhysicsObject
     {
         public bool isMoving = true;
         private Vector2 myForce;
         private SwitchObject mySwitch;
         // The box texture
+        [NonSerialized]
         protected Texture2D texture;
         private float scale;
         private float bound1;//lower bound
         private float bound2;//upper bound
+
+        string textureName;
+
         /**
          * Creates a new box object
          */
-        public HorizontalMovingObject(World world, Texture2D texture, float density, float friction, float restitution, float myScale, bool isPulley, Vector2 myForce, float bound1, float bound2)
+        public HorizontalMovingObject(World world, string texturename, float density, float friction, float restitution, float myScale, bool isPulley, Vector2 myForce, float bound1, float bound2)
             : base(world)
         {
+            texture = GameEngine.TextureList[texturename];
+            textureName = texturename;
             this.bound1 = bound1;
             this.bound2 = bound2;
             this.myForce = myForce;
@@ -52,6 +61,12 @@ namespace CrisisAtSwissStation
             shape.Restitution = restitution;
             shapes.Add(shape);
 
+        }
+
+
+        public void reloadNonSerializedAssets()
+        {
+            texture = GameEngine.TextureList[textureName];
         }
 
         public override void Update(CASSWorld world, float dt)
