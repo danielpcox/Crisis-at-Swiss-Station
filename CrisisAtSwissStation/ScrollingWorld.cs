@@ -158,7 +158,7 @@ namespace CrisisAtSwissStation
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(55f, 15f); //was 2.5 now 55
+        private static Vector2 dudePosition = new Vector2(2.5f, 15f); //was 2.5 now 55
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
