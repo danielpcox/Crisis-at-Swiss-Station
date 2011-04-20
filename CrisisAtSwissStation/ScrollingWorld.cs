@@ -248,6 +248,7 @@ namespace CrisisAtSwissStation
         public static float numDrawLeft;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
         Vector2 prevMousePos;
+        bool mouseWasInbounds = false;
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
@@ -1018,7 +1019,7 @@ namespace CrisisAtSwissStation
                 //laser.finishDrawing();
 
             }
-            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw()) && (numDrawLeft > PAINTING_GRANULARITY || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && mouseinbounds)
+            else if (((mouse.LeftButton == ButtonState.Released || !laser.canDraw() || (mouseWasInbounds && prevms.LeftButton == ButtonState.Pressed)) && (numDrawLeft > PAINTING_GRANULARITY || finishDraw)) && (prevms.LeftButton == ButtonState.Pressed || drawingInterrupted) && (mouseinbounds || mouseWasInbounds))
             {
                 if (!laser.canDraw())
                     drawingInterrupted = true;
@@ -1080,6 +1081,7 @@ namespace CrisisAtSwissStation
             // end painting code (except for prevms = ms below)
 
             prevms = mouse;
+            mouseWasInbounds = mouseinbounds;
 
             laser.Update(scaledMousePosition.X, scaledMousePosition.Y, getCameraCoords());
 
