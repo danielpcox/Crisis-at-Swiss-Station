@@ -577,7 +577,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 List<Vector2> blobs = new List<Vector2>();
                 switch (lastname)
                 {
-                    case "test_paint":
+                    case "line":
                         blobs.Add(gameposition + new Vector2(0.6f, 0f));
                         blobs.Add(gameposition + new Vector2(-0.6f, 0f));
                         po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
