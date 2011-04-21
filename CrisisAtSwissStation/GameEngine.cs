@@ -383,7 +383,7 @@ namespace CrisisAtSwissStation
                 audioManager.DecreaseMusicVolume(.005f);
                 //if (currentWorld.Failed)
                 //{
-                    countdown--;
+                //    countdown--;
                 //}
 
                 //Play the level complete SFX
@@ -393,7 +393,7 @@ namespace CrisisAtSwissStation
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
                 }
 
-                if (countdown < 0)
+                if (countdown == 0)
                 {
                     //reset = currentWorld.Failed;
                     LinkToMain();
@@ -430,7 +430,7 @@ namespace CrisisAtSwissStation
                 
 
             // Just won or lost - initiate countdown
-            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown < 0)
+            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown == 0)
                 countdown = COUNTDOWN;
 
            
@@ -599,31 +599,17 @@ namespace CrisisAtSwissStation
             */
 
 
-            spriteBatch.Begin();
 
 
             //Draw IS label 
-            spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(50, 140), Color.Red);
+            //spriteBatch.DrawString(spriteFont, "Insta-Steel :", new Vector2(50, 140), Color.Red);
             //Draw IS amount
-            spriteBatch.DrawString(spriteFont, ((int)ScrollingWorld.numDrawLeft).ToString(), new Vector2(155, 140), Color.Yellow);
+            //spriteBatch.DrawString(spriteFont, ((int)ScrollingWorld.numDrawLeft).ToString(), new Vector2(155, 140), Color.Yellow);
 
             //Draw Jump label 
            // spriteBatch.DrawString(spriteFont, "Jump :", new Vector2(50, 200), Color.Red);
             //Draw Jump amount
            // spriteBatch.DrawString(spriteFont, DudeObject.jumpImpulse.ToString(), new Vector2(115, 200), Color.Yellow);
-
-            // Draw success or failure image
-            if (currentWorld!=null && currentWorld.Succeeded && !currentWorld.Failed)
-            {
-                spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - victory.Width) / 2,
-                    (graphics.PreferredBackBufferHeight - victory.Height) / 2), Color.White);
-            }
-            else if (currentWorld!=null && currentWorld.Failed)
-            {
-                spriteBatch.Draw(failure, new Vector2((graphics.PreferredBackBufferWidth - failure.Width) / 2,
-                    (graphics.PreferredBackBufferHeight - failure.Height) / 2), Color.White); ;
-            }
-            spriteBatch.End();
 
             switch (progstate)
             {
@@ -663,6 +649,20 @@ namespace CrisisAtSwissStation
                     currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
                     break;
             }
+
+            spriteBatch.Begin();
+            // Draw success or failure image
+            if (currentWorld!=null && currentWorld.Succeeded && !currentWorld.Failed)
+            {
+                spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - victory.Width) / 2,
+                    (graphics.PreferredBackBufferHeight - victory.Height) / 2), Color.White);
+            }
+            else if (currentWorld!=null && currentWorld.Failed)
+            {
+                spriteBatch.Draw(failure, new Vector2((graphics.PreferredBackBufferWidth - failure.Width) / 2,
+                    (graphics.PreferredBackBufferHeight - failure.Height) / 2), Color.White); ;
+            }
+            spriteBatch.End();
             
             //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
            // jumpTextBox.Draw(spriteBatch, 255);
