@@ -137,6 +137,9 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private static Texture2D winDoorAnimTexture;
 
+        [NonSerialized]
+        private static Texture2D ballroomBackground;
+
         private bool movPlat1;
         private bool pistonMove;
         //private bool movPlat2;
@@ -592,7 +595,7 @@ namespace CrisisAtSwissStation
 	    */
 
             // Create laser
-            laser = new LaserObject(World, dude, "paintedsegment", 10);
+            laser = new LaserObject(World, dude,"paintedsegment", 10);
 
 
             //creating insta steel already in the level
@@ -797,6 +800,7 @@ namespace CrisisAtSwissStation
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
             backgroundTerrible = content.Load<Texture2D>("RonniesBestWork");
+            ballroomBackground = content.Load<Texture2D>("ballroom");
 
             /* //our new platforms
              bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
