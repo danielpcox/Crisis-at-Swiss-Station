@@ -23,8 +23,8 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         protected Texture2D texture;
         private float scale;
-        private float bound1;//lower bound
-        private float bound2;//upper bound
+        public float bound1;//lower bound
+        public float bound2;//upper bound
         
         /**
          * Creates a new box object

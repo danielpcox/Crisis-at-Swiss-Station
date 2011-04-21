@@ -641,7 +641,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Art\Objects\CircleObjects\" />
     <Folder Include="Art\Overlays\" />
   </ItemGroup>
   <ItemGroup>
@@ -816,6 +815,18 @@
     </Compile>
     <Compile Include="Art\Objects\BackgroundObjects\window5.png">
       <Name>window5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\moving_platform.png">
+      <Name>moving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\MovingPlatformObjects\moving_platform.png">
+      <Name>moving_platform</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
