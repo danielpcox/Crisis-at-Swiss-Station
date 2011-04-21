@@ -135,11 +135,11 @@ namespace CrisisAtSwissStation.LevelEditor
             //}
         }
 
-        private void rb_Handlebars_CheckedChanged_1(object sender, EventArgs e)
+        private void rb_CircleObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_Handlebars.Checked)
+            if (rb_CircleObjects.Checked)
             {
-                textureDir = "Art\\Handlebars\\";
+                textureDir = "Art\\Objects\\CircleObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
@@ -538,6 +538,13 @@ namespace CrisisAtSwissStation.LevelEditor
                 bo = new BoxObject(world.World, texName, 0, .5f, 0, 1, false);
                 bo.Position = gameposition;
                 world.AddObject(bo);
+            }
+            else if (rb_CircleObjects.Checked)
+            {
+                CircleObject co;
+                co = new CircleObject(world.World, texName, 0, .5f, 0, 1);
+                co.Position = gameposition;
+                world.AddObject(co);
             }
             else if (rb_WinDoorObject.Checked)
             {

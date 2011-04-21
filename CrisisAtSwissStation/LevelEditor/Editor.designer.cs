@@ -40,7 +40,7 @@
             this.rb_SavePoint = new System.Windows.Forms.RadioButton();
             this.rb_VictoryTest = new System.Windows.Forms.RadioButton();
             this.rb_Doors = new System.Windows.Forms.RadioButton();
-            this.rb_Handlebars = new System.Windows.Forms.RadioButton();
+            this.rb_CircleObjects = new System.Windows.Forms.RadioButton();
             this.rb_PaintedObjects = new System.Windows.Forms.RadioButton();
             this.rb_SwitchObject = new System.Windows.Forms.RadioButton();
             this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
@@ -184,7 +184,7 @@
             this.gb_ObjTypes.Controls.Add(this.rb_SavePoint);
             this.gb_ObjTypes.Controls.Add(this.rb_VictoryTest);
             this.gb_ObjTypes.Controls.Add(this.rb_Doors);
-            this.gb_ObjTypes.Controls.Add(this.rb_Handlebars);
+            this.gb_ObjTypes.Controls.Add(this.rb_CircleObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_PaintedObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_SwitchObject);
             this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
@@ -252,18 +252,17 @@
             this.rb_Doors.Visible = false;
             this.rb_Doors.CheckedChanged += new System.EventHandler(this.rb_Doors_CheckedChanged);
             // 
-            // rb_Handlebars
+            // rb_CircleObjects
             // 
-            this.rb_Handlebars.AutoSize = true;
-            this.rb_Handlebars.Location = new System.Drawing.Point(20, 186);
-            this.rb_Handlebars.Name = "rb_Handlebars";
-            this.rb_Handlebars.Size = new System.Drawing.Size(79, 17);
-            this.rb_Handlebars.TabIndex = 7;
-            this.rb_Handlebars.TabStop = true;
-            this.rb_Handlebars.Text = "Handlebars";
-            this.rb_Handlebars.UseVisualStyleBackColor = true;
-            this.rb_Handlebars.Visible = false;
-            this.rb_Handlebars.CheckedChanged += new System.EventHandler(this.rb_Handlebars_CheckedChanged_1);
+            this.rb_CircleObjects.AutoSize = true;
+            this.rb_CircleObjects.Location = new System.Drawing.Point(20, 186);
+            this.rb_CircleObjects.Name = "rb_CircleObjects";
+            this.rb_CircleObjects.Size = new System.Drawing.Size(87, 17);
+            this.rb_CircleObjects.TabIndex = 7;
+            this.rb_CircleObjects.TabStop = true;
+            this.rb_CircleObjects.Text = "CircleObjects";
+            this.rb_CircleObjects.UseVisualStyleBackColor = true;
+            this.rb_CircleObjects.CheckedChanged += new System.EventHandler(this.rb_CircleObjects_CheckedChanged);
             // 
             // rb_PaintedObjects
             // 
@@ -686,7 +685,7 @@
         private System.Windows.Forms.TabPage tab_Objects;
         private System.Windows.Forms.GroupBox gb_ObjTypes;
         private System.Windows.Forms.RadioButton rb_Doors;
-        private System.Windows.Forms.RadioButton rb_Handlebars;
+        private System.Windows.Forms.RadioButton rb_CircleObjects;
         private System.Windows.Forms.RadioButton rb_PaintedObjects;
         private System.Windows.Forms.RadioButton rb_SwitchObject;
         private System.Windows.Forms.RadioButton rb_WinDoorObject;
