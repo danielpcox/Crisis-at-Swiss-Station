@@ -45,7 +45,7 @@
             this.rb_Parts = new System.Windows.Forms.RadioButton();
             this.rb_HazardDynamic = new System.Windows.Forms.RadioButton();
             this.rb_HazardStatic = new System.Windows.Forms.RadioButton();
-            this.rb_SensorObjects = new System.Windows.Forms.RadioButton();
+            this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
             this.rb_BoxObjects = new System.Windows.Forms.RadioButton();
             this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
@@ -189,7 +189,7 @@
             this.gb_ObjTypes.Controls.Add(this.rb_Parts);
             this.gb_ObjTypes.Controls.Add(this.rb_HazardDynamic);
             this.gb_ObjTypes.Controls.Add(this.rb_HazardStatic);
-            this.gb_ObjTypes.Controls.Add(this.rb_SensorObjects);
+            this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
             this.gb_ObjTypes.Controls.Add(this.rb_BoxObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_AnimationObjects);
             this.gb_ObjTypes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -317,17 +317,17 @@
             this.rb_HazardStatic.Visible = false;
             this.rb_HazardStatic.CheckedChanged += new System.EventHandler(this.rb_HazardStatic_CheckedChanged_1);
             // 
-            // rb_SensorObjects
+            // rb_WinDoorObject
             // 
-            this.rb_SensorObjects.AutoSize = true;
-            this.rb_SensorObjects.Location = new System.Drawing.Point(20, 66);
-            this.rb_SensorObjects.Name = "rb_SensorObjects";
-            this.rb_SensorObjects.Size = new System.Drawing.Size(94, 17);
-            this.rb_SensorObjects.TabIndex = 2;
-            this.rb_SensorObjects.TabStop = true;
-            this.rb_SensorObjects.Text = "SensorObjects";
-            this.rb_SensorObjects.UseVisualStyleBackColor = true;
-            this.rb_SensorObjects.CheckedChanged += new System.EventHandler(this.rb_SensorObjects_CheckedChanged);
+            this.rb_WinDoorObject.AutoSize = true;
+            this.rb_WinDoorObject.Location = new System.Drawing.Point(20, 66);
+            this.rb_WinDoorObject.Name = "rb_WinDoorObject";
+            this.rb_WinDoorObject.Size = new System.Drawing.Size(98, 17);
+            this.rb_WinDoorObject.TabIndex = 2;
+            this.rb_WinDoorObject.TabStop = true;
+            this.rb_WinDoorObject.Text = "WinDoorObject";
+            this.rb_WinDoorObject.UseVisualStyleBackColor = true;
+            this.rb_WinDoorObject.CheckedChanged += new System.EventHandler(this.rb_WinDoorObject_CheckedChanged);
             // 
             // rb_BoxObjects
             // 
@@ -695,7 +695,7 @@
         private System.Windows.Forms.RadioButton rb_Parts;
         private System.Windows.Forms.RadioButton rb_HazardDynamic;
         private System.Windows.Forms.RadioButton rb_HazardStatic;
-        private System.Windows.Forms.RadioButton rb_SensorObjects;
+        private System.Windows.Forms.RadioButton rb_WinDoorObject;
         private System.Windows.Forms.RadioButton rb_BoxObjects;
         private System.Windows.Forms.RadioButton rb_AnimationObjects;
         private System.Windows.Forms.TabPage tab_objProps;

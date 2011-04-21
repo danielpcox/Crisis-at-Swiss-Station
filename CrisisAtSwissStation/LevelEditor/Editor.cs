@@ -114,13 +114,9 @@ namespace CrisisAtSwissStation.LevelEditor
             }
         }
 
-        private void rb_SensorObjects_CheckedChanged(object sender, EventArgs e)
+        private void rb_WinDoorObject_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_SensorObjects.Checked)
-            {
-                textureDir = "Art\\Objects\\SensorObjects\\";
-                PopulateTextureList(textureDir);
-            }
+
         }
 
         private void rb_HazardStatic_CheckedChanged_1(object sender, EventArgs e)
@@ -545,11 +541,11 @@ namespace CrisisAtSwissStation.LevelEditor
                 bo.Position = gameposition;
                 world.AddObject(bo);
             }
-            else if (rb_SensorObjects.Checked)
+            else if (rb_WinDoorObject.Checked)
             {
-                SensorObject so;
+                WinDoorObject so;
                 // HACK - hard-coded for the win-door
-                so = new SensorObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 5);
+                so = new WinDoorObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 5);
                 so.Position = gameposition;
                 world.AddObject(so);
             }
@@ -1113,5 +1109,6 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             GameEngine.level_editor_open = false;
         }
+
     }
 }

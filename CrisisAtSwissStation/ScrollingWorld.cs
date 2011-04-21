@@ -259,7 +259,7 @@ namespace CrisisAtSwissStation
 
         DudeObject dude;
         BoxObject arm;
-        SensorObject winDoor;
+        WinDoorObject winDoor;
         public LaserObject laser;
 
         public ScrollingWorld(string backgroundname = "background")
@@ -281,7 +281,7 @@ namespace CrisisAtSwissStation
             // Create win door
 	    // HACK HACK - this will break door animation until a fix is created
             //winDoor = new SensorObject(World, winDoorAnimTexture, winTexture,93,99,20,5);
-            winDoor = new SensorObject(World, "door_strip", "WinDoor", 93, 99, 20, 5);
+            winDoor = new WinDoorObject(World, "door_strip", "WinDoor", 93, 99, 20, 5);
             winDoor.Position = winDoorPos;
             AddObject(winDoor);
 
@@ -1147,73 +1147,132 @@ namespace CrisisAtSwissStation
                     world.dude.Grounded = true;
                 }
 
-                //Generalized Switch Checking Code!!
-                foreach (PhysicsObject switchObj in this.world.Objects)
+                Dictionary<String, List<PhysicsObject>> objsDict = new Dictionary<String, List<PhysicsObject>>();
+                objsDict.Add("BoxObject", new List<PhysicsObject>()); 
+                objsDict.Add("PolygonObject", new List<PhysicsObject>());
+                objsDict.Add("CircleObject", new List<PhysicsObject>());
+                objsDict.Add("DudeObject", new List<PhysicsObject>());
+                objsDict.Add("PaintedObject", new List<PhysicsObject>());
+                objsDict.Add("SensorObject", new List<PhysicsObject>());
+                objsDict.Add("HoleObject", new List<PhysicsObject>());
+                objsDict.Add("AnimationObject", new List<PhysicsObject>());
+                objsDict.Add("MovingObject", new List<PhysicsObject>());
+                objsDict.Add("HorizontalMovingObject", new List<PhysicsObject>());
+                objsDict.Add("SwitchObject", new List<PhysicsObject>());
+                objsDict.Add("WinDoorObject", new List<PhysicsObject>());
+                
+                foreach (PhysicsObject po in this.world.Objects)
                 {
-                    if (switchObj is SwitchObject)
+                    if (po is BoxObject)
                     {
-                        if ((object1 == switchObj && object2 == world.dude) ||
-                          (object2 == switchObj && object1 == world.dude))
-                            ((SwitchObject)switchObj).switchOn = true;
+                        objsDict["BoxObject"].Add(po);
                     }
-                    //Generalized Horizontal Platform checking code!!
-                    else if (switchObj is HorizontalMovingObject)
+                    else if (po is PolygonObject)
                     {
-                        //horizontal platform work
-                        if ((object1 == switchObj && object2 == world.dude) ||
-                           (object2 == switchObj && object1 == world.dude))
+                        objsDict["PolygonObject"].Add(po);
+                    }
+                    else if (po is CircleObject)
+                    {
+                        objsDict["CircleObject"].Add(po);
+                    }
+                    
+                    if (po is DudeObject)
+                    {
+                        objsDict["DudeObject"].Add(po);
+                    }
+                    else if (po is PaintedObject)
+                    {
+                        objsDict["PaintedObject"].Add(po);
+                    }
+                    else if (po is SensorObject)
+                    {
+                        objsDict["SensorObject"].Add(po);
+                    }
+                    else if (po is HoleObject)
+                    {
+                        objsDict["HoleObject"].Add(po);
+                    }
+                    else if (po is AnimationObject)
+                    {
+                        objsDict["AnimationObject"].Add(po);
+                    }
+                    else if (po is MovingObject)
+                    {
+                        objsDict["MovingObject"].Add(po);
+                    }
+                    else if (po is HorizontalMovingObject)
+                    {
+                        objsDict["HorizontalMovingObject"].Add(po);
+                    }
+                    else if (po is SwitchObject)
+                    {
+                        objsDict["SwitchObject"].Add(po);
+                    }
+                    else if (po is WinDoorObject)
+                    {
+                        objsDict["WinDoorObject"].Add(po);
+                    }
+                }
+                
+                foreach (PhysicsObject switchObj in objsDict["SwitchObject"])
+                {
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                    {
+                        ((SwitchObject)switchObj).switchOn = true;
+                    }
+                }
+
+                foreach (PhysicsObject hMove in objsDict["HorizontalMovingObject"])
+                {
+                    if ((object1 == hMove && object2 == world.dude) ||
+                        (object2 == hMove && object1 == world.dude))
+                    {
+                        if (world.dude.Grounded)
                         {
-                            if (world.dude.Grounded)
+                            if (world.movPlatform2.isMoving)
                             {
-                                if (world.movPlatform2.isMoving)
-                                {
-                                    world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
-                                }
-                                // world.dude.Position = world.dude.Position + new Vector2(0.05f, 0);
-                                else
-                                {
-                                    world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
-                                }
-                                //world.dude.Position = world.dude.Position - new Vector2(0.05f, 0);
+                                world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
                             }
+                            // world.dude.Position = world.dude.Position + new Vector2(0.05f, 0);
+                            else
+                            {
+                                world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
+                            }
+                            //world.dude.Position = world.dude.Position - new Vector2(0.05f, 0);
                         }
                     }
-               
                 }
 
-
-                PhysicsObject obj;
                 bool allHolesFilled = true;
-                if ((object1 == world.winDoor && object2 == world.dude) ||
-                    (object2 == world.winDoor && object1 == world.dude))
+                foreach (PhysicsObject hole in objsDict["HoleObject"])
                 {
-                    // this will need to be changed when we move to the level editor model...
-                    if (object1 == world.winDoor)
-                        obj = world.winDoor;
-                    else
-                        obj = world.dude;
-
-                    foreach (PhysicsObject hole in this.world.Objects)
+                    if (((HoleObject)hole).Filled < HoleObject.MAX_FILL)
                     {
-                        if (hole is HoleObject && ((HoleObject)hole).Filled < HoleObject.MAX_FILL)
-                        {
-                            allHolesFilled = false;
-                        }
-                    }
-                    if (allHolesFilled)
-                    {
-                        world.winDoor.makeAnimate();
-                        world.Win();
+                        allHolesFilled = false;
                     }
                 }
 
+                foreach (PhysicsObject door in objsDict["WinDoorObject"])
+                {
+                    if ((object1 == door && object2 == world.dude) ||
+                        (object2 == door && object1 == world.dude))
+                    {
+                        if (allHolesFilled)
+                        {
+                            ((WinDoorObject)door).makeAnimate();
+                            world.Win();
+                        }
+                    }
+                }
+
+                //FINISH!!!!!
                 if ((object1 == world.pistonHead && object2 == world.table) ||
                     (object2 == world.table && object1 == world.pistonHead))
                     world.table.Body.ApplyForce(Utils.Convert(new Vector2(200,0)),world.table.Body.GetWorldCenter());
                 //ronnie added as hole test
                 //if (object1 == world.hole1 && object2 == world.dude)
                 // world.Fail();
-
             }
         }
 
