@@ -588,6 +588,7 @@ namespace CrisisAtSwissStation.LevelEditor
                         po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
                         break;
                 }
+                po.TextureFilename = "Art\\Objects\\PaintedObjects\\" + lastname;
                 po.Position = gameposition;
                 world.AddObject(po);
             }
@@ -854,6 +855,13 @@ namespace CrisisAtSwissStation.LevelEditor
             //In order to do rotations and scaling in windows forms, we need to determine where
             // the upper right, upper left, and lower left corners map to. We determine these, and
             // tell the graphics to draw the image.
+
+            // Hack to make the image representing a painted object draw correctly
+            if (obj is PaintedObject)
+            {
+                ((PaintedObject)obj).Height = img.Height;
+                ((PaintedObject)obj).Width = img.Width;
+            }
 
             XnaRectangle bb = obj.getBBRelativeToWorld();
 

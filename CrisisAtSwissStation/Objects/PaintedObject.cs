@@ -38,6 +38,7 @@ namespace CrisisAtSwissStation
         Texture2D blobTexture;
 
         protected string blobTextureName;
+        protected string segmentTextureName;
 
         int numBlobs = 0;
 
@@ -111,6 +112,9 @@ namespace CrisisAtSwissStation
             Texture2D blobtexture = GameEngine.TextureList[blobtexturename];
 
             this.blobTextureName = blobtexturename;
+            this.segmentTextureName = segmenttexturename;
+
+
             TextureFilename = segmenttexturename;
 
             //boundingBox = new Rectangle((int)Position.X, (int)Position.Y, (int)Height, (int)Width);
@@ -252,7 +256,7 @@ namespace CrisisAtSwissStation
                 Console.WriteLine(Utils.Convert(vert));
             }*/ // DEBUG
 
-            Texture2D segmenttexture = GameEngine.TextureList[TextureFilename];
+            Texture2D segmenttexture = GameEngine.TextureList[this.segmentTextureName];
             Texture2D blobtexture = GameEngine.TextureList[this.blobTextureName];
 
             segmentTexture = segmenttexture;
