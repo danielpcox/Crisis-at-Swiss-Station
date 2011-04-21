@@ -542,7 +542,7 @@ namespace CrisisAtSwissStation.LevelEditor
             else if (rb_CircleObjects.Checked)
             {
                 CircleObject co;
-                co = new CircleObject(world.World, texName, 0, .5f, 0, 1);
+                co = new CircleObject(world.World, texName, 1, .5f, 0, 1);
                 co.Position = gameposition;
                 world.AddObject(co);
             }

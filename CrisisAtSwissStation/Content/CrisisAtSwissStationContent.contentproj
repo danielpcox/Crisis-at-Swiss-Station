@@ -641,7 +641,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Art\Objects\CircleObjects\" />
     <Folder Include="Art\Overlays\" />
   </ItemGroup>
   <ItemGroup>
@@ -750,6 +749,13 @@
   <ItemGroup>
     <Compile Include="Art\Backgrounds\ballroom.png">
       <Name>ballroom</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\CircleObjects\table.png">
+      <Name>table</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
