@@ -186,6 +186,10 @@ namespace CrisisAtSwissStation
                 {
                     ((SwitchObject)obj).reloadNonSerializedAssets();
                 }
+                else if (obj is PistonObject)
+                {
+                    ((PistonObject)obj).reloadNonSerializedAssets();
+                }
 
             }
 
