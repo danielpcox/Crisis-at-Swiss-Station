@@ -67,7 +67,7 @@ namespace CrisisAtSwissStation
             xFrame = 0;
             yFrame = 0;
             numFrames = 8;
-            spriteWidth = 12;
+            spriteWidth = 50;
             spriteHeight = 512;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
