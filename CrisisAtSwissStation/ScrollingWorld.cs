@@ -64,6 +64,9 @@ namespace CrisisAtSwissStation
         public string backgroundName;
 
         [NonSerialized]
+        private static Texture2D laserAnimTexture;
+
+        [NonSerialized]
         private static Texture2D bigBoxTexture;
         [NonSerialized]
         private static Texture2D littleBoxTexture;
@@ -595,7 +598,7 @@ namespace CrisisAtSwissStation
 	    */
 
             // Create laser
-            laser = new LaserObject(World, dude,"paintedsegment", 10);
+            laser = new LaserObject(World, dude, "Art\\spray2_strip", 10);
 
 
             //creating insta steel already in the level
@@ -834,6 +837,8 @@ namespace CrisisAtSwissStation
 
             lampTexture = content.Load<Texture2D>("light");
             lampAnimTexture = content.Load<Texture2D>("light_strip");
+
+            laserAnimTexture = content.Load<Texture2D>("Art\\spray2_strip");
        
 
             pipeAssemblyTexture = content.Load<Texture2D>("pipe_steam_part");

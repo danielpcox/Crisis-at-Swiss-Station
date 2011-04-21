@@ -62,7 +62,7 @@ namespace CrisisAtSwissStation
             //animation stuff
             myGameTime = 0;
             animateTimer = 0;
-            animateInterval = 200;
+            animateInterval = 20;
             xFrame = 0;
             yFrame = 0;
             numFrames = 8;
