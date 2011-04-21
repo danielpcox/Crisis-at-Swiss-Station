@@ -294,6 +294,8 @@ namespace CrisisAtSwissStation
                     {
                         case MenuCommand.LinkToMainMenu:
                             LinkToMain();
+                            currentWorld = null;
+                            audioManager.Stop();
                             break;
 
                         case MenuCommand.ExitProgram:
