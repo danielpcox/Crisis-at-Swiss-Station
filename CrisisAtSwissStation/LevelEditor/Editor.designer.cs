@@ -41,7 +41,7 @@
             this.rb_VictoryTest = new System.Windows.Forms.RadioButton();
             this.rb_Doors = new System.Windows.Forms.RadioButton();
             this.rb_Handlebars = new System.Windows.Forms.RadioButton();
-            this.rb_Survivors = new System.Windows.Forms.RadioButton();
+            this.rb_PaintedObjects = new System.Windows.Forms.RadioButton();
             this.rb_SwitchObject = new System.Windows.Forms.RadioButton();
             this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
             this.rb_SeeSawObject = new System.Windows.Forms.RadioButton();
@@ -185,7 +185,7 @@
             this.gb_ObjTypes.Controls.Add(this.rb_VictoryTest);
             this.gb_ObjTypes.Controls.Add(this.rb_Doors);
             this.gb_ObjTypes.Controls.Add(this.rb_Handlebars);
-            this.gb_ObjTypes.Controls.Add(this.rb_Survivors);
+            this.gb_ObjTypes.Controls.Add(this.rb_PaintedObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_SwitchObject);
             this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
             this.gb_ObjTypes.Controls.Add(this.rb_SeeSawObject);
@@ -265,18 +265,17 @@
             this.rb_Handlebars.Visible = false;
             this.rb_Handlebars.CheckedChanged += new System.EventHandler(this.rb_Handlebars_CheckedChanged_1);
             // 
-            // rb_Survivors
+            // rb_PaintedObjects
             // 
-            this.rb_Survivors.AutoSize = true;
-            this.rb_Survivors.Location = new System.Drawing.Point(20, 162);
-            this.rb_Survivors.Name = "rb_Survivors";
-            this.rb_Survivors.Size = new System.Drawing.Size(69, 17);
-            this.rb_Survivors.TabIndex = 6;
-            this.rb_Survivors.TabStop = true;
-            this.rb_Survivors.Text = "Survivors";
-            this.rb_Survivors.UseVisualStyleBackColor = true;
-            this.rb_Survivors.Visible = false;
-            this.rb_Survivors.CheckedChanged += new System.EventHandler(this.rb_Survivors_CheckedChanged);
+            this.rb_PaintedObjects.AutoSize = true;
+            this.rb_PaintedObjects.Location = new System.Drawing.Point(20, 162);
+            this.rb_PaintedObjects.Name = "rb_PaintedObjects";
+            this.rb_PaintedObjects.Size = new System.Drawing.Size(97, 17);
+            this.rb_PaintedObjects.TabIndex = 6;
+            this.rb_PaintedObjects.TabStop = true;
+            this.rb_PaintedObjects.Text = "PaintedObjects";
+            this.rb_PaintedObjects.UseVisualStyleBackColor = true;
+            this.rb_PaintedObjects.CheckedChanged += new System.EventHandler(this.rb_PaintedObjects_CheckedChanged);
             // 
             // rb_SwitchObject
             // 
@@ -314,20 +313,6 @@
             this.rb_SeeSawObject.UseVisualStyleBackColor = true;
             this.rb_SeeSawObject.CheckedChanged += new System.EventHandler(this.rb_SeeSawObject_CheckedChanged);
             // 
-
-            // rb_WinDoorObject
-            // 
-            this.rb_WinDoorObject.AutoSize = true;
-            this.rb_WinDoorObject.Location = new System.Drawing.Point(20, 66);
-            this.rb_WinDoorObject.Name = "rb_WinDoorObject";
-            this.rb_WinDoorObject.Size = new System.Drawing.Size(98, 17);
-            this.rb_WinDoorObject.TabIndex = 2;
-            this.rb_WinDoorObject.TabStop = true;
-            this.rb_WinDoorObject.Text = "WinDoorObject";
-            this.rb_WinDoorObject.UseVisualStyleBackColor = true;
-            this.rb_WinDoorObject.CheckedChanged += new System.EventHandler(this.rb_WinDoorObject_CheckedChanged);
-            // 
-
             // rb_PistonObject
             // 
             this.rb_PistonObject.AutoSize = true;
@@ -525,7 +510,7 @@
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
             this.fileToolStripMenuItem.Text = "World";
             // 
             // createNewWorld
@@ -607,7 +592,7 @@
             this.tool_Selection.Image = ((System.Drawing.Image)(resources.GetObject("tool_Selection.Image")));
             this.tool_Selection.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_Selection.Name = "tool_Selection";
-            this.tool_Selection.Size = new System.Drawing.Size(40, 22);
+            this.tool_Selection.Size = new System.Drawing.Size(42, 22);
             this.tool_Selection.Text = "Select";
             this.tool_Selection.Click += new System.EventHandler(this.tool_Selection_Click);
             // 
@@ -702,7 +687,7 @@
         private System.Windows.Forms.GroupBox gb_ObjTypes;
         private System.Windows.Forms.RadioButton rb_Doors;
         private System.Windows.Forms.RadioButton rb_Handlebars;
-        private System.Windows.Forms.RadioButton rb_Survivors;
+        private System.Windows.Forms.RadioButton rb_PaintedObjects;
         private System.Windows.Forms.RadioButton rb_SwitchObject;
         private System.Windows.Forms.RadioButton rb_WinDoorObject;
         private System.Windows.Forms.RadioButton rb_SeeSawObject;
