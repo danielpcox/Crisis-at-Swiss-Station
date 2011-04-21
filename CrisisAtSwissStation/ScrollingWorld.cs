@@ -995,7 +995,11 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
             //ERASING
             if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
-            { // if the right button is pressed, remove any painted objects under the cursor from the world
+            {
+                //ronnie added for laser
+                laser.startErasing();
+
+                // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
                 aabb.LowerBound = Common.Utils.Convert(mouseGamePosition - new Vector2(0.1f));
@@ -1015,6 +1019,11 @@ namespace CrisisAtSwissStation
                         numDrawLeft += painto.getAmountOfInstasteel();
                     }
                 }
+                // laser.finishErasing();
+            }
+            else
+            {
+                laser.finishErasing();
             }
 
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())

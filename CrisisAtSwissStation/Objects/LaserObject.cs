@@ -17,7 +17,7 @@ namespace CrisisAtSwissStation
         private Box2DX.Dynamics.World world;
         private float SCALE;
         private DudeObject dude;
-        private bool canIDraw, canIErase, amDrawing;
+        private bool canIDraw, canIErase, amDrawing, amErasing;
         private Vector2 original, adjustment, end, offset, startpoint, endpoint;
         private float mouseX, mouseY, guyPos,lambda;
         private int currentSection, numSections, sectionTimer;
@@ -54,6 +54,7 @@ namespace CrisisAtSwissStation
             sectionTimer = 0;
             lambda = 0;
             amDrawing = false;
+            amErasing = false;
             //interference = new Box2DX.Collision.Shape[20];
 
             SCALE = CASSWorld.SCALE;
@@ -94,6 +95,12 @@ namespace CrisisAtSwissStation
         public void finishDrawing()
         { amDrawing = false; }
 
+        public void startErasing()
+        { amErasing = true; }
+
+        public void finishErasing()
+        { amErasing = false; }
+
         public float getLambda()
         { return lambda; }
 
@@ -105,7 +112,7 @@ namespace CrisisAtSwissStation
 
         public void Update(float mX, float mY, Vector2 offset)
         {
-            if (amDrawing)
+            if (amDrawing || amErasing)
             {
                 //animation object
                 myGameTime++;
@@ -267,7 +274,7 @@ namespace CrisisAtSwissStation
 
             primitiveBatch.End();
 
-            if (amDrawing == true)
+            if (amDrawing || amErasing)
             {
 
                 //Vector2 screenOffset = (CASSWorld.SCALE * Position);
@@ -277,8 +284,8 @@ namespace CrisisAtSwissStation
 
                 //spriteBatch.End();
 
-                GameEngine.Instance.SpriteBatch.Begin();
-                //Console.WriteLine("{0} {1}", sections[currentSection].X, sections[currentSection].Y);
+                GameEngine.Instance.SpriteBatch.Begin();                
+                //Console.WriteLine("{0}");
                 Common.Utils.stretchForLaser(GameEngine.Instance.SpriteBatch, sectionTex, startpoint, endpoint, Color.White,sourceRect);
                 GameEngine.Instance.SpriteBatch.End();
 
