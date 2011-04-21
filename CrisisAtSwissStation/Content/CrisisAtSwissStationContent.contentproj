@@ -642,7 +642,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Art\Objects\CircleObjects\" />
-    <Folder Include="Art\Objects\PaintedObjects\" />
     <Folder Include="Art\Overlays\" />
   </ItemGroup>
   <ItemGroup>
@@ -739,6 +738,13 @@
       <Name>VictoryTrumpets</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\PaintedObjects\test_paint.png">
+      <Name>test_paint</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
