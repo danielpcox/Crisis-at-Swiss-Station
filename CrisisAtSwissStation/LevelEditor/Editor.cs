@@ -902,8 +902,6 @@ namespace CrisisAtSwissStation.LevelEditor
             // apply these new settings
             if (currentlySelectedObject != null && AreObjPropertiesValid())
             {
-                float newRotation = float.Parse(tb_Rotation.Text);
-                currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
                 float newScale = float.Parse(tb_Scale.Text);
                 currentlySelectedObject.Width = (currentlySelectedObject.Width / currentlySelectedObject.scale) * newScale;
 
@@ -945,6 +943,10 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.shapes.Add(shape); // add the new one
                     currentlySelectedObject.AddToWorld();
                 }
+
+
+                float newRotation = float.Parse(tb_Rotation.Text);
+                currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
 
                 currentlySelectedObject.scale = newScale;
             }
