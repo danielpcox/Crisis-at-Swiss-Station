@@ -948,7 +948,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 float newScale = float.Parse(tb_Scale.Text);
                 currentlySelectedObject.Width = (currentlySelectedObject.Width / currentlySelectedObject.scale) * newScale;
 
-                if (currentlySelectedObject is CircleObject)
+                if (currentlySelectedObject is CircleObject && !(currentlySelectedObject is PaintedObject))
                 {
                     currentlySelectedObject.Height = currentlySelectedObject.Width;
 
@@ -966,7 +966,7 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.shapes.Add(shape); // add the new one
                     currentlySelectedObject.AddToWorld();
                 }
-                else
+                else if (!(currentlySelectedObject is PaintedObject))
                 {
                     currentlySelectedObject.Height = (currentlySelectedObject.Height / currentlySelectedObject.scale) * newScale;
                     // Determine dimensions
