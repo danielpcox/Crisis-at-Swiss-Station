@@ -11,7 +11,7 @@ namespace CrisisAtSwissStation
     [Serializable]
     public class LaserObject
     {
-        private Color IN_SIGHT = Color.Green;
+        private Color IN_SIGHT = Color.LimeGreen;
         private Color OUT_SIGHT = Color.Firebrick;
 
         private Box2DX.Dynamics.World world;
