@@ -63,7 +63,7 @@ namespace CrisisAtSwissStation
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
 
             if (switchOn)
-            { Console.WriteLine("sdfsdf"); xFrame = 1; }
+            { xFrame = 1; }
             else
             { xFrame = 0;}
             /*

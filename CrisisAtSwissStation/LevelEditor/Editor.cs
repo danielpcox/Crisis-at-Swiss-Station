@@ -153,11 +153,11 @@ namespace CrisisAtSwissStation.LevelEditor
             }
         }
 
-        private void rb_Survivors_CheckedChanged(object sender, EventArgs e)
+        private void rb_PaintedObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_Survivors.Checked)
+            if (rb_PaintedObjects.Checked)
             {
-                textureDir = "Art\\Survivors\\";
+                textureDir = "Art\\Objects\\PaintedObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
@@ -571,6 +571,26 @@ namespace CrisisAtSwissStation.LevelEditor
                 world.AddObject(ss);
 
             }
+            else if (rb_PaintedObjects.Checked)
+            {
+                PaintedObject po;
+                List<Vector2> blobs = new List<Vector2>();
+                switch (lastname)
+                {
+                    case "test_paint":
+                        blobs.Add(gameposition + new Vector2(0.6f, 0f));
+                        blobs.Add(gameposition + new Vector2(-0.6f, 0f));
+                        po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
+                        break;
+                    default:
+                        blobs.Add(gameposition + new Vector2(0.6f, 0f));
+                        blobs.Add(gameposition + new Vector2(-0.6f, 0f));
+                        po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
+                        break;
+                }
+                po.Position = gameposition;
+                world.AddObject(po);
+            }
             
                 /*
             else if (rb_Player.Checked)
@@ -686,6 +706,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 if (loadWorld)
                 {
                     world = Serializer.DeSerialize(dialog.FileName);
+                    world.Background = GameEngine.TextureList[world.backgroundName];
                     switchRooms();
                 }
                 Size pbLevelSize = new Size(world.Background.Width, world.Background.Height);
