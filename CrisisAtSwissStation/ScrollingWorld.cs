@@ -542,12 +542,27 @@ namespace CrisisAtSwissStation
             
             //public AnimationObject( World world, Texture2D mytexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
 
+            /*
+            Vector2 seesawposition = new Vector2(5f,8f);
+            SeeSawObject seesaw = new SeeSawObject(World, "straight_pipe",.4f,seesawposition );
+            seesaw.Position = seesawposition;
+            AddObject(seesaw);
+            
+            
+            RevoluteJointDef jointDef2 = new RevoluteJointDef();
+            jointDef2.Initialize( World.GetGroundBody(),seesaw.Body, Common.Utils.Convert(seesaw.Position));
+            Console.WriteLine(Common.Utils.Convert(seesaw.Position));
+            //jointDef.EnableMotor = true;
+            //jointDef.MotorSpeed = 1f;
+            World.CreateJoint(jointDef2);
+            */
+
             brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89,32,20,8);
             brokenMovingPlatform1.Position = brokenMovingPlatform1Position;
             AddObject(brokenMovingPlatform1);
 
             movPlatform1 = new MovingObject(World, "moving platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
-            movPlatform2 = new HorizontalMovingObject(World, "moving platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 34f, 36f);
+            movPlatform2 = new HorizontalMovingObject(World, "moving platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 32f, 38f);
             //movPlatform2 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);          
             //movPlatform1.Position = movPlatform1Position;
             //AddObject(movPlatform1);
@@ -1239,14 +1254,44 @@ namespace CrisisAtSwissStation
                         {
                             if (world.movPlatform2.isMoving)
                             {
-                                world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
+                                if (((HorizontalMovingObject)hMove).mySwitch != null)
+                                {
+                                    if (((HorizontalMovingObject)hMove).mySwitch.switchOn)
+                                    {
+                                        if (world.movPlatform2.isMoving)
+                                        {
+                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
+                                            // world.dude.Position += new Vector2(.035f, 0);
+
+                                        }
+
+                                        else
+                                        {
+                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
+                                            // world.dude.Position += new Vector2(-0.05f, 0);
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (world.movPlatform2.isMoving)
+                                    {
+                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
+                                        // world.dude.Position += new Vector2(.035f, 0);
+
+                                    }
+
+                                    else
+                                    {
+                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
+                                        // world.dude.Position += new Vector2(-0.05f, 0);
+                                    }
+                                }
+
+
                             }
-                            // world.dude.Position = world.dude.Position + new Vector2(0.05f, 0);
-                            else
-                            {
-                                world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
-                            }
-                            //world.dude.Position = world.dude.Position - new Vector2(0.05f, 0);
                         }
                     }
                 }

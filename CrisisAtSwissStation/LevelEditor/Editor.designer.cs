@@ -43,8 +43,8 @@
             this.rb_Handlebars = new System.Windows.Forms.RadioButton();
             this.rb_Survivors = new System.Windows.Forms.RadioButton();
             this.rb_Parts = new System.Windows.Forms.RadioButton();
-            this.rb_HazardDynamic = new System.Windows.Forms.RadioButton();
             this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
+            this.rb_SeeSawObject = new System.Windows.Forms.RadioButton();
             this.rb_PistonObject = new System.Windows.Forms.RadioButton();
             this.rb_BoxObjects = new System.Windows.Forms.RadioButton();
             this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
@@ -187,8 +187,8 @@
             this.gb_ObjTypes.Controls.Add(this.rb_Handlebars);
             this.gb_ObjTypes.Controls.Add(this.rb_Survivors);
             this.gb_ObjTypes.Controls.Add(this.rb_Parts);
-            this.gb_ObjTypes.Controls.Add(this.rb_HazardDynamic);
             this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
+            this.gb_ObjTypes.Controls.Add(this.rb_SeeSawObject);
             this.gb_ObjTypes.Controls.Add(this.rb_PistonObject);
             this.gb_ObjTypes.Controls.Add(this.rb_BoxObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_AnimationObjects);
@@ -291,18 +291,17 @@
             this.rb_Parts.Visible = false;
             this.rb_Parts.CheckedChanged += new System.EventHandler(this.rb_Parts_CheckedChanged_1);
             // 
-            // rb_HazardDynamic
+            // rb_SeeSawObject
             // 
-            this.rb_HazardDynamic.AutoSize = true;
-            this.rb_HazardDynamic.Location = new System.Drawing.Point(20, 114);
-            this.rb_HazardDynamic.Name = "rb_HazardDynamic";
-            this.rb_HazardDynamic.Size = new System.Drawing.Size(109, 17);
-            this.rb_HazardDynamic.TabIndex = 4;
-            this.rb_HazardDynamic.TabStop = true;
-            this.rb_HazardDynamic.Text = "Hazard - Dynamic";
-            this.rb_HazardDynamic.UseVisualStyleBackColor = true;
-            this.rb_HazardDynamic.Visible = false;
-            this.rb_HazardDynamic.CheckedChanged += new System.EventHandler(this.rb_HazardDynamic_CheckedChanged_1);
+            this.rb_SeeSawObject.AutoSize = true;
+            this.rb_SeeSawObject.Location = new System.Drawing.Point(20, 114);
+            this.rb_SeeSawObject.Name = "rb_SeeSawObject";
+            this.rb_SeeSawObject.Size = new System.Drawing.Size(96, 17);
+            this.rb_SeeSawObject.TabIndex = 4;
+            this.rb_SeeSawObject.TabStop = true;
+            this.rb_SeeSawObject.Text = "SeeSawObject";
+            this.rb_SeeSawObject.UseVisualStyleBackColor = true;
+            this.rb_SeeSawObject.CheckedChanged += new System.EventHandler(this.rb_SeeSawObject_CheckedChanged);
             // 
             // rb_WinDoorObject
             // 
@@ -692,8 +691,8 @@
         private System.Windows.Forms.RadioButton rb_Handlebars;
         private System.Windows.Forms.RadioButton rb_Survivors;
         private System.Windows.Forms.RadioButton rb_Parts;
-        private System.Windows.Forms.RadioButton rb_HazardDynamic;
         private System.Windows.Forms.RadioButton rb_WinDoorObject;
+        private System.Windows.Forms.RadioButton rb_SeeSawObject;
         private System.Windows.Forms.RadioButton rb_PistonObject;
         private System.Windows.Forms.RadioButton rb_BoxObjects;
         private System.Windows.Forms.RadioButton rb_AnimationObjects;

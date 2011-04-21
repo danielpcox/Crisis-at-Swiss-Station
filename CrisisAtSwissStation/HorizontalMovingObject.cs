@@ -18,7 +18,7 @@ namespace CrisisAtSwissStation
     {
         public bool isMoving;
         private Vector2 myForce;
-        private SwitchObject mySwitch;
+        public SwitchObject mySwitch;
         // The box texture
         [NonSerialized]
         protected Texture2D texture;
@@ -91,7 +91,7 @@ namespace CrisisAtSwissStation
                         if (this.Position.X > bound2)
                         {
                             isMoving = false;
-                             //mySwitch.switchOn = false;
+                             mySwitch.switchOn = false;//right end of path, switch turns off automatically
                         }
 
                     }
