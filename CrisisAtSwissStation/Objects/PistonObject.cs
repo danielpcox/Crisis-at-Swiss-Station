@@ -18,13 +18,17 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private Texture2D pistonEnd = GameEngine.TextureList["Art\\Objects\\PistonObjects\\piston_unmoving"];
 
-        public PistonObject(World world, float myEndScale, float myHeadScale, float myHeadMinVal, float myHeadMaxVal, float myEndXPos, float myEndYPos, float myTrueInc, float myFalseInc)//, float headXPos,float headYPos)
+        public PistonObject(World world, float myEndScale, float myHeadScale, float myHeadMinVal, float myHeadMaxVal, float myEndXPos, float myEndYPos, float myTrueInc, float myFalseInc, Vector2 headPos)//, float headXPos,float headYPos)
             : base(world, "Art\\Objects\\PistonObjects\\piston_moving", 0f, .5f, 0.0f, myHeadScale, false)
         {
             TextureFilename = "Art\\Objects\\PistonObjects\\piston_moving";
 
+            /*
             endXPos = myEndXPos;
             endYPos = myEndYPos;
+             */
+            endXPos = headPos.X - 2.3f;
+            endYPos = headPos.Y - .6f;
             //headScale = myHeadScale; needed?
             endScale = myEndScale;
             headMinVal = myHeadMinVal;
