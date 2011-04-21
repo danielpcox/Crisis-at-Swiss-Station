@@ -10,7 +10,8 @@ using Microsoft.Xna.Framework.Media;
 /*** Code by Rajiv Puvvada and Ara Yessayan **/
 /*** Modification code to work with MP3's by Sam Dannemiller **/
 
-/*** Most of this code is from Music Lab 4, with some modifications **/
+/*** Most of this code is from Music Lab 4 from Cornell's CIS 3000 course, 
+ * with some modifications by Zachary Davis to adapt it to Crisis at Swiss Station**/
 
 
 namespace CrisisAtSwissStation
@@ -21,13 +22,14 @@ namespace CrisisAtSwissStation
         private Dictionary<MusicSelection, Song> songs;              //Dictionaries are useful for keying a selection enum to a particular audio element.
         private Dictionary<SFXSelection, SoundEffect> soundEffects;
         private float SFXVolume;     //Value between 0.0 and 1.0.
+        
+
 
         //This is an enum that speeds up coding and reduces errors.
         //Specifying SFX by enum takes advantage of Intellisense and reduces 
         //the chance of a spelling mistake.
         public enum SFXSelection
         {
-            VictoryTrumpets,
             LevelComplete
 
         }
@@ -51,6 +53,7 @@ namespace CrisisAtSwissStation
             SFXVolume = 0.5f;
             MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
+            
         }
 
         public void LoadContent(ContentManager content)
@@ -60,13 +63,12 @@ namespace CrisisAtSwissStation
 
 
             //Music
-            songs.Add(MusicSelection.EarlyLevelv2, content.Load<Song>("EarlyLevelv2"));
-            songs.Add(MusicSelection.Tension, content.Load<Song>("Tension(Lab 3)"));
-            songs.Add(MusicSelection.Destruction, content.Load<Song>("Destruction(v1)"));
+            songs.Add(MusicSelection.EarlyLevelv2, content.Load<Song>("Music/EarlyLevelv2"));
+            songs.Add(MusicSelection.Tension, content.Load<Song>("Music/Tension(Lab 3)"));
+            songs.Add(MusicSelection.Destruction, content.Load<Song>("Music/Destruction(v1)"));
 
             //Sound Effects
-            soundEffects.Add(SFXSelection.VictoryTrumpets, content.Load<SoundEffect>("VictoryTrumpets"));
-            soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("LevelComplete"));
+            soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music/LevelComplete"));
 
         }
 
@@ -147,7 +149,7 @@ namespace CrisisAtSwissStation
 
         }
 
-        
+             
         //Make sure volume does not go above 1.0.  Hint: Look at MathHelper.Clamp for a quick function to use.
         public void IncreaseSFXVolume(float increment)
         {
