@@ -12,13 +12,13 @@ namespace CrisisAtSwissStation
     public class PistonObject : BoxObject
     {
         private bool pistonMove;
-        private float endXPos, endYPos, headScale, endScale, headMaxVal, headMinVal;
+        private float endXPos, endYPos, headScale, endScale, headMaxVal, headMinVal,trueInc, falseInc;
         [NonSerialized]       
         private Texture2D pistonHead = GameEngine.TextureList["Art\\Objects\\PistonObjects\\piston_moving"];
         [NonSerialized]
         private Texture2D pistonEnd = GameEngine.TextureList["Art\\Objects\\PistonObjects\\piston_unmoving"];
 
-        public PistonObject(World world, float myEndScale, float myHeadScale, float myHeadMinVal, float myHeadMaxVal, float myEndXPos, float myEndYPos)//, float headXPos,float headYPos)
+        public PistonObject(World world, float myEndScale, float myHeadScale, float myHeadMinVal, float myHeadMaxVal, float myEndXPos, float myEndYPos, float myTrueInc, float myFalseInc)//, float headXPos,float headYPos)
             : base(world, "Art\\Objects\\PistonObjects\\piston_moving", 0f, .5f, 0.0f, myHeadScale, false)
         {
             TextureFilename = "Art\\Objects\\PistonObjects\\piston_moving";
@@ -29,6 +29,8 @@ namespace CrisisAtSwissStation
             endScale = myEndScale;
             headMinVal = myHeadMinVal;
             headMaxVal = myHeadMaxVal;
+            trueInc = myTrueInc;
+            falseInc = myFalseInc;
 
 
         }
@@ -45,13 +47,13 @@ namespace CrisisAtSwissStation
 
             if (pistonMove == true)
             {
-                Position = Position - new Vector2(.01f, 0);
+                Position = Position - new Vector2(trueInc, 0);
                 if (Position.X < headMinVal)
                     pistonMove = false;
             }
             else
             {
-                Position = Position + new Vector2(.2f, 0);
+                Position = Position + new Vector2(falseInc, 0);
                 if (Position.X > headMaxVal)
                     pistonMove = true;
             }
