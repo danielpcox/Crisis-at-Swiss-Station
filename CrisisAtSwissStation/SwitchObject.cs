@@ -28,7 +28,7 @@ namespace CrisisAtSwissStation
 
 
         public SwitchObject(World world, string mytexturename, string objectTexturename, int sprWidth, int sprHeight, int animInt, int myNumFrames)
-            : base(world, objectTexturename, 0f, .5f, 0.0f, 1, false)
+            : base(world, objectTexturename, 0f, .5f, 0.0f, .5f, false)
         {
 
             animTexture = GameEngine.TextureList[mytexturename];
@@ -60,13 +60,19 @@ namespace CrisisAtSwissStation
 
         public override void Update(CASSWorld world, float dt)
         {
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
 
-            
+            if (switchOn)
+            { Console.WriteLine("sdfsdf"); xFrame = 1; }
+            else
+            { xFrame = 0;}
+            /*
             //animation stuff
             myGameTime++;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
 
             animateTimer += myGameTime;
+
 
             if (animateTimer > animateInterval)
             {
@@ -82,7 +88,7 @@ namespace CrisisAtSwissStation
                 animateTimer = 0;
 
             }
-
+            */
             base.Update(world, dt);
 
         }
@@ -95,7 +101,7 @@ namespace CrisisAtSwissStation
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
-            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, SpriteEffects.None, 0);
+            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, .5f, SpriteEffects.None, 0);
 
             spriteBatch.End();
 
