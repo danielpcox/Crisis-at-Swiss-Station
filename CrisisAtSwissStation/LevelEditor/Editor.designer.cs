@@ -43,9 +43,9 @@
             this.rb_Handlebars = new System.Windows.Forms.RadioButton();
             this.rb_Survivors = new System.Windows.Forms.RadioButton();
             this.rb_Parts = new System.Windows.Forms.RadioButton();
-            this.rb_HazardDynamic = new System.Windows.Forms.RadioButton();
+            this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
+            this.rb_SeeSawObject = new System.Windows.Forms.RadioButton();
             this.rb_PistonObject = new System.Windows.Forms.RadioButton();
-            this.rb_SensorObjects = new System.Windows.Forms.RadioButton();
             this.rb_BoxObjects = new System.Windows.Forms.RadioButton();
             this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
@@ -187,9 +187,9 @@
             this.gb_ObjTypes.Controls.Add(this.rb_Handlebars);
             this.gb_ObjTypes.Controls.Add(this.rb_Survivors);
             this.gb_ObjTypes.Controls.Add(this.rb_Parts);
-            this.gb_ObjTypes.Controls.Add(this.rb_HazardDynamic);
+            this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
+            this.gb_ObjTypes.Controls.Add(this.rb_SeeSawObject);
             this.gb_ObjTypes.Controls.Add(this.rb_PistonObject);
-            this.gb_ObjTypes.Controls.Add(this.rb_SensorObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_BoxObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_AnimationObjects);
             this.gb_ObjTypes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -291,18 +291,17 @@
             this.rb_Parts.Visible = false;
             this.rb_Parts.CheckedChanged += new System.EventHandler(this.rb_Parts_CheckedChanged_1);
             // 
-            // rb_HazardDynamic
+            // rb_SeeSawObject
             // 
-            this.rb_HazardDynamic.AutoSize = true;
-            this.rb_HazardDynamic.Location = new System.Drawing.Point(20, 114);
-            this.rb_HazardDynamic.Name = "rb_HazardDynamic";
-            this.rb_HazardDynamic.Size = new System.Drawing.Size(109, 17);
-            this.rb_HazardDynamic.TabIndex = 4;
-            this.rb_HazardDynamic.TabStop = true;
-            this.rb_HazardDynamic.Text = "Hazard - Dynamic";
-            this.rb_HazardDynamic.UseVisualStyleBackColor = true;
-            this.rb_HazardDynamic.Visible = false;
-            this.rb_HazardDynamic.CheckedChanged += new System.EventHandler(this.rb_HazardDynamic_CheckedChanged_1);
+            this.rb_SeeSawObject.AutoSize = true;
+            this.rb_SeeSawObject.Location = new System.Drawing.Point(20, 114);
+            this.rb_SeeSawObject.Name = "rb_SeeSawObject";
+            this.rb_SeeSawObject.Size = new System.Drawing.Size(96, 17);
+            this.rb_SeeSawObject.TabIndex = 4;
+            this.rb_SeeSawObject.TabStop = true;
+            this.rb_SeeSawObject.Text = "SeeSawObject";
+            this.rb_SeeSawObject.UseVisualStyleBackColor = true;
+            this.rb_SeeSawObject.CheckedChanged += new System.EventHandler(this.rb_SeeSawObject_CheckedChanged);
             // 
             // rb_PistonObject
             // 
@@ -316,17 +315,17 @@
             this.rb_PistonObject.UseVisualStyleBackColor = true;
             this.rb_PistonObject.CheckedChanged += new System.EventHandler(this.rb_PistonObject_CheckChanged);
             // 
-            // rb_SensorObjects
+            // rb_WinDoorObject
             // 
-            this.rb_SensorObjects.AutoSize = true;
-            this.rb_SensorObjects.Location = new System.Drawing.Point(20, 66);
-            this.rb_SensorObjects.Name = "rb_SensorObjects";
-            this.rb_SensorObjects.Size = new System.Drawing.Size(94, 17);
-            this.rb_SensorObjects.TabIndex = 2;
-            this.rb_SensorObjects.TabStop = true;
-            this.rb_SensorObjects.Text = "SensorObjects";
-            this.rb_SensorObjects.UseVisualStyleBackColor = true;
-            this.rb_SensorObjects.CheckedChanged += new System.EventHandler(this.rb_SensorObjects_CheckedChanged);
+            this.rb_WinDoorObject.AutoSize = true;
+            this.rb_WinDoorObject.Location = new System.Drawing.Point(20, 66);
+            this.rb_WinDoorObject.Name = "rb_WinDoorObject";
+            this.rb_WinDoorObject.Size = new System.Drawing.Size(98, 17);
+            this.rb_WinDoorObject.TabIndex = 2;
+            this.rb_WinDoorObject.TabStop = true;
+            this.rb_WinDoorObject.Text = "WinDoorObject";
+            this.rb_WinDoorObject.UseVisualStyleBackColor = true;
+            this.rb_WinDoorObject.CheckedChanged += new System.EventHandler(this.rb_WinDoorObject_CheckedChanged);
             // 
             // rb_BoxObjects
             // 
@@ -692,9 +691,9 @@
         private System.Windows.Forms.RadioButton rb_Handlebars;
         private System.Windows.Forms.RadioButton rb_Survivors;
         private System.Windows.Forms.RadioButton rb_Parts;
-        private System.Windows.Forms.RadioButton rb_HazardDynamic;
+        private System.Windows.Forms.RadioButton rb_WinDoorObject;
+        private System.Windows.Forms.RadioButton rb_SeeSawObject;
         private System.Windows.Forms.RadioButton rb_PistonObject;
-        private System.Windows.Forms.RadioButton rb_SensorObjects;
         private System.Windows.Forms.RadioButton rb_BoxObjects;
         private System.Windows.Forms.RadioButton rb_AnimationObjects;
         private System.Windows.Forms.TabPage tab_objProps;
