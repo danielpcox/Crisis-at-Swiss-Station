@@ -146,6 +146,7 @@
     <Compile Include="Objects\AnimationObject.cs" />
     <Compile Include="Objects\BoxObject.cs" />
     <Compile Include="Objects\CircleObject.cs" />
+    <Compile Include="Objects\WinDoorObject.cs" />
     <Compile Include="Objects\HackObject.cs" />
     <Compile Include="Objects\HoleObject.cs" />
     <Compile Include="Objects\LaserObject.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Objects\ParticleGenerator.cs" />
     <Compile Include="Objects\PistonObject.cs" />
     <Compile Include="Objects\RopeBridge.cs" />
+    <Compile Include="Objects\SeeSawObject.cs" />
     <Compile Include="PhysicsObject.cs" />
     <Compile Include="CASSWorld.cs" />
     <Compile Include="PolygonDrawer.cs" />

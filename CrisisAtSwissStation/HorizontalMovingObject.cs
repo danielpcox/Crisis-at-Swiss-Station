@@ -16,9 +16,9 @@ namespace CrisisAtSwissStation
     [Serializable]
     public class HorizontalMovingObject : PhysicsObject
     {
-        public bool isMoving = true;
+        public bool isMoving;
         private Vector2 myForce;
-        private SwitchObject mySwitch;
+        public SwitchObject mySwitch;
         // The box texture
         [NonSerialized]
         protected Texture2D texture;
@@ -29,7 +29,7 @@ namespace CrisisAtSwissStation
         /**
          * Creates a new box object
          */
-        public HorizontalMovingObject(World world, string texturename, float density, float friction, float restitution, float myScale, bool isPulley, Vector2 myForce, float bound1, float bound2)
+        public HorizontalMovingObject(World world, string texturename, float density, float friction, float restitution, float myScale, bool isPulley, SwitchObject mySwitch, Vector2 myForce, float bound1, float bound2)
             : base(world)
         {
             texture = GameEngine.TextureList[texturename];
@@ -64,6 +64,8 @@ namespace CrisisAtSwissStation
             shape.Restitution = restitution;
             shapes.Add(shape);
 
+            isMoving = true;
+
         }
 
 
@@ -74,11 +76,38 @@ namespace CrisisAtSwissStation
 
         public override void Update(CASSWorld world, float dt)
         {
+            
+            //hoizontal objects not bound by switches atm
 
-           // if (mySwitch.switchOn)
-           // {
+            if (mySwitch != null)
+            {
+                if (mySwitch.switchOn)
+                {
 
+                    if (isMoving == true)
+                    {
+                        Position = Position + new Vector2(.035f, 0);
+                        //movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
+                        if (this.Position.X > bound2)
+                        {
+                            isMoving = false;
+                             mySwitch.switchOn = false;//right end of path, switch turns off automatically
+                        }
 
+                    }
+                    else
+                    {
+                        //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
+                        Position = Position - new Vector2(.035f, 0);
+                        if (this.Position.X < bound1)
+                            // mySwitch.switchOn = true;
+                            isMoving = true;
+                    }
+
+                }
+            }
+            else
+            {
                 if (isMoving == true)
                 {
                     Position = Position + new Vector2(.035f, 0);
@@ -86,7 +115,7 @@ namespace CrisisAtSwissStation
                     if (this.Position.X > bound2)
                     {
                         isMoving = false;
-                       // mySwitch.switchOn = false;
+                        // mySwitch.switchOn = false;
                     }
 
                 }
@@ -95,11 +124,10 @@ namespace CrisisAtSwissStation
                     //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
                     Position = Position - new Vector2(.035f, 0);
                     if (this.Position.X < bound1)
-                       // mySwitch.switchOn = true;
-                    isMoving = true;
+                        // mySwitch.switchOn = true;
+                        isMoving = true;
                 }
-
-           // }
+            }
 
             base.Update(world, dt);
 
