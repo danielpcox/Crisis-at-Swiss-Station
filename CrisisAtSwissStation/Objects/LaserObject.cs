@@ -11,20 +11,31 @@ namespace CrisisAtSwissStation
     [Serializable]
     public class LaserObject
     {
-        private Color IN_SIGHT = Color.Green;
+        private Color IN_SIGHT = Color.LimeGreen;
         private Color OUT_SIGHT = Color.Firebrick;
 
         private Box2DX.Dynamics.World world;
         private float SCALE;
         private DudeObject dude;
-        private bool canIDraw, canIErase, amDrawing;
+        private bool canIDraw, canIErase, amDrawing, amErasing;
         private Vector2 original, adjustment, end, offset, startpoint, endpoint;
         private float mouseX, mouseY, guyPos,lambda;
         private int currentSection, numSections, sectionTimer;
         Box2DX.Collision.Shape interference;
         //Box2DX.Collision.Shape[] interference;
         private Vector2[] sections;
-        
+
+        //animation stuff
+        private Rectangle sourceRect;
+        private Vector2 origin;
+        private int xFrame;
+        private int yFrame;
+        private int spriteWidth;
+        private int spriteHeight;
+        private int numFrames;
+        private int myGameTime, animateTimer, animateInterval;
+
+
         [NonSerialized]
         PrimitiveBatch primitiveBatch;
         [NonSerialized]
@@ -43,10 +54,26 @@ namespace CrisisAtSwissStation
             sectionTimer = 0;
             lambda = 0;
             amDrawing = false;
+            amErasing = false;
             //interference = new Box2DX.Collision.Shape[20];
 
             SCALE = CASSWorld.SCALE;
             primitiveBatch = new PrimitiveBatch(GameEngine.Instance.GraphicsDevice);
+
+            //animation stuff
+            myGameTime = 0;
+            animateTimer = 0;
+            animateInterval = 20;
+            xFrame = 0;
+            yFrame = 0;
+            numFrames = 8;
+            spriteWidth = 50;
+            spriteHeight = 512;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
+
+
             
         }
 
@@ -68,6 +95,12 @@ namespace CrisisAtSwissStation
         public void finishDrawing()
         { amDrawing = false; }
 
+        public void startErasing()
+        { amErasing = true; }
+
+        public void finishErasing()
+        { amErasing = false; }
+
         public float getLambda()
         { return lambda; }
 
@@ -79,6 +112,33 @@ namespace CrisisAtSwissStation
 
         public void Update(float mX, float mY, Vector2 offset)
         {
+            if (amDrawing || amErasing)
+            {
+                //animation object
+                myGameTime++;
+                sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+
+                animateTimer += myGameTime;
+
+                if (animateTimer > animateInterval)
+                {
+                    xFrame++;
+
+                    if (xFrame > numFrames - 1)
+                    {
+                        xFrame = 0;
+                    }
+
+
+                    myGameTime = 0;
+                    animateTimer = 0;
+
+                }
+
+            }
+
+
+
             //Console.WriteLine("{0} {1}", mX, mY);
 
             mouseX = mX * SCALE;
@@ -131,6 +191,7 @@ namespace CrisisAtSwissStation
             }           
             else if ((PhysicsObject)interference.GetBody().GetUserData() is PaintedObject)
             {
+                
 
                 Box2DX.Common.Vec2 p = (((1 - lambda) * myseg.P1) + (lambda * myseg.P2));
 
@@ -153,6 +214,8 @@ namespace CrisisAtSwissStation
                     canIDraw = false;
                     canIErase = false;
                 }
+                 
+
             }
             else
             {
@@ -176,10 +239,11 @@ namespace CrisisAtSwissStation
             }
             else { canIDraw = true; }*/
 
+            //original animation stuff
             //startpoint = original + adjustment + offset;
             startpoint = original + offset;
             endpoint = new Vector2(mouseX, mouseY);
-
+            /*
             int totalx = (int)(endpoint.X - startpoint.X);
             int totaly = (int)(endpoint.Y - startpoint.Y);
             int xincr = totalx/numSections;
@@ -189,7 +253,7 @@ namespace CrisisAtSwissStation
                 sections[i] = new Vector2(startpoint.X+ (i * xincr), startpoint.Y + (i * yincr));
             }
 
-            
+            */
         }
 
         public void Draw()
@@ -210,8 +274,24 @@ namespace CrisisAtSwissStation
 
             primitiveBatch.End();
 
-            if (amDrawing == true)
+            if (amDrawing || amErasing)
             {
+
+                //Vector2 screenOffset = (CASSWorld.SCALE * Position);
+                //SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
+                //spriteBatch.Begin();
+                //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, SpriteEffects.None, 0);
+
+                //spriteBatch.End();
+
+                GameEngine.Instance.SpriteBatch.Begin();                
+                //Console.WriteLine("{0}");
+                Common.Utils.stretchForLaser(GameEngine.Instance.SpriteBatch, sectionTex, startpoint, endpoint, Color.White,sourceRect);
+                GameEngine.Instance.SpriteBatch.End();
+
+
+                //original animation stuff
+                /*
                 GameEngine.Instance.SpriteBatch.Begin();
                 //Console.WriteLine("{0} {1}", sections[currentSection].X, sections[currentSection].Y);
                 Common.Utils.DrawLine(GameEngine.Instance.SpriteBatch, sectionTex, sections[currentSection], sections[currentSection + 1], PaintedObject.INSTASTEEL_COLOR);
@@ -225,6 +305,7 @@ namespace CrisisAtSwissStation
                     if (currentSection > numSections - 2)
                         currentSection = 0;
                 }
+                  */
             }
         }
 

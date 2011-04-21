@@ -64,6 +64,9 @@ namespace CrisisAtSwissStation
         public string backgroundName;
 
         [NonSerialized]
+        private static Texture2D laserAnimTexture;
+
+        [NonSerialized]
         private static Texture2D bigBoxTexture;
         [NonSerialized]
         private static Texture2D littleBoxTexture;
@@ -140,6 +143,9 @@ namespace CrisisAtSwissStation
 
         [NonSerialized]
         private static Texture2D winDoorAnimTexture;
+
+        [NonSerialized]
+        private static Texture2D ballroomBackground;
 
         private bool movPlat1;
         private bool pistonMove;
@@ -258,7 +264,9 @@ namespace CrisisAtSwissStation
         Vector2 halfdotsize;
         [NonSerialized]
         MouseState prevms;
+
         public static float numDrawLeft;
+        float totalInstaSteelInWorld;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
         Vector2 prevMousePos;
         bool mouseWasInbounds = false;
@@ -285,6 +293,7 @@ namespace CrisisAtSwissStation
             gameLevelHeight = background.Height;
 
             numDrawLeft = 0; // HACK HACK HACK
+            totalInstaSteelInWorld = 0;
 
             // Create win door
 	    // HACK HACK - this will break door animation until a fix is created
@@ -596,7 +605,7 @@ namespace CrisisAtSwissStation
 	    */
 
             // Create laser
-            laser = new LaserObject(World, dude, "paintedsegment", 10);
+            laser = new LaserObject(World, dude, "Art\\spray2_strip", 10);
 
 
             //creating insta steel already in the level
@@ -779,6 +788,14 @@ namespace CrisisAtSwissStation
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.Destruction);
             background = GameEngine.TextureList[backgroundName];
+            foreach (PhysicsObject obj in Objects)
+            {
+                if (obj is PaintedObject)
+                {
+                    totalInstaSteelInWorld += ((PaintedObject)obj).getAmountOfInstasteel();
+                }
+            }
+            halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
         }
 
         public static void LoadContent(ContentManager content)
@@ -801,6 +818,7 @@ namespace CrisisAtSwissStation
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
             backgroundTerrible = content.Load<Texture2D>("RonniesBestWork");
+            ballroomBackground = content.Load<Texture2D>("ballroom");
 
             /* //our new platforms
              bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
@@ -834,6 +852,8 @@ namespace CrisisAtSwissStation
 
             lampTexture = content.Load<Texture2D>("light");
             lampAnimTexture = content.Load<Texture2D>("light_strip");
+
+            laserAnimTexture = content.Load<Texture2D>("Art\\spray2_strip");
        
 
             pipeAssemblyTexture = content.Load<Texture2D>("pipe_steam_part");
@@ -996,7 +1016,11 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
             //ERASING
             if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
-            { // if the right button is pressed, remove any painted objects under the cursor from the world
+            {
+                //ronnie added for laser
+                laser.startErasing();
+
+                // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
                 aabb.LowerBound = Common.Utils.Convert(mouseGamePosition - new Vector2(0.1f));
@@ -1016,6 +1040,11 @@ namespace CrisisAtSwissStation
                         numDrawLeft += painto.getAmountOfInstasteel();
                     }
                 }
+                // laser.finishErasing();
+            }
+            else
+            {
+                laser.finishErasing();
             }
 
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
@@ -1348,6 +1377,16 @@ namespace CrisisAtSwissStation
             }
         }
 
+        private void DrawCrosshair()
+        {
+            MouseState mouse = Mouse.GetState();
+            crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
+            float fractionInstasteel = numDrawLeft / totalInstaSteelInWorld;
+            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
+                null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
+                SpriteEffects.None, 0);
+        }
+
         public override void Draw(GraphicsDevice device, Matrix camera)
         {
             float guyPos = getCameraCoords().X;
@@ -1377,12 +1416,8 @@ namespace CrisisAtSwissStation
             base.Draw(device, cameraTransform);
 
             GameEngine.Instance.SpriteBatch.Begin();
-            MouseState mouse = Mouse.GetState();
-            crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
             paintTexture = GameEngine.TextureList["paint"]; // HACK HACK HACK handle this in a more sustainable way soon
-            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
-                null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
-                SpriteEffects.None, 0);
+            DrawCrosshair();
             foreach (Vector2 dotpos in dotPositions)
             {
                 GameEngine.Instance.SpriteBatch.Draw(paintTexture, getScreenCoords(dotpos) - halfdotsize - screenOffset, Color.Red);

@@ -44,6 +44,18 @@ namespace CrisisAtSwissStation.Common
             spriteBatch.Draw(spr, a, null, col, angle, Origin, Scale, SpriteEffects.None, 0f);
         }
 
+        public static void stretchForLaser(SpriteBatch spriteBatch, Texture2D spr, Vector2 a, Vector2 b, Color col,Rectangle myRect)
+        {          
+            Vector2 Origin = new Vector2(0.5f * myRect.Width, 0.0f);
+            Vector2 diff = b - a;
+            float angle;
+            Vector2 Scale = new Vector2(1.0f, diff.Length() / myRect.Height);
+
+            angle = (float)(System.Math.Atan2(diff.Y, diff.X)) - MathHelper.PiOver2;
+
+            spriteBatch.Draw(spr, a, myRect, col, angle, Origin, Scale, SpriteEffects.None, 0f);
+        }
+
         public static System.Drawing.Image Texture2Image(Texture2D texture)
         {
             if (texture == null)
