@@ -469,9 +469,11 @@ namespace CrisisAtSwissStation
             AddObject(pistonHead);
             */
 
-            piston = new PistonObject(World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f);
+            piston = new PistonObject(World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f, pistonPosition);
             piston.Position = pistonPosition;
             AddObject(piston);   
+
+            //private static Vector2 pistonPosition = new Vector2(12f, 13.2f);
 
             bottom1 = new BoxObject(World, "bottomTexture2273", 0, .5f, 0,1,false);
             bottom1.Position = bottom1Position;
