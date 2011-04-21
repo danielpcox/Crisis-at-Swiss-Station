@@ -791,6 +791,7 @@ namespace CrisisAtSwissStation
                     totalInstaSteelInWorld += ((PaintedObject)obj).getAmountOfInstasteel();
                 }
             }
+            halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
         }
 
         public static void LoadContent(ContentManager content)

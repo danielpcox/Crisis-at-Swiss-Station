@@ -71,11 +71,12 @@ namespace CrisisAtSwissStation.LevelEditor
             tool_Insertion.Checked = true;
 
             // Disable object properties by default
-            tb_Damage.Enabled = false;
+            tb_Density.Enabled = false;
             tb_Rotation.Enabled = false;
             b_ApplyProperties.Enabled = false;
             b_Front.Enabled = false;
             tb_Scale.Enabled = false;
+            cBox_StaticObject.Enabled = false;
 
         }
 
@@ -135,11 +136,11 @@ namespace CrisisAtSwissStation.LevelEditor
             //}
         }
 
-        private void rb_Handlebars_CheckedChanged_1(object sender, EventArgs e)
+        private void rb_CircleObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_Handlebars.Checked)
+            if (rb_CircleObjects.Checked)
             {
-                textureDir = "Art\\Handlebars\\";
+                textureDir = "Art\\Objects\\CircleObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
@@ -396,14 +397,16 @@ namespace CrisisAtSwissStation.LevelEditor
             // Set fields in Object Properties panel
             if (currentlySelectedObject != null)
             {
-                tb_Damage.Enabled = false; // Only true if this is a hazard (below)
+                tb_Density.Enabled = true;
                 tb_Rotation.Enabled = true;
                 b_ApplyProperties.Enabled = true;
                 b_Front.Enabled = true;
                 tb_Scale.Enabled = true;
+                cBox_StaticObject.Enabled = true;
                 tb_Rotation.Text = (currentlySelectedObject.Angle * 180.0f / MathHelper.Pi).ToString();
+                tb_Density.Text = currentlySelectedObject.Body.GetMass().ToString();
                 tb_Scale.Text = currentlySelectedObject.scale.ToString();
-
+                cBox_StaticObject.Checked = (currentlySelectedObject.Body.GetMass() == 0);
                 /*
                 if (currentlySelectedObject is HazardStatic)
                 {
@@ -427,12 +430,12 @@ namespace CrisisAtSwissStation.LevelEditor
             else
             {
                 // Clear all the properties fields
-                tb_Damage.Text = "";
+                tb_Density.Text = "";
                 tb_Rotation.Text = "";
                 tb_Scale.Text = "";
                 b_ApplyProperties.Enabled = false;
                 b_Front.Enabled = false;
-                tb_Damage.Enabled = false;
+                tb_Density.Enabled = false;
                 tb_Rotation.Enabled = false;
                 tb_Scale.Enabled = false;
 
@@ -440,6 +443,8 @@ namespace CrisisAtSwissStation.LevelEditor
                 tb_Script.Enabled = false;
                 cbox_Scripted.Checked = false;
                 cbox_Scripted.Enabled = false;
+                cBox_StaticObject.Checked = false;
+                cBox_StaticObject.Enabled = false;
             }
         }
 
@@ -538,6 +543,13 @@ namespace CrisisAtSwissStation.LevelEditor
                 bo = new BoxObject(world.World, texName, 0, .5f, 0, 1, false);
                 bo.Position = gameposition;
                 world.AddObject(bo);
+            }
+            else if (rb_CircleObjects.Checked)
+            {
+                CircleObject co;
+                co = new CircleObject(world.World, texName, 1, .5f, 0, 1);
+                co.Position = gameposition;
+                world.AddObject(co);
             }
             else if (rb_WinDoorObject.Checked)
             {
@@ -948,7 +960,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 float newScale = float.Parse(tb_Scale.Text);
                 currentlySelectedObject.Width = (currentlySelectedObject.Width / currentlySelectedObject.scale) * newScale;
 
-                if (currentlySelectedObject is CircleObject)
+                if (currentlySelectedObject is CircleObject && !(currentlySelectedObject is PaintedObject))
                 {
                     currentlySelectedObject.Height = currentlySelectedObject.Width;
 
@@ -966,7 +978,7 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.shapes.Add(shape); // add the new one
                     currentlySelectedObject.AddToWorld();
                 }
-                else
+                else if (!(currentlySelectedObject is PaintedObject))
                 {
                     currentlySelectedObject.Height = (currentlySelectedObject.Height / currentlySelectedObject.scale) * newScale;
                     // Determine dimensions
@@ -987,6 +999,20 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.AddToWorld();
                 }
 
+                if ((bool)cBox_StaticObject.Checked)
+                {
+                    MassData mass = new MassData();
+                    mass.Mass = 0f;
+                    currentlySelectedObject.Body.SetMass(mass);
+                }
+                else
+                {
+                    MassData mass = new MassData();
+                    mass.Mass = 1f;
+                    currentlySelectedObject.Body.SetMass(mass);
+                    currentlySelectedObject.Body.GetShapeList().Density = 1f;
+                    currentlySelectedObject.Body.SetMassFromShapes();
+                }
 
                 float newRotation = float.Parse(tb_Rotation.Text);
                 currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
@@ -1031,7 +1057,7 @@ namespace CrisisAtSwissStation.LevelEditor
             return true;
         }
 
-        private void tb_Damage_Leave(object sender, EventArgs e)
+        private void tb_Density_Leave(object sender, EventArgs e)
         {
             b_ApplyProperties.Enabled = AreObjPropertiesValid();
         }

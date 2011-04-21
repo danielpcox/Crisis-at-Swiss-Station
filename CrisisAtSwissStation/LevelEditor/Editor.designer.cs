@@ -40,7 +40,7 @@
             this.rb_SavePoint = new System.Windows.Forms.RadioButton();
             this.rb_VictoryTest = new System.Windows.Forms.RadioButton();
             this.rb_Doors = new System.Windows.Forms.RadioButton();
-            this.rb_Handlebars = new System.Windows.Forms.RadioButton();
+            this.rb_CircleObjects = new System.Windows.Forms.RadioButton();
             this.rb_PaintedObjects = new System.Windows.Forms.RadioButton();
             this.rb_SwitchObject = new System.Windows.Forms.RadioButton();
             this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
@@ -57,7 +57,7 @@
             this.lbl_DamageWarning = new System.Windows.Forms.Label();
             this.lbl_RotationWarning = new System.Windows.Forms.Label();
             this.b_ApplyProperties = new System.Windows.Forms.Button();
-            this.tb_Damage = new System.Windows.Forms.TextBox();
+            this.tb_Density = new System.Windows.Forms.TextBox();
             this.tb_Rotation = new System.Windows.Forms.TextBox();
             this.lbl_Damage = new System.Windows.Forms.Label();
             this.lbl_Rotation = new System.Windows.Forms.Label();
@@ -77,6 +77,7 @@
             this.panel_TextureList = new System.Windows.Forms.Panel();
             this.lb_TextureList = new System.Windows.Forms.ListBox();
             this.pb_Level = new System.Windows.Forms.PictureBox();
+            this.cBox_StaticObject = new System.Windows.Forms.CheckBox();
             this.panel_Main.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -184,7 +185,7 @@
             this.gb_ObjTypes.Controls.Add(this.rb_SavePoint);
             this.gb_ObjTypes.Controls.Add(this.rb_VictoryTest);
             this.gb_ObjTypes.Controls.Add(this.rb_Doors);
-            this.gb_ObjTypes.Controls.Add(this.rb_Handlebars);
+            this.gb_ObjTypes.Controls.Add(this.rb_CircleObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_PaintedObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_SwitchObject);
             this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
@@ -252,18 +253,17 @@
             this.rb_Doors.Visible = false;
             this.rb_Doors.CheckedChanged += new System.EventHandler(this.rb_Doors_CheckedChanged);
             // 
-            // rb_Handlebars
+            // rb_CircleObjects
             // 
-            this.rb_Handlebars.AutoSize = true;
-            this.rb_Handlebars.Location = new System.Drawing.Point(20, 186);
-            this.rb_Handlebars.Name = "rb_Handlebars";
-            this.rb_Handlebars.Size = new System.Drawing.Size(79, 17);
-            this.rb_Handlebars.TabIndex = 7;
-            this.rb_Handlebars.TabStop = true;
-            this.rb_Handlebars.Text = "Handlebars";
-            this.rb_Handlebars.UseVisualStyleBackColor = true;
-            this.rb_Handlebars.Visible = false;
-            this.rb_Handlebars.CheckedChanged += new System.EventHandler(this.rb_Handlebars_CheckedChanged_1);
+            this.rb_CircleObjects.AutoSize = true;
+            this.rb_CircleObjects.Location = new System.Drawing.Point(20, 186);
+            this.rb_CircleObjects.Name = "rb_CircleObjects";
+            this.rb_CircleObjects.Size = new System.Drawing.Size(87, 17);
+            this.rb_CircleObjects.TabIndex = 7;
+            this.rb_CircleObjects.TabStop = true;
+            this.rb_CircleObjects.Text = "CircleObjects";
+            this.rb_CircleObjects.UseVisualStyleBackColor = true;
+            this.rb_CircleObjects.CheckedChanged += new System.EventHandler(this.rb_CircleObjects_CheckedChanged);
             // 
             // rb_PaintedObjects
             // 
@@ -351,6 +351,7 @@
             // 
             // tab_objProps
             // 
+            this.tab_objProps.Controls.Add(this.cBox_StaticObject);
             this.tab_objProps.Controls.Add(this.b_Front);
             this.tab_objProps.Controls.Add(this.tb_Scale);
             this.tab_objProps.Controls.Add(this.lbl_SLevel);
@@ -359,7 +360,7 @@
             this.tab_objProps.Controls.Add(this.lbl_DamageWarning);
             this.tab_objProps.Controls.Add(this.lbl_RotationWarning);
             this.tab_objProps.Controls.Add(this.b_ApplyProperties);
-            this.tab_objProps.Controls.Add(this.tb_Damage);
+            this.tab_objProps.Controls.Add(this.tb_Density);
             this.tab_objProps.Controls.Add(this.tb_Rotation);
             this.tab_objProps.Controls.Add(this.lbl_Damage);
             this.tab_objProps.Controls.Add(this.lbl_Rotation);
@@ -445,7 +446,7 @@
             // 
             // b_ApplyProperties
             // 
-            this.b_ApplyProperties.Location = new System.Drawing.Point(125, 132);
+            this.b_ApplyProperties.Location = new System.Drawing.Point(141, 351);
             this.b_ApplyProperties.Name = "b_ApplyProperties";
             this.b_ApplyProperties.Size = new System.Drawing.Size(82, 39);
             this.b_ApplyProperties.TabIndex = 8;
@@ -453,13 +454,13 @@
             this.b_ApplyProperties.UseVisualStyleBackColor = true;
             this.b_ApplyProperties.Click += new System.EventHandler(this.b_ApplyProperties_Click);
             // 
-            // tb_Damage
+            // tb_Density
             // 
-            this.tb_Damage.Location = new System.Drawing.Point(108, 40);
-            this.tb_Damage.Name = "tb_Damage";
-            this.tb_Damage.Size = new System.Drawing.Size(100, 20);
-            this.tb_Damage.TabIndex = 7;
-            this.tb_Damage.Leave += new System.EventHandler(this.tb_Damage_Leave);
+            this.tb_Density.Location = new System.Drawing.Point(108, 40);
+            this.tb_Density.Name = "tb_Density";
+            this.tb_Density.Size = new System.Drawing.Size(100, 20);
+            this.tb_Density.TabIndex = 7;
+            this.tb_Density.Leave += new System.EventHandler(this.tb_Density_Leave);
             // 
             // tb_Rotation
             // 
@@ -475,9 +476,9 @@
             this.lbl_Damage.AutoSize = true;
             this.lbl_Damage.Location = new System.Drawing.Point(3, 40);
             this.lbl_Damage.Name = "lbl_Damage";
-            this.lbl_Damage.Size = new System.Drawing.Size(47, 13);
+            this.lbl_Damage.Size = new System.Drawing.Size(42, 13);
             this.lbl_Damage.TabIndex = 6;
-            this.lbl_Damage.Text = "Damage";
+            this.lbl_Damage.Text = "Density";
             // 
             // lbl_Rotation
             // 
@@ -627,6 +628,17 @@
             this.pb_Level.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pb_Level_MouseMove);
             this.pb_Level.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pb_Level_MouseUp);
             // 
+            // cBox_StaticObject
+            // 
+            this.cBox_StaticObject.AutoSize = true;
+            this.cBox_StaticObject.Location = new System.Drawing.Point(18, 293);
+            this.cBox_StaticObject.Margin = new System.Windows.Forms.Padding(2);
+            this.cBox_StaticObject.Name = "cBox_StaticObject";
+            this.cBox_StaticObject.Size = new System.Drawing.Size(93, 17);
+            this.cBox_StaticObject.TabIndex = 16;
+            this.cBox_StaticObject.Text = "Static Object?";
+            this.cBox_StaticObject.UseVisualStyleBackColor = true;
+            // 
             // Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -686,7 +698,7 @@
         private System.Windows.Forms.TabPage tab_Objects;
         private System.Windows.Forms.GroupBox gb_ObjTypes;
         private System.Windows.Forms.RadioButton rb_Doors;
-        private System.Windows.Forms.RadioButton rb_Handlebars;
+        private System.Windows.Forms.RadioButton rb_CircleObjects;
         private System.Windows.Forms.RadioButton rb_PaintedObjects;
         private System.Windows.Forms.RadioButton rb_SwitchObject;
         private System.Windows.Forms.RadioButton rb_WinDoorObject;
@@ -698,7 +710,7 @@
         private System.Windows.Forms.Label lbl_DamageWarning;
         private System.Windows.Forms.Label lbl_RotationWarning;
         private System.Windows.Forms.Button b_ApplyProperties;
-        private System.Windows.Forms.TextBox tb_Damage;
+        private System.Windows.Forms.TextBox tb_Density;
         private System.Windows.Forms.Label lbl_Damage;
         private System.Windows.Forms.Label lbl_Rotation;
         private System.Windows.Forms.CheckBox cbox_Scripted;
@@ -714,6 +726,7 @@
         private System.Windows.Forms.Button b_Front;
         private System.Windows.Forms.RadioButton rb_Vanish_Walls;
         private System.Windows.Forms.PictureBox pb_Level;
+        private System.Windows.Forms.CheckBox cBox_StaticObject;
 
 
 

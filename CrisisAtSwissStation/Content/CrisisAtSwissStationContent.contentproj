@@ -641,7 +641,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Art\Objects\CircleObjects\" />
     <Folder Include="Art\Overlays\" />
   </ItemGroup>
   <ItemGroup>
