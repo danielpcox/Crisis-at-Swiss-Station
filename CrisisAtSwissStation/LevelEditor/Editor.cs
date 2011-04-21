@@ -655,7 +655,9 @@ namespace CrisisAtSwissStation.LevelEditor
             //First, choose the file we want to load.
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = filter;
-            dialog.InitialDirectory = ".";
+            string currdir = CurrDirHack() + "\\Worlds";
+            Console.WriteLine("Current Directory " + currdir);
+            dialog.InitialDirectory = currdir; //".";
             dialog.Title = title;
 
             DialogResult result = dialog.ShowDialog();
@@ -873,7 +875,7 @@ namespace CrisisAtSwissStation.LevelEditor
         /// <returns></returns>
         public static string CurrDirHack()
         {
-            return (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
+            return (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
         }
 
         private void showMessage(string title, string text)
@@ -896,8 +898,6 @@ namespace CrisisAtSwissStation.LevelEditor
             // apply these new settings
             if (currentlySelectedObject != null && AreObjPropertiesValid())
             {
-                float newRotation = float.Parse(tb_Rotation.Text);
-                currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
                 float newScale = float.Parse(tb_Scale.Text);
                 currentlySelectedObject.Width = (currentlySelectedObject.Width / currentlySelectedObject.scale) * newScale;
 
@@ -939,6 +939,10 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.shapes.Add(shape); // add the new one
                     currentlySelectedObject.AddToWorld();
                 }
+
+
+                float newRotation = float.Parse(tb_Rotation.Text);
+                currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
 
                 currentlySelectedObject.scale = newScale;
             }

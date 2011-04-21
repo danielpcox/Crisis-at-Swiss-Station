@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using CrisisAtSwissStation.Common;
+using System.Threading;
 
 using Forms = System.Windows.Forms; // alias as Forms so that we don't get collisions with keyboard stuff
 
@@ -22,6 +23,9 @@ namespace CrisisAtSwissStation
     /// </summary>
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
+
+        private const bool LOAD_FROM_FILE = false;
+
 
         //textbox for setting insta-steel
         TextBox instaSteelTextBox;
@@ -293,16 +297,25 @@ namespace CrisisAtSwissStation
                 // Uses C# reflection to construct a new world with minimal code
                 //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
 
-                string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
+                string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+                Console.WriteLine("Current Directory: " + currdir);
 
-                //currentWorld = new ScrollingWorld();
-                currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\asdf.world");
-                currentWorld.reloadNonSerializedAssets();
-
+                if (LOAD_FROM_FILE)
+                {
+                    currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\asdf.world");
+                    currentWorld.reloadNonSerializedAssets();
+                }
+                else
+                {
+                    currentWorld = new ScrollingWorld();
+                }
+                
                 countdown = 0;
             }
 
-            currentWorld.Simulate((float)gameTime.ElapsedGameTime.TotalSeconds);
+            if (!level_editor_open)
+                currentWorld.Simulate((float)gameTime.ElapsedGameTime.TotalSeconds);
+                
 
             // Just won or lost - initiate countdown
             if ((currentWorld.Failed || currentWorld.Succeeded) && countdown == 0)
