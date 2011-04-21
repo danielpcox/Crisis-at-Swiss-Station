@@ -125,13 +125,14 @@ namespace CrisisAtSwissStation.LevelEditor
             PopulateTextureList(textureDir);
         }
         
-        private void rb_HazardDynamic_CheckedChanged_1(object sender, EventArgs e)
+        private void rb_SeeSawObject_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_HazardDynamic.Checked)
-            {
-                textureDir = "Art\\Dynamic Hazards\\";
+            //if (rb_SeeSawObject.Checked)
+            //{
+            Console.WriteLine("I got here");
+                textureDir = "Art\\Objects\\SeeSawObjects\\";
                 PopulateTextureList(textureDir);
-            }
+            //}
         }
 
         private void rb_Handlebars_CheckedChanged_1(object sender, EventArgs e)
@@ -552,6 +553,14 @@ namespace CrisisAtSwissStation.LevelEditor
                 po = new PistonObject(world.World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f, gameposition);
                 po.Position = gameposition;
                 world.AddObject(po);  
+            }
+            else if(rb_SeeSawObject.Checked)
+            {
+                SeeSawObject ss;
+                ss = new SeeSawObject(world.World, texName, 1.5f, gameposition);
+                ss.Position = gameposition;
+                world.AddObject(ss);
+
             }
             
                 /*

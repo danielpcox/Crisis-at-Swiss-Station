@@ -155,6 +155,7 @@
     <Compile Include="Objects\ParticleGenerator.cs" />
     <Compile Include="Objects\PistonObject.cs" />
     <Compile Include="Objects\RopeBridge.cs" />
+    <Compile Include="Objects\SeeSawObject.cs" />
     <Compile Include="PhysicsObject.cs" />
     <Compile Include="CASSWorld.cs" />
     <Compile Include="PolygonDrawer.cs" />

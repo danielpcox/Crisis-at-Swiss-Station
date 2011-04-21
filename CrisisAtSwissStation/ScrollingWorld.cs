@@ -542,6 +542,21 @@ namespace CrisisAtSwissStation
             
             //public AnimationObject( World world, Texture2D mytexture, Texture2D objectTexture, int sprWidth, int sprHeight, int animInt, int myNumFrames)
 
+            /*
+            Vector2 seesawposition = new Vector2(5f,8f);
+            SeeSawObject seesaw = new SeeSawObject(World, "straight_pipe",.4f,seesawposition );
+            seesaw.Position = seesawposition;
+            AddObject(seesaw);
+            
+            
+            RevoluteJointDef jointDef2 = new RevoluteJointDef();
+            jointDef2.Initialize( World.GetGroundBody(),seesaw.Body, Common.Utils.Convert(seesaw.Position));
+            Console.WriteLine(Common.Utils.Convert(seesaw.Position));
+            //jointDef.EnableMotor = true;
+            //jointDef.MotorSpeed = 1f;
+            World.CreateJoint(jointDef2);
+            */
+
             brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89,32,20,8);
             brokenMovingPlatform1.Position = brokenMovingPlatform1Position;
             AddObject(brokenMovingPlatform1);
