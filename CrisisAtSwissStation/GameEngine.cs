@@ -24,7 +24,7 @@ namespace CrisisAtSwissStation
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
 
-        private const bool LOAD_FROM_FILE = true;
+        private const bool LOAD_FROM_FILE = false;
 
 
         //textbox for setting insta-steel
