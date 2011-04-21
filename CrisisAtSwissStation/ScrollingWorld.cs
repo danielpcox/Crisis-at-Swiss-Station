@@ -212,6 +212,9 @@ namespace CrisisAtSwissStation
         private static Vector2 pistonHeadPosition = new Vector2(12f, 13.2f);
         private BoxObject pistonHead;
 
+        private static Vector2 pistonPosition = new Vector2(12f, 13.2f);
+        private PistonObject piston;
+
         //private static Vector2 movPlatform1Position = new Vector2(10f, 10f);
         //private BoxObject movPlatform1;
 
@@ -459,10 +462,17 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0} {1}", pulleyPipe2.Body.GetWorldCenter().X, pulleyPipe2.Body.GetWorldCenter().Y);
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
-
+            /*
             pistonHead = new BoxObject(World, "Art\\Objects\\PistonObjects\\piston_moving", 0, .5f, 0, .5f, false);
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
+            */
+
+            piston = new PistonObject(World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f, pistonPosition);
+            piston.Position = pistonPosition;
+            AddObject(piston);
+
+            //private static Vector2 pistonPosition = new Vector2(12f, 13.2f);
 
             bottom1 = new BoxObject(World, "bottomTexture2273", 0, .5f, 0,1,false);
             bottom1.Position = bottom1Position;
@@ -929,6 +939,7 @@ namespace CrisisAtSwissStation
 
 
             //new Vector2(14.5f, 13.3f);
+            /*
             if (pistonMove == true)
             {
                 pistonHead.Position = pistonHead.Position - new Vector2(.01f, 0);
@@ -941,7 +952,7 @@ namespace CrisisAtSwissStation
                 if (pistonHead.Position.X > 13f)
                     pistonMove= true;
             }
-
+            */
 
             dude.Grounded = false; // unrelated to the following
 
