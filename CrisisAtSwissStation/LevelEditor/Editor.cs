@@ -76,6 +76,8 @@ namespace CrisisAtSwissStation.LevelEditor
             b_ApplyProperties.Enabled = false;
             b_Front.Enabled = false;
             tb_Scale.Enabled = false;
+            tb_bound1.Enabled = false;
+            tb_bound2.Enabled = false;
             cBox_StaticObject.Enabled = false;
 
         }
@@ -136,6 +138,15 @@ namespace CrisisAtSwissStation.LevelEditor
             //}
         }
 
+        private void rb_MovingPlatform_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rb_MovingPlatform.Checked)
+            {
+                textureDir = "Art\\Objects\\MovingPlatformObjects\\";
+                PopulateTextureList(textureDir);
+            }
+        }
+
         private void rb_CircleObjects_CheckedChanged(object sender, EventArgs e)
         {
             if (rb_CircleObjects.Checked)
@@ -144,6 +155,16 @@ namespace CrisisAtSwissStation.LevelEditor
                 PopulateTextureList(textureDir);
             }
         }
+
+        private void rb_HorizontalMovingPlatform_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rb_HorizontalMovingPlatform.Checked)
+            {
+                textureDir = "Art\\Objects\\HorizontalMovingPlatformObjects\\";
+                PopulateTextureList(textureDir);
+            }
+        }
+
 
         private void rb_SwitchObject_CheckedChanged(object sender, EventArgs e)
         {
@@ -166,9 +187,9 @@ namespace CrisisAtSwissStation.LevelEditor
         //This is slightly different than all the others. There is no "texture"
         //for doors, you see, so we're going to just add one item in the
         //list at the bottom, and make it selected.
-        private void rb_Doors_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rb_Doors.Checked)
+        private void rb_Door_CheckedChanged(object sender, EventArgs e)
+        {/*
+            if (rb_HorizontalMovingPlatform.Checked)
             {
                 lb_TextureList.Items.Clear();
 
@@ -176,6 +197,7 @@ namespace CrisisAtSwissStation.LevelEditor
 
                 lb_TextureList.SelectedIndex = 0;
             }
+          */
         }
 
         private void rb_VictoryTest_CheckedChanged(object sender, EventArgs e)
@@ -399,6 +421,8 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 tb_Density.Enabled = true;
                 tb_Rotation.Enabled = true;
+                tb_bound1.Enabled = true;
+                tb_bound2.Enabled = true;
                 b_ApplyProperties.Enabled = true;
                 b_Front.Enabled = true;
                 tb_Scale.Enabled = true;
@@ -406,7 +430,10 @@ namespace CrisisAtSwissStation.LevelEditor
                 tb_Rotation.Text = (currentlySelectedObject.Angle * 180.0f / MathHelper.Pi).ToString();
                 tb_Density.Text = currentlySelectedObject.Body.GetMass().ToString();
                 tb_Scale.Text = currentlySelectedObject.scale.ToString();
+                tb_bound1.Text = currentlySelectedObject.scale.ToString();
+                tb_bound2.Text = currentlySelectedObject.scale.ToString();
                 cBox_StaticObject.Checked = (currentlySelectedObject.Body.GetMass() == 0);
+
                 /*
                 if (currentlySelectedObject is HazardStatic)
                 {
@@ -432,11 +459,15 @@ namespace CrisisAtSwissStation.LevelEditor
                 // Clear all the properties fields
                 tb_Density.Text = "";
                 tb_Rotation.Text = "";
+                tb_bound1.Text = "";
+                tb_bound2.Text = "";
                 tb_Scale.Text = "";
                 b_ApplyProperties.Enabled = false;
                 b_Front.Enabled = false;
                 tb_Density.Enabled = false;
                 tb_Rotation.Enabled = false;
+                tb_bound1.Enabled = false;
+                tb_bound2.Enabled = false;
                 tb_Scale.Enabled = false;
 
                 tb_Script.Text = "";
@@ -579,6 +610,24 @@ namespace CrisisAtSwissStation.LevelEditor
                 SwitchObject ss;
                 ss = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
                 //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                ss.Position = gameposition;
+                world.AddObject(ss);
+
+            }
+            else if (rb_MovingPlatform.Checked)
+            {
+                MovingObject ss;
+                ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+               // movPlatform1 = new MovingObject(World, "moving platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
+                ss.Position = gameposition;
+                world.AddObject(ss);
+
+            }
+            else if (rb_HorizontalMovingPlatform.Checked)
+            {
+                HorizontalMovingObject ss;
+                ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+               // movPlatform2 = new HorizontalMovingObject(World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 32f, 38f);
                 ss.Position = gameposition;
                 world.AddObject(ss);
 
@@ -1018,6 +1067,24 @@ namespace CrisisAtSwissStation.LevelEditor
                 currentlySelectedObject.Angle = MathHelper.ToRadians(newRotation);
 
                 currentlySelectedObject.scale = newScale;
+
+                float newbound1 = float.Parse(tb_bound1.Text);
+                float newbound2 = float.Parse(tb_bound2.Text);
+                if (currentlySelectedObject is MovingObject)
+                {
+                    MovingObject temp = (MovingObject)currentlySelectedObject;
+                    temp.bound1 = newbound1;
+                    temp.bound2 = newbound2;
+                    currentlySelectedObject = temp;
+                }
+                else if (currentlySelectedObject is HorizontalMovingObject)
+                {
+                    HorizontalMovingObject temp = (HorizontalMovingObject)currentlySelectedObject;
+                    temp.bound1 = newbound1;
+                    temp.bound2 = newbound2;
+                    currentlySelectedObject = temp;
+                }
+                
             }
 
            pb_Level.Refresh();
@@ -1186,6 +1253,8 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             GameEngine.level_editor_open = false;
         }
+
+       
 
     }
 }

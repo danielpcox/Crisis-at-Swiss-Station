@@ -820,8 +820,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\CircleObjects\table.png">
-      <Name>table</Name>
+    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\moving_platform.png">
+      <Name>moving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\MovingPlatformObjects\moving_platform.png">
+      <Name>moving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\BoxObjects\chair.png">
+      <Name>chair</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\BoxObjects\chandelier.png">
+      <Name>chandelier</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\BoxObjects\stool.png">
+      <Name>stool</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
