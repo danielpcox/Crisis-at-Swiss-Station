@@ -498,7 +498,7 @@ namespace CrisisAtSwissStation
 
         public bool NewWorld()
         {
-            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content");
+            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
             ScrollingWorld world = Serializer.DeSerialize(currdir + "\\Worlds\\" + Constants.NEW_GAME_NAME);
 
             if (world != null)
