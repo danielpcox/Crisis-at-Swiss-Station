@@ -44,8 +44,8 @@
             this.rb_Survivors = new System.Windows.Forms.RadioButton();
             this.rb_Parts = new System.Windows.Forms.RadioButton();
             this.rb_HazardDynamic = new System.Windows.Forms.RadioButton();
-            this.rb_HazardStatic = new System.Windows.Forms.RadioButton();
             this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
+            this.rb_PistonObject = new System.Windows.Forms.RadioButton();
             this.rb_BoxObjects = new System.Windows.Forms.RadioButton();
             this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
@@ -188,8 +188,8 @@
             this.gb_ObjTypes.Controls.Add(this.rb_Survivors);
             this.gb_ObjTypes.Controls.Add(this.rb_Parts);
             this.gb_ObjTypes.Controls.Add(this.rb_HazardDynamic);
-            this.gb_ObjTypes.Controls.Add(this.rb_HazardStatic);
             this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
+            this.gb_ObjTypes.Controls.Add(this.rb_PistonObject);
             this.gb_ObjTypes.Controls.Add(this.rb_BoxObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_AnimationObjects);
             this.gb_ObjTypes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -304,18 +304,17 @@
             this.rb_HazardDynamic.Visible = false;
             this.rb_HazardDynamic.CheckedChanged += new System.EventHandler(this.rb_HazardDynamic_CheckedChanged_1);
             // 
-            // rb_HazardStatic
+            // rb_PistonObject
             // 
-            this.rb_HazardStatic.AutoSize = true;
-            this.rb_HazardStatic.Location = new System.Drawing.Point(20, 90);
-            this.rb_HazardStatic.Name = "rb_HazardStatic";
-            this.rb_HazardStatic.Size = new System.Drawing.Size(95, 17);
-            this.rb_HazardStatic.TabIndex = 3;
-            this.rb_HazardStatic.TabStop = true;
-            this.rb_HazardStatic.Text = "Hazard - Static";
-            this.rb_HazardStatic.UseVisualStyleBackColor = true;
-            this.rb_HazardStatic.Visible = false;
-            this.rb_HazardStatic.CheckedChanged += new System.EventHandler(this.rb_HazardStatic_CheckedChanged_1);
+            this.rb_PistonObject.AutoSize = true;
+            this.rb_PistonObject.Location = new System.Drawing.Point(20, 90);
+            this.rb_PistonObject.Name = "rb_PistonObject";
+            this.rb_PistonObject.Size = new System.Drawing.Size(85, 17);
+            this.rb_PistonObject.TabIndex = 3;
+            this.rb_PistonObject.TabStop = true;
+            this.rb_PistonObject.Text = "PistonObject";
+            this.rb_PistonObject.UseVisualStyleBackColor = true;
+            this.rb_PistonObject.CheckedChanged += new System.EventHandler(this.rb_PistonObject_CheckChanged);
             // 
             // rb_WinDoorObject
             // 
@@ -694,8 +693,8 @@
         private System.Windows.Forms.RadioButton rb_Survivors;
         private System.Windows.Forms.RadioButton rb_Parts;
         private System.Windows.Forms.RadioButton rb_HazardDynamic;
-        private System.Windows.Forms.RadioButton rb_HazardStatic;
         private System.Windows.Forms.RadioButton rb_WinDoorObject;
+        private System.Windows.Forms.RadioButton rb_PistonObject;
         private System.Windows.Forms.RadioButton rb_BoxObjects;
         private System.Windows.Forms.RadioButton rb_AnimationObjects;
         private System.Windows.Forms.TabPage tab_objProps;

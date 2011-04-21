@@ -119,15 +119,12 @@ namespace CrisisAtSwissStation.LevelEditor
 
         }
 
-        private void rb_HazardStatic_CheckedChanged_1(object sender, EventArgs e)
+        private void rb_PistonObject_CheckChanged(object sender, EventArgs e)
         {
-            if (rb_HazardStatic.Checked)
-            {
-                textureDir = "Art\\Static Hazards\\";
-                PopulateTextureList(textureDir);
-            }
+            textureDir = "Art\\Objects\\PistonObjects\\";
+            PopulateTextureList(textureDir);
         }
-
+        
         private void rb_HazardDynamic_CheckedChanged_1(object sender, EventArgs e)
         {
             if (rb_HazardDynamic.Checked)
@@ -548,6 +545,13 @@ namespace CrisisAtSwissStation.LevelEditor
                 so = new WinDoorObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 5);
                 so.Position = gameposition;
                 world.AddObject(so);
+            }
+            else if (rb_PistonObject.Checked)
+            {
+                PistonObject po;
+                po = new PistonObject(world.World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f, gameposition);
+                po.Position = gameposition;
+                world.AddObject(po);  
             }
             
                 /*

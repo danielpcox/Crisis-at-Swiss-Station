@@ -117,6 +117,13 @@ namespace CrisisAtSwissStation
                 AddToWorld();
                 Position = Position + new Vector2(0.35f, 0.2f);
                 replacedBody = true;
+                if (Filled != MAX_FILL)
+                {
+                    float temp1 = Filled - MAX_FILL;
+                    Filled = MAX_FILL;
+                    ScrollingWorld.numDrawLeft += temp1;
+                    
+                }
             }
 
             //base.Update(world, dt);
