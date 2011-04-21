@@ -64,6 +64,9 @@ namespace CrisisAtSwissStation
         public string backgroundName;
 
         [NonSerialized]
+        private static Texture2D laserAnimTexture;
+
+        [NonSerialized]
         private static Texture2D bigBoxTexture;
         [NonSerialized]
         private static Texture2D littleBoxTexture;
@@ -136,6 +139,9 @@ namespace CrisisAtSwissStation
 
         [NonSerialized]
         private static Texture2D winDoorAnimTexture;
+
+        [NonSerialized]
+        private static Texture2D ballroomBackground;
 
         private bool movPlat1;
         private bool pistonMove;
@@ -595,7 +601,7 @@ namespace CrisisAtSwissStation
 	    */
 
             // Create laser
-            laser = new LaserObject(World, dude, "paintedsegment", 10);
+            laser = new LaserObject(World, dude, "Art\\spray2_strip", 10);
 
 
             //creating insta steel already in the level
@@ -785,6 +791,7 @@ namespace CrisisAtSwissStation
                     totalInstaSteelInWorld += ((PaintedObject)obj).getAmountOfInstasteel();
                 }
             }
+            halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
         }
 
         public static void LoadContent(ContentManager content)
@@ -807,6 +814,7 @@ namespace CrisisAtSwissStation
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
             backgroundTerrible = content.Load<Texture2D>("RonniesBestWork");
+            ballroomBackground = content.Load<Texture2D>("ballroom");
 
             /* //our new platforms
              bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
@@ -840,6 +848,8 @@ namespace CrisisAtSwissStation
 
             lampTexture = content.Load<Texture2D>("light");
             lampAnimTexture = content.Load<Texture2D>("light_strip");
+
+            laserAnimTexture = content.Load<Texture2D>("Art\\spray2_strip");
        
 
             pipeAssemblyTexture = content.Load<Texture2D>("pipe_steam_part");
@@ -996,7 +1006,11 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
             //ERASING
             if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
-            { // if the right button is pressed, remove any painted objects under the cursor from the world
+            {
+                //ronnie added for laser
+                laser.startErasing();
+
+                // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
                 AABB aabb = new AABB();
                 aabb.LowerBound = Common.Utils.Convert(mouseGamePosition - new Vector2(0.1f));
@@ -1016,6 +1030,11 @@ namespace CrisisAtSwissStation
                         numDrawLeft += painto.getAmountOfInstasteel();
                     }
                 }
+                // laser.finishErasing();
+            }
+            else
+            {
+                laser.finishErasing();
             }
 
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
