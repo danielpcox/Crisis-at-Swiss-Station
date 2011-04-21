@@ -16,7 +16,7 @@ namespace CrisisAtSwissStation
     [Serializable]
     public class MovingObject : PhysicsObject
     {
-        private bool isMoving = true;
+        private bool isMoving;
         private Vector2 myForce;
         private SwitchObject mySwitch;
         // The box texture
@@ -64,6 +64,8 @@ namespace CrisisAtSwissStation
             shape.Friction = friction;
             shape.Restitution = restitution;
             shapes.Add(shape);
+
+            isMoving = true;
            
         }
 
@@ -74,31 +76,55 @@ namespace CrisisAtSwissStation
 
         public override void Update(CASSWorld world, float dt)
         {
-           
-            if (mySwitch.switchOn)
+            if (mySwitch != null)
             {
-                
-                
-                    if (isMoving== true)
+                if (mySwitch.switchOn)
+                {
+
+
+                    if (isMoving == true)
                     {
                         this.Body.ApplyForce(Utils.Convert(myForce), this.Body.GetWorldCenter());
                         //movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
                         if (this.Position.Y < bound1)
                         {
                             isMoving = false;
-                            mySwitch.switchOn = false;
+                            mySwitch.switchOn = false;//end of launch path
                         }
 
                     }
                     else
                     {
                         //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
-                        this.Body.ApplyForce(Utils.Convert(myForce/3), this.Body.GetWorldCenter());
+                        this.Body.ApplyForce(Utils.Convert(myForce / 3), this.Body.GetWorldCenter());
                         if (this.Position.Y > bound2)
-                           // mySwitch.switchOn = true;
-                        isMoving = true;
+                            // mySwitch.switchOn = true;
+                            isMoving = true;
                     }
-                
+
+                }
+            }
+            else{
+               
+                if (isMoving == true)
+                    {
+                        this.Body.ApplyForce(Utils.Convert(myForce), this.Body.GetWorldCenter());
+                        //movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
+                        if (this.Position.Y < bound1)
+                        {
+                            isMoving = false;
+                            //mySwitch.switchOn = false;//end of launch path
+                        }
+
+                    }
+                    else
+                    {
+                        //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
+                        this.Body.ApplyForce(Utils.Convert(myForce / 3), this.Body.GetWorldCenter());
+                        if (this.Position.Y > bound2)
+                            // mySwitch.switchOn = true;
+                            isMoving = true;
+                    }
             }
 
             base.Update(world, dt);
