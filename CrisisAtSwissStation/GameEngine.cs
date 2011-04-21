@@ -23,7 +23,7 @@ namespace CrisisAtSwissStation
     /// </summary>
     public class GameEngine : Microsoft.Xna.Framework.Game
     {
-        private const bool LOAD_FROM_FILE = true;
+        private const bool LOAD_FROM_FILE = false;
 
         static MenuEngine currentMenu;
         static MenuEngine startMenu = new MenuEngine(), optionMenu = new MenuEngine(), pauseMenu = new MenuEngine();

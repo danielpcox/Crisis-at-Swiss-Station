@@ -39,8 +39,8 @@
             this.rb_Vanish_Walls = new System.Windows.Forms.RadioButton();
             this.rb_SavePoint = new System.Windows.Forms.RadioButton();
             this.rb_VictoryTest = new System.Windows.Forms.RadioButton();
-            this.rb_Doors = new System.Windows.Forms.RadioButton();
-            this.rb_Handlebars = new System.Windows.Forms.RadioButton();
+            this.rb_HorizontalMovingPlatform = new System.Windows.Forms.RadioButton();
+            this.rb_MovingPlatform = new System.Windows.Forms.RadioButton();
             this.rb_PaintedObjects = new System.Windows.Forms.RadioButton();
             this.rb_SwitchObject = new System.Windows.Forms.RadioButton();
             this.rb_WinDoorObject = new System.Windows.Forms.RadioButton();
@@ -49,6 +49,10 @@
             this.rb_BoxObjects = new System.Windows.Forms.RadioButton();
             this.rb_AnimationObjects = new System.Windows.Forms.RadioButton();
             this.tab_objProps = new System.Windows.Forms.TabPage();
+            this.tb_bound2 = new System.Windows.Forms.TextBox();
+            this.lbl_bound2 = new System.Windows.Forms.Label();
+            this.tb_bound1 = new System.Windows.Forms.TextBox();
+            this.lbl_bound1 = new System.Windows.Forms.Label();
             this.b_Front = new System.Windows.Forms.Button();
             this.tb_Scale = new System.Windows.Forms.TextBox();
             this.lbl_SLevel = new System.Windows.Forms.Label();
@@ -183,8 +187,8 @@
             this.gb_ObjTypes.Controls.Add(this.rb_Vanish_Walls);
             this.gb_ObjTypes.Controls.Add(this.rb_SavePoint);
             this.gb_ObjTypes.Controls.Add(this.rb_VictoryTest);
-            this.gb_ObjTypes.Controls.Add(this.rb_Doors);
-            this.gb_ObjTypes.Controls.Add(this.rb_Handlebars);
+            this.gb_ObjTypes.Controls.Add(this.rb_HorizontalMovingPlatform);
+            this.gb_ObjTypes.Controls.Add(this.rb_MovingPlatform);
             this.gb_ObjTypes.Controls.Add(this.rb_PaintedObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_SwitchObject);
             this.gb_ObjTypes.Controls.Add(this.rb_WinDoorObject);
@@ -239,31 +243,28 @@
             this.rb_VictoryTest.Visible = false;
             this.rb_VictoryTest.CheckedChanged += new System.EventHandler(this.rb_VictoryTest_CheckedChanged);
             // 
-            // rb_Doors
+            // rb_HorizontalMovingPlatform
             // 
-            this.rb_Doors.AutoSize = true;
-            this.rb_Doors.Location = new System.Drawing.Point(20, 209);
-            this.rb_Doors.Name = "rb_Doors";
-            this.rb_Doors.Size = new System.Drawing.Size(53, 17);
-            this.rb_Doors.TabIndex = 8;
-            this.rb_Doors.TabStop = true;
-            this.rb_Doors.Text = "Doors";
-            this.rb_Doors.UseVisualStyleBackColor = true;
-            this.rb_Doors.Visible = false;
-            this.rb_Doors.CheckedChanged += new System.EventHandler(this.rb_Doors_CheckedChanged);
+            this.rb_HorizontalMovingPlatform.AutoSize = true;
+            this.rb_HorizontalMovingPlatform.Location = new System.Drawing.Point(20, 209);
+            this.rb_HorizontalMovingPlatform.Name = "rb_HorizontalMovingPlatform";
+            this.rb_HorizontalMovingPlatform.Size = new System.Drawing.Size(145, 17);
+            this.rb_HorizontalMovingPlatform.TabIndex = 8;
+            this.rb_HorizontalMovingPlatform.TabStop = true;
+            this.rb_HorizontalMovingPlatform.Text = "HorizontalMovingPlatform";
+            this.rb_HorizontalMovingPlatform.UseVisualStyleBackColor = true;
             // 
-            // rb_Handlebars
+            // rb_MovingPlatform
             // 
-            this.rb_Handlebars.AutoSize = true;
-            this.rb_Handlebars.Location = new System.Drawing.Point(20, 186);
-            this.rb_Handlebars.Name = "rb_Handlebars";
-            this.rb_Handlebars.Size = new System.Drawing.Size(79, 17);
-            this.rb_Handlebars.TabIndex = 7;
-            this.rb_Handlebars.TabStop = true;
-            this.rb_Handlebars.Text = "Handlebars";
-            this.rb_Handlebars.UseVisualStyleBackColor = true;
-            this.rb_Handlebars.Visible = false;
-            this.rb_Handlebars.CheckedChanged += new System.EventHandler(this.rb_Handlebars_CheckedChanged_1);
+            this.rb_MovingPlatform.AutoSize = true;
+            this.rb_MovingPlatform.Location = new System.Drawing.Point(20, 186);
+            this.rb_MovingPlatform.Name = "rb_MovingPlatform";
+            this.rb_MovingPlatform.Size = new System.Drawing.Size(98, 17);
+            this.rb_MovingPlatform.TabIndex = 7;
+            this.rb_MovingPlatform.TabStop = true;
+            this.rb_MovingPlatform.Text = "MovingPlatform";
+            this.rb_MovingPlatform.UseVisualStyleBackColor = true;
+            this.rb_MovingPlatform.CheckedChanged += new System.EventHandler(this.rb_MovingPlatform_CheckedChanged);
             // 
             // rb_PaintedObjects
             // 
@@ -351,6 +352,10 @@
             // 
             // tab_objProps
             // 
+            this.tab_objProps.Controls.Add(this.tb_bound2);
+            this.tab_objProps.Controls.Add(this.lbl_bound2);
+            this.tab_objProps.Controls.Add(this.tb_bound1);
+            this.tab_objProps.Controls.Add(this.lbl_bound1);
             this.tab_objProps.Controls.Add(this.b_Front);
             this.tab_objProps.Controls.Add(this.tb_Scale);
             this.tab_objProps.Controls.Add(this.lbl_SLevel);
@@ -370,6 +375,38 @@
             this.tab_objProps.TabIndex = 1;
             this.tab_objProps.Text = "Object Properties";
             this.tab_objProps.UseVisualStyleBackColor = true;
+            // 
+            // tb_bound2
+            // 
+            this.tb_bound2.Location = new System.Drawing.Point(56, 353);
+            this.tb_bound2.Name = "tb_bound2";
+            this.tb_bound2.Size = new System.Drawing.Size(100, 20);
+            this.tb_bound2.TabIndex = 19;
+            // 
+            // lbl_bound2
+            // 
+            this.lbl_bound2.AutoSize = true;
+            this.lbl_bound2.Location = new System.Drawing.Point(7, 353);
+            this.lbl_bound2.Name = "lbl_bound2";
+            this.lbl_bound2.Size = new System.Drawing.Size(43, 13);
+            this.lbl_bound2.TabIndex = 18;
+            this.lbl_bound2.Text = "bound2";
+            // 
+            // tb_bound1
+            // 
+            this.tb_bound1.Location = new System.Drawing.Point(56, 313);
+            this.tb_bound1.Name = "tb_bound1";
+            this.tb_bound1.Size = new System.Drawing.Size(100, 20);
+            this.tb_bound1.TabIndex = 17;
+            // 
+            // lbl_bound1
+            // 
+            this.lbl_bound1.AutoSize = true;
+            this.lbl_bound1.Location = new System.Drawing.Point(7, 313);
+            this.lbl_bound1.Name = "lbl_bound1";
+            this.lbl_bound1.Size = new System.Drawing.Size(43, 13);
+            this.lbl_bound1.TabIndex = 16;
+            this.lbl_bound1.Text = "bound1";
             // 
             // b_Front
             // 
@@ -510,7 +547,7 @@
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.fileToolStripMenuItem.Text = "World";
             // 
             // createNewWorld
@@ -592,7 +629,7 @@
             this.tool_Selection.Image = ((System.Drawing.Image)(resources.GetObject("tool_Selection.Image")));
             this.tool_Selection.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool_Selection.Name = "tool_Selection";
-            this.tool_Selection.Size = new System.Drawing.Size(42, 22);
+            this.tool_Selection.Size = new System.Drawing.Size(40, 22);
             this.tool_Selection.Text = "Select";
             this.tool_Selection.Click += new System.EventHandler(this.tool_Selection_Click);
             // 
@@ -685,8 +722,8 @@
         private System.Windows.Forms.TabControl tabctrl_TexProp;
         private System.Windows.Forms.TabPage tab_Objects;
         private System.Windows.Forms.GroupBox gb_ObjTypes;
-        private System.Windows.Forms.RadioButton rb_Doors;
-        private System.Windows.Forms.RadioButton rb_Handlebars;
+        private System.Windows.Forms.RadioButton rb_HorizontalMovingPlatform;
+        private System.Windows.Forms.RadioButton rb_MovingPlatform;
         private System.Windows.Forms.RadioButton rb_PaintedObjects;
         private System.Windows.Forms.RadioButton rb_SwitchObject;
         private System.Windows.Forms.RadioButton rb_WinDoorObject;
@@ -714,6 +751,10 @@
         private System.Windows.Forms.Button b_Front;
         private System.Windows.Forms.RadioButton rb_Vanish_Walls;
         private System.Windows.Forms.PictureBox pb_Level;
+        private System.Windows.Forms.TextBox tb_bound1;
+        private System.Windows.Forms.Label lbl_bound1;
+        private System.Windows.Forms.Label lbl_bound2;
+        private System.Windows.Forms.TextBox tb_bound2;
 
 
 

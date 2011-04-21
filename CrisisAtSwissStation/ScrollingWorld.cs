@@ -128,6 +128,10 @@ namespace CrisisAtSwissStation
         private static Texture2D switchAnimTexture;
         [NonSerialized]
         private static Texture2D switchObjectTexture;
+        [NonSerialized]
+        private static Texture2D movingObjectTexture;
+        [NonSerialized]
+        private static Texture2D horizontalmovingObjectTexture;
 
         [NonSerialized]
         private static Texture2D lampTexture;
@@ -565,8 +569,8 @@ namespace CrisisAtSwissStation
             brokenMovingPlatform1.Position = brokenMovingPlatform1Position;
             AddObject(brokenMovingPlatform1);
 
-            movPlatform1 = new MovingObject(World, "moving platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
-            movPlatform2 = new HorizontalMovingObject(World, "moving platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 32f, 38f);
+            movPlatform1 = new MovingObject(World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
+            movPlatform2 = new HorizontalMovingObject(World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 32f, 38f);
             //movPlatform2 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);          
             //movPlatform1.Position = movPlatform1Position;
             //AddObject(movPlatform1);
@@ -844,7 +848,13 @@ namespace CrisisAtSwissStation
        
             switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
+
+            movingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\moving_platform");
+            horizontalmovingObjectTexture = content.Load<Texture2D>("Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform");
+        
         }
+
+
 
 
 
@@ -1259,8 +1269,7 @@ namespace CrisisAtSwissStation
                     {
                         if (world.dude.Grounded)
                         {
-                            if (world.movPlatform2.isMoving)
-                            {
+                            
                                 if (((HorizontalMovingObject)hMove).mySwitch != null)
                                 {
                                     if (((HorizontalMovingObject)hMove).mySwitch.switchOn)
@@ -1298,7 +1307,7 @@ namespace CrisisAtSwissStation
                                 }
 
 
-                            }
+                            
                         }
                     }
                 }
