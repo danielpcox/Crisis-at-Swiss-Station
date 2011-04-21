@@ -124,6 +124,10 @@ namespace CrisisAtSwissStation
         private static Texture2D fanAnimTexture;
         [NonSerialized]
         private static Texture2D fanTexture;
+        [NonSerialized]
+        private static Texture2D switchAnimTexture;
+        [NonSerialized]
+        private static Texture2D switchObjectTexture;
 
         [NonSerialized]
         private static Texture2D lampTexture;
@@ -557,7 +561,7 @@ namespace CrisisAtSwissStation
             World.CreateJoint(jointDef2);
             */
 
-            brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89,32,20,8);
+            brokenMovingPlatform1 = new SwitchObject(World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
             brokenMovingPlatform1.Position = brokenMovingPlatform1Position;
             AddObject(brokenMovingPlatform1);
 
@@ -837,6 +841,9 @@ namespace CrisisAtSwissStation
 
             fanAnimTexture =  content.Load<Texture2D>("fan_strip");
             fanTexture = content.Load<Texture2D>("fan");
+       
+            switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
+            switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
         }
 
 

@@ -129,7 +129,7 @@ namespace CrisisAtSwissStation.LevelEditor
         {
             //if (rb_SeeSawObject.Checked)
             //{
-            Console.WriteLine("I got here");
+            
                 textureDir = "Art\\Objects\\SeeSawObjects\\";
                 PopulateTextureList(textureDir);
             //}
@@ -144,11 +144,11 @@ namespace CrisisAtSwissStation.LevelEditor
             }
         }
 
-        private void rb_Parts_CheckedChanged_1(object sender, EventArgs e)
+        private void rb_SwitchObject_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_Parts.Checked)
+            if (rb_SwitchObject.Checked)
             {
-                textureDir = "Art\\Parts\\";
+                textureDir = "Art\\Objects\\SwitchObjects\\";
                 PopulateTextureList(textureDir);
             }
         }
@@ -558,6 +558,15 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 SeeSawObject ss;
                 ss = new SeeSawObject(world.World, texName, 1.5f, gameposition);
+                ss.Position = gameposition;
+                world.AddObject(ss);
+
+            }
+            else if (rb_SwitchObject.Checked)
+            {
+                SwitchObject ss;
+                ss = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
                 ss.Position = gameposition;
                 world.AddObject(ss);
 

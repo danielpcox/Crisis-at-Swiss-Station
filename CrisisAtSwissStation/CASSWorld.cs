@@ -190,6 +190,10 @@ namespace CrisisAtSwissStation
                 {
                     ((PistonObject)obj).reloadNonSerializedAssets();
                 }
+                else if (obj is WinDoorObject)
+                {
+                    ((WinDoorObject)obj).reloadNonSerializedAssets();
+                }
 
             }
 
