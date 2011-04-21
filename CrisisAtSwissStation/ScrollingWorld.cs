@@ -1184,6 +1184,7 @@ namespace CrisisAtSwissStation
                 objsDict.Add("HorizontalMovingObject", new List<PhysicsObject>());
                 objsDict.Add("SwitchObject", new List<PhysicsObject>());
                 objsDict.Add("WinDoorObject", new List<PhysicsObject>());
+                objsDict.Add("PistonObject", new List<PhysicsObject>());
                 
                 foreach (PhysicsObject po in this.world.Objects)
                 {
@@ -1235,6 +1236,10 @@ namespace CrisisAtSwissStation
                     else if (po is WinDoorObject)
                     {
                         objsDict["WinDoorObject"].Add(po);
+                    }
+                    else if (po is PistonObject)
+                    {
+                        objsDict["PistonObject"].Add(po);
                     }
                 }
                 
@@ -1320,13 +1325,17 @@ namespace CrisisAtSwissStation
                     }
                 }
 
-                //FINISH!!!!!
-                if ((object1 == world.pistonHead && object2 == world.table) ||
-                    (object2 == world.table && object1 == world.pistonHead))
-                    world.table.Body.ApplyForce(Utils.Convert(new Vector2(200,0)),world.table.Body.GetWorldCenter());
-                //ronnie added as hole test
-                //if (object1 == world.hole1 && object2 == world.dude)
-                // world.Fail();
+                foreach (PhysicsObject piston in objsDict["PistonObject"])
+                {
+                    foreach (PhysicsObject circle in objsDict["CircleObject"])
+                    {
+                        if ((object1 == piston && object2 == circle) ||
+                            (object1 == piston && object2 == circle))
+                        {
+                            circle.Body.ApplyForce(Utils.Convert(new Vector2(200, 0)), circle.Body.GetWorldCenter());
+                        }
+                    }
+                }
             }
         }
 

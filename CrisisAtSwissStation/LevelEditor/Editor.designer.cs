@@ -314,6 +314,20 @@
             this.rb_SeeSawObject.UseVisualStyleBackColor = true;
             this.rb_SeeSawObject.CheckedChanged += new System.EventHandler(this.rb_SeeSawObject_CheckedChanged);
             // 
+
+            // rb_WinDoorObject
+            // 
+            this.rb_WinDoorObject.AutoSize = true;
+            this.rb_WinDoorObject.Location = new System.Drawing.Point(20, 66);
+            this.rb_WinDoorObject.Name = "rb_WinDoorObject";
+            this.rb_WinDoorObject.Size = new System.Drawing.Size(98, 17);
+            this.rb_WinDoorObject.TabIndex = 2;
+            this.rb_WinDoorObject.TabStop = true;
+            this.rb_WinDoorObject.Text = "WinDoorObject";
+            this.rb_WinDoorObject.UseVisualStyleBackColor = true;
+            this.rb_WinDoorObject.CheckedChanged += new System.EventHandler(this.rb_WinDoorObject_CheckedChanged);
+            // 
+
             // rb_PistonObject
             // 
             this.rb_PistonObject.AutoSize = true;
