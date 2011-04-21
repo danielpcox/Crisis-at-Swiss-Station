@@ -7,6 +7,6 @@ namespace CrisisAtSwissStation.Common
 {
     class Constants
     {
-        public const string NEW_GAME_NAME = "\\Worlds\\new_game.world";
+        public const string NEW_GAME_NAME = "new_game.world";
     }
 }
