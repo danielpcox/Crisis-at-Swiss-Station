@@ -32,6 +32,7 @@ namespace CrisisAtSwissStation
         public MovingObject(World world, string texturename, float density, float friction, float restitution, float myScale, bool isPulley, SwitchObject mySwitch, Vector2 myForce, float bound1, float bound2)
             : base(world)
         {
+            BodyDef.FixedRotation = true;
             texture = GameEngine.TextureList[texturename];
             TextureFilename = texturename;
 
@@ -94,7 +95,7 @@ namespace CrisisAtSwissStation
                         //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
                         this.Body.ApplyForce(Utils.Convert(myForce/3), this.Body.GetWorldCenter());
                         if (this.Position.Y > bound2)
-                            mySwitch.switchOn = true;
+                           // mySwitch.switchOn = true;
                         isMoving = true;
                     }
                 
