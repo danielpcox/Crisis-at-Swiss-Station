@@ -672,6 +672,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 if (loadWorld)
                 {
                     world = Serializer.DeSerialize(dialog.FileName);
+                    world.reloadNonSerializedAssets();
                     switchRooms();
                 }
                 Size pbLevelSize = new Size(world.Background.Width, world.Background.Height);

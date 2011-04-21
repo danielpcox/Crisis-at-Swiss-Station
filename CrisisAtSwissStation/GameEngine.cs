@@ -74,7 +74,7 @@ namespace CrisisAtSwissStation
 
         // How many frames after winning/losing do we continue?
 
-        int COUNTDOWN = 200;
+        const int COUNTDOWN = 200;
         
         // Lets us draw things on the screen
         GraphicsDeviceManager graphics;
@@ -96,7 +96,7 @@ namespace CrisisAtSwissStation
         Texture2D failure;
 
         // Win/Lose countdown
-        int countdown;
+        int countdown = COUNTDOWN;
 
         // Current world instance
         CASSWorld currentWorld;
@@ -375,15 +375,16 @@ namespace CrisisAtSwissStation
             // Move to next track if they press 'x'
             if (keyState.IsKeyDown(Keys.X) && prevKeyState.IsKeyUp(Keys.X))
                 audioManager.PlayNext();
+            */
 
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {
                 countdown--;
                 audioManager.DecreaseMusicVolume(.005f);
-                if (currentWorld.Failed)
-                {
+                //if (currentWorld.Failed)
+                //{
                     countdown--;
-                }
+                //}
 
                 //Play the level complete SFX
                 if (countdown == 180 && currentWorld.Succeeded)
@@ -392,13 +393,15 @@ namespace CrisisAtSwissStation
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
                 }
 
-                if (countdown == 0)
+                if (countdown < 0)
                 {
-                    reset = currentWorld.Failed;
+                    //reset = currentWorld.Failed;
+                    LinkToMain();
+                    progstate = ProgramState.Menu;
+                    currentWorld = null;
                     audioManager.IncreaseMusicVolume(0.5f);
                 }
             }
-            */
             
             // Current world is invalid for some reason - construct a new one!
             /*
@@ -427,10 +430,8 @@ namespace CrisisAtSwissStation
                 
 
             // Just won or lost - initiate countdown
-            /*
-            if ((currentWorld.Failed || currentWorld.Succeeded) && countdown == 0)
+            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown < 0)
                 countdown = COUNTDOWN;
-            */
 
            
 
