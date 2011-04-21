@@ -29,9 +29,9 @@ namespace CrisisAtSwissStation
 
         private const int JUMP_COOLDOWN = 30;
 
-        private const float DUDE_FORCE = 20.0f;   // How much force to apply to get the dude moving
-        private const float DUDE_DAMPING = 10.0f; // How hard the brakes are applied to get a dude to stop moving
-        private const float DUDE_MAXSPEED = 6.0f; // Upper limit on dude left-right movement.  Does NOT apply to vertical movement.
+        private const float DUDE_FORCE = 30.0f;   //was 20, raised so horizonal moving plats are a bit smoother, How much force to apply to get the dude moving
+        private const float DUDE_DAMPING = 10.0f; // was 10, How hard the brakes are applied to get a dude to stop moving
+        private const float DUDE_MAXSPEED = 6.0f; //was 6, Upper limit on dude left-right movement.  Does NOT apply to vertical movement.
 
         // Whether or not this dude is touching the ground
         private bool isGrounded;
