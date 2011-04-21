@@ -58,6 +58,8 @@ namespace CrisisAtSwissStation
         private static Texture2D crosshairTexture;
         [NonSerialized]
         private static Texture2D background;
+        [NonSerialized]
+        private static Texture2D backgroundTerrible;
 
         public string backgroundName;
 
@@ -458,7 +460,7 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
 
-            pistonHead = new BoxObject(World, "piston", 0, .5f, 0, .5f, false);
+            pistonHead = new BoxObject(World, "Art\\Objects\\PistonObjects\\piston_moving", 0, .5f, 0, .5f, false);
             pistonHead.Position = pistonHeadPosition;
             AddObject(pistonHead);
 
@@ -765,6 +767,7 @@ namespace CrisisAtSwissStation
             paintedSegmentTexture = content.Load<Texture2D>("paintedsegment");
             crosshairTexture = content.Load<Texture2D>("Crosshair");
             background = content.Load<Texture2D>("background");
+            backgroundTerrible = content.Load<Texture2D>("RonniesBestWork");
 
             /* //our new platforms
              bigBoxTexture = content.Load<Texture2D>("bigBoxTexture");
@@ -792,8 +795,8 @@ namespace CrisisAtSwissStation
             pulleyPlatformTexture = content.Load<Texture2D>("pulley_platform");
             pulleyPlatformLongTexture = content.Load<Texture2D>("pulley_platform_long");
             pulleyChainTexture = content.Load<Texture2D>("pulleytrack");
-            pistonAssemblyTexture = content.Load<Texture2D>("piston_end");
-            pistonHeadTexture = content.Load<Texture2D>("piston");
+            pistonAssemblyTexture = content.Load<Texture2D>("piston_unmoving");
+            pistonHeadTexture = content.Load<Texture2D>("piston_moving");
             tableTexture = content.Load<Texture2D>("table");
 
             lampTexture = content.Load<Texture2D>("light");

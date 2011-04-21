@@ -152,6 +152,7 @@
     <Compile Include="Objects\PaintedObject.cs" />
     <Compile Include="Objects\DudeObject.cs" />
     <Compile Include="Objects\ParticleGenerator.cs" />
+    <Compile Include="Objects\PistonObject.cs" />
     <Compile Include="Objects\RopeBridge.cs" />
     <Compile Include="PhysicsObject.cs" />
     <Compile Include="CASSWorld.cs" />
