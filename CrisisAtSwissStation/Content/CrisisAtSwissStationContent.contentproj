@@ -642,7 +642,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Art\Objects\CircleObjects\" />
-    <Folder Include="Art\Objects\PaintedObjects\" />
     <Folder Include="Art\Overlays\" />
   </ItemGroup>
   <ItemGroup>
@@ -742,8 +741,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Backgrounds\ballroom.png">
-      <Name>ballroom</Name>
+    <Compile Include="Art\Objects\PaintedObjects\test_paint.png">
+      <Name>test_paint</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
