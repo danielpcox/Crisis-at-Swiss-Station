@@ -260,7 +260,9 @@ namespace CrisisAtSwissStation
         Vector2 halfdotsize;
         [NonSerialized]
         MouseState prevms;
+
         public static float numDrawLeft;
+        float totalInstaSteelInWorld;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
         Vector2 prevMousePos;
         bool mouseWasInbounds = false;
@@ -287,6 +289,7 @@ namespace CrisisAtSwissStation
             gameLevelHeight = background.Height;
 
             numDrawLeft = 0; // HACK HACK HACK
+            totalInstaSteelInWorld = 0;
 
             // Create win door
 	    // HACK HACK - this will break door animation until a fix is created
@@ -781,6 +784,13 @@ namespace CrisisAtSwissStation
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.Destruction);
             background = GameEngine.TextureList[backgroundName];
+            foreach (PhysicsObject obj in Objects)
+            {
+                if (obj is PaintedObject)
+                {
+                    totalInstaSteelInWorld += ((PaintedObject)obj).getAmountOfInstasteel();
+                }
+            }
         }
 
         public static void LoadContent(ContentManager content)
@@ -1357,6 +1367,16 @@ namespace CrisisAtSwissStation
             }
         }
 
+        private void DrawCrosshair()
+        {
+            MouseState mouse = Mouse.GetState();
+            crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
+            float fractionInstasteel = numDrawLeft / totalInstaSteelInWorld;
+            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
+                null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
+                SpriteEffects.None, 0);
+        }
+
         public override void Draw(GraphicsDevice device, Matrix camera)
         {
             float guyPos = getCameraCoords().X;
@@ -1386,12 +1406,8 @@ namespace CrisisAtSwissStation
             base.Draw(device, cameraTransform);
 
             GameEngine.Instance.SpriteBatch.Begin();
-            MouseState mouse = Mouse.GetState();
-            crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
             paintTexture = GameEngine.TextureList["paint"]; // HACK HACK HACK handle this in a more sustainable way soon
-            GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
-                null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
-                SpriteEffects.None, 0);
+            DrawCrosshair();
             foreach (Vector2 dotpos in dotPositions)
             {
                 GameEngine.Instance.SpriteBatch.Draw(paintTexture, getScreenCoords(dotpos) - halfdotsize - screenOffset, Color.Red);
