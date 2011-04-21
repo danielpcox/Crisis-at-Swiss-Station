@@ -304,18 +304,6 @@
             this.rb_HazardDynamic.Visible = false;
             this.rb_HazardDynamic.CheckedChanged += new System.EventHandler(this.rb_HazardDynamic_CheckedChanged_1);
             // 
-            // rb_PistonObject
-            // 
-            this.rb_PistonObject.AutoSize = true;
-            this.rb_PistonObject.Location = new System.Drawing.Point(20, 90);
-            this.rb_PistonObject.Name = "rb_PistonObject";
-            this.rb_PistonObject.Size = new System.Drawing.Size(85, 17);
-            this.rb_PistonObject.TabIndex = 3;
-            this.rb_PistonObject.TabStop = true;
-            this.rb_PistonObject.Text = "PistonObject";
-            this.rb_PistonObject.UseVisualStyleBackColor = true;
-            this.rb_PistonObject.CheckedChanged += new System.EventHandler(this.rb_PistonObject_CheckChanged);
-            // 
             // rb_WinDoorObject
             // 
             this.rb_WinDoorObject.AutoSize = true;
@@ -327,6 +315,18 @@
             this.rb_WinDoorObject.Text = "WinDoorObject";
             this.rb_WinDoorObject.UseVisualStyleBackColor = true;
             this.rb_WinDoorObject.CheckedChanged += new System.EventHandler(this.rb_WinDoorObject_CheckedChanged);
+            // 
+            // rb_PistonObject
+            // 
+            this.rb_PistonObject.AutoSize = true;
+            this.rb_PistonObject.Location = new System.Drawing.Point(20, 90);
+            this.rb_PistonObject.Name = "rb_PistonObject";
+            this.rb_PistonObject.Size = new System.Drawing.Size(85, 17);
+            this.rb_PistonObject.TabIndex = 3;
+            this.rb_PistonObject.TabStop = true;
+            this.rb_PistonObject.Text = "PistonObject";
+            this.rb_PistonObject.UseVisualStyleBackColor = true;
+            this.rb_PistonObject.CheckedChanged += new System.EventHandler(this.rb_PistonObject_CheckChanged);
             // 
             // rb_BoxObjects
             // 
