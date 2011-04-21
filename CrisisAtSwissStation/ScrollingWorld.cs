@@ -462,7 +462,6 @@ namespace CrisisAtSwissStation
             //Console.WriteLine("{0} {1}", pulleyPipe2.Body.GetWorldCenter().X, pulleyPipe2.Body.GetWorldCenter().Y);
             //Console.WriteLine("{0}",  getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
             World.CreateJoint(jointDef1);
-
             /*
             pistonHead = new BoxObject(World, "Art\\Objects\\PistonObjects\\piston_moving", 0, .5f, 0, .5f, false);
             pistonHead.Position = pistonHeadPosition;
@@ -471,7 +470,7 @@ namespace CrisisAtSwissStation
 
             piston = new PistonObject(World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f, pistonPosition);
             piston.Position = pistonPosition;
-            AddObject(piston);   
+            AddObject(piston);
 
             //private static Vector2 pistonPosition = new Vector2(12f, 13.2f);
 
@@ -548,7 +547,7 @@ namespace CrisisAtSwissStation
             AddObject(brokenMovingPlatform1);
 
             movPlatform1 = new MovingObject(World, "moving platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
-            movPlatform2 = new HorizontalMovingObject(World, "moving platform", 0f, 0.5f, 0, 1, false, new Vector2(0, -11500), 34f, 36f);
+            movPlatform2 = new HorizontalMovingObject(World, "moving platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 34f, 36f);
             //movPlatform2 = new BoxObject(World, movingPlatformTexture, 0, .5f, 0);          
             //movPlatform1.Position = movPlatform1Position;
             //AddObject(movPlatform1);
@@ -937,9 +936,10 @@ namespace CrisisAtSwissStation
 
 
 
-            /*
+
 
             //new Vector2(14.5f, 13.3f);
+            /*
             if (pistonMove == true)
             {
                 pistonHead.Position = pistonHead.Position - new Vector2(.01f, 0);
@@ -952,8 +952,8 @@ namespace CrisisAtSwissStation
                 if (pistonHead.Position.X > 13f)
                     pistonMove= true;
             }
-
             */
+
             dude.Grounded = false; // unrelated to the following
 
             // code for erasing a painted object
