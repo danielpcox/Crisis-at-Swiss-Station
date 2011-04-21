@@ -781,6 +781,7 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
+            paintTexture = GameEngine.TextureList["paint"];
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.Destruction);
             background = GameEngine.TextureList[backgroundName];
@@ -794,6 +795,7 @@ namespace CrisisAtSwissStation
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
         }
 
+        // NO LONGER USED. TALK TO DANIEL
         public static void LoadContent(ContentManager content)
         {
             // all of this is obsoleted by GameEngine.TextureList
