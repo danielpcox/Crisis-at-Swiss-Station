@@ -686,6 +686,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 if (loadWorld)
                 {
                     world = Serializer.DeSerialize(dialog.FileName);
+                    world.Background = GameEngine.TextureList[world.backgroundName];
                     switchRooms();
                 }
                 Size pbLevelSize = new Size(world.Background.Width, world.Background.Height);

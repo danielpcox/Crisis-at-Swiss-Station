@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioManager.cs" />
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Conversion.cs" />
     <Compile Include="Common\Serializer.cs" />
     <Compile Include="HorizontalMovingObject.cs" />
@@ -142,6 +143,10 @@
     <Compile Include="LevelEditor\StringPromptDialog.Designer.cs">
       <DependentUpon>StringPromptDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menu\MenuController.cs" />
+    <Compile Include="Menu\MenuEngine.cs" />
+    <Compile Include="Menu\MenuOption.cs" />
+    <Compile Include="Menu\MenuScreen.cs" />
     <Compile Include="MovingObject.cs" />
     <Compile Include="Objects\AnimationObject.cs" />
     <Compile Include="Objects\BoxObject.cs" />

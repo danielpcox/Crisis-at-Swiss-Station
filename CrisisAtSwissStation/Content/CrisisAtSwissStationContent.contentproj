@@ -705,20 +705,27 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\SeeSawObjects\seesaw1.png">
-      <Name>seesaw1</Name>
+    <Compile Include="MenuFont.spritefont">
+      <Name>MenuFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Misc\onepixel.png">
+      <Name>onepixel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\SwitchObjects\button.png">
-      <Name>button</Name>
+    <Compile Include="Art\Menus\menu_back.png">
+      <Name>menu_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Objects\SwitchObjects\button_strip.png">
-      <Name>button_strip</Name>
+    <Compile Include="Art\Menus\menu_panel.png">
+      <Name>menu_panel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
