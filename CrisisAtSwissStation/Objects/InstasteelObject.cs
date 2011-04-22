@@ -63,6 +63,7 @@ namespace CrisisAtSwissStation
         public void reloadNonSerializedAssets()
         {
             this.texture = GameEngine.TextureList[TextureFilename];
+            amountOfInstasteel = amountOfInstasteel * (float)System.Math.Pow(scale,2);
         }
 
         public override void Draw(Matrix cameraTransform)
