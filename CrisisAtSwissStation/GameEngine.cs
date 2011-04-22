@@ -100,6 +100,7 @@ namespace CrisisAtSwissStation
 
         // Current world instance
         CASSWorld currentWorld;
+        string cwname;
 
         // Keyboard state
         KeyboardState lastKeyboardState;
@@ -365,9 +366,14 @@ namespace CrisisAtSwissStation
                 case ProgramState.Playing:
 
                     //Updates the room.
-                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    KeyboardState ks = Keyboard.GetState();
+                    if (ks.IsKeyDown(Keys.Escape))
                     {
                         EnterMenu();
+                    }
+                    else if (ks.IsKeyDown(Keys.R))
+                    {
+                        LoadWorld(cwname);
                     }
                     //world.Update();
                     currentWorld.Simulate((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -530,7 +536,8 @@ namespace CrisisAtSwissStation
         public bool NewWorld()
         {
             string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-            ScrollingWorld world = Serializer.DeSerialize(currdir + "\\Worlds\\" + Constants.NEW_GAME_NAME);
+            cwname = currdir + "\\Worlds\\" + Constants.NEW_GAME_NAME;
+            ScrollingWorld world = Serializer.DeSerialize(cwname);
 
             if (world != null)
             {
@@ -559,9 +566,46 @@ namespace CrisisAtSwissStation
             //If the result was ok, load the resultant file into world and return it. Otherwise,
             //return null.
             if (result == Forms.DialogResult.OK)
+            {
                 world = Serializer.DeSerialize(dialog.FileName);
+                cwname = dialog.FileName;
+            }
             else
+            {
                 return false;
+            }
+
+            if (world != null)
+            {
+                //this.world = world;
+                currentWorld = world;
+                //world.LoadContent(Content);
+                currentWorld.reloadNonSerializedAssets();
+
+                //Bug: When reloading a game, player starts at last known rotation, but kicking
+                //box is always redrawn from initial rotaion. (So kicking box is offset)
+                //Solution: Always create a new player, only transferring state. (No one will notice/care)
+                //****// 
+                //world.player.Rotation = world.player.OriginalRotation;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool LoadWorld(string worldpath)
+        {
+            ScrollingWorld world;
+
+            if (worldpath!=null)
+            {
+                world = Serializer.DeSerialize(worldpath);
+                cwname = worldpath;
+            }
+            else
+            {
+                return false;
+            }
 
             if (world != null)
             {
