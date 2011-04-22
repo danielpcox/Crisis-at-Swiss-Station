@@ -942,7 +942,7 @@ namespace CrisisAtSwissStation.LevelEditor
         private void mi_New_World_Click(object sender, EventArgs e)
         {
             //Get the background name from the user
-            StringPromptDialog dialog = new StringPromptDialog("Enter the name of the background texture: ", "background");
+            StringPromptDialog dialog = new StringPromptDialog("Enter background/music", "background");
 
             //Create the world.
             if (dialog.ShowDialog() == DialogResult.OK)
