@@ -85,7 +85,8 @@ namespace CrisisAtSwissStation
             songsdict.Add("background", content.Load<Song>("Music/Basement"));
             songsdict.Add("tutorial", content.Load<Song>("Music/SpaceThemeHappy"));
             songsdict.Add("ballroom", content.Load<Song>("Music/EarlyLevelv2"));
-            songsdict.Add("RonniesBestWork", content.Load<Song>("Music/LaterLevelv1"));
+            songsdict.Add("RonniesBestWork", content.Load<Song>("Music/SpaceThemeHappy"));
+            songsdict.Add("basement2", content.Load<Song>("Music/LaterLevelv1"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));
