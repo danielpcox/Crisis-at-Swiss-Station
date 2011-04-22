@@ -1124,8 +1124,8 @@ namespace CrisisAtSwissStation.LevelEditor
                 {
                    
                     MovingObject temp = (MovingObject)currentlySelectedObject;
-                    temp.bound1 = newbound1;
-                    temp.bound2 = newbound2;
+                    temp.bound1 = temp.Position.Y - newbound1;
+                    temp.bound2 = temp.Position.Y + newbound2;
                     Console.WriteLine(temp.bound1 + " " + temp.bound2);
                     currentlySelectedObject = temp;
                     
@@ -1133,8 +1133,8 @@ namespace CrisisAtSwissStation.LevelEditor
                 else if (currentlySelectedObject is HorizontalMovingObject)
                 {
                     HorizontalMovingObject temp = (HorizontalMovingObject)currentlySelectedObject;
-                    temp.bound1 = newbound1;
-                    temp.bound2 = newbound2;
+                    temp.bound1 = temp.Position.X - newbound1;
+                    temp.bound2 = temp.Position.X + newbound2;
                     currentlySelectedObject = temp;
                 }
                 
