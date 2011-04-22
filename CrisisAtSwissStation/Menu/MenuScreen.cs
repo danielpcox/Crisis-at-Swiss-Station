@@ -17,8 +17,8 @@ namespace CrisisAtSwissStation
 {
     class MenuScreen
     {
-        public static readonly Color Selected = Color.Gold;
-        public static readonly Color Unselected = Color.CornflowerBlue; // GO TO HELL, CORNFLOWERBLUE!!!
+        public static readonly Color Selected = new Color(255, 247, 153);
+        public static readonly Color Unselected = new Color(182,0,0);
 
         private float initialX;
         private float initialY;

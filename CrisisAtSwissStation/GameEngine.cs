@@ -556,8 +556,8 @@ namespace CrisisAtSwissStation
         public void InitializeMenus()
         {
             // Set up main screen
-            MenuScreen mainScreen = new MenuScreen(400.0f, 120.0f, 50.0f);
-            MenuScreen optionScreen = new MenuScreen(400.0f, 120.0f, 50.0f);
+            MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
+            MenuScreen optionScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
 
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
@@ -566,18 +566,18 @@ namespace CrisisAtSwissStation
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
             optionScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Options here?", MenuCommand.NONE));
-            optionScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Back to Main Menu", mainScreen));
+            optionScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(optionScreen);
 
             // Pause screen
 
-            MenuScreen pauseScreen = new MenuScreen(400.0f, 120.0f, 50.0f);
+            MenuScreen pauseScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
 
             pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Resume", MenuCommand.Resume));
             pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load", MenuCommand.Load));
-            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Back to Main Menu", MenuCommand.LinkToMainMenu)); // Can link between engines...
+            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Main Menu", MenuCommand.LinkToMainMenu)); // Can link between engines...
 
             pauseMenu.Screens.Add(pauseScreen);
 
