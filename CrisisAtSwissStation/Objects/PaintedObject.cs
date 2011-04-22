@@ -42,7 +42,7 @@ namespace CrisisAtSwissStation
 
         int numBlobs = 0;
 
-        float amountOfInstasteel; //how much insta-steel is in the object
+        protected float amountOfInstasteel; //how much insta-steel is in the object
         
         float radius = 0f;
 
@@ -107,6 +107,8 @@ namespace CrisisAtSwissStation
         public PaintedObject(World world, string blobtexturename, string segmenttexturename, List<Vector2> blobs)
             : base(world, blobtexturename, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1f)
         {
+            if (blobs.Count == 0)
+                return;
             Position = blobs[0]; // CASSWorld.SCALE; // position of the painting is the first blob in it
 
             Texture2D segmenttexture = GameEngine.TextureList[segmenttexturename];

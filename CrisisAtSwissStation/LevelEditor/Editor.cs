@@ -677,6 +677,14 @@ namespace CrisisAtSwissStation.LevelEditor
             }
             else if (rb_PaintedObjects.Checked)
             {
+                InstasteelObject io;
+                io = new InstasteelObject(world.World, texName, 600, 0, .5f, 0, 1, false);
+                io.Position = gameposition;
+                world.AddObject(io);
+            }
+                /*
+            else if (rb_PaintedObjects.Checked)
+            {
                 PaintedObject po;
                 List<Vector2> blobs = new List<Vector2>();
                 float radius;
@@ -757,6 +765,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 po.Position = gameposition + centeroff;
                 world.AddObject(po);
             }
+            */
             else if (rb_BackgroundObjects.Checked)
             {
                 BackgroundObject bo;

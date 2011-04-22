@@ -166,6 +166,10 @@ namespace CrisisAtSwissStation
                 {
                     ((DudeObject)obj).reloadNonSerializedAssets();
                 }
+                else if (obj is InstasteelObject)
+                {
+                    ((InstasteelObject)obj).reloadNonSerializedAssets();
+                }
                 else if (obj is PaintedObject)
                 {
                     ((PaintedObject)obj).reloadNonSerializedAssets();
