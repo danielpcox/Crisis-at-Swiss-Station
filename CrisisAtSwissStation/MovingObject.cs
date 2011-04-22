@@ -84,8 +84,8 @@ namespace CrisisAtSwissStation
 
                     if (isMoving == true)
                     {
-                        this.Body.ApplyForce(Utils.Convert(myForce), this.Body.GetWorldCenter());
-                        //movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
+                       // this.Body.ApplyForce(Utils.Convert(myForce), this.Body.GetWorldCenter());
+                        Position = Position - new Vector2(0, 0.025f);
                         if (this.Position.Y < bound1)
                         {
                             isMoving = false;
@@ -95,8 +95,8 @@ namespace CrisisAtSwissStation
                     }
                     else
                     {
-                        //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
-                        this.Body.ApplyForce(Utils.Convert(myForce / 3), this.Body.GetWorldCenter());
+                        Position = Position + new Vector2(0, 0.05f);
+                       // this.Body.ApplyForce(Utils.Convert(myForce / 1.1f), this.Body.GetWorldCenter());
                         if (this.Position.Y > bound2)
                             // mySwitch.switchOn = true;
                             isMoving = true;
@@ -108,8 +108,8 @@ namespace CrisisAtSwissStation
                
                 if (isMoving == true)
                     {
-                        this.Body.ApplyForce(Utils.Convert(myForce), this.Body.GetWorldCenter());
-                        //movPlatform1.Position = movPlatform1.Position - new Vector2(0, 0.05f);
+                       // this.Body.ApplyForce(Utils.Convert(myForce), this.Body.GetWorldCenter());
+                        Position = Position - new Vector2(0, 0.025f);
                         if (this.Position.Y < bound1)
                         {
                             isMoving = false;
@@ -119,8 +119,8 @@ namespace CrisisAtSwissStation
                     }
                     else
                     {
-                        //movPlatform1.Position = movPlatform1.Position + new Vector2(0, 0.05f);
-                        this.Body.ApplyForce(Utils.Convert(myForce / 3), this.Body.GetWorldCenter());
+                        Position = Position + new Vector2(0, 0.05f);
+                        //this.Body.ApplyForce(Utils.Convert(myForce / 1.1f), this.Body.GetWorldCenter());
                         if (this.Position.Y > bound2)
                             // mySwitch.switchOn = true;
                             isMoving = true;

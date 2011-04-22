@@ -390,6 +390,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.Load:
                             if (LoadWorld())
                             {
+                                countdown = COUNTDOWN;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -411,6 +412,7 @@ namespace CrisisAtSwissStation
                             //animateMyMenu();
                             if (NewWorld())
                             {
+                                countdown = COUNTDOWN;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -487,7 +489,7 @@ namespace CrisisAtSwissStation
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
                 }
 
-                if (countdown <= 0)
+                if (countdown <= 0 && currentWorld.Succeeded && !currentWorld.Failed)
                 {
                     //reset = currentWorld.Failed;
                     int levelnum;
@@ -507,7 +509,6 @@ namespace CrisisAtSwissStation
 
                     if ( File.Exists( newfilename ) )
                     {
-                        countdown = COUNTDOWN;
                         LoadWorld(newfilename);
                         progstate = ProgramState.Playing;
                     }
@@ -517,7 +518,14 @@ namespace CrisisAtSwissStation
                         progstate = ProgramState.Menu;
                         currentWorld = null;
                     }
+                    countdown = COUNTDOWN;
                     audioManager.IncreaseMusicVolume(0.5f);
+                }
+                else if (countdown <= 0) // failed
+                {
+                        LoadWorld(cwname);
+                        progstate = ProgramState.Playing;
+                        countdown = COUNTDOWN;
                 }
             }
             

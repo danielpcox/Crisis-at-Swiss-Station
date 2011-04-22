@@ -1087,6 +1087,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Art\Objects\BoxObjects\ruined_column.png">
+      <Name>ruined_column</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Art\Objects\BoxObjects\seesaw_stand.png">
       <Name>seesaw_stand</Name>
       <Importer>TextureImporter</Importer>

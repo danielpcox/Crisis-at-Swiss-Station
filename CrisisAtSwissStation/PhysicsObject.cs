@@ -201,13 +201,12 @@ namespace CrisisAtSwissStation
          */
         public void SetTransform(Vector2 position, float rotation)
         {
-            if (body == null)
+            bodyDef.Position = Utils.Convert(position);
+            bodyDef.Angle = rotation;
+            if (body != null)
             {
-                bodyDef.Position = Utils.Convert(position);
-                bodyDef.Angle = rotation;
-            }
-            else
                 body.SetXForm(Utils.Convert(position), rotation);
+            }
         }
 
         //Maps a point on the original image to a point in the world. Takes into account rotation and scaling.
