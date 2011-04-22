@@ -868,15 +868,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\MovingPlatformObjects\switchmoving_platform.png">
-      <Name>switchmoving_platform</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+    <Compile Include="Music\Basement.mp3">
+      <Name>Basement</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\switchmoving_platform.png">
-      <Name>switchmoving_platform</Name>
+    <Compile Include="Art\crosshair_strip.png">
+      <Name>crosshair_strip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
