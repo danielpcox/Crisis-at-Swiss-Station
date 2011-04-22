@@ -641,14 +641,22 @@ namespace CrisisAtSwissStation.LevelEditor
                     case "line":
                         blobs.Add(gameposition + new Vector2(0.6f, 0f));
                         blobs.Add(gameposition + new Vector2(-0.6f, 0f));
-                        po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
+                        break;
+                    case "disk":
+                        int numpoints = 20;
+                        float radius = 0.6f;
+                        for (int i = 0; i < numpoints; i++)
+                        {
+                            float angle = (float)i * 2f * (float)Math.PI / (float)numpoints;
+                            blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle) - radius, (float)radius * (float)Math.Cos(angle) - radius));
+                        }
                         break;
                     default:
                         blobs.Add(gameposition + new Vector2(0.6f, 0f));
                         blobs.Add(gameposition + new Vector2(-0.6f, 0f));
-                        po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
                         break;
                 }
+                po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
                 po.TextureFilename = "Art\\Objects\\PaintedObjects\\" + lastname;
                 po.Position = gameposition;
                 world.AddObject(po);
@@ -1062,7 +1070,7 @@ namespace CrisisAtSwissStation.LevelEditor
                     mass.Mass = 0f;
                     currentlySelectedObject.Body.SetMass(mass);
                 }
-                else
+                else if (currentlySelectedObject.Body.GetMass()==0)
                 {
                     MassData mass = new MassData();
                     mass.Mass = 1f;
