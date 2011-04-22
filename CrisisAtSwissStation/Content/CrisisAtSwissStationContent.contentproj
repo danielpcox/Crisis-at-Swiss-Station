@@ -977,8 +977,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Art\Objects\SeeSawObjects\seesaw_pole.png">
+      <Name>seesaw_pole</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\BackgroundObjects\gear.png">
+      <Name>gear</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Art\Objects\CircleObjects\gear.png">
       <Name>gear</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Menus\main_strip.png">
+      <Name>main_strip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

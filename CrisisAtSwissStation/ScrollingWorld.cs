@@ -1159,7 +1159,12 @@ namespace CrisisAtSwissStation
                         break;
                     }
                 }
-                audio.Play(AudioManager.SFXSelection.Construct);
+
+                if (dotPositions.Count > 1)
+                {
+                    audio.Play(AudioManager.SFXSelection.Construct);
+                }
+
                 laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
