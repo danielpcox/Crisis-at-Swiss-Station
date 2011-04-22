@@ -195,8 +195,8 @@ namespace CrisisAtSwissStation
         private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
         private BoxObject platform;
 
-        private static Vector2 bottom1Position = new Vector2(22.75f, 15f);
-        private static Vector2 bottom2Position = new Vector2(65.58f, 15f);
+        private static Vector2 bottom1Position = new Vector2(22.85f, 15f);//22,75
+        private static Vector2 bottom2Position = new Vector2(65.48f, 15f);//65.58
         private BoxObject bottom1, bottom2;
 
         private static Vector2 straightPipe1Position = new Vector2(9.5f, 9.3f);
