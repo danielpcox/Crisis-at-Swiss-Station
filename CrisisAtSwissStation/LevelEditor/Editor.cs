@@ -677,10 +677,23 @@ namespace CrisisAtSwissStation.LevelEditor
             }
             else if (rb_PaintedObjects.Checked)
             {
-                InstasteelObject io;
-                io = new InstasteelObject(world.World, texName, 600, 1, .5f, 0, 1, false);
-                io.Position = gameposition;
-                world.AddObject(io);
+                switch (lastname)
+                {
+                    case "block_long":
+                        InstasteelObject io;
+                        io = new InstasteelObject(world.World, texName, 600, 1, .5f, 0, 1, false);
+                        io.Position = gameposition;
+                        world.AddObject(io);
+                        break;
+                    case "disk_long":
+                        InstasteelCircleObject ico;
+                        ico = new InstasteelCircleObject(world.World, texName, 500, 1, .5f, 0, 1);
+                        ico.Position = gameposition;
+                        world.AddObject(ico);
+                        break;
+                    default:
+                        break;
+                }
             }
                 /*
             else if (rb_PaintedObjects.Checked)

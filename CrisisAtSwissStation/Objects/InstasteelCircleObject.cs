@@ -1,10 +1,19 @@
-﻿using System;
+﻿using Box2DX.Common;
 using Box2DX.Collision;
 using Box2DX.Dynamics;
+using Box2DX.Dynamics.Controllers;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Color = Microsoft.Xna.Framework.Color; // Stupid Box2DX name collision!
+using CrisisAtSwissStation.Common;
+
+using System;
+using System.Resources;
+using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CrisisAtSwissStation
 {
@@ -14,20 +23,22 @@ namespace CrisisAtSwissStation
      * Texture provided should be square to avoid distortion.
      */
     [Serializable]
-    public class CircleObject : PhysicsObject
+    public class InstasteelCircleObject : PaintedObject
     {
-        // The circle texture
-        [NonSerialized]
-        protected Texture2D texture;
 
-        protected string textureName;
+        protected static string blobtexturename ="paint";
+        protected static string segmenttexturename = "paintsegment";
+        protected static List<Vector2> blobs = new List<Vector2>();
 
         /**
          * Creates a new circle object.
          */
-        public CircleObject(World world, string texturename, float density, float friction, float restitution,float myScale)
-            : base(world)
+        public InstasteelCircleObject(World world, string texturename, float amountofis, float density, float friction, float restitution,float myScale)
+            : base(world, blobtexturename, segmenttexturename, blobs)
         {
+
+            amountOfInstasteel = amountofis;
+
             textureName = texturename;
 
             // Initialize
@@ -54,6 +65,7 @@ namespace CrisisAtSwissStation
         public void reloadNonSerializedAssets()
         {
             this.texture = GameEngine.TextureList[textureName];
+            amountOfInstasteel = amountOfInstasteel * (float)System.Math.PI * (float)System.Math.Pow(scale / 2f,2);
         }
 
         /**
@@ -71,7 +83,7 @@ namespace CrisisAtSwissStation
 
             spriteBatch.End();
 
-            base.Draw(cameraTransform);
+            //base.Draw(cameraTransform);
         }
 
     }
