@@ -295,7 +295,7 @@ namespace CrisisAtSwissStation
         {
 
             backgroundName = "Art\\Backgrounds\\" + backgroundname;
-            musicName = "Music\\" + backgroundname;
+            musicName = backgroundname;
             background = GameEngine.TextureList[backgroundName];
 
             movPlat1 = true;
@@ -802,7 +802,8 @@ namespace CrisisAtSwissStation
         {
             paintTexture = GameEngine.TextureList["paint"];
             AudioManager audio = GameEngine.AudioManager;
-            audio.Play(AudioManager.MusicSelection.Basement);
+            //audio.Play(AudioManager.MusicSelection.Basement);
+            audio.Play(musicName);
             background = GameEngine.TextureList[backgroundName];
             holeList = new List<HoleObject>();
             foreach (PhysicsObject obj in Objects)
