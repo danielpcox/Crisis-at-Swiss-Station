@@ -210,11 +210,11 @@ namespace CrisisAtSwissStation.LevelEditor
 
         }
 
-        private void rb_SavePoint_CheckedChanged(object sender, EventArgs e)
+        private void rb_HoleObject_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_SavePoint.Checked)
+            if (rb_HoleObject.Checked)
             {
-                textureDir = "Art\\Save Points\\";
+                textureDir = "Art\\Objects\\HoleObjects\\";
                 PopulateTextureList(textureDir);
             }
 
@@ -613,6 +613,15 @@ namespace CrisisAtSwissStation.LevelEditor
                 ss1.Position = gameposition;
                 world.AddObject(ss1);
               
+            }
+            else if (rb_HoleObject.Checked)
+            {
+                HoleObject ss;
+                ss = new HoleObject(world.World, "Art\\Objects\\HoleObjects\\hole_strip", "Art\\Objects\\HoleObjects\\hole");
+                //hole1 = new HoleObject(World, "Art\\Objects\\HoleObjects\\hole_strip", "Art\\Objects\\HoleObjects\\hole");
+                ss.Position = gameposition;
+                world.AddObject(ss);
+
             }
             else if (rb_MovingPlatform.Checked)
             {

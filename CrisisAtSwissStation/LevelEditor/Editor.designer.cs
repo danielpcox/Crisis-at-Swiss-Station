@@ -36,7 +36,7 @@
             this.tab_Objects = new System.Windows.Forms.TabPage();
             this.gb_ObjTypes = new System.Windows.Forms.GroupBox();
             this.rb_Vanish_Walls = new System.Windows.Forms.RadioButton();
-            this.rb_SavePoint = new System.Windows.Forms.RadioButton();
+            this.rb_HoleObject = new System.Windows.Forms.RadioButton();
             this.rb_BackgroundObjects = new System.Windows.Forms.RadioButton();
             this.rb_HorizontalMovingPlatform = new System.Windows.Forms.RadioButton();
             this.rb_MovingPlatform = new System.Windows.Forms.RadioButton();
@@ -187,7 +187,7 @@
             // gb_ObjTypes
             // 
             this.gb_ObjTypes.Controls.Add(this.rb_Vanish_Walls);
-            this.gb_ObjTypes.Controls.Add(this.rb_SavePoint);
+            this.gb_ObjTypes.Controls.Add(this.rb_HoleObject);
             this.gb_ObjTypes.Controls.Add(this.rb_BackgroundObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_HorizontalMovingPlatform);
             this.gb_ObjTypes.Controls.Add(this.rb_MovingPlatform);
@@ -221,18 +221,17 @@
             this.rb_Vanish_Walls.Visible = false;
             this.rb_Vanish_Walls.CheckedChanged += new System.EventHandler(this.rb_Vanish_Walls_CheckedChanged);
             // 
-            // rb_SavePoint
+            // rb_HoleObject
             // 
-            this.rb_SavePoint.AutoSize = true;
-            this.rb_SavePoint.Location = new System.Drawing.Point(20, 276);
-            this.rb_SavePoint.Name = "rb_SavePoint";
-            this.rb_SavePoint.Size = new System.Drawing.Size(77, 17);
-            this.rb_SavePoint.TabIndex = 10;
-            this.rb_SavePoint.TabStop = true;
-            this.rb_SavePoint.Text = "Save Point";
-            this.rb_SavePoint.UseVisualStyleBackColor = true;
-            this.rb_SavePoint.Visible = false;
-            this.rb_SavePoint.CheckedChanged += new System.EventHandler(this.rb_SavePoint_CheckedChanged);
+            this.rb_HoleObject.AutoSize = true;
+            this.rb_HoleObject.Location = new System.Drawing.Point(20, 276);
+            this.rb_HoleObject.Name = "rb_HoleObject";
+            this.rb_HoleObject.Size = new System.Drawing.Size(78, 17);
+            this.rb_HoleObject.TabIndex = 10;
+            this.rb_HoleObject.TabStop = true;
+            this.rb_HoleObject.Text = "HoleObject";
+            this.rb_HoleObject.UseVisualStyleBackColor = true;
+            this.rb_HoleObject.CheckedChanged += new System.EventHandler(this.rb_HoleObject_CheckedChanged);
             // 
             // rb_BackgroundObjects
             // 
@@ -786,7 +785,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.RadioButton rb_BackgroundObjects;
-        private System.Windows.Forms.RadioButton rb_SavePoint;
+        private System.Windows.Forms.RadioButton rb_HoleObject;
         private System.Windows.Forms.TextBox tb_Scale;
         private System.Windows.Forms.Label lbl_SLevel;
         private System.Windows.Forms.TextBox tb_Rotation;
