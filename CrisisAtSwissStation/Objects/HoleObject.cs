@@ -116,7 +116,7 @@ namespace CrisisAtSwissStation
             else if (Filled >= MAX_FILL && !replacedBody)
             {
                 AddToWorld();
-                Position = Position + new Vector2(0.2f, -0.0145f);//0.35, 0.28
+                Position = Position + new Vector2(0f, 0.258f);// +new Vector2(0.2f, -0.0145f);//0.35, 0.28
                 replacedBody = true;
                 if (Filled != MAX_FILL)
                 {
