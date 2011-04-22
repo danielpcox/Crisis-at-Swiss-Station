@@ -292,7 +292,7 @@ namespace CrisisAtSwissStation
             gameLevelWidth = background.Width;
             gameLevelHeight = background.Height;
 
-            numDrawLeft = 0; // HACK HACK HACK
+            numDrawLeft = 0; // reset the amount of instasteel when loading the level
             totalInstaSteelInWorld = 0;
 
             // Create win door
@@ -797,6 +797,7 @@ namespace CrisisAtSwissStation
                 }
             }
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
+            numDrawLeft = 0; // reset the amount of instasteel we have when we load the level
         }
 
         // NO LONGER USED. TALK TO DANIEL

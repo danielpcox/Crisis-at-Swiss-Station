@@ -89,7 +89,15 @@ namespace CrisisAtSwissStation
         public virtual void Draw(GraphicsDevice device, Matrix cameraTransform)
         {
             foreach (PhysicsObject obj in objects)
-                obj.Draw(cameraTransform);
+            {
+                if (obj is BackgroundObject)
+                    obj.Draw(cameraTransform);
+            }
+            foreach (PhysicsObject obj in objects)
+            {
+                if (!(obj is BackgroundObject))
+                    obj.Draw(cameraTransform);
+            }
         }
 
 

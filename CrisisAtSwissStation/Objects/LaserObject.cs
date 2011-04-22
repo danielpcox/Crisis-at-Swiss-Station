@@ -3,6 +3,7 @@ using Color = Microsoft.Xna.Framework.Color;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using CrisisAtSwissStation.Common;
 
 using Box2DX.Collision;
 
@@ -182,7 +183,7 @@ namespace CrisisAtSwissStation
             //int numShapes = world.Raycast(myseg, interference, 20, false, null);   
             //Console.WriteLine( "{0}", interference[0]);
             //if(interference[0] != null)
-            //PhysicsObject po = (PhysicsObject)interference.GetBody().GetUserData();
+            //Physic
 
             if (interference == null || interference.IsSensor)
             {
@@ -243,6 +244,12 @@ namespace CrisisAtSwissStation
             //startpoint = original + adjustment + offset;
             startpoint = original + offset;
             endpoint = new Vector2(mouseX, mouseY);
+
+            // move the start point to the end of his gun
+            Vector2 cursorDirection = (endpoint - startpoint);
+            cursorDirection.Normalize();
+            startpoint = startpoint + (Constants.HALF_GUN * cursorDirection);
+
             /*
             int totalx = (int)(endpoint.X - startpoint.X);
             int totaly = (int)(endpoint.Y - startpoint.Y);

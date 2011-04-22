@@ -149,6 +149,7 @@
     <Compile Include="Menu\MenuScreen.cs" />
     <Compile Include="MovingObject.cs" />
     <Compile Include="Objects\AnimationObject.cs" />
+    <Compile Include="Objects\BackgroundObject.cs" />
     <Compile Include="Objects\BoxObject.cs" />
     <Compile Include="Objects\CircleObject.cs" />
     <Compile Include="Objects\WinDoorObject.cs" />

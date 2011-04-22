@@ -17,3 +17,6 @@ CrisisAtSwissStation/Content/Art/Objects/BoxObjects/Thumbs.db
 *~
 CrisisAtSwissStation/Content/Worlds/*.world
 *.db
+Thumbs.db
+*/Thumbs.db
+*Thumbs.db
