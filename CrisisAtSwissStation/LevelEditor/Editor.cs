@@ -607,27 +607,61 @@ namespace CrisisAtSwissStation.LevelEditor
             }
             else if (rb_SwitchObject.Checked)
             {
-                SwitchObject ss;
-                ss = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                SwitchObject ss1;
+                ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
                 //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
-                ss.Position = gameposition;
-                world.AddObject(ss);
-
+                ss1.Position = gameposition;
+                world.AddObject(ss1);
+              
             }
             else if (rb_MovingPlatform.Checked)
             {
                 MovingObject ss;
-                ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+              //  ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
                // movPlatform1 = new MovingObject(World, "moving platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
+               // ss.Position = gameposition;
+              //  world.AddObject(ss);
+
+
+                if (lastname == "moving_platform")
+                    ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+                else
+                {
+                   
+                    SwitchObject ss1;
+                    ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                    ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\switchmoving_platform", 1000, 0.5f, 0, 1, false, ss1, new Vector2(0, -11500), 4.5f, 14.2f);
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ss1.Position = gameposition;
+                    world.AddObject(ss1);
+                }
+
                 ss.Position = gameposition;
                 world.AddObject(ss);
+                 
 
             }
             else if (rb_HorizontalMovingPlatform.Checked)
             {
                 HorizontalMovingObject ss;
-                ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+              //  ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
                // movPlatform2 = new HorizontalMovingObject(World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 32f, 38f);
+
+
+                if (lastname == "moving_platform")
+                    ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+                else
+                {
+
+                    SwitchObject ss1;
+                    ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                    ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\switchmoving_platform", 0, 0.5f, 0, 1, false, ss1, new Vector2(0, -11500), 4.5f, 14.2f);
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ss1.Position = gameposition;
+                    world.AddObject(ss1);
+                }
+                
+                
                 ss.Position = gameposition;
                 world.AddObject(ss);
 
