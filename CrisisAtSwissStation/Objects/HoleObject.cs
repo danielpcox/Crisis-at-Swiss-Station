@@ -107,6 +107,7 @@ namespace CrisisAtSwissStation
             // gotta delete the hole Body so we fall through the hole
             if (!destroyedBody)
             {
+                Position = Position + new Vector2(0f, -0.258f);//0.35, 0.28
                 tempBody = Body;
                 //world.World.DestroyBody(Body);
                 RemoveFromWorld();
@@ -115,7 +116,7 @@ namespace CrisisAtSwissStation
             else if (Filled >= MAX_FILL && !replacedBody)
             {
                 AddToWorld();
-                Position = Position + new Vector2(0.35f, 0.2f);
+                Position = Position + new Vector2(0.2f, -0.0145f);//0.35, 0.28
                 replacedBody = true;
                 if (Filled != MAX_FILL)
                 {

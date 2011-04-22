@@ -85,7 +85,7 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private static Texture2D holeTexture;
         [NonSerialized]
-        private static Texture2D holeObjectTexture;
+        private static Texture2D holeObjTexture;
 
         [NonSerialized]
         private static Texture2D movingPlatformTexture;
@@ -132,6 +132,10 @@ namespace CrisisAtSwissStation
         private static Texture2D switchAnimTexture;
         [NonSerialized]
         private static Texture2D switchObjectTexture;
+        [NonSerialized]
+        private static Texture2D holeAnimTexture;
+        [NonSerialized]
+        private static Texture2D holeObjectTexture;
         [NonSerialized]
         private static Texture2D movingObjectTexture;
         [NonSerialized]
@@ -196,8 +200,8 @@ namespace CrisisAtSwissStation
         private static Vector2 platformPosition = new Vector2(18.2f, 5.48f);
         private BoxObject platform;
 
-        private static Vector2 bottom1Position = new Vector2(22.75f, 15f);
-        private static Vector2 bottom2Position = new Vector2(65.58f, 15f);
+        private static Vector2 bottom1Position = new Vector2(23.2f, 15f);//22.75
+        private static Vector2 bottom2Position = new Vector2(65f, 15f);//65.58
         private BoxObject bottom1, bottom2;
 
         private static Vector2 straightPipe1Position = new Vector2(9.5f, 9.3f);
@@ -221,7 +225,7 @@ namespace CrisisAtSwissStation
         private static Vector2 topPosition = new Vector2(41f, 0f);
         private BoxObject top;
 
-        private static Vector2 hole1Position = new Vector2(47f, 14.7f);
+        private static Vector2 hole1Position = new Vector2(47f, 15f);//14.7
         private BoxObject hole1;
         
         private static Vector2 pistonHeadPosition = new Vector2(12f, 13.2f);
@@ -535,7 +539,8 @@ namespace CrisisAtSwissStation
             fan1.Position = fan1Position;
             AddObject(fan1);
 
-            hole1 = new HoleObject(World, "big_hole_strip", "hole_tile_sealed");
+            //hole1 = new HoleObject(World, "big_hole_strip", "hole_tile_sealed");
+            hole1 = new HoleObject(World, "Art\\Objects\\HoleObjects\\hole_strip", "Art\\Objects\\HoleObjects\\hole");
             hole1.Position = hole1Position;
             AddObject(hole1);
             
@@ -858,7 +863,7 @@ namespace CrisisAtSwissStation
 
 
             holeTexture = content.Load<Texture2D>("big_hole_strip");
-            holeObjectTexture = content.Load<Texture2D>("hole_tile_sealed");
+            holeObjTexture = content.Load<Texture2D>("hole_tile_sealed");
 
             movingPlatformTexture = content.Load<Texture2D>("moving platform");
             brokenMovingPlatformTexture = content.Load<Texture2D>("broken_moving_platform");
@@ -893,8 +898,12 @@ namespace CrisisAtSwissStation
             switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
 
+            holeAnimTexture = content.Load<Texture2D>("Art\\Objects\\HoleObjects\\hole_strip");
+            holeObjectTexture = content.Load<Texture2D>("Art\\Objects\\HolehObjects\\hole");
+
             movingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\moving_platform");
             movingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\switchmoving_platform");
+
             horizontalmovingObjectTexture = content.Load<Texture2D>("Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform");
             horizontalmovingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\switchmoving_platform");
         }
@@ -1159,7 +1168,12 @@ namespace CrisisAtSwissStation
                         break;
                     }
                 }
-                audio.Play(AudioManager.SFXSelection.Construct);
+
+                if (dotPositions.Count > 1)
+                {
+                    audio.Play(AudioManager.SFXSelection.Construct);
+                }
+
                 laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
