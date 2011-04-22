@@ -65,7 +65,7 @@ namespace CrisisAtSwissStation
         public void reloadNonSerializedAssets()
         {
             this.texture = GameEngine.TextureList[textureName];
-            amountOfInstasteel = amountOfInstasteel * (float)System.Math.PI * (float)System.Math.Pow(scale / 2f,2);
+            amountOfInstasteel = amountOfInstasteel * scale;
         }
 
         /**
