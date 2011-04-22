@@ -62,6 +62,7 @@ namespace CrisisAtSwissStation
         private static Texture2D backgroundTerrible;
 
         public string backgroundName;
+        public string musicName;
 
         [NonSerialized]
         private static Texture2D laserAnimTexture;
@@ -290,6 +291,7 @@ namespace CrisisAtSwissStation
         {
 
             backgroundName = "Art\\Backgrounds\\" + backgroundname;
+            musicName = "Music\\" + backgroundname;
             background = GameEngine.TextureList[backgroundName];
 
             movPlat1 = true;
