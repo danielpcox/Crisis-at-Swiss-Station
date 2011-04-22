@@ -299,7 +299,7 @@ namespace CrisisAtSwissStation
         {
             
             //ronnie added for animation
-            Console.WriteLine("{0} {1} {2} {3}", myGameTime, xFrame,yFrame,animateTimer);
+            //Console.WriteLine("{0} {1} {2} {3}", myGameTime, xFrame,yFrame,animateTimer);
             if (animate == true)
             {
                 myGameTime++;
