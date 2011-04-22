@@ -263,6 +263,37 @@ namespace CrisisAtSwissStation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            /*
+            //ronnie added for animation
+            if (animate == true)
+            {
+                if (xFrame != 4)
+                {
+                    //animation stuff
+                    myGameTime++;
+                    sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+
+                    animateTimer += myGameTime;
+
+                    if (animateTimer > animateInterval)
+                    {
+                        xFrame++;
+
+                        if (xFrame > numFrames - 1)
+                        {
+                            xFrame = 0;
+                        }
+
+
+                        myGameTime = 0;
+                        animateTimer = 0;
+
+                    }
+                }
+            }
+            */
+
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
