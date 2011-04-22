@@ -638,15 +638,44 @@ namespace CrisisAtSwissStation.LevelEditor
                 List<Vector2> blobs = new List<Vector2>();
                 switch (lastname)
                 {
+                    case "line_short":
+                        float linelength_short = (30f/60f) * 1.2f;
+                        blobs.Add(gameposition + new Vector2(linelength_short/2f, 0f));
+                        blobs.Add(gameposition + new Vector2(-linelength_short/2f, 0f));
+                        break;
                     case "line":
-                        blobs.Add(gameposition + new Vector2(0.6f, 0f));
-                        blobs.Add(gameposition + new Vector2(-0.6f, 0f));
+                        float linelength = 1.2f;
+                        blobs.Add(gameposition + new Vector2(linelength/2, 0f));
+                        blobs.Add(gameposition + new Vector2(-linelength/2f, 0f));
+                        break;
+                    case "line_long":
+                        float linelength_long = (200f/60f) * 1.2f;
+                        blobs.Add(gameposition + new Vector2(linelength_long/2f, 0f));
+                        blobs.Add(gameposition + new Vector2(-linelength_long/2f, 0f));
+                        break;
+                    case "disk_short":
+                        blobs = paintedCircle((30f/60f) *0.6f, gameposition); // radius of 0.6f
+                        break;
+                    case "disk_small":
+                        blobs = paintedCircle((40f/60f) * 0.6f, gameposition); // radius of 0.6f
                         break;
                     case "disk":
                         blobs = paintedCircle(0.6f, gameposition); // radius of 0.6f
                         break;
+                    case "disk_long":
+                        blobs = paintedCircle((150f/60f) * 0.6f, gameposition); // radius of 0.6f
+                        break;
+                    case "block_short":
+                        blobs = paintedSquare((30f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        break;
+                    case "block_small":
+                        blobs = paintedSquare((40f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        break;
                     case "block":
                         blobs = paintedSquare(1.2f, gameposition); // sidelength of 1.2f
+                        break;
+                    case "block_long":
+                        blobs = paintedSquare((150f/60f) * 1.2f, gameposition); // sidelength of 1.2f
                         break;
                     default:
                         blobs.Add(gameposition + new Vector2(0.6f, 0f));
@@ -689,19 +718,19 @@ namespace CrisisAtSwissStation.LevelEditor
 
         private List<Vector2> paintedCircle(float radius, Vector2 gameposition)
         {
-            int numpoints = 20;
+            int numpoints = 10;
             List<Vector2> blobs = new List<Vector2>();
             for (int i = 0; i < numpoints; i++)
             {
                 float angle = (float)i * 2f * (float)Math.PI / (float)numpoints;
-                blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle) - radius, (float)radius * (float)Math.Cos(angle) - radius));
+                blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle), (float)radius * (float)Math.Cos(angle)));
             }
             return blobs;
         }
 
         private List<Vector2> paintedSquare(float sidelength, Vector2 gameposition)
         {
-            int numpoints = 20;
+            int numpoints = 10;
             List<Vector2> blobs = new List<Vector2>();
             Vector2 right = (sidelength / 2) * new Vector2(1, 0); Vector2 left = (sidelength / 2) * new Vector2(-1, 0);
             Vector2 top = (sidelength / 2) * new Vector2(0, -1); Vector2 bottom = (sidelength / 2) * new Vector2(0, 1);
