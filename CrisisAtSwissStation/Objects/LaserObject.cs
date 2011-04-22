@@ -189,6 +189,7 @@ namespace CrisisAtSwissStation
             {
                 canIDraw = true;
                 canIErase = true;
+                endpoint = new Vector2(mouseX, mouseY);
             }           
             else if ((PhysicsObject)interference.GetBody().GetUserData() is PaintedObject)
             {
@@ -196,7 +197,8 @@ namespace CrisisAtSwissStation
 
                 Box2DX.Common.Vec2 p = (((1 - lambda) * myseg.P1) + (lambda * myseg.P2));
 
-                Box2DX.Collision.Segment tempseg = new Segment();
+                endpoint = Common.Utils.Convert(p) * SCALE;
+/**                Box2DX.Collision.Segment tempseg = new Segment();
                 tempseg.P1 = new Box2DX.Common.Vec2(end.X / SCALE, end.Y / SCALE);
                 tempseg.P2 = p;
                 interference = world.RaycastOne(tempseg, out lambda, out normal, false, null);
@@ -215,7 +217,9 @@ namespace CrisisAtSwissStation
                     canIDraw = false;
                     canIErase = false;
                 }
-                 
+                 */
+                canIDraw = false;
+                canIErase = true;
 
             }
             else
@@ -225,7 +229,7 @@ namespace CrisisAtSwissStation
                 end.Y = SCALE * p.Y;
                 canIDraw = false;
                 canIErase = false;
-
+                endpoint = Common.Utils.Convert(p) * SCALE;
             }
 
             //Console.WriteLine("{0}  {1}", canIDraw, canIErase);
@@ -243,7 +247,7 @@ namespace CrisisAtSwissStation
             //original animation stuff
             //startpoint = original + adjustment + offset;
             startpoint = original + offset;
-            endpoint = new Vector2(mouseX, mouseY);
+//            endpoint = new Vector2(mouseX, mouseY);
 
             // move the start point to the end of his gun
             Vector2 cursorDirection = (endpoint - startpoint);

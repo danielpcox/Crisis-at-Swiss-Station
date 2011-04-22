@@ -876,8 +876,9 @@ namespace CrisisAtSwissStation
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
 
             movingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\moving_platform");
+            movingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\switchmoving_platform");
             horizontalmovingObjectTexture = content.Load<Texture2D>("Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform");
-        
+            horizontalmovingObjectTexture = content.Load<Texture2D>("Art\\Objects\\MovingPlatformObjects\\switchmoving_platform");
         }
 
 

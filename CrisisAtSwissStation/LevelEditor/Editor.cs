@@ -607,27 +607,61 @@ namespace CrisisAtSwissStation.LevelEditor
             }
             else if (rb_SwitchObject.Checked)
             {
-                SwitchObject ss;
-                ss = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                SwitchObject ss1;
+                ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
                 //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
-                ss.Position = gameposition;
-                world.AddObject(ss);
-
+                ss1.Position = gameposition;
+                world.AddObject(ss1);
+              
             }
             else if (rb_MovingPlatform.Checked)
             {
                 MovingObject ss;
-                ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+              //  ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
                // movPlatform1 = new MovingObject(World, "moving platform", 1000f, .5f, 0, 1, false, brokenMovingPlatform1, new Vector2(0, -11500), 4.5f, 14.2f);
+               // ss.Position = gameposition;
+              //  world.AddObject(ss);
+
+
+                if (lastname == "moving_platform")
+                    ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 1000, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+                else
+                {
+                   
+                    SwitchObject ss1;
+                    ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                    ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\switchmoving_platform", 1000, 0.5f, 0, 1, false, ss1, new Vector2(0, -11500), 4.5f, 14.2f);
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ss1.Position = gameposition;
+                    world.AddObject(ss1);
+                }
+
                 ss.Position = gameposition;
                 world.AddObject(ss);
+                 
 
             }
             else if (rb_HorizontalMovingPlatform.Checked)
             {
                 HorizontalMovingObject ss;
-                ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+              //  ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
                // movPlatform2 = new HorizontalMovingObject(World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0f, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 32f, 38f);
+
+
+                if (lastname == "moving_platform")
+                    ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+                else
+                {
+
+                    SwitchObject ss1;
+                    ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                    ss = new HorizontalMovingObject(world.World, "Art\\Objects\\HorizontalMovingPlatformObjects\\switchmoving_platform", 0, 0.5f, 0, 1, false, ss1, new Vector2(0, -11500), 4.5f, 14.2f);
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ss1.Position = gameposition;
+                    world.AddObject(ss1);
+                }
+                
+                
                 ss.Position = gameposition;
                 world.AddObject(ss);
 
@@ -638,18 +672,44 @@ namespace CrisisAtSwissStation.LevelEditor
                 List<Vector2> blobs = new List<Vector2>();
                 switch (lastname)
                 {
+                    case "line_short":
+                        float linelength_short = (30f/60f) * 1.2f;
+                        blobs.Add(gameposition + new Vector2(linelength_short/2f, 0f));
+                        blobs.Add(gameposition + new Vector2(-linelength_short/2f, 0f));
+                        break;
                     case "line":
-                        blobs.Add(gameposition + new Vector2(0.6f, 0f));
-                        blobs.Add(gameposition + new Vector2(-0.6f, 0f));
+                        float linelength = 1.2f;
+                        blobs.Add(gameposition + new Vector2(linelength/2, 0f));
+                        blobs.Add(gameposition + new Vector2(-linelength/2f, 0f));
+                        break;
+                    case "line_long":
+                        float linelength_long = (200f/60f) * 1.2f;
+                        blobs.Add(gameposition + new Vector2(linelength_long/2f, 0f));
+                        blobs.Add(gameposition + new Vector2(-linelength_long/2f, 0f));
+                        break;
+                    case "disk_short":
+                        blobs = paintedCircle((30f/60f) *0.6f, gameposition); // radius of 0.6f
+                        break;
+                    case "disk_small":
+                        blobs = paintedCircle((40f/60f) * 0.6f, gameposition); // radius of 0.6f
                         break;
                     case "disk":
-                        int numpoints = 20;
-                        float radius = 0.6f;
-                        for (int i = 0; i < numpoints; i++)
-                        {
-                            float angle = (float)i * 2f * (float)Math.PI / (float)numpoints;
-                            blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle) - radius, (float)radius * (float)Math.Cos(angle) - radius));
-                        }
+                        blobs = paintedCircle(0.6f, gameposition); // radius of 0.6f
+                        break;
+                    case "disk_long":
+                        blobs = paintedCircle((150f/60f) * 0.6f, gameposition); // radius of 0.6f
+                        break;
+                    case "block_short":
+                        blobs = paintedSquare((30f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        break;
+                    case "block_small":
+                        blobs = paintedSquare((40f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        break;
+                    case "block":
+                        blobs = paintedSquare(1.2f, gameposition); // sidelength of 1.2f
+                        break;
+                    case "block_long":
+                        blobs = paintedSquare((150f/60f) * 1.2f, gameposition); // sidelength of 1.2f
                         break;
                     default:
                         blobs.Add(gameposition + new Vector2(0.6f, 0f));
@@ -689,6 +749,48 @@ namespace CrisisAtSwissStation.LevelEditor
         //End of the clicking on paint area callbacks
         //----------------------------------------------------------------------------------------------------
 
+
+        private List<Vector2> paintedCircle(float radius, Vector2 gameposition)
+        {
+            int numpoints = 10;
+            List<Vector2> blobs = new List<Vector2>();
+            for (int i = 0; i < numpoints; i++)
+            {
+                float angle = ((float)i * 2f * (float)Math.PI + (float)Math.PI) / (float)numpoints;
+                blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle), (float)radius * (float)Math.Cos(angle)));
+            }
+            return blobs;
+        }
+
+        private List<Vector2> paintedSquare(float sidelength, Vector2 gameposition)
+        {
+            int numpoints = 10;
+            List<Vector2> blobs = new List<Vector2>();
+            Vector2 right = (sidelength / 2) * new Vector2(1, 0); Vector2 left = (sidelength / 2) * new Vector2(-1, 0);
+            Vector2 top = (sidelength / 2) * new Vector2(0, -1); Vector2 bottom = (sidelength / 2) * new Vector2(0, 1);
+            Vector2 centeroff = new Vector2(-sidelength * 2f, -sidelength * 2f);
+            for (int i = 0; i < numpoints / 4; i++)
+            {
+                float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
+                blobs.Add(gameposition + top + new Vector2(progress, 0) + centeroff);
+            }
+            for (int i = 0; i < numpoints / 4; i++)
+            {
+                float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
+                blobs.Add(gameposition + right + new Vector2(0, progress) + centeroff);
+            }
+            for (int i = 0; i < numpoints / 4; i++)
+            {
+                float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
+                blobs.Add(gameposition + bottom + new Vector2(-progress, 0) + centeroff);
+            }
+            for (int i = 0; i < numpoints / 4; i++)
+            {
+                float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
+                blobs.Add(gameposition + left + new Vector2(0, -progress) + centeroff);
+            }
+            return blobs;
+        }
 
 
         //-----------------Functions dealing with saving and loading levels-----------------------------------
@@ -1090,8 +1192,8 @@ namespace CrisisAtSwissStation.LevelEditor
                 {
                    
                     MovingObject temp = (MovingObject)currentlySelectedObject;
-                    temp.bound1 = newbound1;
-                    temp.bound2 = newbound2;
+                    temp.bound1 = temp.Position.Y - newbound1;
+                    temp.bound2 = temp.Position.Y + newbound2;
                     Console.WriteLine(temp.bound1 + " " + temp.bound2);
                     currentlySelectedObject = temp;
                     
@@ -1099,8 +1201,8 @@ namespace CrisisAtSwissStation.LevelEditor
                 else if (currentlySelectedObject is HorizontalMovingObject)
                 {
                     HorizontalMovingObject temp = (HorizontalMovingObject)currentlySelectedObject;
-                    temp.bound1 = newbound1;
-                    temp.bound2 = newbound2;
+                    temp.bound1 = temp.Position.X - newbound1;
+                    temp.bound2 = temp.Position.X + newbound2;
                     currentlySelectedObject = temp;
                 }
                 
