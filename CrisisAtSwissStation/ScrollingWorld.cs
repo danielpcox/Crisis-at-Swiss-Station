@@ -1047,8 +1047,7 @@ namespace CrisisAtSwissStation
                 //ronnie added for laser
                 laser.startErasing();
 
-                //Implementing deconstruct sfx
-                audio.Play(CrisisAtSwissStation.AudioManager.SFXSelection.Deconstruct);
+
 
                 // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -1066,6 +1065,8 @@ namespace CrisisAtSwissStation
                     if (po is PaintedObject)
                     {
                         this.RemoveObject(po);
+                        //Implementing deconstruct sfx
+                        audio.Play(CrisisAtSwissStation.AudioManager.SFXSelection.Deconstruct);
                         PaintedObject painto = (PaintedObject)po;
                         numDrawLeft += painto.getAmountOfInstasteel();
                     }
@@ -1084,7 +1085,10 @@ namespace CrisisAtSwissStation
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
-                audio.Play(AudioManager.SFXSelection.Charge);
+                
+               
+                /* Still working on this nasty loop
+                audio.Play(AudioManager.SFXSelection.Charge); */
 
                 // if we're holding down the mouse button
                 //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
