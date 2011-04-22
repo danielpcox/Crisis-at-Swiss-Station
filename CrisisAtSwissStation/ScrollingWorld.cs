@@ -265,6 +265,8 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         MouseState prevms;
 
+        Rectangle cursorSrcRect;
+        int cursorWidth = 32;
         public static float numDrawLeft;
         float totalInstaSteelInWorld;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
@@ -292,6 +294,7 @@ namespace CrisisAtSwissStation
             gameLevelWidth = background.Width;
             gameLevelHeight = background.Height;
 
+            cursorSrcRect = new Rectangle(cursorWidth, cursorWidth, cursorWidth, cursorWidth);
             numDrawLeft = 0; // reset the amount of instasteel when loading the level
             totalInstaSteelInWorld = 0;
 
@@ -787,7 +790,7 @@ namespace CrisisAtSwissStation
         {
             paintTexture = GameEngine.TextureList["paint"];
             AudioManager audio = GameEngine.AudioManager;
-            audio.Play(AudioManager.MusicSelection.Destruction);
+            audio.Play(AudioManager.MusicSelection.Basement);
             background = GameEngine.TextureList[backgroundName];
             foreach (PhysicsObject obj in Objects)
             {
@@ -1163,6 +1166,12 @@ namespace CrisisAtSwissStation
 
             laser.Update(scaledMousePosition.X, scaledMousePosition.Y, getCameraCoords());
 
+            // update cursor insta-steel level
+            float fractionInstasteel = numDrawLeft / totalInstaSteelInWorld;
+            int cursorPic = (int)(fractionInstasteel * 8);
+            
+            cursorSrcRect = new Rectangle(cursorPic * cursorWidth, 0, cursorWidth, cursorWidth);
+
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
         }
@@ -1383,10 +1392,9 @@ namespace CrisisAtSwissStation
         private void DrawCrosshair()
         {
             MouseState mouse = Mouse.GetState();
-            crosshairTexture = GameEngine.TextureList["Crosshair"]; // HACK HACK HACK handle this in a more sustainable way soon
-            float fractionInstasteel = numDrawLeft / totalInstaSteelInWorld;
+            crosshairTexture = GameEngine.TextureList["Art\\crosshair_strip"]; // HACK HACK HACK handle this in a more sustainable way soon
             GameEngine.Instance.SpriteBatch.Draw(crosshairTexture, new Vector2(mouse.X, mouse.Y),
-                null, Color.White, 0, new Vector2(crosshairTexture.Width / 2, crosshairTexture.Height / 2), 1,
+                cursorSrcRect, Color.White, 0, new Vector2(cursorWidth / 2, cursorWidth / 2), 1,
                 SpriteEffects.None, 0);
         }
 
