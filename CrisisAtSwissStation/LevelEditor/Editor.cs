@@ -678,7 +678,7 @@ namespace CrisisAtSwissStation.LevelEditor
             else if (rb_PaintedObjects.Checked)
             {
                 InstasteelObject io;
-                io = new InstasteelObject(world.World, texName, 600, 0, .5f, 0, 1, false);
+                io = new InstasteelObject(world.World, texName, 600, 1, .5f, 0, 1, false);
                 io.Position = gameposition;
                 world.AddObject(io);
             }
