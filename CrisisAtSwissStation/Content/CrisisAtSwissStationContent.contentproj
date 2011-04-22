@@ -939,13 +939,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\switchmoving_platform.png">
+      <Name>switchmoving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\MovingPlatformObjects\switchmoving_platform.png">
+      <Name>switchmoving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\victory_strip.png">
+      <Name>victory_strip</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Music\Construct.mp3">
       <Name>Construct</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Music\Constructing%28charge%29.mp3">
-      <Name>Constructing%28charge%29</Name>
+    <Compile Include="Music\Constructing%28Charge%29.mp3">
+      <Name>Constructing%28Charge%29</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
@@ -956,15 +977,29 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\switchmoving_platform.png">
-      <Name>switchmoving_platform</Name>
+    <Compile Include="Art\Objects\SeeSawObjects\seesaw_pole.png">
+      <Name>seesaw_pole</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\MovingPlatformObjects\switchmoving_platform.png">
-      <Name>switchmoving_platform</Name>
+    <Compile Include="Art\Objects\BackgroundObjects\gear.png">
+      <Name>gear</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\CircleObjects\gear.png">
+      <Name>gear</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Menus\main_strip.png">
+      <Name>main_strip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

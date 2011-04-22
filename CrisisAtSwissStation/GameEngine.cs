@@ -33,7 +33,29 @@ namespace CrisisAtSwissStation
         public static Texture2D onepixel; // used for darkening the string
         public static Texture2D menuBack;
         public static Texture2D menuPanel;
+        public static Texture2D menuPanelAnimation;
         
+        //victory animation stuff
+        private static bool animate;
+        private static Rectangle sourceRect;
+        private Vector2 origin;
+        private static int xFrame;
+        private static int yFrame;
+        private static int spriteWidth;
+        private static int spriteHeight;           
+        private int myGameTime, animateTimer, animateInterval;
+
+        //menu animation stuff
+        private static bool menuAnimate;
+        private static Rectangle menuSourceRect;
+        private Vector2 menuOrigin;
+        private static int menuXFrame;
+        private static int menuYFrame;
+        private static int menuSpriteWidth;
+        private static int menuSpriteHeight;           
+        private int menuMyGameTime, menuAnimateTimer, menuAnimateInterval;
+
+
         enum ProgramState
         {
             Menu,
@@ -171,6 +193,22 @@ namespace CrisisAtSwissStation
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
+            //victory animation stuff
+            animate = false;
+            myGameTime = 0;
+            animateTimer = 0;
+            animateInterval = 20;
+            xFrame = 0;
+            yFrame = 0;           
+            spriteWidth = 700;
+            spriteHeight = 350;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
+            //menuanimation stuff
+            menuAnimate = false;
+
+
             //initializes our InstaSteel text box
             /*
             instaSteelTextBox = new TextBox(new Vector2(50, 160), 80, Content);//instantiates with vector for location, 80 is the width, Content is a content manager
@@ -196,7 +234,7 @@ namespace CrisisAtSwissStation
             spriteBatch = new SpriteBatch(GraphicsDevice);
             polygonDrawer = new PolygonDrawer(GraphicsDevice, Window.ClientBounds.Width, Window.ClientBounds.Height);
             spriteFont = Content.Load<SpriteFont>("PhysicsFont");
-            victory = Content.Load<Texture2D>("Victory");
+            victory = Content.Load<Texture2D>("Art\\victory_strip");
             failure = Content.Load<Texture2D>("failure");
             audioManager.LoadContent(Content);
 
@@ -207,6 +245,7 @@ namespace CrisisAtSwissStation
             onepixel = Content.Load<Texture2D>("Art\\Misc\\onepixel");
             menuBack= Content.Load<Texture2D>("Art\\Menus\\menu_back");
             menuPanel = Content.Load<Texture2D>("Art\\Menus\\menu_panel");
+            menuPanelAnimation = Content.Load<Texture2D>("Art\\Menus\\main_strip");
 
             DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Content"); //
             FileInfo[] fileList = di.GetFiles("*.xnb", SearchOption.AllDirectories);                  //
@@ -257,6 +296,16 @@ namespace CrisisAtSwissStation
             textureList.Clear();
         }
 
+
+        public static void resetVictoryAnimation()
+        {
+            animate = false;
+            xFrame = 0;
+            yFrame = 0;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -264,35 +313,39 @@ namespace CrisisAtSwissStation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            /*
+            
             //ronnie added for animation
+            //Console.WriteLine("{0} {1} {2} {3}", myGameTime, xFrame,yFrame,animateTimer);
             if (animate == true)
             {
-                if (xFrame != 4)
+                myGameTime++;
+                sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+                if (!((xFrame == 3) && (yFrame == 1)))
                 {
-                    //animation stuff
-                    myGameTime++;
-                    sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-
                     animateTimer += myGameTime;
 
                     if (animateTimer > animateInterval)
                     {
                         xFrame++;
 
-                        if (xFrame > numFrames - 1)
+                        if (xFrame > 4 && yFrame == 0)
                         {
                             xFrame = 0;
+                            yFrame = 1;
                         }
+                        else if (xFrame > 3 && yFrame == 1)
+                        {
+                            xFrame = 3;
+                            yFrame = 1;
+                        }                     
 
-
+                        // -= (int)walkInterval;
                         myGameTime = 0;
                         animateTimer = 0;
-
                     }
                 }
             }
-            */
+            
 
 
             // Allows the game to exit
@@ -354,6 +407,8 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.New:
+                           // menuAnimate = true;
+                            //animateMyMenu();
                             if (NewWorld())
                             {
                                 progstate = ProgramState.Playing;
@@ -364,7 +419,7 @@ namespace CrisisAtSwissStation
                     break;
 
                 case ProgramState.Playing:
-
+                    //menuAnimate = false;
                     //Updates the room.
                     KeyboardState ks = Keyboard.GetState();
                     if (ks.IsKeyDown(Keys.Escape))
@@ -432,12 +487,36 @@ namespace CrisisAtSwissStation
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
                 }
 
-                if (countdown == 0)
+                if (countdown <= 0)
                 {
                     //reset = currentWorld.Failed;
-                    LinkToMain();
-                    progstate = ProgramState.Menu;
-                    currentWorld = null;
+                    int levelnum;
+                    string[] pieces = cwname.Split('.');
+                    bool parsed = int.TryParse(pieces[0].Substring(pieces[0].Length - 1), out levelnum);
+                    string origname;
+                    if (parsed)
+                    {
+                        origname = pieces[0].Substring(0, pieces[0].Length-1);
+                    }
+                    else
+                    {
+                        origname = pieces[0];
+                    }
+
+                    string newfilename = origname + (levelnum + 1) + ".world";
+
+                    if ( File.Exists( newfilename ) )
+                    {
+                        countdown = COUNTDOWN;
+                        LoadWorld(newfilename);
+                        progstate = ProgramState.Playing;
+                    }
+                    else
+                    {
+                        LinkToMain();
+                        progstate = ProgramState.Menu;
+                        currentWorld = null;
+                    }
                     audioManager.IncreaseMusicVolume(0.5f);
                 }
             }
@@ -469,7 +548,7 @@ namespace CrisisAtSwissStation
                 
 
             // Just won or lost - initiate countdown
-            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown == 0)
+            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown <= 0)
                 countdown = COUNTDOWN;
 
            
@@ -659,7 +738,57 @@ namespace CrisisAtSwissStation
             SetCurrentMenu(startMenu);
 
         }
-        
+
+
+        private void animateMyMenu()
+        {
+            menuXFrame = 0;
+            menuYFrame = 0;
+            menuSpriteWidth = 500;
+            menuSpriteHeight = 500;
+            menuAnimateInterval = 20;
+            menuMyGameTime = 0;
+            menuAnimateTimer = 0;
+            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+            menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
+            spriteBatch.Begin();
+            for (int i = 0; i < 150; i++)
+            {
+                Console.WriteLine("i got here");
+                menuMyGameTime++;
+                menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+                if (!((menuXFrame == 5) && (menuYFrame == 1)))
+                {
+                    menuAnimateTimer += menuMyGameTime;
+
+                    if (menuAnimateTimer > menuAnimateInterval)
+                    {
+                        menuXFrame++;
+
+                        if (menuXFrame > 5 && menuYFrame == 0)
+                        {
+                            menuXFrame = 0;
+                            menuYFrame = 1;
+                        }
+                        else if (menuXFrame > 5 && menuYFrame == 1)
+                        {
+                            menuXFrame = 5;
+                            menuYFrame = 1;
+                        }
+                        myGameTime = 0;
+                        animateTimer = 0;
+                    }
+                }
+
+                spriteBatch.Draw(menuPanelAnimation,
+                        new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
+
+
+            }
+            spriteBatch.End();
+
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -713,16 +842,73 @@ namespace CrisisAtSwissStation
                         currentMenu.Draw(spriteBatch);
                         spriteBatch.End();
                     }
-                        
-                    spriteBatch.Begin();
-                    spriteBatch.Draw(menuPanel,
-                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                    currentMenu.Draw(spriteBatch);
-                    spriteBatch.End();
+
+                    /*
+                    //oh god hacking for menu screen
+                    if (menuAnimate)
+                    {
+                        menuXFrame = 0;
+                        menuYFrame = 0;
+                        menuSpriteWidth = 500;
+                        menuSpriteHeight = 500;
+                        menuAnimateInterval = 20;
+                        menuMyGameTime = 0;
+                        menuAnimateTimer = 0;
+                        menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+                        menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
+                        spriteBatch.Begin();
+                        for (int i = 0; i < 150; i++)
+                        {
+                            Console.WriteLine("i got here");
+                            menuMyGameTime++;
+                            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+                            if (!((menuXFrame == 5) && (menuYFrame == 1)))
+                            {
+                                menuAnimateTimer += menuMyGameTime;
+
+                                if (menuAnimateTimer > menuAnimateInterval)
+                                {
+                                    menuXFrame++;
+
+                                    if (menuXFrame > 5 && menuYFrame == 0)
+                                    {
+                                        menuXFrame = 0;
+                                        menuYFrame = 1;
+                                    }
+                                    else if (menuXFrame > 5 && menuYFrame == 1)
+                                    {
+                                        menuXFrame = 5;
+                                        menuYFrame = 1;
+                                    }                                   
+                                    myGameTime = 0;
+                                    animateTimer = 0;
+                                }
+                            }
+
+                            spriteBatch.Draw(menuPanelAnimation,
+                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
+                           
+
+                        }
+                        spriteBatch.End();
+
+                        menuAnimate = false;
+
+                    }
+                    
+                    */
+
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(menuPanel,
+                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                        currentMenu.Draw(spriteBatch);
+                        spriteBatch.End();
+                    
 
                     break;
 
-                case ProgramState.Playing:
+                case ProgramState.Playing:        
+
                     //currentWorld.Draw(spriteBatch, (float)this.Window.ClientBounds.Width, (float)this.Window.ClientBounds.Height);
                     currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
                     break;
@@ -732,8 +918,9 @@ namespace CrisisAtSwissStation
             // Draw success or failure image
             if (currentWorld!=null && currentWorld.Succeeded && !currentWorld.Failed)
             {
-                spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - victory.Width) / 2,
-                    (graphics.PreferredBackBufferHeight - victory.Height) / 2), Color.White);
+                animate = true;
+                spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - sourceRect.Width) / 2,
+                    (graphics.PreferredBackBufferHeight - sourceRect.Height) / 2), sourceRect, Color.White);
             }
             else if (currentWorld!=null && currentWorld.Failed)
             {

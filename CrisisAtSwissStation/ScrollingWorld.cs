@@ -62,6 +62,7 @@ namespace CrisisAtSwissStation
         private static Texture2D backgroundTerrible;
 
         public string backgroundName;
+        public string musicName;
 
         [NonSerialized]
         private static Texture2D laserAnimTexture;
@@ -294,6 +295,7 @@ namespace CrisisAtSwissStation
         {
 
             backgroundName = "Art\\Backgrounds\\" + backgroundname;
+            musicName = "Music\\" + backgroundname;
             background = GameEngine.TextureList[backgroundName];
 
             movPlat1 = true;
@@ -820,6 +822,8 @@ namespace CrisisAtSwissStation
             }
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
             numDrawLeft = 0; // reset the amount of instasteel we have when we load the level
+
+            GameEngine.resetVictoryAnimation();
         }
 
         // NO LONGER USED. TALK TO DANIEL
@@ -1052,8 +1056,7 @@ namespace CrisisAtSwissStation
                 //ronnie added for laser
                 laser.startErasing();
 
-                //Implementing deconstruct sfx
-                audio.Play(CrisisAtSwissStation.AudioManager.SFXSelection.Deconstruct);
+
 
                 // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -1071,6 +1074,8 @@ namespace CrisisAtSwissStation
                     if (po is PaintedObject)
                     {
                         this.RemoveObject(po);
+                        //Implementing deconstruct sfx
+                        audio.Play(CrisisAtSwissStation.AudioManager.SFXSelection.Deconstruct);
                         PaintedObject painto = (PaintedObject)po;
                         numDrawLeft += painto.getAmountOfInstasteel();
                     }
@@ -1089,7 +1094,10 @@ namespace CrisisAtSwissStation
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
-                audio.Play(AudioManager.SFXSelection.Charge);
+                
+               
+                /* Still working on this nasty loop
+                audio.Play(AudioManager.SFXSelection.Charge); */
 
                 // if we're holding down the mouse button
                 //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
@@ -1160,7 +1168,12 @@ namespace CrisisAtSwissStation
                         break;
                     }
                 }
-                audio.Play(AudioManager.SFXSelection.Construct);
+
+                if (dotPositions.Count > 1)
+                {
+                    audio.Play(AudioManager.SFXSelection.Construct);
+                }
+
                 laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects

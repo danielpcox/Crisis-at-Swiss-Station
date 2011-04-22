@@ -679,55 +679,82 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 PaintedObject po;
                 List<Vector2> blobs = new List<Vector2>();
+                float radius;
+                float sidelength;
+                Vector2 centeroff;
                 switch (lastname)
                 {
                     case "line_short":
                         float linelength_short = (30f/60f) * 1.2f;
                         blobs.Add(gameposition + new Vector2(linelength_short/2f, 0f));
                         blobs.Add(gameposition + new Vector2(-linelength_short/2f, 0f));
+                        centeroff = new Vector2(0,0);
                         break;
                     case "line":
                         float linelength = 1.2f;
                         blobs.Add(gameposition + new Vector2(linelength/2, 0f));
                         blobs.Add(gameposition + new Vector2(-linelength/2f, 0f));
+                        centeroff = new Vector2(0,0);
                         break;
                     case "line_long":
                         float linelength_long = (200f/60f) * 1.2f;
                         blobs.Add(gameposition + new Vector2(linelength_long/2f, 0f));
                         blobs.Add(gameposition + new Vector2(-linelength_long/2f, 0f));
+                        centeroff = new Vector2(0,0);
                         break;
                     case "disk_short":
-                        blobs = paintedCircle((30f/60f) *0.6f, gameposition); // radius of 0.6f
+                        radius =  (30f/60f) *0.6f;
+                        blobs = paintedCircle(radius, gameposition); // radius of 0.6f
+                        centeroff = -1 * new Vector2(radius, radius);
+                        centeroff = new Vector2(0,0);
                         break;
                     case "disk_small":
-                        blobs = paintedCircle((40f/60f) * 0.6f, gameposition); // radius of 0.6f
+                        radius =  (40f/60f) *0.6f;
+                        blobs = paintedCircle(radius, gameposition); // radius of 0.6f
+                        centeroff = -1 * new Vector2(radius, radius);
+                        centeroff = new Vector2(0,0);
                         break;
                     case "disk":
-                        blobs = paintedCircle(0.6f, gameposition); // radius of 0.6f
+                        radius =  0.6f;
+                        blobs = paintedCircle(radius, gameposition); // radius of 0.6f
+                        centeroff = -1 * new Vector2(radius, radius);
+                        centeroff = new Vector2(0,0);
                         break;
                     case "disk_long":
-                        blobs = paintedCircle((150f/60f) * 0.6f, gameposition); // radius of 0.6f
+                        radius =  (150f/60f) * 0.6f;
+                        blobs = paintedCircle(radius, gameposition); // radius of 0.6f
+                        centeroff = -1 * new Vector2(radius, radius);
+                        centeroff = new Vector2(0,0);
                         break;
                     case "block_short":
+                        sidelength =  (30f/60f) *0.6f;
                         blobs = paintedSquare((30f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        centeroff = -1 * new Vector2(sidelength, sidelength);
                         break;
                     case "block_small":
+                        sidelength =  (40f/60f) *0.6f;
                         blobs = paintedSquare((40f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        centeroff = -1 * new Vector2(sidelength, sidelength);
                         break;
                     case "block":
+                        sidelength =  0.6f;
                         blobs = paintedSquare(1.2f, gameposition); // sidelength of 1.2f
+                        centeroff = -1 * new Vector2(sidelength, sidelength);
                         break;
                     case "block_long":
+                        sidelength =  (150f/60f) * 0.6f;
                         blobs = paintedSquare((150f/60f) * 1.2f, gameposition); // sidelength of 1.2f
+                        centeroff = -1 * new Vector2(sidelength, sidelength);
                         break;
                     default:
                         blobs.Add(gameposition + new Vector2(0.6f, 0f));
                         blobs.Add(gameposition + new Vector2(-0.6f, 0f));
+                        centeroff = new Vector2(0,0);
                         break;
                 }
                 po = new PaintedObject(world.World, "paint", "paintedsegment", blobs);
                 po.TextureFilename = "Art\\Objects\\PaintedObjects\\" + lastname;
-                po.Position = gameposition;
+                po.Position = gameposition + centeroff;
                 world.AddObject(po);
             }
             else if (rb_BackgroundObjects.Checked)
@@ -765,7 +792,7 @@ namespace CrisisAtSwissStation.LevelEditor
             List<Vector2> blobs = new List<Vector2>();
             for (int i = 0; i < numpoints; i++)
             {
-                float angle = ((float)i * 2f * (float)Math.PI + (float)Math.PI) / (float)numpoints;
+                float angle = ((float)i * 2f * (float)Math.PI / (float)numpoints ) + (float)Math.PI;
                 blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle), (float)radius * (float)Math.Cos(angle)));
             }
             return blobs;
@@ -924,7 +951,7 @@ namespace CrisisAtSwissStation.LevelEditor
         private void mi_New_World_Click(object sender, EventArgs e)
         {
             //Get the background name from the user
-            StringPromptDialog dialog = new StringPromptDialog("Enter the name of the background texture: ", "background");
+            StringPromptDialog dialog = new StringPromptDialog("Enter background/music", "background");
 
             //Create the world.
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -1146,6 +1173,24 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.RemoveFromWorld();
                     CircleDef shape = new CircleDef();
                     shape.Radius = radius;
+                    // HACK HACK HACK - this won't work for objects that have more than one shape!
+                    shape.Density = currentlySelectedObject.shapes[0].Density;
+                    shape.Friction = currentlySelectedObject.shapes[0].Friction;
+                    shape.Restitution = currentlySelectedObject.shapes[0].Restitution;
+                    currentlySelectedObject.shapes.Clear(); // get rid of the old, unscaled shape
+                    currentlySelectedObject.shapes.Add(shape); // add the new one
+                    currentlySelectedObject.AddToWorld();
+                }
+                else if (currentlySelectedObject.TextureFilename == "Art\\Objects\\BoxObjects\\bottomTexture2273")
+                {
+                    float halfWidth = (float)currentlySelectedObject.Width / (2 * CASSWorld.SCALE);
+                    float halfHeight = (float)currentlySelectedObject.Height / (2 * CASSWorld.SCALE);
+
+                    // box object only...
+                    currentlySelectedObject.RemoveFromWorld();
+                    // Create the collision shape
+                    PolygonDef shape = new PolygonDef();
+                    shape.SetAsBox(halfWidth, halfHeight);
                     // HACK HACK HACK - this won't work for objects that have more than one shape!
                     shape.Density = currentlySelectedObject.shapes[0].Density;
                     shape.Friction = currentlySelectedObject.shapes[0].Friction;
