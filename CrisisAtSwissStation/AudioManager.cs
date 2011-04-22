@@ -22,6 +22,9 @@ namespace CrisisAtSwissStation
         private Dictionary<MusicSelection, Song> songs;              //Dictionaries are useful for keying a selection enum to a particular audio element.
         private Dictionary<SFXSelection, SoundEffect> soundEffects;
         private float SFXVolume;     //Value between 0.0 and 1.0.
+        private SoundEffectInstance SFXplaying = null;
+        
+
         
 
 
@@ -54,7 +57,7 @@ namespace CrisisAtSwissStation
             //Initializes the dictionaries.
             soundEffects = new Dictionary<SFXSelection, SoundEffect>();
             songs = new Dictionary<MusicSelection, Song>();
-            SFXVolume = 0.1f;
+            SFXVolume = 0.5f;
             MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
             
@@ -123,7 +126,11 @@ namespace CrisisAtSwissStation
              {
                  SoundEffectInstance sound = sfx.CreateInstance();
                  sound.Volume = SFXVolume;
-                 sound.Play();
+                 if (SFXplaying != sound)
+                 {
+                     sound.Play();
+                     SFXplaying = sound;
+                 }
              }
              else
              {
