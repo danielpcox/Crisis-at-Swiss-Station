@@ -787,7 +787,7 @@ namespace CrisisAtSwissStation
         {
             paintTexture = GameEngine.TextureList["paint"];
             AudioManager audio = GameEngine.AudioManager;
-            audio.Play(AudioManager.MusicSelection.Destruction);
+            audio.Play(AudioManager.MusicSelection.Basement);
             background = GameEngine.TextureList[backgroundName];
             foreach (PhysicsObject obj in Objects)
             {
