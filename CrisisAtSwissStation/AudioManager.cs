@@ -41,7 +41,8 @@ namespace CrisisAtSwissStation
         {
             EarlyLevelv2,
             Tension,
-            Destruction
+            Destruction,
+            Basement
            
         }
 
@@ -66,6 +67,7 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.EarlyLevelv2, content.Load<Song>("Music/EarlyLevelv2"));
             songs.Add(MusicSelection.Tension, content.Load<Song>("Music/Tension(Lab 3)"));
             songs.Add(MusicSelection.Destruction, content.Load<Song>("Music/Destruction(v1)"));
+            songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music/LevelComplete"));
