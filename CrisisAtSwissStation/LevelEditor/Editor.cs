@@ -200,11 +200,11 @@ namespace CrisisAtSwissStation.LevelEditor
           */
         }
 
-        private void rb_VictoryTest_CheckedChanged(object sender, EventArgs e)
+        private void rb_BackgroundObjects_CheckedChanged(object sender, EventArgs e)
         {
-            if (rb_VictoryTest.Checked)
+            if (rb_BackgroundObjects.Checked)
             {
-                textureDir = "Art\\Victory Tests\\";
+                textureDir = "Art\\Objects\\BackgroundObjects\\";
                 PopulateTextureList(textureDir);
             }
 
@@ -652,6 +652,14 @@ namespace CrisisAtSwissStation.LevelEditor
                 po.TextureFilename = "Art\\Objects\\PaintedObjects\\" + lastname;
                 po.Position = gameposition;
                 world.AddObject(po);
+            }
+            else if (rb_BackgroundObjects.Checked)
+            {
+                BackgroundObject bo;
+                bo = new BackgroundObject(world.World, world, texName,gameposition);
+                bo.Position = gameposition;
+                world.AddObject(bo); 
+
             }
             
                 /*
