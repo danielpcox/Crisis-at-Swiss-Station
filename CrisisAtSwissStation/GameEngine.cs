@@ -432,6 +432,11 @@ namespace CrisisAtSwissStation
                     {
                         LoadWorld(cwname);
                     }
+                    else if (ks.IsKeyDown(Keys.N))
+                    {
+                        LoadNextWorld();
+                    }
+
                     //world.Update();
                     currentWorld.Simulate((float)gameTime.ElapsedGameTime.TotalSeconds);
                     //SetDebugInfo("Level = " + world.player.Level);
@@ -492,40 +497,14 @@ namespace CrisisAtSwissStation
                 if (countdown <= 0 && currentWorld.Succeeded && !currentWorld.Failed)
                 {
                     //reset = currentWorld.Failed;
-                    int levelnum;
-                    string[] pieces = cwname.Split('.');
-                    bool parsed = int.TryParse(pieces[0].Substring(pieces[0].Length - 1), out levelnum);
-                    string origname;
-                    if (parsed)
-                    {
-                        origname = pieces[0].Substring(0, pieces[0].Length-1);
-                    }
-                    else
-                    {
-                        origname = pieces[0];
-                    }
-
-                    string newfilename = origname + (levelnum + 1) + ".world";
-
-                    if ( File.Exists( newfilename ) )
-                    {
-                        LoadWorld(newfilename);
-                        progstate = ProgramState.Playing;
-                    }
-                    else
-                    {
-                        LinkToMain();
-                        progstate = ProgramState.Menu;
-                        currentWorld = null;
-                    }
-                    countdown = COUNTDOWN;
-                    audioManager.IncreaseMusicVolume(0.5f);
+                    LoadNextWorld();
                 }
                 else if (countdown <= 0) // failed
                 {
                         LoadWorld(cwname);
                         progstate = ProgramState.Playing;
                         countdown = COUNTDOWN;
+                        audioManager.IncreaseMusicVolume(0.5f);
                 }
             }
             
@@ -601,6 +580,37 @@ namespace CrisisAtSwissStation
 
             base.Update(gameTime);
             prevKeyState = keyState;
+        }
+
+        private void LoadNextWorld()
+        {
+            int levelnum;
+            string[] pieces = cwname.Split('.');
+            bool parsed = int.TryParse(pieces[0].Substring(pieces[0].Length - 1), out levelnum);
+            string origname;
+            if (parsed)
+            {
+                origname = pieces[0].Substring(0, pieces[0].Length - 1);
+            }
+            else
+            {
+                origname = pieces[0];
+            }
+
+            string newfilename = origname + (levelnum + 1) + ".world";
+
+            if (File.Exists(newfilename))
+            {
+                LoadWorld(newfilename);
+                progstate = ProgramState.Playing;
+            }
+            else
+            {
+                LinkToMain();
+                progstate = ProgramState.Menu;
+                currentWorld = null;
+            }
+            countdown = COUNTDOWN;
         }
 
         public static void EnterMenu()
