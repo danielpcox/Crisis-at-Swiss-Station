@@ -1075,10 +1075,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\BoxObjects\ruined_column.png">
-      <Name>ruined_column</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+    <Compile Include="Music\LaterLevelv1.mp3">
+      <Name>LaterLevelv1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Music\SpaceThemeHappy.mp3">
+      <Name>SpaceThemeHappy</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
