@@ -469,12 +469,36 @@ namespace CrisisAtSwissStation
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
                 }
 
-                if (countdown == 0)
+                if (countdown <= 0)
                 {
                     //reset = currentWorld.Failed;
-                    LinkToMain();
-                    progstate = ProgramState.Menu;
-                    currentWorld = null;
+                    int levelnum;
+                    string[] pieces = cwname.Split('.');
+                    bool parsed = int.TryParse(pieces[0].Substring(pieces[0].Length - 1), out levelnum);
+                    string origname;
+                    if (parsed)
+                    {
+                        origname = pieces[0].Substring(0, pieces[0].Length-1);
+                    }
+                    else
+                    {
+                        origname = pieces[0];
+                    }
+
+                    string newfilename = origname + (levelnum + 1) + ".world";
+
+                    if ( File.Exists( newfilename ) )
+                    {
+                        countdown = COUNTDOWN;
+                        LoadWorld(newfilename);
+                        progstate = ProgramState.Playing;
+                    }
+                    else
+                    {
+                        LinkToMain();
+                        progstate = ProgramState.Menu;
+                        currentWorld = null;
+                    }
                     audioManager.IncreaseMusicVolume(0.5f);
                 }
             }
@@ -506,7 +530,7 @@ namespace CrisisAtSwissStation
                 
 
             // Just won or lost - initiate countdown
-            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown == 0)
+            if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown <= 0)
                 countdown = COUNTDOWN;
 
            
