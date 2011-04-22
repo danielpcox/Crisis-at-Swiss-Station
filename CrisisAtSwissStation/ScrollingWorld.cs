@@ -813,6 +813,8 @@ namespace CrisisAtSwissStation
             }
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
             numDrawLeft = 0; // reset the amount of instasteel we have when we load the level
+
+            GameEngine.resetVictoryAnimation();
         }
 
         // NO LONGER USED. TALK TO DANIEL

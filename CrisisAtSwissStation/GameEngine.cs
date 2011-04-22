@@ -34,6 +34,17 @@ namespace CrisisAtSwissStation
         public static Texture2D menuBack;
         public static Texture2D menuPanel;
         
+        //animation stuff
+        private static bool animate;
+        private static Rectangle sourceRect;
+        private Vector2 origin;
+        private static int xFrame;
+        private static int yFrame;
+        private static int spriteWidth;
+        private static int spriteHeight;           
+        private int myGameTime, animateTimer, animateInterval;
+
+
         enum ProgramState
         {
             Menu,
@@ -171,6 +182,18 @@ namespace CrisisAtSwissStation
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
+            //animation stuff
+            animate = false;
+            myGameTime = 0;
+            animateTimer = 0;
+            animateInterval = 20;
+            xFrame = 0;
+            yFrame = 0;           
+            spriteWidth = 700;
+            spriteHeight = 350;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
             //initializes our InstaSteel text box
             /*
             instaSteelTextBox = new TextBox(new Vector2(50, 160), 80, Content);//instantiates with vector for location, 80 is the width, Content is a content manager
@@ -196,7 +219,7 @@ namespace CrisisAtSwissStation
             spriteBatch = new SpriteBatch(GraphicsDevice);
             polygonDrawer = new PolygonDrawer(GraphicsDevice, Window.ClientBounds.Width, Window.ClientBounds.Height);
             spriteFont = Content.Load<SpriteFont>("PhysicsFont");
-            victory = Content.Load<Texture2D>("Victory");
+            victory = Content.Load<Texture2D>("Art\\victory_strip");
             failure = Content.Load<Texture2D>("failure");
             audioManager.LoadContent(Content);
 
@@ -257,6 +280,16 @@ namespace CrisisAtSwissStation
             textureList.Clear();
         }
 
+
+        public static void resetVictoryAnimation()
+        {
+            animate = false;
+            xFrame = 0;
+            yFrame = 0;
+            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -264,35 +297,39 @@ namespace CrisisAtSwissStation
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            /*
+            
             //ronnie added for animation
+            Console.WriteLine("{0} {1} {2} {3}", myGameTime, xFrame,yFrame,animateTimer);
             if (animate == true)
             {
-                if (xFrame != 4)
+                myGameTime++;
+                sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
+                if (!((xFrame == 3) && (yFrame == 1)))
                 {
-                    //animation stuff
-                    myGameTime++;
-                    sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-
                     animateTimer += myGameTime;
 
                     if (animateTimer > animateInterval)
                     {
                         xFrame++;
 
-                        if (xFrame > numFrames - 1)
+                        if (xFrame > 4 && yFrame == 0)
                         {
                             xFrame = 0;
+                            yFrame = 1;
                         }
+                        else if (xFrame > 3 && yFrame == 1)
+                        {
+                            xFrame = 3;
+                            yFrame = 1;
+                        }                     
 
-
+                        // -= (int)walkInterval;
                         myGameTime = 0;
                         animateTimer = 0;
-
                     }
                 }
             }
-            */
+            
 
 
             // Allows the game to exit
@@ -732,8 +769,9 @@ namespace CrisisAtSwissStation
             // Draw success or failure image
             if (currentWorld!=null && currentWorld.Succeeded && !currentWorld.Failed)
             {
-                spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - victory.Width) / 2,
-                    (graphics.PreferredBackBufferHeight - victory.Height) / 2), Color.White);
+                animate = true;
+                spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - sourceRect.Width) / 2,
+                    (graphics.PreferredBackBufferHeight - sourceRect.Height) / 2), sourceRect, Color.White);
             }
             else if (currentWorld!=null && currentWorld.Failed)
             {
