@@ -49,7 +49,9 @@ namespace CrisisAtSwissStation
             EarlyLevelv2,
             Tension,
             Destruction,
-            Basement
+            Basement,
+            Happy,
+            Robots
            
         }
 
@@ -76,12 +78,14 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.Tension, content.Load<Song>("Music/Tension(Lab 3)"));
             songs.Add(MusicSelection.Destruction, content.Load<Song>("Music/Destruction(v1)"));
             songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
+            songs.Add(MusicSelection.Happy, content.Load<Song>("Music/SpaceThemeHappy"));
+            songs.Add(MusicSelection.Robots, content.Load<Song>("Music/LaterLevelv1"));
 
             // MAPS BACKGROUND FILENAMES TO MUSIC FILES
-            songsdict.Add("background", content.Load<Song>("Music/EarlyLevelv2"));
-            songsdict.Add("tutorial", content.Load<Song>("Music/Tension(Lab 3)"));
-            songsdict.Add("ballroom", content.Load<Song>("Music/Destruction(v1)"));
-            songsdict.Add("RonniesBestWork", content.Load<Song>("Music/Basement"));
+            songsdict.Add("background", content.Load<Song>("Music/Basement"));
+            songsdict.Add("tutorial", content.Load<Song>("Music/SpaceThemeHappy"));
+            songsdict.Add("ballroom", content.Load<Song>("Music/EarlyLevelv2"));
+            songsdict.Add("RonniesBestWork", content.Load<Song>("Music/LaterLevelv1"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));
