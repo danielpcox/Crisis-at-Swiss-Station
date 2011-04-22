@@ -1094,7 +1094,7 @@ namespace CrisisAtSwissStation.LevelEditor
             // tell the graphics to draw the image.
 
             // Hack to make the image representing a painted object draw correctly
-            if (obj is PaintedObject)
+            if (obj is PaintedObject && !(obj is InstasteelObject) && !(obj is InstasteelCircleObject))
             {
                 ((PaintedObject)obj).Height = img.Height;
                 ((PaintedObject)obj).Width = img.Width;
