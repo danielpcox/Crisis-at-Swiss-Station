@@ -54,7 +54,7 @@ namespace CrisisAtSwissStation
             //Initializes the dictionaries.
             soundEffects = new Dictionary<SFXSelection, SoundEffect>();
             songs = new Dictionary<MusicSelection, Song>();
-            SFXVolume = 0.5f;
+            SFXVolume = 0.1f;
             MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
             

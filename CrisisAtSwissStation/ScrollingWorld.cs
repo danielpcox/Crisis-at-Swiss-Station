@@ -280,6 +280,8 @@ namespace CrisisAtSwissStation
         WinDoorObject winDoor;
         public LaserObject laser;
 
+        
+
         public ScrollingWorld(string backgroundname = "background")
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
@@ -1021,11 +1023,16 @@ namespace CrisisAtSwissStation
             Vector2 scaledMousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
             Vector2 mouseGamePosition = getScreenOrigin() + scaledMousePosition;
             //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
+            AudioManager audio = GameEngine.AudioManager;
+            
             //ERASING
             if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
             {
                 //ronnie added for laser
                 laser.startErasing();
+
+                //Implementing deconstruct sfx
+                audio.Play(CrisisAtSwissStation.AudioManager.SFXSelection.Deconstruct);
 
                 // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -1061,6 +1068,7 @@ namespace CrisisAtSwissStation
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
+                audio.Play(AudioManager.SFXSelection.Charge);
 
                 // if we're holding down the mouse button
                 //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
@@ -1097,6 +1105,7 @@ namespace CrisisAtSwissStation
                     finishDraw = true;
                 }
 
+                
                 //other random ronnie addition for laser
                 //laser.finishDrawing();
 
@@ -1130,6 +1139,7 @@ namespace CrisisAtSwissStation
                         break;
                     }
                 }
+                audio.Play(AudioManager.SFXSelection.Construct);
                 laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
