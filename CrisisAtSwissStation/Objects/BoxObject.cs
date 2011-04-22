@@ -99,8 +99,15 @@ namespace CrisisAtSwissStation
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
-            
-            spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
+
+            if (TextureFilename == "Art\\Objects\\BoxObjects\\bottomTexture2273")
+            {
+                spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, new Vector2(scale, 1), SpriteEffects.None, 0);
+            }
+            else
+            {
+                spriteBatch.Draw(texture, CASSWorld.SCALE * Position, null, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
+            }
 
             spriteBatch.End();
         }
