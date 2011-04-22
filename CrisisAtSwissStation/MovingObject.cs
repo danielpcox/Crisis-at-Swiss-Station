@@ -65,7 +65,7 @@ namespace CrisisAtSwissStation
             shape.Restitution = restitution;
             shapes.Add(shape);
 
-            isMoving = true;
+            isMoving = false;
            
         }
 

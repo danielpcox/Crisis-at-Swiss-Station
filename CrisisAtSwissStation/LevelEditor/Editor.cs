@@ -1088,10 +1088,13 @@ namespace CrisisAtSwissStation.LevelEditor
                 float newbound2 = float.Parse(tb_bound2.Text);
                 if (currentlySelectedObject is MovingObject)
                 {
+                   
                     MovingObject temp = (MovingObject)currentlySelectedObject;
                     temp.bound1 = newbound1;
                     temp.bound2 = newbound2;
+                    Console.WriteLine(temp.bound1 + " " + temp.bound2);
                     currentlySelectedObject = temp;
+                    
                 }
                 else if (currentlySelectedObject is HorizontalMovingObject)
                 {
