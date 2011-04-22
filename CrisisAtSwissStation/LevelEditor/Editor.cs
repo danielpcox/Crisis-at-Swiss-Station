@@ -756,7 +756,7 @@ namespace CrisisAtSwissStation.LevelEditor
             List<Vector2> blobs = new List<Vector2>();
             for (int i = 0; i < numpoints; i++)
             {
-                float angle = (float)i * 2f * (float)Math.PI / (float)numpoints;
+                float angle = ((float)i * 2f * (float)Math.PI + (float)Math.PI) / (float)numpoints;
                 blobs.Add(gameposition + new Vector2((float)radius * (float)Math.Sin(angle), (float)radius * (float)Math.Cos(angle)));
             }
             return blobs;
@@ -768,25 +768,26 @@ namespace CrisisAtSwissStation.LevelEditor
             List<Vector2> blobs = new List<Vector2>();
             Vector2 right = (sidelength / 2) * new Vector2(1, 0); Vector2 left = (sidelength / 2) * new Vector2(-1, 0);
             Vector2 top = (sidelength / 2) * new Vector2(0, -1); Vector2 bottom = (sidelength / 2) * new Vector2(0, 1);
+            Vector2 centeroff = new Vector2(-sidelength * 2f, -sidelength * 2f);
             for (int i = 0; i < numpoints / 4; i++)
             {
                 float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
-                blobs.Add(gameposition + top + new Vector2(progress, 0));
+                blobs.Add(gameposition + top + new Vector2(progress, 0) + centeroff);
             }
             for (int i = 0; i < numpoints / 4; i++)
             {
                 float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
-                blobs.Add(gameposition + right + new Vector2(0, progress));
+                blobs.Add(gameposition + right + new Vector2(0, progress) + centeroff);
             }
             for (int i = 0; i < numpoints / 4; i++)
             {
                 float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
-                blobs.Add(gameposition + bottom + new Vector2(-progress, 0));
+                blobs.Add(gameposition + bottom + new Vector2(-progress, 0) + centeroff);
             }
             for (int i = 0; i < numpoints / 4; i++)
             {
                 float progress = i * sidelength / ((float)numpoints / 4f) - (sidelength / 2f);
-                blobs.Add(gameposition + left + new Vector2(0, -progress));
+                blobs.Add(gameposition + left + new Vector2(0, -progress) + centeroff);
             }
             return blobs;
         }
