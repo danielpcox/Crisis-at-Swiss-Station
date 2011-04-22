@@ -487,7 +487,7 @@ namespace CrisisAtSwissStation
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
                 }
 
-                if (countdown <= 0)
+                if (countdown <= 0 && currentWorld.Succeeded && !currentWorld.Failed)
                 {
                     //reset = currentWorld.Failed;
                     int levelnum;
@@ -518,6 +518,12 @@ namespace CrisisAtSwissStation
                         currentWorld = null;
                     }
                     audioManager.IncreaseMusicVolume(0.5f);
+                }
+                else if (countdown <= 0) // failed
+                {
+                        countdown = COUNTDOWN;
+                        LoadWorld(cwname);
+                        progstate = ProgramState.Playing;
                 }
             }
             
