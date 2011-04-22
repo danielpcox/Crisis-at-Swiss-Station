@@ -34,6 +34,8 @@ namespace CrisisAtSwissStation
             : base(world, blobtexturename, segmenttexturename, blobs)
         {
 
+            shapes.Clear();
+
             amountOfInstasteel = amountofis;
 
             this.texture = GameEngine.TextureList[textureName];

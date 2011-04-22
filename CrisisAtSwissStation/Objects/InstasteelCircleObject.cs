@@ -36,6 +36,7 @@ namespace CrisisAtSwissStation
         public InstasteelCircleObject(World world, string texturename, float amountofis, float density, float friction, float restitution,float myScale)
             : base(world, blobtexturename, segmenttexturename, blobs)
         {
+            shapes.Clear();
 
             amountOfInstasteel = amountofis;
 
