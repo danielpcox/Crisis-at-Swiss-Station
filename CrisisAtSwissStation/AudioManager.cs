@@ -30,7 +30,10 @@ namespace CrisisAtSwissStation
         //the chance of a spelling mistake.
         public enum SFXSelection
         {
-            LevelComplete
+            LevelComplete,
+            Construct,
+            Charge,
+            Deconstruct
 
         }
 
@@ -70,7 +73,10 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
 
             //Sound Effects
-            soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music/LevelComplete"));
+            soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));
+            soundEffects.Add(SFXSelection.Construct, content.Load<SoundEffect>("Music\\Construct"));
+            soundEffects.Add(SFXSelection.Charge, content.Load<SoundEffect>("Music\\Constructing(charge)"));
+            soundEffects.Add(SFXSelection.Deconstruct, content.Load<SoundEffect>("Music\\Deconstruct"));
 
         }
 
