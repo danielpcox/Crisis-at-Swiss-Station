@@ -13,20 +13,23 @@ using System.Diagnostics;
 namespace CrisisAtSwissStation
 {
     [Serializable]
-    public class BackgroundObject
+    public class BackgroundObject : BoxObject
     {
         [NonSerialized]
         private Texture2D displayTexture;
         private string displayTextureName;
         private Vector2 position;
         private ScrollingWorld world;
+        private bool destroyedBody;
 
-        public BackgroundObject(ScrollingWorld myWorld, string myDisplayTextureName, Vector2 myPosition)
+        public BackgroundObject(World myWorld, ScrollingWorld myScrollingWorld, string myDisplayTextureName, Vector2 myPosition)
+            : base(myWorld, myDisplayTextureName, 0f, .5f, 0.0f, 1, false)
         {
             displayTexture = GameEngine.TextureList[myDisplayTextureName];
             displayTextureName = myDisplayTextureName;
-            world = myWorld;
+            world = myScrollingWorld;
             position = myPosition;
+            destroyedBody = false;
 
         }
 
@@ -34,6 +37,16 @@ namespace CrisisAtSwissStation
         {
             displayTexture = GameEngine.TextureList[displayTextureName];
            
+        }
+
+        public override void Update(CASSWorld world, float dt)
+        {
+            if (!destroyedBody)
+            { 
+                
+                RemoveFromWorld();
+                destroyedBody = true;
+            }
         }
 
         public void Draw(GraphicsDevice device, Matrix camera)

@@ -656,7 +656,9 @@ namespace CrisisAtSwissStation.LevelEditor
             else if (rb_BackgroundObjects.Checked)
             {
                 BackgroundObject bo;
-                bo = new BackgroundObject(world, texName,gameposition);                  
+                bo = new BackgroundObject(world.World, world, texName,gameposition);
+                bo.Position = gameposition;
+                world.AddObject(bo); 
 
             }
             
