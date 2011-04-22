@@ -1081,24 +1081,18 @@ namespace CrisisAtSwissStation.LevelEditor
             XnaRectangle bb = obj.getBBRelativeToWorld();
 
             //Find the new point for the upper-left corner
-            //DrawPoint upper_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(0, 0) - new Vector2(obj.Width / 2, obj.Height / 2));
-            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X, bb.Y));
+            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width/2f, bb.Y + bb.Height/2f) + RotateVector2(new Vector2(-obj.Width/2f, -obj.Height/2f), obj.Angle));
 
-            //Find the new point for the upper-right corner
-            float x_ur = obj.Width / 2;
-            float y_ur = 0 - obj.Height / 2;
+            DrawPoint upper_right = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width/2f, bb.Y + bb.Height/2) + RotateVector2(new Vector2(obj.Width - obj.Width/2f, -obj.Height/2f), obj.Angle));
 
-            //DrawPoint upper_right = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(x_ur, y_ur));
-            DrawPoint upper_right = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width, bb.Y));
+            DrawPoint lower_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width/2f, bb.Y + bb.Height/2) + RotateVector2(new Vector2(-obj.Width/2f, obj.Height - obj.Height/2f), obj.Angle));
+            /*
+            DrawPoint upper_left = Conversion.Vector2ToDrawPoint(RotateVector2(new Vector2(bb.X, bb.Y), obj.Angle));
 
+            DrawPoint upper_right = Conversion.Vector2ToDrawPoint(RotateVector2(new Vector2(bb.X + bb.Width, bb.Y), obj.Angle));
 
-            //Find the new point for the lower-left corner
-            float x_ll = 0 - obj.Width / 2;
-            float y_ll = obj.Height / 2;
-
-            //DrawPoint lower_left = Conversion.Vector2ToDrawPoint(obj.mapPointOnImage(x_ll, y_ll));
-            DrawPoint lower_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X, bb.Y + bb.Height));
-
+            DrawPoint lower_left = Conversion.Vector2ToDrawPoint(RotateVector2(new Vector2(bb.X, bb.Y + bb.Height), obj.Angle));
+            */
 
             //Define the point mapping.
             DrawPoint[] destmapping = {upper_left, upper_right, lower_left};
@@ -1106,6 +1100,17 @@ namespace CrisisAtSwissStation.LevelEditor
 
             //Draw the image with the specified position and scaling.
             e.Graphics.DrawImage(img, destmapping, srcrect, GraphicsUnit.Pixel);
+        }
+
+
+        public static Vector2 RotateVector2(Vector2 point, float radians)
+        {
+            float cosRadians = (float)Math.Cos(radians);
+            float sinRadians = (float)Math.Sin(radians);
+
+            return new Vector2(
+                point.X * cosRadians - point.Y * sinRadians,
+                point.X * sinRadians + point.Y * cosRadians);
         }
 
         //-------End of painting functions------------------------------------------------------------
