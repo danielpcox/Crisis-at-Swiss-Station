@@ -33,8 +33,9 @@ namespace CrisisAtSwissStation
         public static Texture2D onepixel; // used for darkening the string
         public static Texture2D menuBack;
         public static Texture2D menuPanel;
+        public static Texture2D menuPanelAnimation;
         
-        //animation stuff
+        //victory animation stuff
         private static bool animate;
         private static Rectangle sourceRect;
         private Vector2 origin;
@@ -43,6 +44,16 @@ namespace CrisisAtSwissStation
         private static int spriteWidth;
         private static int spriteHeight;           
         private int myGameTime, animateTimer, animateInterval;
+
+        //menu animation stuff
+        private static bool menuAnimate;
+        private static Rectangle menuSourceRect;
+        private Vector2 menuOrigin;
+        private static int menuXFrame;
+        private static int menuYFrame;
+        private static int menuSpriteWidth;
+        private static int menuSpriteHeight;           
+        private int menuMyGameTime, menuAnimateTimer, menuAnimateInterval;
 
 
         enum ProgramState
@@ -182,7 +193,7 @@ namespace CrisisAtSwissStation
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.ApplyChanges();
 
-            //animation stuff
+            //victory animation stuff
             animate = false;
             myGameTime = 0;
             animateTimer = 0;
@@ -193,6 +204,10 @@ namespace CrisisAtSwissStation
             spriteHeight = 350;
             sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+
+            //menuanimation stuff
+            menuAnimate = false;
+
 
             //initializes our InstaSteel text box
             /*
@@ -230,6 +245,7 @@ namespace CrisisAtSwissStation
             onepixel = Content.Load<Texture2D>("Art\\Misc\\onepixel");
             menuBack= Content.Load<Texture2D>("Art\\Menus\\menu_back");
             menuPanel = Content.Load<Texture2D>("Art\\Menus\\menu_panel");
+            menuPanelAnimation = Content.Load<Texture2D>("Art\\Menus\\main_strip");
 
             DirectoryInfo di = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\Content"); //
             FileInfo[] fileList = di.GetFiles("*.xnb", SearchOption.AllDirectories);                  //
@@ -391,6 +407,8 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.New:
+                           // menuAnimate = true;
+                            //animateMyMenu();
                             if (NewWorld())
                             {
                                 progstate = ProgramState.Playing;
@@ -401,7 +419,7 @@ namespace CrisisAtSwissStation
                     break;
 
                 case ProgramState.Playing:
-
+                    //menuAnimate = false;
                     //Updates the room.
                     KeyboardState ks = Keyboard.GetState();
                     if (ks.IsKeyDown(Keys.Escape))
@@ -696,7 +714,57 @@ namespace CrisisAtSwissStation
             SetCurrentMenu(startMenu);
 
         }
-        
+
+
+        private void animateMyMenu()
+        {
+            menuXFrame = 0;
+            menuYFrame = 0;
+            menuSpriteWidth = 500;
+            menuSpriteHeight = 500;
+            menuAnimateInterval = 20;
+            menuMyGameTime = 0;
+            menuAnimateTimer = 0;
+            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+            menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
+            spriteBatch.Begin();
+            for (int i = 0; i < 150; i++)
+            {
+                Console.WriteLine("i got here");
+                menuMyGameTime++;
+                menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+                if (!((menuXFrame == 5) && (menuYFrame == 1)))
+                {
+                    menuAnimateTimer += menuMyGameTime;
+
+                    if (menuAnimateTimer > menuAnimateInterval)
+                    {
+                        menuXFrame++;
+
+                        if (menuXFrame > 5 && menuYFrame == 0)
+                        {
+                            menuXFrame = 0;
+                            menuYFrame = 1;
+                        }
+                        else if (menuXFrame > 5 && menuYFrame == 1)
+                        {
+                            menuXFrame = 5;
+                            menuYFrame = 1;
+                        }
+                        myGameTime = 0;
+                        animateTimer = 0;
+                    }
+                }
+
+                spriteBatch.Draw(menuPanelAnimation,
+                        new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
+
+
+            }
+            spriteBatch.End();
+
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -750,16 +818,73 @@ namespace CrisisAtSwissStation
                         currentMenu.Draw(spriteBatch);
                         spriteBatch.End();
                     }
-                        
-                    spriteBatch.Begin();
-                    spriteBatch.Draw(menuPanel,
-                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                    currentMenu.Draw(spriteBatch);
-                    spriteBatch.End();
+
+                    /*
+                    //oh god hacking for menu screen
+                    if (menuAnimate)
+                    {
+                        menuXFrame = 0;
+                        menuYFrame = 0;
+                        menuSpriteWidth = 500;
+                        menuSpriteHeight = 500;
+                        menuAnimateInterval = 20;
+                        menuMyGameTime = 0;
+                        menuAnimateTimer = 0;
+                        menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+                        menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
+                        spriteBatch.Begin();
+                        for (int i = 0; i < 150; i++)
+                        {
+                            Console.WriteLine("i got here");
+                            menuMyGameTime++;
+                            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
+                            if (!((menuXFrame == 5) && (menuYFrame == 1)))
+                            {
+                                menuAnimateTimer += menuMyGameTime;
+
+                                if (menuAnimateTimer > menuAnimateInterval)
+                                {
+                                    menuXFrame++;
+
+                                    if (menuXFrame > 5 && menuYFrame == 0)
+                                    {
+                                        menuXFrame = 0;
+                                        menuYFrame = 1;
+                                    }
+                                    else if (menuXFrame > 5 && menuYFrame == 1)
+                                    {
+                                        menuXFrame = 5;
+                                        menuYFrame = 1;
+                                    }                                   
+                                    myGameTime = 0;
+                                    animateTimer = 0;
+                                }
+                            }
+
+                            spriteBatch.Draw(menuPanelAnimation,
+                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
+                           
+
+                        }
+                        spriteBatch.End();
+
+                        menuAnimate = false;
+
+                    }
+                    
+                    */
+
+                        spriteBatch.Begin();
+                        spriteBatch.Draw(menuPanel,
+                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                        currentMenu.Draw(spriteBatch);
+                        spriteBatch.End();
+                    
 
                     break;
 
-                case ProgramState.Playing:
+                case ProgramState.Playing:        
+
                     //currentWorld.Draw(spriteBatch, (float)this.Window.ClientBounds.Width, (float)this.Window.ClientBounds.Height);
                     currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
                     break;
