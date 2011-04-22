@@ -882,14 +882,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\CircleObjects\Thumbs.db">
-      <Name>Thumbs</Name>
+    <Compile Include="Art\Objects\MovingPlatformObjects\switchmoving_platform.png">
+      <Name>switchmoving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\Thumbs.db">
-      <Name>Thumbs</Name>
-    </Compile>
-    <Compile Include="Art\Objects\MovingPlatformObjects\Thumbs.db">
-      <Name>Thumbs</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\HorizontalMovingPlatformObjects\switchmoving_platform.png">
+      <Name>switchmoving_platform</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
