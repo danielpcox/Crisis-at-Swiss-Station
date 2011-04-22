@@ -275,6 +275,9 @@ namespace CrisisAtSwissStation
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
+        List<HoleObject> holeList;
+        bool allHolesFilled = false;
+
         DudeObject dude;
         BoxObject arm;
         WinDoorObject winDoor;
@@ -794,11 +797,20 @@ namespace CrisisAtSwissStation
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.Basement);
             background = GameEngine.TextureList[backgroundName];
+            holeList = new List<HoleObject>();
             foreach (PhysicsObject obj in Objects)
             {
                 if (obj is PaintedObject)
                 {
                     totalInstaSteelInWorld += ((PaintedObject)obj).getAmountOfInstasteel();
+                }
+                if (obj is HoleObject)
+                {
+                    holeList.Add((HoleObject)obj);
+                }
+                if (obj is WinDoorObject)
+                {
+                    winDoor = (WinDoorObject)obj;
                 }
             }
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
@@ -1185,6 +1197,13 @@ namespace CrisisAtSwissStation
 
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
+
+            allHolesFilled = true;
+
+            foreach (HoleObject hole in holeList)
+            {
+                allHolesFilled = allHolesFilled && (hole.Filled >= HoleObject.MAX_FILL);
+            }
         }
 
         public Texture2D Background
@@ -1447,6 +1466,10 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.End();
 
             laser.Draw();
+            if (allHolesFilled)
+            {
+                winDoor.makeAnimate();
+            }
         }
 
         /**
