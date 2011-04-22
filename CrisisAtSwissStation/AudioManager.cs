@@ -20,6 +20,7 @@ namespace CrisisAtSwissStation
     {
 
         private Dictionary<MusicSelection, Song> songs;              //Dictionaries are useful for keying a selection enum to a particular audio element.
+        private Dictionary<string, Song> songsdict;              //Dictionaries are useful for keying a selection enum to a particular audio element.
         private Dictionary<SFXSelection, SoundEffect> soundEffects;
         private float SFXVolume;     //Value between 0.0 and 1.0.
         private SoundEffectInstance SFXplaying = null;
@@ -57,6 +58,7 @@ namespace CrisisAtSwissStation
             //Initializes the dictionaries.
             soundEffects = new Dictionary<SFXSelection, SoundEffect>();
             songs = new Dictionary<MusicSelection, Song>();
+            songsdict = new Dictionary<string, Song>();
             SFXVolume = 0.5f;
             MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
@@ -74,6 +76,12 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.Tension, content.Load<Song>("Music/Tension(Lab 3)"));
             songs.Add(MusicSelection.Destruction, content.Load<Song>("Music/Destruction(v1)"));
             songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
+
+            // MAPS BACKGROUND FILENAMES TO MUSIC FILES
+            songsdict.Add("background", content.Load<Song>("Music/EarlyLevelv2"));
+            songsdict.Add("tutorial", content.Load<Song>("Music/Tension(Lab 3)"));
+            songsdict.Add("ballroom", content.Load<Song>("Music/Destruction(v1)"));
+            songsdict.Add("RonniesBestWork", content.Load<Song>("Music/Basement"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));
@@ -105,6 +113,16 @@ namespace CrisisAtSwissStation
             }
         }
 
+        public void Play(string songname)
+        {
+            Song sng;
+            if (songsdict.TryGetValue(songname, out sng))
+            {
+                Stop();
+                MediaPlayer.Play(sng);
+
+            }
+        }
 
 
 
