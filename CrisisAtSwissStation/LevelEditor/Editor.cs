@@ -1172,6 +1172,24 @@ namespace CrisisAtSwissStation.LevelEditor
                     currentlySelectedObject.shapes.Add(shape); // add the new one
                     currentlySelectedObject.AddToWorld();
                 }
+                else if (currentlySelectedObject.TextureFilename == "Art\\Objects\\BoxObjects\\bottomTexture2273")
+                {
+                    float halfWidth = (float)currentlySelectedObject.Width / (2 * CASSWorld.SCALE);
+                    float halfHeight = (float)currentlySelectedObject.Height / (2 * CASSWorld.SCALE);
+
+                    // box object only...
+                    currentlySelectedObject.RemoveFromWorld();
+                    // Create the collision shape
+                    PolygonDef shape = new PolygonDef();
+                    shape.SetAsBox(halfWidth, halfHeight);
+                    // HACK HACK HACK - this won't work for objects that have more than one shape!
+                    shape.Density = currentlySelectedObject.shapes[0].Density;
+                    shape.Friction = currentlySelectedObject.shapes[0].Friction;
+                    shape.Restitution = currentlySelectedObject.shapes[0].Restitution;
+                    currentlySelectedObject.shapes.Clear(); // get rid of the old, unscaled shape
+                    currentlySelectedObject.shapes.Add(shape); // add the new one
+                    currentlySelectedObject.AddToWorld();
+                }
                 else if (!(currentlySelectedObject is PaintedObject))
                 {
                     currentlySelectedObject.Height = (currentlySelectedObject.Height / currentlySelectedObject.scale) * newScale;
