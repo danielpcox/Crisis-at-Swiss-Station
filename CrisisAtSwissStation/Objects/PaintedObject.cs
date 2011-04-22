@@ -46,6 +46,7 @@ namespace CrisisAtSwissStation
         
         float radius = 0f;
 
+
         /**
          * Creates a new drawn object - HACK HACK - obsolete. remove when its reference in ScrollingWorld is removed
          */
@@ -301,6 +302,8 @@ namespace CrisisAtSwissStation
          */
         public override void Draw(Matrix cameraTransform)
         {
+            
+
             Vector2 origin = new Vector2(blobTexture.Width, blobTexture.Height) / 2;
 
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
@@ -345,6 +348,8 @@ namespace CrisisAtSwissStation
             double lasttheta = System.Math.Atan2(lastlocalpos.Y, lastlocalpos.X) + Angle;
             Vector2 lastrotatedpos = new Vector2((float)(lastlocalpos.Length() * System.Math.Cos(lasttheta)), (float)(lastlocalpos.Length() * System.Math.Sin(lasttheta)));
             Vector2 lastscreenpos = ((Position + lastrotatedpos) * CASSWorld.SCALE);
+
+
             // Draw blob at point
             spriteBatch.Draw(blobTexture, lastscreenpos, null, INSTASTEEL_COLOR, Angle, origin, 1, 0, 0);
 

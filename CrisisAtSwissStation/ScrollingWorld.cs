@@ -275,10 +275,15 @@ namespace CrisisAtSwissStation
         bool finishDraw = false;
         bool drawingInterrupted = false; // true when we're creating the object due to occlusion, false otherwise
 
+        List<HoleObject> holeList;
+        bool allHolesFilled = false;
+
         DudeObject dude;
         BoxObject arm;
         WinDoorObject winDoor;
         public LaserObject laser;
+
+        
 
         public ScrollingWorld(string backgroundname = "background")
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
@@ -792,11 +797,20 @@ namespace CrisisAtSwissStation
             AudioManager audio = GameEngine.AudioManager;
             audio.Play(AudioManager.MusicSelection.Basement);
             background = GameEngine.TextureList[backgroundName];
+            holeList = new List<HoleObject>();
             foreach (PhysicsObject obj in Objects)
             {
                 if (obj is PaintedObject)
                 {
                     totalInstaSteelInWorld += ((PaintedObject)obj).getAmountOfInstasteel();
+                }
+                if (obj is HoleObject)
+                {
+                    holeList.Add((HoleObject)obj);
+                }
+                if (obj is WinDoorObject)
+                {
+                    winDoor = (WinDoorObject)obj;
                 }
             }
             halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
@@ -1021,11 +1035,16 @@ namespace CrisisAtSwissStation
             Vector2 scaledMousePosition = new Vector2(mouse.X / CASSWorld.SCALE, mouse.Y / CASSWorld.SCALE);
             Vector2 mouseGamePosition = getScreenOrigin() + scaledMousePosition;
             //Console.WriteLine("{0} {1} {2} {3}", dude.Position.X, dude.Position.Y, mouseGamePosition.X, mouseGamePosition.Y);
+            AudioManager audio = GameEngine.AudioManager;
+            
             //ERASING
             if (mouse.RightButton == ButtonState.Pressed && laser.canErase())
             {
                 //ronnie added for laser
                 laser.startErasing();
+
+                //Implementing deconstruct sfx
+                audio.Play(CrisisAtSwissStation.AudioManager.SFXSelection.Deconstruct);
 
                 // if the right button is pressed, remove any painted objects under the cursor from the world
                 // Query a small box around the mouse
@@ -1061,6 +1080,7 @@ namespace CrisisAtSwissStation
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
+                audio.Play(AudioManager.SFXSelection.Charge);
 
                 // if we're holding down the mouse button
                 //Vector2 mousepos = new Vector2(mouse.X, mouse.Y);
@@ -1097,6 +1117,7 @@ namespace CrisisAtSwissStation
                     finishDraw = true;
                 }
 
+                
                 //other random ronnie addition for laser
                 //laser.finishDrawing();
 
@@ -1130,6 +1151,7 @@ namespace CrisisAtSwissStation
                         break;
                     }
                 }
+                audio.Play(AudioManager.SFXSelection.Construct);
                 laser.finishDrawing();
 
                 // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
@@ -1175,6 +1197,13 @@ namespace CrisisAtSwissStation
 
             base.Simulate(dt);
             screenOffset = new Vector2(0, 0); // TODO Diana: Change this!
+
+            allHolesFilled = true;
+
+            foreach (HoleObject hole in holeList)
+            {
+                allHolesFilled = allHolesFilled && (hole.Filled >= HoleObject.MAX_FILL);
+            }
         }
 
         public Texture2D Background
@@ -1437,6 +1466,10 @@ namespace CrisisAtSwissStation
             GameEngine.Instance.SpriteBatch.End();
 
             laser.Draw();
+            if (allHolesFilled)
+            {
+                winDoor.makeAnimate();
+            }
         }
 
         /**
