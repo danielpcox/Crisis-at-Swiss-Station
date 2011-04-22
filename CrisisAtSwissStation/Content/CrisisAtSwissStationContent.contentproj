@@ -849,16 +849,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\BoxObjects\Thumbs.db">
-      <Name>Thumbs</Name>
-    </Compile>
-    <Compile Include="Art\Objects\PistonObjects\Thumbs.db">
-      <Name>Thumbs</Name>
+    <Compile Include="Art\Objects\CircleObjects\table.png">
+      <Name>table</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\CircleObjects\table.png">
-      <Name>table</Name>
+    <Compile Include="Art\Objects\SeeSawObjects\box_cog.png">
+      <Name>box_cog</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\SeeSawObjects\seesaw.png">
+      <Name>seesaw</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

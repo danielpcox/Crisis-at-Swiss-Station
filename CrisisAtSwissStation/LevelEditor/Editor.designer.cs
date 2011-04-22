@@ -37,7 +37,7 @@
             this.gb_ObjTypes = new System.Windows.Forms.GroupBox();
             this.rb_Vanish_Walls = new System.Windows.Forms.RadioButton();
             this.rb_SavePoint = new System.Windows.Forms.RadioButton();
-            this.rb_VictoryTest = new System.Windows.Forms.RadioButton();
+            this.rb_BackgroundObjects = new System.Windows.Forms.RadioButton();
             this.rb_HorizontalMovingPlatform = new System.Windows.Forms.RadioButton();
             this.rb_MovingPlatform = new System.Windows.Forms.RadioButton();
             this.rb_Doors = new System.Windows.Forms.RadioButton();
@@ -188,7 +188,7 @@
             // 
             this.gb_ObjTypes.Controls.Add(this.rb_Vanish_Walls);
             this.gb_ObjTypes.Controls.Add(this.rb_SavePoint);
-            this.gb_ObjTypes.Controls.Add(this.rb_VictoryTest);
+            this.gb_ObjTypes.Controls.Add(this.rb_BackgroundObjects);
             this.gb_ObjTypes.Controls.Add(this.rb_HorizontalMovingPlatform);
             this.gb_ObjTypes.Controls.Add(this.rb_MovingPlatform);
             this.gb_ObjTypes.Controls.Add(this.rb_Doors);
@@ -234,18 +234,17 @@
             this.rb_SavePoint.Visible = false;
             this.rb_SavePoint.CheckedChanged += new System.EventHandler(this.rb_SavePoint_CheckedChanged);
             // 
-            // rb_VictoryTest
+            // rb_BackgroundObjects
             // 
-            this.rb_VictoryTest.AutoSize = true;
-            this.rb_VictoryTest.Location = new System.Drawing.Point(20, 253);
-            this.rb_VictoryTest.Name = "rb_VictoryTest";
-            this.rb_VictoryTest.Size = new System.Drawing.Size(81, 17);
-            this.rb_VictoryTest.TabIndex = 9;
-            this.rb_VictoryTest.TabStop = true;
-            this.rb_VictoryTest.Text = "Victory Test";
-            this.rb_VictoryTest.UseVisualStyleBackColor = true;
-            this.rb_VictoryTest.Visible = false;
-            this.rb_VictoryTest.CheckedChanged += new System.EventHandler(this.rb_VictoryTest_CheckedChanged);
+            this.rb_BackgroundObjects.AutoSize = true;
+            this.rb_BackgroundObjects.Location = new System.Drawing.Point(20, 253);
+            this.rb_BackgroundObjects.Name = "rb_BackgroundObjects";
+            this.rb_BackgroundObjects.Size = new System.Drawing.Size(119, 17);
+            this.rb_BackgroundObjects.TabIndex = 9;
+            this.rb_BackgroundObjects.TabStop = true;
+            this.rb_BackgroundObjects.Text = "BackgroundObjects";
+            this.rb_BackgroundObjects.UseVisualStyleBackColor = true;
+            this.rb_BackgroundObjects.CheckedChanged += new System.EventHandler(this.rb_BackgroundObjects_CheckedChanged);
             // 
             // rb_HorizontalMovingPlatform
             // 
@@ -786,7 +785,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.RadioButton rb_VictoryTest;
+        private System.Windows.Forms.RadioButton rb_BackgroundObjects;
         private System.Windows.Forms.RadioButton rb_SavePoint;
         private System.Windows.Forms.TextBox tb_Scale;
         private System.Windows.Forms.Label lbl_SLevel;
