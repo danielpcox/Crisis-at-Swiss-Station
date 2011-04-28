@@ -608,10 +608,38 @@ namespace CrisisAtSwissStation.LevelEditor
             else if (rb_SwitchObject.Checked)
             {
                 SwitchObject ss1;
-                ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+         //       ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip","Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
                 //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
-                ss1.Position = gameposition;
-                world.AddObject(ss1);
+         //       ss1.Position = gameposition;
+              //  world.AddObject(ss1);
+
+                if (lastname == "button")
+                {
+                    ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+
+                    ss1.Position = gameposition;
+                    world.AddObject(ss1);
+                }
+                else if (lastname == "death")
+                {
+
+                    DeathPlatform ss2;
+                    ss2 = new DeathPlatform(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\death", 181, 84, 20, 2);
+
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ss2.Position = gameposition;
+                    world.AddObject(ss2);
+                }
+                else
+                {
+                    FailButtonObject ss2;
+                    ss2 = new FailButtonObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\fail_button", 181, 84, 20, 2);
+
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ss2.Position = gameposition;
+                    world.AddObject(ss2);
+                }
+
               
             }
             else if (rb_HoleObject.Checked)

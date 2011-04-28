@@ -133,6 +133,10 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private static Texture2D switchObjectTexture;
         [NonSerialized]
+        private static Texture2D deathObjectTexture;
+        [NonSerialized]
+        private static Texture2D failButtonObjectTexture;
+        [NonSerialized]
         private static Texture2D holeAnimTexture;
         [NonSerialized]
         private static Texture2D holeObjectTexture;
@@ -898,6 +902,8 @@ namespace CrisisAtSwissStation
        
             switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
+            deathObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\death");
+            failButtonObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\fail_button");
 
             holeAnimTexture = content.Load<Texture2D>("Art\\Objects\\HoleObjects\\hole_strip");
             holeObjectTexture = content.Load<Texture2D>("Art\\Objects\\HolehObjects\\hole");
@@ -1287,6 +1293,8 @@ namespace CrisisAtSwissStation
                 objsDict.Add("MovingObject", new List<PhysicsObject>());
                 objsDict.Add("HorizontalMovingObject", new List<PhysicsObject>());
                 objsDict.Add("SwitchObject", new List<PhysicsObject>());
+                objsDict.Add("DeathObject", new List<PhysicsObject>());
+                objsDict.Add("FailButtonObject", new List<PhysicsObject>());
                 objsDict.Add("WinDoorObject", new List<PhysicsObject>());
                 objsDict.Add("PistonObject", new List<PhysicsObject>());
                 
@@ -1337,6 +1345,14 @@ namespace CrisisAtSwissStation
                     {
                         objsDict["SwitchObject"].Add(po);
                     }
+                    else if (po is DeathPlatform)
+                    {
+                        objsDict["DeathObject"].Add(po);
+                    }
+                    else if (po is FailButtonObject)
+                    {
+                        objsDict["FailButtonObject"].Add(po);
+                    }
                     else if (po is WinDoorObject)
                     {
                         objsDict["WinDoorObject"].Add(po);
@@ -1353,6 +1369,24 @@ namespace CrisisAtSwissStation
                         (object2 == switchObj && object1 == world.dude))
                     {
                         ((SwitchObject)switchObj).switchOn = true;
+                    }
+                }
+                foreach (PhysicsObject switchObj in objsDict["DeathObject"])
+                {
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                    {
+                        ((DeathPlatform)switchObj).deadCosmo = true;
+                        world.Fail();
+                    }
+                }
+                foreach (PhysicsObject switchObj in objsDict["FailButtonObject"])
+                {
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                    {
+                        ((FailButtonObject)switchObj).deadCosmo = true;
+                        world.Fail();
                     }
                 }
 

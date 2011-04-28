@@ -210,7 +210,14 @@ namespace CrisisAtSwissStation
                 {
                     ((WinDoorObject)obj).reloadNonSerializedAssets();
                 }
-
+                else if (obj is DeathPlatform)
+                {
+                    ((DeathPlatform)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is FailButtonObject)
+                {
+                    ((FailButtonObject)obj).reloadNonSerializedAssets();
+                }
             }
 
             // misc
