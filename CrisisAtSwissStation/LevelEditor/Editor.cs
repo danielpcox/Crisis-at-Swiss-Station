@@ -624,7 +624,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 {
 
                     DeathPlatform ss2;
-                    ss2 = new DeathPlatform(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\death", 181, 84, 20, 2);
+                    ss2 = new DeathPlatform(world.World, "Art\\Objects\\SwitchObjects\\button_death_strip", "Art\\Objects\\SwitchObjects\\death", 181, 84, 20, 2);
 
                     //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
                     ss2.Position = gameposition;

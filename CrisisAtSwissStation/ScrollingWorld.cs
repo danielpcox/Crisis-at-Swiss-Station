@@ -131,6 +131,8 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private static Texture2D switchAnimTexture;
         [NonSerialized]
+        private static Texture2D switchDeathAnimTexture;
+        [NonSerialized]
         private static Texture2D switchObjectTexture;
         [NonSerialized]
         private static Texture2D deathObjectTexture;
@@ -901,6 +903,7 @@ namespace CrisisAtSwissStation
             fanTexture = content.Load<Texture2D>("fan");
        
             switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
+            switchDeathAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_death_strip");
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
             deathObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\death");
             failButtonObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\fail_button");
@@ -1365,9 +1368,9 @@ namespace CrisisAtSwissStation
                 
                 foreach (PhysicsObject switchObj in objsDict["SwitchObject"])
                 {
-                    if (object1 == switchObj || object2 == switchObj)
-                        /*((object1 == switchObj && object2 == world.dude) ||
-                        (object2 == switchObj && object1 == world.dude))*/
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                        //(object1 == switchObj || object2 == switchObj)
                     {
                         ((SwitchObject)switchObj).switchOn = true;
                     }
