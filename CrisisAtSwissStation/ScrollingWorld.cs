@@ -1216,7 +1216,7 @@ namespace CrisisAtSwissStation
             prevms = mouse;
             mouseWasInbounds = mouseinbounds;
 
-            laser.Update(scaledMousePosition.X, scaledMousePosition.Y, getCameraCoords());
+            laser.Update(scaledMousePosition.X, scaledMousePosition.Y, getCameraCoords(), gameLevelWidth);
 
             // update cursor insta-steel level
             float fractionInstasteel = numDrawLeft / totalInstaSteelInWorld;

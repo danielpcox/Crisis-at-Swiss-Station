@@ -111,7 +111,7 @@ namespace CrisisAtSwissStation
         public Vector2 getEnd()
         { return endpoint; }
 
-        public void Update(float mX, float mY, Vector2 offset)
+        public void Update(float mX, float mY, Vector2 offset, int levelWidth)
         {
             if (amDrawing || amErasing)
             {
@@ -152,7 +152,7 @@ namespace CrisisAtSwissStation
             int guyScreenPos = 0;
             if (dude.Position.X * CASSWorld.SCALE <= GameEngine.SCREEN_WIDTH / 2)
                 guyScreenPos = (int)(dude.getWorld().getScreenCoords(dude.Position).X);
-            else if (dude.Position.X * CASSWorld.SCALE >= 4096 - GameEngine.SCREEN_WIDTH / 2)
+            else if (dude.Position.X * CASSWorld.SCALE >= levelWidth - GameEngine.SCREEN_WIDTH / 2)
             {
                 guyScreenPos = (int)(dude.getWorld().getScreenCoords(dude.Position).X); ;
             }
