@@ -24,7 +24,7 @@ namespace CrisisAtSwissStation
         private Dictionary<SFXSelection, SoundEffect> soundEffects;
         private float SFXVolume;     //Value between 0.0 and 1.0.
         private SoundEffectInstance SFXplaying = null;
-        
+        private bool muted; //Is audio muted?
 
         
 
@@ -64,6 +64,7 @@ namespace CrisisAtSwissStation
             SFXVolume = 0.6f;
             MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
+            muted = false;
             
         }
 
@@ -219,11 +220,23 @@ namespace CrisisAtSwissStation
         //Set volume equal to 0.0 or 0.5
         public void Mute()
         {
-            if (MediaPlayer.Volume == 0.0f)
+            if (muted)
+            {
                 MediaPlayer.Volume = 0.5f;
-            else if (MediaPlayer.Volume>0.0)
-            MediaPlayer.Volume = 0.0f;
-            
+                SFXVolume = 0.5f;
+            }
+            else
+            {
+                MediaPlayer.Volume = 0.0f;
+                SFXVolume = 0.0f;
+            }
+            muted = !muted;
+        }
+
+        //= true if the game is muted
+        public bool isMuted()
+        {
+            return muted;
         }
 
         //Play next track

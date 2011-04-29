@@ -469,14 +469,14 @@ namespace CrisisAtSwissStation
                 GameEngine.level_editor_open = true;
             }
 
-            // toggle mute if they press 'm' 
-            if (keyState.IsKeyDown(Keys.M) && prevKeyState.IsKeyUp(Keys.M))
-                audioManager.Mute();
-
             // Move to next track if they press 'x'
             if (keyState.IsKeyDown(Keys.X) && prevKeyState.IsKeyUp(Keys.X))
                 audioManager.PlayNext();
             */
+
+            //toggle mute if they press 'm' 
+            if (keyState.IsKeyDown(Keys.M) && prevKeyState.IsKeyUp(Keys.M))
+                audioManager.Mute();
 
             if (currentWorld != null && (currentWorld.Succeeded || currentWorld.Failed))
             {
@@ -492,11 +492,16 @@ namespace CrisisAtSwissStation
                 {
                     audioManager.Stop();
                     audioManager.Play(CrisisAtSwissStation.AudioManager.SFXSelection.LevelComplete);
+                    
                 }
 
                 if (countdown <= 0 && currentWorld.Succeeded && !currentWorld.Failed)
                 {
                     //reset = currentWorld.Failed;
+                    if (!audioManager.isMuted())
+                    {
+                        audioManager.IncreaseMusicVolume(0.5f);
+                    }
                     LoadNextWorld();
                 }
                 else if (countdown <= 0) // failed
@@ -504,7 +509,10 @@ namespace CrisisAtSwissStation
                         LoadWorld(cwname);
                         progstate = ProgramState.Playing;
                         countdown = COUNTDOWN;
-                        audioManager.IncreaseMusicVolume(0.5f);
+                        if (!audioManager.isMuted())
+                        {
+                            audioManager.IncreaseMusicVolume(0.5f);
+                        }
                 }
             }
             
