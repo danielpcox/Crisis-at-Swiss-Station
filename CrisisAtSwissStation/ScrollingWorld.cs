@@ -1365,8 +1365,9 @@ namespace CrisisAtSwissStation
                 
                 foreach (PhysicsObject switchObj in objsDict["SwitchObject"])
                 {
-                    if ((object1 == switchObj && object2 == world.dude) ||
-                        (object2 == switchObj && object1 == world.dude))
+                    if (object1 == switchObj || object2 == switchObj)
+                        /*((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))*/
                     {
                         ((SwitchObject)switchObj).switchOn = true;
                     }
