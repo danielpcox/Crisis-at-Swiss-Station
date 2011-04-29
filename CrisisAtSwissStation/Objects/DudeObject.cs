@@ -21,6 +21,8 @@ namespace CrisisAtSwissStation
     [Serializable]
     public class DudeObject : BoxObject
     {
+
+        private static bool lockDude;
        
 
         //dude's jump impulse
@@ -218,6 +220,8 @@ namespace CrisisAtSwissStation
             groundSensor.SetAsBox(halfWidth / 2, 0.05f, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
 
+            lockDude = false;
+
             //animation stuff
             //base.(world, texture, 1.0f, 0.0f, 0.0f);
         }
@@ -228,7 +232,15 @@ namespace CrisisAtSwissStation
             this.animTexture = GameEngine.TextureList[animTextureName];
             this.armTexture = GameEngine.TextureList[armTextureName];
             base.reloadNonSerializedAssets();
+            lockDude = false;
         }
+
+
+
+        public static void locked(){
+        lockDude = true;
+    }
+
 
         /**
          * Updates dude game logic - jumping cooldown
@@ -354,9 +366,9 @@ namespace CrisisAtSwissStation
                 // --------------------
                 KeyboardState ks = Keyboard.GetState();
 
-                if (ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.A))
+                if ((ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.A)) && !lockDude) //&& !CASSWorld.getFailed())
                 {
-                 
+               
                     
                         moveForce.X = -DUDE_FORCE;
 
@@ -366,7 +378,7 @@ namespace CrisisAtSwissStation
                         else
                         dudeObject.fallAnimation();
                 }
-                else if (ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D))
+                else if ((ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D)) &&!lockDude) //&& !CASSWorld.getFailed())
                 {
 
                     moveForce.X += DUDE_FORCE;
@@ -388,9 +400,9 @@ namespace CrisisAtSwissStation
                 }
                 if (dudeObject.Body.GetLinearVelocity().X == 0 && dudeObject.Body.GetLinearVelocity().Y == 0)
                     dudeObject.standAnimation();
-                
-            
-                if (ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W))
+
+
+                if ((ks.IsKeyDown(Keys.Up) || ks.IsKeyDown(Keys.W)) && !lockDude)// && !CASSWorld.getFailed())
                     jump = true;
                 // --------------------
 

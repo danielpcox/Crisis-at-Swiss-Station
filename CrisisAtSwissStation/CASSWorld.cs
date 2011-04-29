@@ -31,6 +31,8 @@ namespace CrisisAtSwissStation
         private bool succeeded;
         private bool failed;
 
+       
+
         public CASSWorld(float width, float height, Vector2 gravity)
         {
             // Create the world's axis-aligned bounding box
@@ -123,6 +125,7 @@ namespace CrisisAtSwissStation
          */
         public void Fail()
         {
+            DudeObject.locked();
             failed = true;
         }
 
