@@ -194,7 +194,7 @@ namespace CrisisAtSwissStation
             else if ((PhysicsObject)interference.GetBody().GetUserData() is PaintedObject)
             {
 
-                
+                /*
                 Box2DX.Common.Vec2 p = (((1 - lambda) * (myseg.P1)) + (lambda * (myseg.P2)));
 
                 endpoint = Common.Utils.Convert(p) *SCALE;
