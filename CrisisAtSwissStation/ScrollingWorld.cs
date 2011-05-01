@@ -185,7 +185,7 @@ namespace CrisisAtSwissStation
 
         //private static Vector2 spinPlatformPos = new Vector2(7.0f, 6.0f);
 
-        private static Vector2 dudePosition = new Vector2(2.5f, 15f); //was 2.5 now 55
+        private static Vector2 dudePosition = new Vector2(4f, 6f); //was 2.5 now 55
         private static string dudeSensorName = "Dude Ground Sensor";
 
         private static Vector2 screenOffset = new Vector2(0, 0); // The location of the screen origin in the Game World
@@ -1477,7 +1477,14 @@ namespace CrisisAtSwissStation
                         if ((object1 == piston && object2 == circle) ||
                             (object1 == piston && object2 == circle))
                         {
-                            circle.Body.ApplyForce(Utils.Convert(new Vector2(200, 0)), circle.Body.GetWorldCenter());
+                            if (MathHelper.ToDegrees(object1.Angle) == 0)
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(200, 0)), circle.Body.GetWorldCenter()); }
+                            else if (MathHelper.ToDegrees(object1.Angle) == 90)
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, 200)), circle.Body.GetWorldCenter()); }
+                            else if (MathHelper.ToDegrees(object1.Angle) == -90)
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, -200)), circle.Body.GetWorldCenter()); }
+                            else if (MathHelper.ToDegrees(object1.Angle) == 180)
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(-200, 0)), circle.Body.GetWorldCenter()); }
                         }
                     }
                 }
