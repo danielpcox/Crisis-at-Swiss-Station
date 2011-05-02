@@ -103,8 +103,10 @@ namespace CrisisAtSwissStation
         /// to prevent getting stuck in an infinite loop.
         /// </summary>
         /// <returns></returns>
-        public MenuCommand ReturnAndResetCommand()
+        public MenuCommand ReturnAndResetCommand(MenuCommand forcedCommand = MenuCommand.NONE)
         {
+            if (!(forcedCommand == MenuCommand.NONE))
+                return forcedCommand;
             MenuCommand temp = command;
             command = MenuCommand.NONE;
             return temp;

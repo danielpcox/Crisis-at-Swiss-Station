@@ -30,6 +30,7 @@ namespace CrisisAtSwissStation
         static MenuScreen floorsScreen;
 
         public static SavedGame savedgame = new SavedGame();
+        MenuCommand forcedCommand = MenuCommand.NONE;
 
         KeyboardState keyState, prevKeyState;
 
@@ -376,7 +377,7 @@ namespace CrisisAtSwissStation
                 case ProgramState.Menu:
                     currentMenu.Update();
 
-                    switch (currentMenu.ReturnAndResetCommand())
+                    switch (currentMenu.ReturnAndResetCommand(forcedCommand))
                     {
                         case MenuCommand.LinkToMainMenu:
                             LinkToMain();
@@ -400,6 +401,7 @@ namespace CrisisAtSwissStation
                             if (LoadRelWorld("genesis"))
                             {
                                 countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -408,6 +410,7 @@ namespace CrisisAtSwissStation
                             if (LoadRelWorld("exodus"))
                             {
                                 countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -416,6 +419,7 @@ namespace CrisisAtSwissStation
                             if (LoadRelWorld("leviticus"))
                             {
                                 countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -424,6 +428,7 @@ namespace CrisisAtSwissStation
                             if (LoadRelWorld("numbers"))
                             {
                                 countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -432,6 +437,7 @@ namespace CrisisAtSwissStation
                             if (LoadRelWorld("deuteronomy"))
                             {
                                 countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -456,6 +462,10 @@ namespace CrisisAtSwissStation
                                 countdown = COUNTDOWN;
                                 progstate = ProgramState.Playing;
                             }
+                            break;
+                        case MenuCommand.Continue:
+                            countdown = COUNTDOWN;
+                            forcedCommand = Constants.floors[savedgame.GetCurrentFloor()];
                             break;
                     }
 
@@ -722,7 +732,6 @@ namespace CrisisAtSwissStation
             // Set up main screen
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
             floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
-
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
@@ -736,7 +745,10 @@ namespace CrisisAtSwissStation
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
-            savedgame.LoadGame(); // if there is a saved game, load it instead of the hardcoded starter version above
+            if (savedgame.LoadGame()) // if there is a saved game, load it instead of the hardcoded starter version above
+            {
+                mainScreen.Options[0] = new MenuOption(MenuOptionType.Command, "Continue", MenuCommand.Continue);
+            }
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);
