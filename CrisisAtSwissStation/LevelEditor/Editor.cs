@@ -1125,6 +1125,10 @@ namespace CrisisAtSwissStation.LevelEditor
             // the upper right, upper left, and lower left corners map to. We determine these, and
             // tell the graphics to draw the image.
 
+            // unscale before rotating
+            //obj.Height = obj.Height / obj.scale;
+            //obj.Width = obj.Width / obj.scale;
+
             // Hack to make the image representing a painted object draw correctly
             if (obj is PaintedObject && !(obj is InstasteelObject) && !(obj is InstasteelCircleObject))
             {
@@ -1134,12 +1138,19 @@ namespace CrisisAtSwissStation.LevelEditor
 
             XnaRectangle bb = obj.getBBRelativeToWorld();
 
+            float s = obj.scale;
+
             //Find the new point for the upper-left corner
             DrawPoint upper_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width/2f, bb.Y + bb.Height/2f) + RotateVector2(new Vector2(-obj.Width/2f, -obj.Height/2f), obj.Angle));
 
             DrawPoint upper_right = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width/2f, bb.Y + bb.Height/2) + RotateVector2(new Vector2(obj.Width - obj.Width/2f, -obj.Height/2f), obj.Angle));
 
             DrawPoint lower_left = Conversion.Vector2ToDrawPoint(new Vector2(bb.X + bb.Width/2f, bb.Y + bb.Height/2) + RotateVector2(new Vector2(-obj.Width/2f, obj.Height - obj.Height/2f), obj.Angle));
+
+            // rescale after rotating
+            //obj.Height = obj.Height * obj.scale;
+            //obj.Width = obj.Width * obj.scale;
+
             /*
             DrawPoint upper_left = Conversion.Vector2ToDrawPoint(RotateVector2(new Vector2(bb.X, bb.Y), obj.Angle));
 
