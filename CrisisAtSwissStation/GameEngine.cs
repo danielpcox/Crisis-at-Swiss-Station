@@ -26,7 +26,7 @@ namespace CrisisAtSwissStation
         private const bool LOAD_FROM_FILE = false;
 
         static MenuEngine currentMenu;
-        static MenuEngine startMenu = new MenuEngine(), optionMenu = new MenuEngine(), pauseMenu = new MenuEngine();
+        static MenuEngine startMenu = new MenuEngine(), floorsMenu = new MenuEngine(), pauseMenu = new MenuEngine();
 
         KeyboardState keyState, prevKeyState;
 
@@ -239,7 +239,7 @@ namespace CrisisAtSwissStation
             audioManager.LoadContent(Content);
 
             startMenu.LoadContent(Content);
-            optionMenu.LoadContent(Content);
+            floorsMenu.LoadContent(Content);
             pauseMenu.LoadContent(Content);
 
             onepixel = Content.Load<Texture2D>("Art\\Misc\\onepixel");
@@ -560,7 +560,7 @@ namespace CrisisAtSwissStation
             }
             else
             {
-                LinkToMain();
+                LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
             }
@@ -576,7 +576,12 @@ namespace CrisisAtSwissStation
         public static void LinkToMain()
         {
             SetCurrentMenu(startMenu);
-            
+        }
+
+        public static void LinkToFloors()
+        {
+            SetCurrentMenu(startMenu);
+            startMenu.NextMenu();
         }
 
         public void ExitGame()

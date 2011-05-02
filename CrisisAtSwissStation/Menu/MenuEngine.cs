@@ -57,6 +57,17 @@ namespace CrisisAtSwissStation
             currentScreen = screens[0];
         }
 
+        public void NextMenu()
+        {
+            try
+            {
+                currentScreen = screens[screens.IndexOf(currentScreen) + 1];
+            }
+            finally
+            {
+            }
+        }
+
         public void Update()
         {
             currentScreen.Update();
