@@ -562,7 +562,7 @@ namespace CrisisAtSwissStation.LevelEditor
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 7);
                 else if (lastname == "broken_platform")
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
-                else // if (texName == "light")
+                else //if (texName == "light")
                 {
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8,false);
                     //ao.RemoveFromWorld();
@@ -596,6 +596,7 @@ namespace CrisisAtSwissStation.LevelEditor
             else if (rb_PistonObject.Checked)
             {
                 PistonObject po;
+                Console.WriteLine("{0}", gameposition);
                 po = new PistonObject(world.World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .1f, gameposition);
                 po.Position = gameposition;
                 world.AddObject(po);  

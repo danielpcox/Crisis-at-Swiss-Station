@@ -23,6 +23,7 @@ namespace CrisisAtSwissStation
     {
 
         private static bool lockDude;
+        private bool amDead;
        
 
         //dude's jump impulse
@@ -61,6 +62,8 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private Texture2D armTexture;
         protected string armTextureName;
+        [NonSerialized]
+        private Texture2D deadTexture;
 
         private int myGameTime;
         private LaserObject myLaser; //for arm rotation only
@@ -153,11 +156,14 @@ namespace CrisisAtSwissStation
             Texture2D objectTexture = GameEngine.TextureList[objectTexturename];
             Texture2D texture = GameEngine.TextureList[texturename];
             Texture2D armTexture = GameEngine.TextureList[armTexturename];
+            deadTexture = GameEngine.TextureList["Art\\failure_cosmo"];
 
             Height = objectTexture.Height;
             Width = objectTexture.Width;
 
             boundingBox = new Rectangle((int)(Position.X * CASSWorld.SCALE), (int)(Position.Y * CASSWorld.SCALE), (int)Height, (int)Width);
+
+            amDead = false;
 
             // Initialize
             isGrounded = false;
@@ -241,6 +247,7 @@ namespace CrisisAtSwissStation
             this.texture = GameEngine.TextureList[animTextureName];
             this.animTexture = GameEngine.TextureList[animTextureName];
             this.armTexture = GameEngine.TextureList[armTextureName];
+            deadTexture = GameEngine.TextureList["Art\\failure_cosmo"];
             base.reloadNonSerializedAssets();
             lockDude = false;
         }
@@ -252,6 +259,10 @@ namespace CrisisAtSwissStation
             lockDude = true;
         }
 
+        public void setDead()
+        {
+            amDead = true;
+        }
 
         /**
          * Updates dude game logic - jumping cooldown
@@ -295,22 +306,27 @@ namespace CrisisAtSwissStation
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
 
             //Console.WriteLine("X {0} Y {1}",sourceRect.Width, sourceRect.Height);
-
-            //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
-            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, animOrigin, 1, flip, 0);
-
-            //arm code
-            if (facingRight)
-                spriteBatch.Draw(armTexture, screenOffset + new Vector2(-10, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
+            if (amDead)
+            {
+                spriteBatch.Draw(deadTexture, screenOffset, null, Color.White, 0, new Vector2(deadTexture.Width / 2, deadTexture.Height / 2), 1, SpriteEffects.None, 0);
+            }
             else
             {
-                if (armAngle < -1.5 ) armAngle = -armAngle;//for corner cases
-                 // if (armAngle > 1.5) armAngle = -armAngle;
-                spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
-                // spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin - new Vector2(-10, -10), .8f, flip, 0);
+                //spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, 1, flip, 0);
+                spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, animOrigin, 1, flip, 0);
+
+                //arm code
+                if (facingRight)
+                    spriteBatch.Draw(armTexture, screenOffset + new Vector2(-10, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
+                else
+                {
+                    if (armAngle < -1.5) armAngle = -armAngle;//for corner cases
+                    // if (armAngle > 1.5) armAngle = -armAngle;
+                    spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin, .8f, flip, 0);
+                    // spriteBatch.Draw(armTexture, screenOffset + new Vector2(0, 0), null, Color.White, armAngle, armOrigin - new Vector2(-10, -10), .8f, flip, 0);
+                }
+                //Console.WriteLine("{0}", armAngle);
             }
-            //Console.WriteLine("{0}", armAngle);
-         
 
             spriteBatch.End();
 
