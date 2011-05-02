@@ -1385,6 +1385,7 @@ namespace CrisisAtSwissStation
                         (object2 == switchObj && object1 == world.dude))
                     {
                         ((DeathPlatform)switchObj).deadCosmo = true;
+                        world.dude.setDead();
                         world.Fail();
                     }
                 }
@@ -1393,8 +1394,11 @@ namespace CrisisAtSwissStation
                     if ((object1 == switchObj && object2 == world.dude) ||
                         (object2 == switchObj && object1 == world.dude))
                     {
-                        if(((CircleObject)switchObj).TextureFilename.Equals("Art\\Objects\\CircleObjects\\gear"))
-                        world.Fail();
+                        if (((CircleObject)switchObj).TextureFilename.Equals("Art\\Objects\\CircleObjects\\gear"))
+                        {
+                            world.dude.setDead();
+                            world.Fail();
+                        }
                     }
                 }
                 foreach (PhysicsObject switchObj in objsDict["FailButtonObject"])
@@ -1403,6 +1407,7 @@ namespace CrisisAtSwissStation
                         (object2 == switchObj && object1 == world.dude))
                     {
                         ((FailButtonObject)switchObj).deadCosmo = true;
+                        world.dude.setDead();
                         world.Fail();
                     }
                 }
