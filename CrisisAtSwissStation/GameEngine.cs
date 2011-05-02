@@ -151,6 +151,7 @@ namespace CrisisAtSwissStation
         private GameEngine()
         {
             graphics = new GraphicsDeviceManager(this);
+
             
             //Adds an audio manager when the constructor is called
             audioManager = new AudioManager();
@@ -735,6 +736,7 @@ namespace CrisisAtSwissStation
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
+            savedgame.LoadGame(); // if there is a saved game, load it instead of the hardcoded starter version above
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);
