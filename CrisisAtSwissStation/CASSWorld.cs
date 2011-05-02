@@ -94,10 +94,12 @@ namespace CrisisAtSwissStation
             {
                 if (obj is BackgroundObject)
                     obj.Draw(cameraTransform);
+                if (obj is PaintedObject)
+                    obj.Draw(cameraTransform);
             }
             foreach (PhysicsObject obj in objects)
             {
-                if (!(obj is BackgroundObject))
+                if (!(obj is BackgroundObject) && !(obj is PaintedObject))
                     obj.Draw(cameraTransform);
             }
         }
@@ -185,10 +187,7 @@ namespace CrisisAtSwissStation
                 {
                     ((SensorObject)obj).reloadNonSerializedAssets();
                 }
-                else if (obj is HoleObject)
-                {
-                    ((HoleObject)obj).reloadNonSerializedAssets();
-                }
+                
                 else if (obj is AnimationObject)
                 {
                     ((AnimationObject)obj).reloadNonSerializedAssets();
@@ -220,6 +219,10 @@ namespace CrisisAtSwissStation
                 else if (obj is FailButtonObject)
                 {
                     ((FailButtonObject)obj).reloadNonSerializedAssets();
+                }
+                else if (obj is HoleObject)
+                {
+                    ((HoleObject)obj).reloadNonSerializedAssets();
                 }
             }
 

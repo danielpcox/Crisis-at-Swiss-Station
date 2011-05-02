@@ -563,8 +563,11 @@ namespace CrisisAtSwissStation.LevelEditor
                 else if (lastname == "broken_platform")
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
                 else // if (texName == "light")
-                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
-
+                {
+                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8,false);
+                    //ao.RemoveFromWorld();
+                    //world.World.DestroyBody(ao.Body);
+                }
                 ao.Position = gameposition;
                 world.AddObject(ao);
             }
