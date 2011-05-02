@@ -395,6 +395,46 @@ namespace CrisisAtSwissStation
                             }
                             break;
 
+                        case MenuCommand.LoadGenesis:
+                            if (LoadRelWorld("genesis"))
+                            {
+                                countdown = COUNTDOWN;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadExodus:
+                            if (LoadRelWorld("exodus"))
+                            {
+                                countdown = COUNTDOWN;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadLeviticus:
+                            if (LoadRelWorld("leviticus"))
+                            {
+                                countdown = COUNTDOWN;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadNumbers:
+                            if (LoadRelWorld("numbers"))
+                            {
+                                countdown = COUNTDOWN;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadDeuteronomy:
+                            if (LoadRelWorld("deuteronomy"))
+                            {
+                                countdown = COUNTDOWN;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
                         case MenuCommand.LaunchEditor:
                             {
                                 progstate = ProgramState.EditorOpen;
@@ -656,6 +696,14 @@ namespace CrisisAtSwissStation
             return false;
         }
 
+        // load a world with a pathname relative to the worlds directory
+        public bool LoadRelWorld(string worldname)
+        {
+            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            cwname = currdir + "\\Worlds\\" + worldname + ".world";
+            return LoadWorld(cwname);
+        }
+
         public bool LoadWorld()
         {
             ScrollingWorld world;
@@ -747,10 +795,10 @@ namespace CrisisAtSwissStation
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Genesis", MenuCommand.LoadGenesis));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Exodus", MenuCommand.LoadExodus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Leviticus", MenuCommand.LoadLeviticus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Numbers", MenuCommand.LoadNumbers));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Genesis", MenuCommand.LoadGenesis));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exodus", MenuCommand.LoadExodus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Leviticus", MenuCommand.LoadLeviticus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Numbers", MenuCommand.LoadNumbers));
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
 
@@ -838,8 +886,7 @@ namespace CrisisAtSwissStation
                 currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
             }
             */
-
-
+            
 
 
             //Draw IS label 
@@ -931,13 +978,14 @@ namespace CrisisAtSwissStation
                     }
                     
                     */
+                    DrawSuccessOrFail();
 
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(menuPanel,
-                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                        currentMenu.Draw(spriteBatch);
-                        spriteBatch.End();
-                    
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(menuPanel,
+                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                    currentMenu.Draw(spriteBatch);
+                    spriteBatch.End();
+                
 
                     break;
 
@@ -945,27 +993,32 @@ namespace CrisisAtSwissStation
 
                     //currentWorld.Draw(spriteBatch, (float)this.Window.ClientBounds.Width, (float)this.Window.ClientBounds.Height);
                     currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
+                    DrawSuccessOrFail();
                     break;
             }
 
+            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+           // jumpTextBox.Draw(spriteBatch, 255);
+            base.Draw(gameTime);
+        }
+
+        private void DrawSuccessOrFail()
+        {
+
             spriteBatch.Begin();
             // Draw success or failure image
-            if (currentWorld!=null && currentWorld.Succeeded && !currentWorld.Failed)
+            if (currentWorld != null && currentWorld.Succeeded && !currentWorld.Failed)
             {
                 animate = true;
                 spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - sourceRect.Width) / 2,
                     (graphics.PreferredBackBufferHeight - sourceRect.Height) / 2), sourceRect, Color.White);
             }
-            else if (currentWorld!=null && currentWorld.Failed)
+            else if (currentWorld != null && currentWorld.Failed)
             {
                 spriteBatch.Draw(failure, new Vector2((graphics.PreferredBackBufferWidth - failure.Width) / 2,
                     (graphics.PreferredBackBufferHeight - failure.Height) / 2), Color.White); ;
             }
             spriteBatch.End();
-            
-            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
-           // jumpTextBox.Draw(spriteBatch, 255);
-            base.Draw(gameTime);
         }
     }
 }
