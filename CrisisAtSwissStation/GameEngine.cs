@@ -739,19 +739,25 @@ namespace CrisisAtSwissStation
         {
             // Set up main screen
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
-            MenuScreen optionScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
+            MenuScreen floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f);
 
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
-            mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
+            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
+            mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
-            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Options", optionScreen));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
-            optionScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Options here?", MenuCommand.NONE));
-            optionScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Genesis", MenuCommand.LoadGenesis));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Exodus", MenuCommand.LoadExodus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Leviticus", MenuCommand.LoadLeviticus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Numbers", MenuCommand.LoadNumbers));
+            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
 
             startMenu.Screens.Add(mainScreen);
-            startMenu.Screens.Add(optionScreen);
+            startMenu.Screens.Add(floorsScreen);
+
+
 
             // Pause screen
 
