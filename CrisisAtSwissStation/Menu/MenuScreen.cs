@@ -19,6 +19,7 @@ namespace CrisisAtSwissStation
     {
         public static readonly Color Selected = new Color(255, 247, 153);
         public static readonly Color Unselected = new Color(182,0,0);
+        public static readonly Color Disabled = new Color(25, 25, 25);
 
         private float initialX;
         private float initialY;
@@ -31,6 +32,7 @@ namespace CrisisAtSwissStation
         /// Options player has to choose
         /// </summary>
         private List<MenuOption> options;
+        public List<int> disabledOptions = new List<int>();
         public List<MenuOption> Options
         {
             get { return options; }
@@ -84,7 +86,7 @@ namespace CrisisAtSwissStation
                 spriteBatch.DrawString(font,
                     options[i].Text,
                     rollingPos,
-                    (i == selected ? Selected : Unselected));
+                    (disabledOptions.Contains(i) ? Disabled : (i == selected ? Selected : Unselected) ));
 
                 rollingPos.Y += distY;
             }
@@ -95,14 +97,21 @@ namespace CrisisAtSwissStation
             controller.UpdateInput();
             returnSelected = false;
 
+            int viable = selected;
             switch (controller.ControlCode)
             {
                 case MenuInput.DOWN:
-                    selected += 1;
+                    viable += 1;
+                    while (disabledOptions.Contains(viable))
+                        viable += 1;
+                    selected = viable;
                     break;
 
                 case MenuInput.UP:
-                    selected -= 1;
+                    viable -= 1;
+                    while (disabledOptions.Contains(viable))
+                        viable -= 1;
+                    selected = viable;
                     break;
 
                 case MenuInput.SELECT:

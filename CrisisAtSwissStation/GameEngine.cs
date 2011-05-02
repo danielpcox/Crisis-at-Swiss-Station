@@ -707,6 +707,7 @@ namespace CrisisAtSwissStation
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Numbers", MenuCommand.LoadNumbers));
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
+            floorsScreen.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);
