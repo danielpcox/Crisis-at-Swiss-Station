@@ -713,15 +713,21 @@ namespace CrisisAtSwissStation.LevelEditor
                 {
                     case "block_long":
                         InstasteelObject io;
-                        io = new InstasteelObject(world.World, texName, 600, 1, .5f, 0, 1, false);
+                        io = new InstasteelObject(world.World, texName, 580, 1, .5f, 0, 1, false);
                         io.Position = gameposition;
                         world.AddObject(io);
                         break;
                     case "disk_long":
                         InstasteelCircleObject ico;
-                        ico = new InstasteelCircleObject(world.World, texName, 500, 1, .5f, 0, 1);
+                        ico = new InstasteelCircleObject(world.World, texName, 480, 1, .5f, 0, 1);
                         ico.Position = gameposition;
                         world.AddObject(ico);
+                        break;
+                    case "line_long":
+                        InstasteelObject ilo;
+                        ilo = new InstasteelObject(world.World, texName, 190, 1, .5f, 0, 1, false);
+                        ilo.Position = gameposition;
+                        world.AddObject(ilo);
                         break;
                     default:
                         break;

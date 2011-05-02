@@ -30,7 +30,7 @@ namespace CrisisAtSwissStation
 
         KeyboardState keyState, prevKeyState;
 
-        public static Texture2D onepixel; // used for darkening the string
+        public static Texture2D onepixel; // used for darkening the screen
         public static Texture2D menuBack;
         public static Texture2D menuPanel;
         public static Texture2D menuPanelAnimation;
