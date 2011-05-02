@@ -593,6 +593,7 @@ namespace CrisisAtSwissStation.LevelEditor
             else if (rb_PistonObject.Checked)
             {
                 PistonObject po;
+                Console.WriteLine("{0}", gameposition);
                 po = new PistonObject(world.World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .1f, gameposition);
                 po.Position = gameposition;
                 world.AddObject(po);  
