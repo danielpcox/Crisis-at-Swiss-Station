@@ -224,12 +224,18 @@ namespace CrisisAtSwissStation
             //float cos_theta = (float)System.Math.Cos(Angle);
             //float sin_theta = (float)System.Math.Sin(Angle);
 
-            Vector2 center = new Vector2(boundingBox.Center.X, boundingBox.Center.Y);
+            Vector2 center = new Vector2(boundingBox.Center.X*scale, boundingBox.Center.Y*scale);
             newPoint = newPoint - center;
             
+            //unscale before rotating
+            newPoint = newPoint / scale;
+
             double theta = System.Math.Atan2(newPoint.Y, newPoint.X) + Angle;
             Vector2 rotatedpos = new Vector2((float)(newPoint.Length() * System.Math.Cos(theta)), (float)(newPoint.Length() * System.Math.Sin(theta)));
             newPoint = rotatedpos;
+
+            //rescale after rotating
+            newPoint = newPoint * scale;
 
             /*
             newPoint = new Vector2(
