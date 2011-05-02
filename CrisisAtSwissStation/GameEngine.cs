@@ -630,6 +630,7 @@ namespace CrisisAtSwissStation
         public static void LinkToMain()
         {
             SetCurrentMenu(startMenu);
+            
         }
 
         public void ExitGame()

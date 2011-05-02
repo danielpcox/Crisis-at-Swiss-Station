@@ -51,7 +51,8 @@ namespace CrisisAtSwissStation
             Destruction,
             Basement,
             Happy,
-            Robots
+            Robots,
+            Menu
            
         }
 
@@ -81,6 +82,7 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
             songs.Add(MusicSelection.Happy, content.Load<Song>("Music/SpaceThemeHappy"));
             songs.Add(MusicSelection.Robots, content.Load<Song>("Music/LaterLevelv1"));
+            
 
             // MAPS BACKGROUND FILENAMES TO MUSIC FILES
             songsdict.Add("background", content.Load<Song>("Music/Basement"));
