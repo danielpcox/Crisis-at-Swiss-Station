@@ -22,7 +22,7 @@ namespace CrisisAtSwissStation
             : base(world, "Art\\Objects\\PistonObjects\\piston_moving", 0f, .5f, 0.0f, myHeadScale, false)
         {
             TextureFilename = "Art\\Objects\\PistonObjects\\piston_moving";
-
+            Console.WriteLine(" in po1  {0}", headPos);
             //po = new PistonObject(world.World, .5f, .5f, 12f, 13f, 9.7f, 12.6f, .01f, .2f, gameposition);
             // private static Vector2 pistonPosition = new Vector2(12f, 13.2f);
             /*
@@ -31,6 +31,7 @@ namespace CrisisAtSwissStation
              */
             endXPos = headPos.X - 2.3f;
             endYPos = headPos.Y - .6f;
+            Console.WriteLine(" in po2  {0} {1}", endXPos, endYPos);
             //headScale = myHeadScale; needed?
             //endScale = myEndScale;
             endScale = myEndScale;
