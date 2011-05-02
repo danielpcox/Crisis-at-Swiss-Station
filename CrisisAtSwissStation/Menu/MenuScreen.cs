@@ -44,7 +44,7 @@ namespace CrisisAtSwissStation
         /// </summary>
         private string title;
 
-        MenuController controller;
+        public MenuController controller;
 
         private SpriteFont font;
 

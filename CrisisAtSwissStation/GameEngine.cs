@@ -352,9 +352,6 @@ namespace CrisisAtSwissStation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-
-            ////////////// FROM BOUNCE
-
             bool skipdialog = false;
 
             keyState = Keyboard.GetState();
@@ -489,31 +486,6 @@ namespace CrisisAtSwissStation
                     break;
             }
 
-            //base.Update(gameTime);
-            ///////////// END FROM BOUNCE
-
-            //KeyboardState ks = Keyboard.GetState();
-            //bool next = ks.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N);
-            //bool prev = ks.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P);
-            //bool reset = keyState.IsKeyDown(Keys.R) && prevKeyState.IsKeyUp(Keys.R);
-           
-            /*
-            // exit when they press escape
-            if (keyState.IsKeyDown(Keys.Escape))
-                this.Exit();
-
-            if (keyState.IsKeyDown(Keys.L) && !GameEngine.level_editor_open)
-            {
-                editor = new CrisisAtSwissStation.LevelEditor.Editor();
-                editor.Show();
-                GameEngine.level_editor_open = true;
-            }
-
-            // Move to next track if they press 'x'
-            if (keyState.IsKeyDown(Keys.X) && prevKeyState.IsKeyUp(Keys.X))
-                audioManager.PlayNext();
-            */
-
             //toggle mute if they press 'm' 
             if (keyState.IsKeyDown(Keys.M) && prevKeyState.IsKeyUp(Keys.M))
                 audioManager.Mute();
@@ -555,76 +527,10 @@ namespace CrisisAtSwissStation
                         }
                 }
             }
-            
-            // Current world is invalid for some reason - construct a new one!
-            /*
-            if (next || reset || currentWorld == null)
-            {
-                // Uses C# reflection to construct a new world with minimal code
-                //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
-
-                string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-                Console.WriteLine("Current Directory: " + currdir);
-
-                if (LOAD_FROM_FILE)
-                {
-                    currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\asdf.world");
-                    currentWorld.reloadNonSerializedAssets();
-                }
-                else
-                {
-                    currentWorld = new ScrollingWorld();
-                }
                 
-                countdown = 0;
-            }
-            */
-
-                
-
             // Just won or lost - initiate countdown
             if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown <= 0)
                 countdown = COUNTDOWN;
-
-           
-
-            //Call to update the Text Box
-            /*
-            instaSteelTextBox.Update(gameTime);
-            jumpTextBox.Update(gameTime);
-            */
-
-            //Need the text from the text box to interpret it later
-            //string temp = instaSteelTextBox.GetText();
-           
-            //check if enter pushed and a valid number entered. Update insta-steel accordingly 
-            /*
-            if (ks.IsKeyDown(Keys.Enter))
-            {
-                int num;
-                bool parseWin = Int32.TryParse(temp, out num);//try to parse the string to int
-
-                if (parseWin)
-                {
-                     ScrollingWorld.numDrawLeft = (float) Int32.Parse(temp);
-                }
-            }
-
-            string temp2 = jumpTextBox.GetText();
-
-            //check if enter pushed and a valid number entered. Update Jump accordingly 
-            if (ks.IsKeyDown(Keys.Enter))
-            {
-                float num;
-                bool parseWin = float.TryParse(temp2, out num);//try to parse the string to int
-
-                if (parseWin)
-                {
-                    DudeObject.jumpImpulse = -float.Parse(temp2);
-                }
-            }
-            */
-
 
             base.Update(gameTime);
             prevKeyState = keyState;
@@ -836,7 +742,6 @@ namespace CrisisAtSwissStation
             spriteBatch.Begin();
             for (int i = 0; i < 150; i++)
             {
-                Console.WriteLine("i got here");
                 menuMyGameTime++;
                 menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
                 if (!((menuXFrame == 5) && (menuYFrame == 1)))

@@ -68,7 +68,10 @@ namespace CrisisAtSwissStation
                 switch (selected.Type)
                 {
                     case MenuOptionType.Link:
+                        KeyboardState prevks = currentScreen.controller.keyState;
                         currentScreen = selected.Link;
+                        // pass along the previous keystate the first time so we don't duplicate selection
+                        currentScreen.controller.prevState = prevks;
                         break;
 
                     case MenuOptionType.Command:
