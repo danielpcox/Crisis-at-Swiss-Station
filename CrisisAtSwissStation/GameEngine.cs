@@ -398,7 +398,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadGenesis:
-                            if (LoadRelWorld("genesis"))
+                            if (LoadRelWorld("introduction"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -407,7 +407,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadExodus:
-                            if (LoadRelWorld("exodus"))
+                            if (LoadRelWorld("ballroom"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -416,7 +416,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadLeviticus:
-                            if (LoadRelWorld("leviticus"))
+                            if (LoadRelWorld("basement"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -425,7 +425,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadNumbers:
-                            if (LoadRelWorld("numbers"))
+                            if (LoadRelWorld("credits"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -485,7 +485,8 @@ namespace CrisisAtSwissStation
                     }
                     else if (ks.IsKeyDown(Keys.N))
                     {
-                        LoadNextWorld();
+                        //LoadNextWorld();
+                        currentWorld.Succeeded = true;
                     }
 
                     //world.Update();
@@ -738,10 +739,10 @@ namespace CrisisAtSwissStation
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Genesis", MenuCommand.LoadGenesis));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exodus", MenuCommand.LoadExodus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Leviticus", MenuCommand.LoadLeviticus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Numbers", MenuCommand.LoadNumbers));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Ballroom", MenuCommand.LoadExodus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Basement", MenuCommand.LoadLeviticus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Free Play", MenuCommand.LoadNumbers));
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });

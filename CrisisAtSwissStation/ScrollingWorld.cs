@@ -820,6 +820,7 @@ namespace CrisisAtSwissStation
             AudioManager audio = GameEngine.AudioManager;
             //audio.Play(AudioManager.MusicSelection.Basement);
             audio.Play(musicName);
+            //Console.WriteLine(backgroundName);
             background = GameEngine.TextureList[backgroundName];
             holeList = new List<HoleObject>();
             foreach (PhysicsObject obj in Objects)

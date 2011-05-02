@@ -141,7 +141,13 @@ namespace CrisisAtSwissStation
          * Whether or not we've beaten this world
          */
         public bool Succeeded
-        { get { return succeeded; } }
+        {
+            get { return succeeded; }
+            set
+            {
+                succeeded = value;
+            }
+        }
 
         /**
          * Whether or not we died trying

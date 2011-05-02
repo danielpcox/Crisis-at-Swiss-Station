@@ -85,6 +85,7 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
+            //Console.WriteLine(TextureFilename);
             this.texture = GameEngine.TextureList[TextureFilename];
         }
 
