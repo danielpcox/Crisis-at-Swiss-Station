@@ -1166,28 +1166,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Objects\BoxObjects\column_1.png">
-      <Name>column_1</Name>
+    <Compile Include="Art\Objects\AnimationObjects\chandelier.png">
+      <Name>chandelier</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Objects\BoxObjects\column_2.png">
-      <Name>column_2</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\AnimationObjects\strips\chandelier_strip.png">
+      <Name>chandelier_strip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Objects\BoxObjects\column_3.png">
-      <Name>column_3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\Objects\BoxObjects\column_4.png">
-      <Name>column_4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\Objects\BoxObjects\column_5.png">
-      <Name>column_5</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\BackgroundObjects\chandelier.png">
+      <Name>chandelier</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

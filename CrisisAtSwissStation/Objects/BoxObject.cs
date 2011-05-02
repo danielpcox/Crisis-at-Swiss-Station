@@ -79,6 +79,7 @@ namespace CrisisAtSwissStation
             shape.Density = density;
             shape.Friction = friction;
             shape.Restitution = restitution;
+            shape.UserData = textureName; // for DEBUGging purposes
             shapes.Add(shape);
         }
 
