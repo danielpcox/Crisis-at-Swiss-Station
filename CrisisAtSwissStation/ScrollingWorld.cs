@@ -513,7 +513,7 @@ namespace CrisisAtSwissStation
 
             bottom1 = new BoxObject(World, "bottomTexture2273", 0, .5f, 0,1,false);
             bottom1.Position = bottom1Position;
-            AddObject(bottom1);
+            //AddObject(bottom1);
 
             bottom2 = new BoxObject(World, "bottomTexture1636", 0, .5f, 0,1,false);
             bottom2.Position = bottom2Position;
@@ -639,31 +639,33 @@ namespace CrisisAtSwissStation
             blobs.Add(new Vector2(startx, starty));
             blobs.Add(new Vector2(endx,starty));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            //AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .2f));
             blobs.Add(new Vector2(endx, starty + .2f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            //AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .4f));
             blobs.Add(new Vector2(endx, starty + .4f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            //AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .6f));
             blobs.Add(new Vector2(endx, starty + .6f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            //AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
 
+            /* a TON of insta-steel
             blobs.Add(new Vector2(startx, starty + .6f));
             blobs.Add(new Vector2(endx, starty + .6f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-            PaintedObject po = new PaintedObject(World, "paint", "paintedsegment", blobs);
+            kaintedObject po = new PaintedObject(World, "paint", "paintedsegment", blobs);
             po.Length = 200000; // DEBUG
             AddObject(po);
             blobs.Clear();
+            */
 
             /*
             float startx = .3f, endx = 1.5f, starty = 4f, spacing = .5f;
@@ -1299,7 +1301,7 @@ namespace CrisisAtSwissStation
                 if ((ScrollingWorld.dudeSensorName + "SLOPE").Equals(shape1.UserData) &&
                     (world.dude != shape2.GetBody().GetUserData()) && (shape1.GetBody() != shape2.GetBody()))
                 {
-                    Console.WriteLine(shape2.UserData);
+                    //Console.WriteLine(shape2.UserData); // DEBUG
                     world.dude.OnSlope = true;
                 }
 
