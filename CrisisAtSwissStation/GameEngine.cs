@@ -29,6 +29,8 @@ namespace CrisisAtSwissStation
         static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
         static MenuScreen floorsScreen;
 
+        public static SavedGame savedgame = new SavedGame();
+
         KeyboardState keyState, prevKeyState;
 
         public static Texture2D onepixel; // used for darkening the screen
@@ -557,6 +559,7 @@ namespace CrisisAtSwissStation
             if (File.Exists(newfilename))
             {
                 LoadWorld(newfilename);
+                savedgame.currentRoom++; savedgame.SaveGame();
                 progstate = ProgramState.Playing;
             }
             else
@@ -566,20 +569,24 @@ namespace CrisisAtSwissStation
                 progstate = ProgramState.Menu;
                 currentWorld = null;
             }
+
             countdown = COUNTDOWN;
         }
 
-        public static void EnableNextFloor()
+        public void EnableNextFloor()
         {
             int low_water_mark = 200; // starts as "infinity"
-            foreach (int floor in floorsScreen.disabledOptions)
+            foreach (int floor in savedgame.disabledOptions)
             {
                 if (floor < low_water_mark)
                 {
                     low_water_mark = floor;
                 }
             }
-            floorsScreen.disabledOptions.Remove(low_water_mark);
+            savedgame.currentRoom = 0;
+            savedgame.disabledOptions.Remove(low_water_mark);
+            savedgame.SaveGame();
+            //floorsScreen.disabledOptions.Remove(low_water_mark);
         }
 
         public static void EnterMenu()
@@ -713,7 +720,7 @@ namespace CrisisAtSwissStation
         {
             // Set up main screen
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
-            floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f);
+            floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
 
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
@@ -727,7 +734,7 @@ namespace CrisisAtSwissStation
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Numbers", MenuCommand.LoadNumbers));
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
-            floorsScreen.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
+            savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);

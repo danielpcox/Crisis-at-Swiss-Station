@@ -59,6 +59,50 @@ namespace CrisisAtSwissStation.Common
          }
 
 
+        public static void Serialize(SavedGame sg, string filename)
+        {
+                FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
+
+                try
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    formatter.Serialize(fs, sg);
+                }
+                finally
+                {
+                    fs.Close();
+                    Console.WriteLine("Saved!");
+                }
+            }
+        
+        public static SavedGame DeSerialize(string filename, bool throwaway)
+        {
+            SavedGame sg;
+
+            // Check for existance of file
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show("File \"" + filename + "\" does not exist!",
+                    "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            
+                try
+                {
+                    //The actual game serialization couldn't handle the upgrade to 4.0 :(
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    sg = (SavedGame) formatter.Deserialize(fs);
+   
+                }
+                finally
+                {
+                    fs.Close();
+                }
+            return sg;
+
+         }
 
         //-------------Serialization for rooms-----------------------------------------------------
         /*
