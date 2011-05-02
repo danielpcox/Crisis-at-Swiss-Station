@@ -26,7 +26,8 @@ namespace CrisisAtSwissStation
         private const bool LOAD_FROM_FILE = false;
 
         static MenuEngine currentMenu;
-        static MenuEngine startMenu = new MenuEngine(), floorsMenu = new MenuEngine(), pauseMenu = new MenuEngine();
+        static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
+        static MenuScreen floorsScreen;
 
         KeyboardState keyState, prevKeyState;
 
@@ -239,7 +240,7 @@ namespace CrisisAtSwissStation
             audioManager.LoadContent(Content);
 
             startMenu.LoadContent(Content);
-            floorsMenu.LoadContent(Content);
+            //floorsMenu.LoadContent(Content);
             pauseMenu.LoadContent(Content);
 
             onepixel = Content.Load<Texture2D>("Art\\Misc\\onepixel");
@@ -560,11 +561,25 @@ namespace CrisisAtSwissStation
             }
             else
             {
+                EnableNextFloor();
                 LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
             }
             countdown = COUNTDOWN;
+        }
+
+        public static void EnableNextFloor()
+        {
+            int low_water_mark = 200; // starts as "infinity"
+            foreach (int floor in floorsScreen.disabledOptions)
+            {
+                if (floor < low_water_mark)
+                {
+                    low_water_mark = floor;
+                }
+            }
+            floorsScreen.disabledOptions.Remove(low_water_mark);
         }
 
         public static void EnterMenu()
@@ -698,7 +713,7 @@ namespace CrisisAtSwissStation
         {
             // Set up main screen
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
-            MenuScreen floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f);
+            floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f);
 
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
