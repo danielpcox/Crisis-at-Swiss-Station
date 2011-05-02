@@ -1388,6 +1388,15 @@ namespace CrisisAtSwissStation
                         world.Fail();
                     }
                 }
+                foreach (PhysicsObject switchObj in objsDict["CircleObject"])
+                {
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                    {
+                        if(((CircleObject)switchObj).TextureFilename.Equals("Art\\Objects\\CircleObjects\\gear"))
+                        world.Fail();
+                    }
+                }
                 foreach (PhysicsObject switchObj in objsDict["FailButtonObject"])
                 {
                     if ((object1 == switchObj && object2 == world.dude) ||
