@@ -673,6 +673,7 @@ namespace CrisisAtSwissStation
             if (result == Forms.DialogResult.OK)
             {
                 world = Serializer.DeSerialize(dialog.FileName);
+                //world = new ScrollingWorld("background"); // DEBUG
                 cwname = dialog.FileName;
             }
             else

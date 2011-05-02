@@ -32,11 +32,13 @@ namespace CrisisAtSwissStation
         private const int JUMP_COOLDOWN = 30;
 
         private const float DUDE_FORCE = 30.0f;   //was 20, raised so horizonal moving plats are a bit smoother, How much force to apply to get the dude moving
+        private const float UNGROUNDED_DUDE_FORCE = 5.0f;   //was 20, raised so horizonal moving plats are a bit smoother, How much force to apply to get the dude moving
         private const float DUDE_DAMPING = 10.0f; // was 10, How hard the brakes are applied to get a dude to stop moving
         private const float DUDE_MAXSPEED = 6.0f; //was 6, Upper limit on dude left-right movement.  Does NOT apply to vertical movement.
 
         // Whether or not this dude is touching the ground
         private bool isGrounded;
+        private bool isSloped;
 
         // Cooldown values
         private int jumpCooldown;
@@ -159,6 +161,7 @@ namespace CrisisAtSwissStation
 
             // Initialize
             isGrounded = false;
+            isSloped = false;
 
             TextureFilename = objectTexturename;
             // BodyDef options
@@ -217,8 +220,15 @@ namespace CrisisAtSwissStation
             groundSensor.Density = 1.0f;
             groundSensor.IsSensor = true;
             groundSensor.UserData = groundSensorName;
-            groundSensor.SetAsBox(halfWidth / 2, 0.05f, Utils.Convert(sensorCenter), 0);
+            groundSensor.SetAsBox(halfWidth / 2f, 0.05f, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
+
+            PolygonDef slopeSensor = new PolygonDef();
+            slopeSensor.Density = 1.0f;
+            slopeSensor.IsSensor = true;
+            slopeSensor.UserData = groundSensorName + "SLOPE";
+            slopeSensor.SetAsBox(halfWidth * 1.9f, 0.1f, Utils.Convert(sensorCenter + new Vector2(0, 0)), 0);
+            shapes.Add(slopeSensor);
 
             lockDude = false;
 
@@ -237,9 +247,10 @@ namespace CrisisAtSwissStation
 
 
 
-        public static void locked(){
-        lockDude = true;
-    }
+        public static void locked()
+        {
+            lockDude = true;
+        }
 
 
         /**
@@ -326,6 +337,15 @@ namespace CrisisAtSwissStation
             set { isGrounded = value; }
         }
 
+        /**
+         * Is the dude on a surface at all or not?
+         */
+        public bool OnSlope
+        {
+            get { return isSloped; }
+            set { isSloped = value; }
+        }
+
         public bool isRight()
         {
             return facingRight;
@@ -360,20 +380,24 @@ namespace CrisisAtSwissStation
 
                 Vector2 moveForce = new Vector2();
                 bool jump = false;
-               
-
-                // TODO: XBox controls
-                // --------------------
+                
                 KeyboardState ks = Keyboard.GetState();
 
                 if ((ks.IsKeyDown(Keys.Left) || ks.IsKeyDown(Keys.A)) && !lockDude) //&& !CASSWorld.getFailed())
                 {
                
                     
+                    if (dudeObject.Grounded)
+                    {
                         moveForce.X = -DUDE_FORCE;
+                    }
+                    else 
+                    {
+                        moveForce.X = -UNGROUNDED_DUDE_FORCE;
+                    }
 
                     //dudeObject.walkAnimation(dudeObject.getTime());
-                        if (dudeObject.Grounded) 
+                        if (dudeObject.OnSlope) 
                         dudeObject.walkAnimation();
                         else
                         dudeObject.fallAnimation();
@@ -381,10 +405,18 @@ namespace CrisisAtSwissStation
                 else if ((ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D)) &&!lockDude) //&& !CASSWorld.getFailed())
                 {
 
-                    moveForce.X += DUDE_FORCE;
+                    //moveForce.X += DUDE_FORCE;
+                    if (dudeObject.Grounded)
+                    {
+                        moveForce.X = +DUDE_FORCE;
+                    }
+                    else 
+                    {
+                        moveForce.X = +UNGROUNDED_DUDE_FORCE;
+                    }
 
                     //dudeObject.walkAnimation(dudeObject.getTime());
-                    if (dudeObject.Grounded)
+                    if (dudeObject.OnSlope)
                         dudeObject.walkAnimation();
                     else
                         dudeObject.fallAnimation();
@@ -392,7 +424,7 @@ namespace CrisisAtSwissStation
                 }
                 else
                 {
-                    if (dudeObject.Grounded)                                   
+                    if (dudeObject.OnSlope)
                         dudeObject.standAnimation();
                     else
                         dudeObject.fallAnimation();

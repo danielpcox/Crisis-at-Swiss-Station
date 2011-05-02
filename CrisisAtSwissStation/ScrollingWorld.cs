@@ -513,7 +513,7 @@ namespace CrisisAtSwissStation
 
             bottom1 = new BoxObject(World, "bottomTexture2273", 0, .5f, 0,1,false);
             bottom1.Position = bottom1Position;
-         //   AddObject(bottom1);
+            AddObject(bottom1);
 
             bottom2 = new BoxObject(World, "bottomTexture1636", 0, .5f, 0,1,false);
             bottom2.Position = bottom2Position;
@@ -639,22 +639,30 @@ namespace CrisisAtSwissStation
             blobs.Add(new Vector2(startx, starty));
             blobs.Add(new Vector2(endx,starty));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-        //    AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .2f));
             blobs.Add(new Vector2(endx, starty + .2f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-        //    AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .4f));
             blobs.Add(new Vector2(endx, starty + .4f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-       //     AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
             blobs.Clear();
             blobs.Add(new Vector2(startx, starty + .6f));
             blobs.Add(new Vector2(endx, starty + .6f));
             //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
-        //    AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            AddObject(new PaintedObject(World, "paint", "paintedsegment", blobs));
+            blobs.Clear();
+
+            blobs.Add(new Vector2(startx, starty + .6f));
+            blobs.Add(new Vector2(endx, starty + .6f));
+            //AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, blobs));
+            PaintedObject po = new PaintedObject(World, "paint", "paintedsegment", blobs);
+            po.Length = 200000; // DEBUG
+            AddObject(po);
             blobs.Clear();
 
             /*
@@ -1055,6 +1063,7 @@ namespace CrisisAtSwissStation
             */
 
             dude.Grounded = false; // unrelated to the following
+            dude.OnSlope = false; // unrelated to the following
 
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
@@ -1276,7 +1285,7 @@ namespace CrisisAtSwissStation
                 PhysicsObject object1 = shape1.GetBody().GetUserData() as PhysicsObject;
                 PhysicsObject object2 = shape2.GetBody().GetUserData() as PhysicsObject;
 
-                if (ScrollingWorld.dudeSensorName.Equals(shape2.UserData))
+                if ((ScrollingWorld.dudeSensorName+"SLOPE").Equals(shape2.UserData) || ScrollingWorld.dudeSensorName.Equals(shape2.UserData))
                 {
                     Shape temp = shape1;
                     shape1 = shape2;
@@ -1286,6 +1295,12 @@ namespace CrisisAtSwissStation
                     (world.dude != shape2.GetBody().GetUserData()))
                 {
                     world.dude.Grounded = true;
+                }
+                if ((ScrollingWorld.dudeSensorName + "SLOPE").Equals(shape1.UserData) &&
+                    (world.dude != shape2.GetBody().GetUserData()) && (shape1.GetBody() != shape2.GetBody()))
+                {
+                    Console.WriteLine(shape2.UserData);
+                    world.dude.OnSlope = true;
                 }
 
                 Dictionary<String, List<PhysicsObject>> objsDict = new Dictionary<String, List<PhysicsObject>>();
