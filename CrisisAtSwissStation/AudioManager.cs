@@ -92,9 +92,9 @@ namespace CrisisAtSwissStation
             songsdict.Add("RonniesBestWork", content.Load<Song>("Music/SpaceThemeHappy"));
             songsdict.Add("basement2", content.Load<Song>("Music/LaterLevelv1"));
             songsdict.Add("bathroom", content.Load<Song>("Music/Basement"));
-            songsdict.Add("plinko", content.Load<Song>("Music/MainMenuv1"));
+            songsdict.Add("plinko", content.Load<Song>("Music/EarlyLevelv2"));
             songsdict.Add("hallway2", content.Load<Song>("Music/EarlyLevelv2"));
-            songsdict.Add("credits", content.Load<Song>("Music/SpaceThemeHappy"));
+            songsdict.Add("credits", content.Load<Song>("Music/MainMenuv1"));
             songsdict.Add("space", content.Load<Song>("Music/EarlyLevelv2"));
 
             //Sound Effects
