@@ -997,7 +997,7 @@ namespace CrisisAtSwissStation.LevelEditor
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = filter;
             string currdir = CurrDirHack() + "\\Worlds";
-            Console.WriteLine("Current Directory " + currdir);
+            //Console.WriteLine("Current Directory " + currdir);
             dialog.InitialDirectory = currdir; //".";
             dialog.Title = title;
 
