@@ -19,6 +19,9 @@ namespace CrisisAtSwissStation
     {
         public static readonly Color Selected = new Color(255, 247, 153);
         public static readonly Color Unselected = new Color(182,0,0);
+        public static readonly Color Disabled = new Color(25, 25, 25);
+
+        private bool sgconnect = false;
 
         private float initialX;
         private float initialY;
@@ -31,6 +34,7 @@ namespace CrisisAtSwissStation
         /// Options player has to choose
         /// </summary>
         private List<MenuOption> options;
+        //public List<int> disabledOptions = new List<int>();
         public List<MenuOption> Options
         {
             get { return options; }
@@ -44,7 +48,7 @@ namespace CrisisAtSwissStation
         /// </summary>
         private string title;
 
-        MenuController controller;
+        public MenuController controller;
 
         private SpriteFont font;
 
@@ -54,10 +58,12 @@ namespace CrisisAtSwissStation
         /// <param name="x">X coordinate of first option</param>
         /// <param name="y">Y coordinate of first option</param>
         /// <param name="vertDist">Y distance to next option</param>
-        public MenuScreen(float x, float y, float vertDist)
+        public MenuScreen(float x, float y, float vertDist, bool sgConnect = false)
         {
             controller = new MenuController();
             options = new List<MenuOption>();
+
+            sgconnect = sgConnect;
 
             selected = 0; // Set default selected item to first
 
@@ -84,7 +90,7 @@ namespace CrisisAtSwissStation
                 spriteBatch.DrawString(font,
                     options[i].Text,
                     rollingPos,
-                    (i == selected ? Selected : Unselected));
+                    (sgconnect && GameEngine.savedgame.disabledOptions.Contains(i) ? Disabled : (i == selected ? Selected : Unselected) ));
 
                 rollingPos.Y += distY;
             }
@@ -95,14 +101,21 @@ namespace CrisisAtSwissStation
             controller.UpdateInput();
             returnSelected = false;
 
+            int viable = selected;
             switch (controller.ControlCode)
             {
                 case MenuInput.DOWN:
-                    selected += 1;
+                    viable += 1;
+                    while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
+                        viable += 1;
+                    selected = viable;
                     break;
 
                 case MenuInput.UP:
-                    selected -= 1;
+                    viable -= 1;
+                    while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
+                        viable -= 1;
+                    selected = viable;
                     break;
 
                 case MenuInput.SELECT:

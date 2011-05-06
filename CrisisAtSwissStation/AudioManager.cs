@@ -82,6 +82,7 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
             songs.Add(MusicSelection.Happy, content.Load<Song>("Music/SpaceThemeHappy"));
             songs.Add(MusicSelection.Robots, content.Load<Song>("Music/LaterLevelv1"));
+            songs.Add(MusicSelection.Menu, content.Load<Song>("Music/MainMenuv1"));
             
 
             // MAPS BACKGROUND FILENAMES TO MUSIC FILES
@@ -90,6 +91,11 @@ namespace CrisisAtSwissStation
             songsdict.Add("ballroom", content.Load<Song>("Music/EarlyLevelv2"));
             songsdict.Add("RonniesBestWork", content.Load<Song>("Music/SpaceThemeHappy"));
             songsdict.Add("basement2", content.Load<Song>("Music/LaterLevelv1"));
+            songsdict.Add("bathroom", content.Load<Song>("Music/Basement"));
+            songsdict.Add("plinko", content.Load<Song>("Music/EarlyLevelv2"));
+            songsdict.Add("hallway2", content.Load<Song>("Music/EarlyLevelv2"));
+            songsdict.Add("credits", content.Load<Song>("Music/MainMenuv1"));
+            songsdict.Add("space", content.Load<Song>("Music/EarlyLevelv2"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));

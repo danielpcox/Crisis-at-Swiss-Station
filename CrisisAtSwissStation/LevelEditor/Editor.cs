@@ -47,7 +47,8 @@ namespace CrisisAtSwissStation.LevelEditor
         private string textureDir;
         private ScrollingWorld world;
 
-        string currdir = CurrDirHack();
+        //string currdir = CurrDirHack();
+        string currdir = GameEngine.GetCurrDir();
 
         //The object that the user just selected. May be null!
         //private SpaceObject currentlySelectedObject;
@@ -892,6 +893,35 @@ namespace CrisisAtSwissStation.LevelEditor
         //-----------------Functions dealing with saving and loading levels-----------------------------------
         // More specifically, these are the callbacks and functions related to the menu bar in the top.
 
+        private void SaveRoom()
+        {
+            SavedRoom sr = new SavedRoom();
+            sr.objects = world.Objects;
+            sr.backgroundName = world.backgroundName;
+            sr.musicName = world.musicName;
+            foreach (PhysicsObject obj in world.Objects)
+            {
+                if (obj is DudeObject)
+                {
+                    sr.dude = (DudeObject)obj;
+                }
+                else if (obj is WinDoorObject)
+                {
+                    sr.winDoor = (WinDoorObject)obj;
+                }
+            }
+            sr.objects.Remove(sr.dude);
+            world.World.DestroyBody(sr.dude.Body);
+            sr.objects.Remove(sr.winDoor);
+            world.World.DestroyBody(sr.winDoor.Body);
+
+            sr.world = world.World;
+
+            Serializer.Serialize(sr, currentFileName);
+
+            sr.objects.Add(sr.dude);
+            sr.objects.Add(sr.winDoor);
+        }
 
         //Saves the current file, using the currentFileName as the name of the file.
         private void mi_Save_Click(object sender, EventArgs e)
@@ -901,14 +931,11 @@ namespace CrisisAtSwissStation.LevelEditor
                 if (currentFileName == "")
                 {
                     mi_Save_As_Click(sender, e);
-
                 }
                 else if (currentState == State.EDITING_WORLD)
                 {
-
                     //verifyInvariants(false);
-
-                    Serializer.Serialize(world, currentFileName);
+                    SaveRoom();
                 }
             }
         }
@@ -933,7 +960,7 @@ namespace CrisisAtSwissStation.LevelEditor
                 }
 
                 //dialog.InitialDirectory = ".";
-                dialog.InitialDirectory = CurrDirHack() + "\\Worlds";
+                dialog.InitialDirectory = GameEngine.GetCurrDir() + "\\Levels";
                 dialog.Title = "Choose the file to save.";
 
 
@@ -942,11 +969,12 @@ namespace CrisisAtSwissStation.LevelEditor
                 //If the result was ok, load the resultant file, otherwise, just return.
                 if (result == DialogResult.OK)
                 {
+                    currentFileName = dialog.FileName;
                     if (currentState == State.EDITING_WORLD)
                     {
-                        Serializer.Serialize(world, dialog.FileName);
+                        //Serializer.Serialize(world, dialog.FileName);
+                        SaveRoom();
                     }
-                    currentFileName = dialog.FileName;
                 }
             }
         }
@@ -969,8 +997,8 @@ namespace CrisisAtSwissStation.LevelEditor
             //First, choose the file we want to load.
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = filter;
-            string currdir = CurrDirHack() + "\\Worlds";
-            Console.WriteLine("Current Directory " + currdir);
+            string currdir = GameEngine.GetCurrDir() + "\\Levels";
+            //Console.WriteLine("Current Directory " + currdir);
             dialog.InitialDirectory = currdir; //".";
             dialog.Title = title;
 
@@ -981,7 +1009,8 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 if (loadWorld)
                 {
-                    world = Serializer.DeSerialize(dialog.FileName);
+                    //world = Serializer.OLDDeSerialize(dialog.FileName); // HACK so we can convert the old levels into the new format
+                    world = new ScrollingWorld(dialog.FileName, true);
                     world.Background = GameEngine.TextureList[world.backgroundName];
                     switchRooms();
                 }
@@ -1213,7 +1242,8 @@ namespace CrisisAtSwissStation.LevelEditor
         /// <returns></returns>
         public static string CurrDirHack()
         {
-            return (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            //return (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            return GameEngine.GetCurrDir();
         }
 
         private void showMessage(string title, string text)

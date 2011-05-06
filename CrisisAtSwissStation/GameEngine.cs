@@ -26,7 +26,11 @@ namespace CrisisAtSwissStation
         private const bool LOAD_FROM_FILE = false;
 
         static MenuEngine currentMenu;
-        static MenuEngine startMenu = new MenuEngine(), optionMenu = new MenuEngine(), pauseMenu = new MenuEngine();
+        static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
+        static MenuScreen floorsScreen;
+
+        public static SavedGame savedgame = new SavedGame();
+        MenuCommand forcedCommand = MenuCommand.NONE;
 
         KeyboardState keyState, prevKeyState;
 
@@ -148,6 +152,7 @@ namespace CrisisAtSwissStation
         private GameEngine()
         {
             graphics = new GraphicsDeviceManager(this);
+
             
             //Adds an audio manager when the constructor is called
             audioManager = new AudioManager();
@@ -239,7 +244,7 @@ namespace CrisisAtSwissStation
             audioManager.LoadContent(Content);
 
             startMenu.LoadContent(Content);
-            optionMenu.LoadContent(Content);
+            //floorsMenu.LoadContent(Content);
             pauseMenu.LoadContent(Content);
 
             onepixel = Content.Load<Texture2D>("Art\\Misc\\onepixel");
@@ -352,9 +357,6 @@ namespace CrisisAtSwissStation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-
-            ////////////// FROM BOUNCE
-
             bool skipdialog = false;
 
             keyState = Keyboard.GetState();
@@ -375,7 +377,7 @@ namespace CrisisAtSwissStation
                 case ProgramState.Menu:
                     currentMenu.Update();
 
-                    switch (currentMenu.ReturnAndResetCommand())
+                    switch (currentMenu.ReturnAndResetCommand(forcedCommand))
                     {
                         case MenuCommand.LinkToMainMenu:
                             LinkToMain();
@@ -391,6 +393,51 @@ namespace CrisisAtSwissStation
                             if (LoadWorld())
                             {
                                 countdown = COUNTDOWN;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadGenesis:
+                            if (LoadRelWorld("introduction"))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadExodus:
+                            if (LoadRelWorld("ballroom"))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadLeviticus:
+                            if (LoadRelWorld("basement"))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadNumbers:
+                            if (LoadRelWorld("credits"))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
+                        case MenuCommand.LoadDeuteronomy:
+                            if (LoadRelWorld("deuteronomy"))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
                             }
                             break;
@@ -416,6 +463,10 @@ namespace CrisisAtSwissStation
                                 progstate = ProgramState.Playing;
                             }
                             break;
+                        case MenuCommand.Continue:
+                            countdown = COUNTDOWN;
+                            forcedCommand = Constants.floors[savedgame.GetCurrentFloor()];
+                            break;
                     }
 
                     break;
@@ -434,7 +485,8 @@ namespace CrisisAtSwissStation
                     }
                     else if (ks.IsKeyDown(Keys.N))
                     {
-                        LoadNextWorld();
+                        //LoadNextWorld();
+                        currentWorld.Succeeded = true;
                     }
 
                     //world.Update();
@@ -448,31 +500,6 @@ namespace CrisisAtSwissStation
                         progstate = ProgramState.Menu;
                     break;
             }
-
-            //base.Update(gameTime);
-            ///////////// END FROM BOUNCE
-
-            //KeyboardState ks = Keyboard.GetState();
-            //bool next = ks.IsKeyDown(Keys.N) && lastKeyboardState.IsKeyUp(Keys.N);
-            //bool prev = ks.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P);
-            //bool reset = keyState.IsKeyDown(Keys.R) && prevKeyState.IsKeyUp(Keys.R);
-           
-            /*
-            // exit when they press escape
-            if (keyState.IsKeyDown(Keys.Escape))
-                this.Exit();
-
-            if (keyState.IsKeyDown(Keys.L) && !GameEngine.level_editor_open)
-            {
-                editor = new CrisisAtSwissStation.LevelEditor.Editor();
-                editor.Show();
-                GameEngine.level_editor_open = true;
-            }
-
-            // Move to next track if they press 'x'
-            if (keyState.IsKeyDown(Keys.X) && prevKeyState.IsKeyUp(Keys.X))
-                audioManager.PlayNext();
-            */
 
             //toggle mute if they press 'm' 
             if (keyState.IsKeyDown(Keys.M) && prevKeyState.IsKeyUp(Keys.M))
@@ -515,76 +542,10 @@ namespace CrisisAtSwissStation
                         }
                 }
             }
-            
-            // Current world is invalid for some reason - construct a new one!
-            /*
-            if (next || reset || currentWorld == null)
-            {
-                // Uses C# reflection to construct a new world with minimal code
-                //currentWorld = worldTypes[currentType].GetConstructor(Type.EmptyTypes).Invoke(null) as DemoWorld;
-
-                string currdir =  (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-                Console.WriteLine("Current Directory: " + currdir);
-
-                if (LOAD_FROM_FILE)
-                {
-                    currentWorld = Serializer.DeSerialize(currdir + "\\Worlds\\asdf.world");
-                    currentWorld.reloadNonSerializedAssets();
-                }
-                else
-                {
-                    currentWorld = new ScrollingWorld();
-                }
                 
-                countdown = 0;
-            }
-            */
-
-                
-
             // Just won or lost - initiate countdown
             if (currentWorld!=null && (currentWorld.Failed || currentWorld.Succeeded) && countdown <= 0)
                 countdown = COUNTDOWN;
-
-           
-
-            //Call to update the Text Box
-            /*
-            instaSteelTextBox.Update(gameTime);
-            jumpTextBox.Update(gameTime);
-            */
-
-            //Need the text from the text box to interpret it later
-            //string temp = instaSteelTextBox.GetText();
-           
-            //check if enter pushed and a valid number entered. Update insta-steel accordingly 
-            /*
-            if (ks.IsKeyDown(Keys.Enter))
-            {
-                int num;
-                bool parseWin = Int32.TryParse(temp, out num);//try to parse the string to int
-
-                if (parseWin)
-                {
-                     ScrollingWorld.numDrawLeft = (float) Int32.Parse(temp);
-                }
-            }
-
-            string temp2 = jumpTextBox.GetText();
-
-            //check if enter pushed and a valid number entered. Update Jump accordingly 
-            if (ks.IsKeyDown(Keys.Enter))
-            {
-                float num;
-                bool parseWin = float.TryParse(temp2, out num);//try to parse the string to int
-
-                if (parseWin)
-                {
-                    DudeObject.jumpImpulse = -float.Parse(temp2);
-                }
-            }
-            */
-
 
             base.Update(gameTime);
             prevKeyState = keyState;
@@ -610,15 +571,34 @@ namespace CrisisAtSwissStation
             if (File.Exists(newfilename))
             {
                 LoadWorld(newfilename);
+                savedgame.currentRoom++; savedgame.SaveGame();
                 progstate = ProgramState.Playing;
             }
             else
             {
-                LinkToMain();
+                EnableNextFloor();
+                LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
             }
+
             countdown = COUNTDOWN;
+        }
+
+        public void EnableNextFloor()
+        {
+            int low_water_mark = 200; // starts as "infinity"
+            foreach (int floor in savedgame.disabledOptions)
+            {
+                if (floor < low_water_mark)
+                {
+                    low_water_mark = floor;
+                }
+            }
+            savedgame.currentRoom = 0;
+            savedgame.disabledOptions.Remove(low_water_mark);
+            savedgame.SaveGame();
+            //floorsScreen.disabledOptions.Remove(low_water_mark);
         }
 
         public static void EnterMenu()
@@ -630,7 +610,12 @@ namespace CrisisAtSwissStation
         public static void LinkToMain()
         {
             SetCurrentMenu(startMenu);
-            
+        }
+
+        public static void LinkToFloors()
+        {
+            SetCurrentMenu(startMenu);
+            startMenu.NextMenu();
         }
 
         public void ExitGame()
@@ -639,11 +624,16 @@ namespace CrisisAtSwissStation
             this.Exit();
         }
 
+        public static string GetCurrDir()
+        {
+            return Directory.GetCurrentDirectory();
+        }
+
         public bool NewWorld()
         {
-            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-            cwname = currdir + "\\Worlds\\" + Constants.NEW_GAME_NAME;
-            ScrollingWorld world = Serializer.DeSerialize(cwname);
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            cwname = GetCurrDir() + "\\Levels\\" + Constants.NEW_GAME_NAME;
+            ScrollingWorld world = new ScrollingWorld(cwname, true);
 
             if (world != null)
             {
@@ -654,6 +644,14 @@ namespace CrisisAtSwissStation
                 return true;
             }
             return false;
+        }
+
+        // load a world with a pathname relative to the worlds directory
+        public bool LoadRelWorld(string worldname)
+        {
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            cwname = GetCurrDir() + "\\Levels\\" + worldname + ".world";
+            return LoadWorld(cwname);
         }
 
         public bool LoadWorld()
@@ -673,8 +671,8 @@ namespace CrisisAtSwissStation
             //return null.
             if (result == Forms.DialogResult.OK)
             {
-                world = Serializer.DeSerialize(dialog.FileName);
-                //world = new ScrollingWorld("background"); // DEBUG
+                //world = Serializer.DeSerialize(dialog.FileName);
+                world = new ScrollingWorld(dialog.FileName, true);
                 cwname = dialog.FileName;
             }
             else
@@ -706,7 +704,8 @@ namespace CrisisAtSwissStation
 
             if (worldpath!=null)
             {
-                world = Serializer.DeSerialize(worldpath);
+                //world = Serializer.DeSerialize(worldpath);
+                world = new ScrollingWorld(worldpath, true);
                 cwname = worldpath;
             }
             else
@@ -739,19 +738,29 @@ namespace CrisisAtSwissStation
         {
             // Set up main screen
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
-            MenuScreen optionScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
-
+            floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
+            mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
-            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Options", optionScreen));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
-            optionScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Options here?", MenuCommand.NONE));
-            optionScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Ballroom", MenuCommand.LoadExodus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Basement", MenuCommand.LoadLeviticus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Free Play", MenuCommand.LoadNumbers));
+            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
+            savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
+            /*if (savedgame.LoadGame()) // if there is a saved game, load it instead of the hardcoded starter version above
+            {
+                mainScreen.Options[0] = new MenuOption(MenuOptionType.Command, "Continue", MenuCommand.Continue);
+            }*/
 
             startMenu.Screens.Add(mainScreen);
-            startMenu.Screens.Add(optionScreen);
+            startMenu.Screens.Add(floorsScreen);
+
+
 
             // Pause screen
 
@@ -782,7 +791,6 @@ namespace CrisisAtSwissStation
             spriteBatch.Begin();
             for (int i = 0; i < 150; i++)
             {
-                Console.WriteLine("i got here");
                 menuMyGameTime++;
                 menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
                 if (!((menuXFrame == 5) && (menuYFrame == 1)))
@@ -832,8 +840,7 @@ namespace CrisisAtSwissStation
                 currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
             }
             */
-
-
+            
 
 
             //Draw IS label 
@@ -925,13 +932,14 @@ namespace CrisisAtSwissStation
                     }
                     
                     */
+                    DrawSuccessOrFail();
 
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(menuPanel,
-                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                        currentMenu.Draw(spriteBatch);
-                        spriteBatch.End();
-                    
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(menuPanel,
+                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                    currentMenu.Draw(spriteBatch);
+                    spriteBatch.End();
+                
 
                     break;
 
@@ -939,27 +947,32 @@ namespace CrisisAtSwissStation
 
                     //currentWorld.Draw(spriteBatch, (float)this.Window.ClientBounds.Width, (float)this.Window.ClientBounds.Height);
                     currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
+                    DrawSuccessOrFail();
                     break;
             }
 
+            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
+           // jumpTextBox.Draw(spriteBatch, 255);
+            base.Draw(gameTime);
+        }
+
+        private void DrawSuccessOrFail()
+        {
+
             spriteBatch.Begin();
             // Draw success or failure image
-            if (currentWorld!=null && currentWorld.Succeeded && !currentWorld.Failed)
+            if (currentWorld != null && currentWorld.Succeeded && !currentWorld.Failed)
             {
                 animate = true;
                 spriteBatch.Draw(victory, new Vector2((graphics.PreferredBackBufferWidth - sourceRect.Width) / 2,
                     (graphics.PreferredBackBufferHeight - sourceRect.Height) / 2), sourceRect, Color.White);
             }
-            else if (currentWorld!=null && currentWorld.Failed)
+            else if (currentWorld != null && currentWorld.Failed)
             {
                 spriteBatch.Draw(failure, new Vector2((graphics.PreferredBackBufferWidth - failure.Width) / 2,
                     (graphics.PreferredBackBufferHeight - failure.Height) / 2), Color.White); ;
             }
             spriteBatch.End();
-            
-            //instaSteelTextBox.Draw(spriteBatch, 255); //draws the textbox here, no transparency 
-           // jumpTextBox.Draw(spriteBatch, 255);
-            base.Draw(gameTime);
         }
     }
 }

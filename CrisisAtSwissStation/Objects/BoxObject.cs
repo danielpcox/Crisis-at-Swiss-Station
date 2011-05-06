@@ -57,7 +57,7 @@ namespace CrisisAtSwissStation
             : base(world)
         {
             // Initialize
-            Console.WriteLine(textureName);
+            //Console.WriteLine(textureName);
             this.texture = GameEngine.TextureList[textureName];
             TextureFilename = textureName;
             Height = texture.Height * myScale;
@@ -85,6 +85,7 @@ namespace CrisisAtSwissStation
 
         public void reloadNonSerializedAssets()
         {
+            //Console.WriteLine(TextureFilename);
             this.texture = GameEngine.TextureList[TextureFilename];
         }
 
