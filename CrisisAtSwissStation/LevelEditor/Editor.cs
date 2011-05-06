@@ -48,7 +48,7 @@ namespace CrisisAtSwissStation.LevelEditor
         private ScrollingWorld world;
 
         //string currdir = CurrDirHack();
-        string currdir = GameEngine.GetCurrDir();
+        string currdir = GameEngine.GetCurrDir() + "\\Content\\";
 
         //The object that the user just selected. May be null!
         //private SpaceObject currentlySelectedObject;
@@ -1094,7 +1094,7 @@ namespace CrisisAtSwissStation.LevelEditor
             if (currentState != State.NO_EDITS)
             {
                 //Draw the background image
-                string background_file = currdir + "\\" + world.backgroundName + ".png";
+                string background_file = currdir + world.backgroundName + ".png";
 
                 System.Drawing.Image image = Image.FromFile(background_file);
                 e.Graphics.DrawImage(image, 0, 0, pb_Level.Width, pb_Level.Height);
