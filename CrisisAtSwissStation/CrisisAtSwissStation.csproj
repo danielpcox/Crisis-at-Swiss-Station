@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioManager.cs" />
+    <Compile Include="SavedRoom.cs" />
     <Compile Include="SavedGame.cs" />
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\Conversion.cs" />

@@ -628,7 +628,7 @@ namespace CrisisAtSwissStation
         {
             string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
             cwname = currdir + "\\Worlds\\" + Constants.NEW_GAME_NAME;
-            ScrollingWorld world = Serializer.DeSerialize(cwname);
+            ScrollingWorld world = new ScrollingWorld(cwname, true);
 
             if (world != null)
             {
@@ -666,8 +666,8 @@ namespace CrisisAtSwissStation
             //return null.
             if (result == Forms.DialogResult.OK)
             {
-                world = Serializer.DeSerialize(dialog.FileName);
-                //world = new ScrollingWorld("background"); // DEBUG
+                //world = Serializer.DeSerialize(dialog.FileName);
+                world = new ScrollingWorld(dialog.FileName, true);
                 cwname = dialog.FileName;
             }
             else
@@ -699,7 +699,8 @@ namespace CrisisAtSwissStation
 
             if (worldpath!=null)
             {
-                world = Serializer.DeSerialize(worldpath);
+                //world = Serializer.DeSerialize(worldpath);
+                world = new ScrollingWorld(worldpath, true);
                 cwname = worldpath;
             }
             else
@@ -734,7 +735,7 @@ namespace CrisisAtSwissStation
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
             floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
-            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
+            mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));

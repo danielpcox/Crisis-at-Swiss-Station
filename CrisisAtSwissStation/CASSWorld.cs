@@ -47,14 +47,14 @@ namespace CrisisAtSwissStation
 
         public void AddObject(PhysicsObject obj)
         {
-            objects.Add(obj);
+            Objects.Add(obj);
             obj.AddToWorld();
             obj.SetupJoints(world);
         }
 
         public void RemoveObject(PhysicsObject obj)
         {
-            objects.Remove(obj);
+            Objects.Remove(obj);
             obj.RemoveFromWorld();
         }
 
@@ -63,6 +63,10 @@ namespace CrisisAtSwissStation
             get
             {
                 return objects;
+            }
+            set
+            {
+                objects = value;
             }
         }
 
@@ -135,7 +139,10 @@ namespace CrisisAtSwissStation
          * Gets the Box2DX physics world
          */
         public World World
-        { get { return world; } }
+        {
+            get { return world; }
+            set { world = value; }
+        }
 
         /**
          * Whether or not we've beaten this world

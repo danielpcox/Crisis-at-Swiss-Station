@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -814,13 +815,81 @@ namespace CrisisAtSwissStation
 
         }
 
+        public ScrollingWorld(string savedroomname, bool loadingWorldFromFile)
+            : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
+        {
+            SavedRoom sr = Serializer.DeSerialize(savedroomname);
+            World = sr.world;
+            backgroundName = sr.backgroundName; // "Art\\Backgrounds\\" + backgroundname;
+            Objects = sr.objects;
+            foreach (PhysicsObject obj in sr.objects)
+            {
+                //obj.AddToWorld();
+                //obj.SetupJoints(this.World);
+                obj.world = this.World;
+                //obj.Body.SetWorld(this.World);
+                //obj.AddToWorld();
+                //Objects.Add(obj);
+                //AddObject(obj);
+                List<Body> tobedeleted = new List<Body>();
+                for (Body bd = World.GetBodyList(); bd != null; bd = bd.GetNext() )
+                {
+                    if (!Objects.Contains(bd.GetUserData()))
+                    {
+                        //World.DestroyBody(bd);
+                        //tobedeleted.Add(bd);
+                        World.DestroyBody(bd);
+                    }
+                }
+                //foreach (Body bd in tobedeleted)
+                    //World.DestroyBody(bd);
+            }
+
+            musicName = sr.musicName;
+            background = GameEngine.TextureList[backgroundName];
+
+            gameLevelWidth = background.Width;
+            gameLevelHeight = background.Height;
+
+            cursorSrcRect = new Rectangle(cursorWidth, cursorWidth, cursorWidth, cursorWidth);
+            numDrawLeft = 0; // reset the amount of instasteel when loading the level
+            totalInstaSteelInWorld = 0;
+
+            winDoor = new WinDoorObject(World, "door_strip", "WinDoor", 93, 99, 20, 5);
+            winDoor.Position = sr.winDoor.Position; // winDoorPos;
+            winDoor.world = this.World;
+            AddObject(winDoor);
+
+            // Create laser
+            laser = new LaserObject(World, dude, "paintedsegment", 10);
+
+            dude = new DudeObject(World, this, "newDudeFilmstrip", "Dude", "arm", laser, dudeSensorName);
+            dude.Position = sr.dude.Position; // dudePosition;
+            dude.world = this.World;
+            AddObject(dude);
+
+            laser = new LaserObject(World, dude, "Art\\spray2_strip", 10);
+
+            World.SetContactListener(new PlatformContactListener(this));
+            World.SetBoundaryListener(new PlatformBoundaryListener(this));
+
+            paintTexture = GameEngine.TextureList["paint"];
+
+            halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
+
+
+            //PLAYS THE SONG!!!  (It resets at the beginning of the level)
+            AudioManager audio = GameEngine.AudioManager;
+            //audio.Play(AudioManager.MusicSelection.Destruction);
+        }
+
         public void reloadNonSerializedAssets()
         {
             paintTexture = GameEngine.TextureList["paint"];
             AudioManager audio = GameEngine.AudioManager;
             //audio.Play(AudioManager.MusicSelection.Basement);
             audio.Play(musicName);
-            //Console.WriteLine(backgroundName);
+            //Console.WriteLine(musicName);
             background = GameEngine.TextureList[backgroundName];
             holeList = new List<HoleObject>();
             foreach (PhysicsObject obj in Objects)
@@ -985,8 +1054,8 @@ namespace CrisisAtSwissStation
 
         public override void Simulate(float dt)
         {
-            pulleyPipe1.Position = new Vector2(16.8f,pulleyPipe1.Position.Y);
-            pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
+            //pulleyPipe1.Position = new Vector2(16.8f,pulleyPipe1.Position.Y);
+            //pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
 
 
             //Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));

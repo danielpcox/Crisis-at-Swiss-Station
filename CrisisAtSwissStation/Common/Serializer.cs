@@ -13,14 +13,14 @@ namespace CrisisAtSwissStation.Common
     {
 
         //-------------Serialization for the world-----------------------------------------------
-        public static void Serialize(ScrollingWorld world, string filename)
+        public static void Serialize(SavedRoom sr, string filename)
         {
                 FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
 
                 try
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(fs, world );
+                    formatter.Serialize(fs, sr);
                 }
                 finally
                 {
@@ -29,9 +29,9 @@ namespace CrisisAtSwissStation.Common
                 }
             }
         
-        public static ScrollingWorld DeSerialize(string filename)
+        public static SavedRoom DeSerialize(string filename)
         {
-            ScrollingWorld world;
+            SavedRoom sr;
 
             // Check for existance of file
             if (!File.Exists(filename))
@@ -47,14 +47,14 @@ namespace CrisisAtSwissStation.Common
                 {
                     //The actual game serialization couldn't handle the upgrade to 4.0 :(
                     BinaryFormatter formatter = new BinaryFormatter();
-                    world = (ScrollingWorld) formatter.Deserialize(fs);
+                    sr = (SavedRoom) formatter.Deserialize(fs);
    
                 }
                 finally
                 {
                     fs.Close();
                 }
-            return world;
+            return sr;
 
          }
 
@@ -104,43 +104,33 @@ namespace CrisisAtSwissStation.Common
 
          }
 
-        //-------------Serialization for rooms-----------------------------------------------------
-        /*
-        public static void SerializeRoom(Room room, string filename)
+        public static ScrollingWorld OLDDeSerialize(string filename)
         {
-                FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write);
+            ScrollingWorld world;
 
-                try
-                {
-                    BinaryFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(fs, room );
-                }
-                finally
-                {
-                    fs.Close();
-                    Console.WriteLine("Saved!");
-                }
+            // Check for existance of file
+            if (!File.Exists(filename))
+            {
+                MessageBox.Show("File \"" + filename + "\" does not exist!",
+                    "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
             }
-        
-        public static Room DeserializeRoom(string filename)
-        {
-            Room room;
 
             FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
             
                 try
                 {
+                    //The actual game serialization couldn't handle the upgrade to 4.0 :(
                     BinaryFormatter formatter = new BinaryFormatter();
-                    room = (Room) formatter.Deserialize(fs);
+                    world = (ScrollingWorld) formatter.Deserialize(fs);
    
                 }
                 finally
                 {
                     fs.Close();
                 }
-            return room;
+            return world;
 
          }
-        */
     }
 }

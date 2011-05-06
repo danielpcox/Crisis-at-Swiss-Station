@@ -66,7 +66,7 @@ namespace CrisisAtSwissStation
         private Texture2D deadTexture;
 
         private int myGameTime;
-        private LaserObject myLaser; //for arm rotation only
+        //private LaserObject myLaser; //for arm rotation only
         private float armAngle;
 
         ScrollingWorld myWorld;
@@ -176,7 +176,6 @@ namespace CrisisAtSwissStation
             // Make a dude controller
             controllers.Add(new DudeController());
 
-            myLaser = Laser;
             armAngle = 0;
 
             myWorld = theWorld;
