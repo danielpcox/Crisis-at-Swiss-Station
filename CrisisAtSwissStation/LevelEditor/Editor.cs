@@ -1008,8 +1008,8 @@ namespace CrisisAtSwissStation.LevelEditor
             {
                 if (loadWorld)
                 {
-                    world = Serializer.OLDDeSerialize(dialog.FileName); // HACK so we can convert the old levels into the new format
-                    //world = new ScrollingWorld(dialog.FileName, true);
+                    //world = Serializer.OLDDeSerialize(dialog.FileName); // HACK so we can convert the old levels into the new format
+                    world = new ScrollingWorld(dialog.FileName, true);
                     world.Background = GameEngine.TextureList[world.backgroundName];
                     switchRooms();
                 }
