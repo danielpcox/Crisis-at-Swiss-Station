@@ -624,10 +624,15 @@ namespace CrisisAtSwissStation
             this.Exit();
         }
 
+        public static string GetCurrDir()
+        {
+            return Directory.GetCurrentDirectory();
+        }
+
         public bool NewWorld()
         {
-            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-            cwname = currdir + "\\Worlds\\" + Constants.NEW_GAME_NAME;
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            cwname = GetCurrDir() + "\\Levels\\" + Constants.NEW_GAME_NAME;
             ScrollingWorld world = new ScrollingWorld(cwname, true);
 
             if (world != null)
@@ -644,8 +649,8 @@ namespace CrisisAtSwissStation
         // load a world with a pathname relative to the worlds directory
         public bool LoadRelWorld(string worldname)
         {
-            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-            cwname = currdir + "\\Worlds\\" + worldname + ".world";
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            cwname = GetCurrDir() + "\\Levels\\" + worldname + ".world";
             return LoadWorld(cwname);
         }
 
@@ -747,10 +752,10 @@ namespace CrisisAtSwissStation
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
-            if (savedgame.LoadGame()) // if there is a saved game, load it instead of the hardcoded starter version above
+            /*if (savedgame.LoadGame()) // if there is a saved game, load it instead of the hardcoded starter version above
             {
                 mainScreen.Options[0] = new MenuOption(MenuOptionType.Command, "Continue", MenuCommand.Continue);
-            }
+            }*/
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);

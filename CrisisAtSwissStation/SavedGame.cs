@@ -14,15 +14,15 @@ namespace CrisisAtSwissStation
         public int currentRoom = 0;
         public void SaveGame()
         {
-            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-            Serializer.Serialize(this, currdir + "\\" + Constants.SAVED_GAME_FILENAME);
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            Serializer.Serialize(this, GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME);
         }
         public bool LoadGame()
         {
-            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
-            if (File.Exists(currdir + "\\" + Constants.SAVED_GAME_FILENAME))
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            if (File.Exists(GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME))
             {
-                SavedGame tmp = Serializer.DeSerialize(currdir + "\\" + Constants.SAVED_GAME_FILENAME, true);
+                SavedGame tmp = Serializer.DeSerialize(GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME, true);
                 disabledOptions = tmp.disabledOptions;
                 currentRoom = tmp.currentRoom;
                 return true;
