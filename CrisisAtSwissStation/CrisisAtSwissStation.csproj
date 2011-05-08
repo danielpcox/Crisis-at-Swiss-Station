@@ -26,7 +26,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
-    <PublishUrl>C:\Users\danielpcox\Desktop\tmp\</PublishUrl>
+    <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -36,7 +36,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -279,33 +279,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CrisisAtSwissStation_TemporaryKey.pfx" />
-    <Compile Include="Levels\ballroom.world">
+    <Content Include="Levels\ballroom.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\ballroom1.world">
+    </Content>
+    <Content Include="Levels\ballroom1.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\basement.world">
+    </Content>
+    <Content Include="Levels\basement.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\basement1.world">
+    </Content>
+    <Content Include="Levels\basement1.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\basement2.world">
+    </Content>
+    <Content Include="Levels\basement2.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\basement3.world">
+    </Content>
+    <Content Include="Levels\basement3.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\credits.world">
+    </Content>
+    <Content Include="Levels\credits.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\introduction.world">
+    </Content>
+    <Content Include="Levels\introduction.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Levels\introduction1.world">
+    </Content>
+    <Content Include="Levels\introduction1.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

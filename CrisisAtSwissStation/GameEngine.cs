@@ -626,7 +626,11 @@ namespace CrisisAtSwissStation
 
         public static string GetCurrDir()
         {
-            return Directory.GetCurrentDirectory();
+            string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "").Replace("bin\\x86\\Release", "").Replace("\\Worlds", "").Replace("\\Levels", "");
+            //Console.WriteLine(currdir);
+            //Console.WriteLine("GOT HERE");
+            return currdir;
+            //return Directory.GetCurrentDirectory();
         }
 
         public bool NewWorld()

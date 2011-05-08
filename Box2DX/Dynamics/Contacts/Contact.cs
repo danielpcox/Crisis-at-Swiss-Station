@@ -292,7 +292,8 @@ namespace Box2DX.Dynamics
 
 		public static void Destroy(Contact contact)
 		{
-			Box2DXDebug.Assert(s_initialized == true);
+
+            //Box2DXDebug.Assert(s_initialized == true); // COMMENT IS HACK HACK HACK
 
 			if (contact.GetManifoldCount() > 0)
 			{
