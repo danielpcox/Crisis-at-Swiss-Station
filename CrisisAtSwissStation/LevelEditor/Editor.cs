@@ -911,9 +911,9 @@ namespace CrisisAtSwissStation.LevelEditor
                 }
             }
             sr.objects.Remove(sr.dude);
-            world.World.DestroyBody(sr.dude.Body);
+            //sr.world.DestroyBody(sr.dude.Body);
             sr.objects.Remove(sr.winDoor);
-            world.World.DestroyBody(sr.winDoor.Body);
+            //sr.world.DestroyBody(sr.winDoor.Body);
 
             sr.world = world.World;
 

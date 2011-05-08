@@ -840,6 +840,10 @@ namespace CrisisAtSwissStation
                         //tobedeleted.Add(bd);
                         World.DestroyBody(bd);
                     }
+                    else if (bd.GetUserData() is DudeObject || bd.GetUserData() is WinDoorObject)
+                    {
+                        World.DestroyBody(bd);
+                    }
                 }
                 //foreach (Body bd in tobedeleted)
                     //World.DestroyBody(bd);
