@@ -8,6 +8,8 @@ namespace CrisisAtSwissStation.Common
 {
     class Constants
     {
+        public const float MAX_DRAWING_LENGTH = 800;
+
         public const string NEW_GAME_NAME = "introduction.world";
 
         public const string SAVED_GAME_FILENAME = "SAVEDGAME.sav";

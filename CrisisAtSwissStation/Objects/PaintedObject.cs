@@ -104,9 +104,10 @@ namespace CrisisAtSwissStation
         /**
          * Creates a new drawn object
          */
-        public PaintedObject(World world, string blobtexturename, string segmenttexturename, List<Vector2> blobs)
+        public PaintedObject(World world, string blobtexturename, string segmenttexturename, List<Vector2> unsanitized_blobs)
             : base(world, blobtexturename, POB_DENSITY, POB_FRICTION, POB_RESTITUTION, 1f)
         {
+            List<Vector2> blobs = SanitizeBlobs(unsanitized_blobs);
             if (blobs.Count == 0)
                 return;
             Position = blobs[0]; // CASSWorld.SCALE; // position of the painting is the first blob in it
@@ -127,6 +128,13 @@ namespace CrisisAtSwissStation
 
             radius = (float)blobtexture.Width / (2 * CASSWorld.SCALE);
 
+            // calculate amount of instasteel that was taken from this object during sanitation so we can return it to you
+            float origamount = 0;
+            for (int i = 0; i < unsanitized_blobs.Count - 1; i++)
+            {
+                origamount += Vector2.Distance(unsanitized_blobs[i], unsanitized_blobs[i + 1]) * CASSWorld.SCALE;
+            }
+
             //foreach (Vector2 blobpos in blobs)
             for (int i=0; i<blobs.Count-1; i++)
             {
@@ -134,7 +142,7 @@ namespace CrisisAtSwissStation
                 //Vector2 localpos2 = (blobs[i+1] / CASSWorld.SCALE) - Position;
                 Vector2 localpos = blobs[i]  - Position;
                 Vector2 localpos2 = blobs[i+1]- Position;
-                amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE;
+                amountOfInstasteel += Vector2.Distance(blobs[i], blobs[i + 1]) * CASSWorld.SCALE; // moved above
 
                 // add a circle fixture to this object at each point
                 /*
@@ -171,6 +179,10 @@ namespace CrisisAtSwissStation
                 vertices.Add(Common.Utils.Convert(localpos)); // that is, vertices of the curve approximation
                 numBlobs++;
             }
+            
+            // return the instasteel that was taken from you during sanitation of your drawing
+            ScrollingWorld.numDrawLeft += (origamount - amountOfInstasteel);
+
             // add the last vertex
             //Vector2 lastlocalpos = (blobs[blobs.Count - 1] / CASSWorld.SCALE) - Position;
             //vertices.Add(Common.Utils.Convert(lastlocalpos));
@@ -190,7 +202,23 @@ namespace CrisisAtSwissStation
                 amountOfInstasteel = value;
             }
         }
-       
+
+        private List<Vector2> SanitizeBlobs(List<Vector2> unsanitized_blobs)
+        {
+            List<Vector2> blobs = new List<Vector2>();
+            bool badblob = false;
+            foreach (Vector2 blob in unsanitized_blobs)
+            {
+                foreach (Vector2 blob2 in blobs)
+                    if (blob != blob2 && Vector2.Distance(blob, blob2) < (ScrollingWorld.PAINTING_GRANULARITY / CASSWorld.SCALE))
+                        badblob = true;
+                if (!badblob)
+                    blobs.Add(blob);
+                badblob = false;
+            }
+            return blobs;
+        }
+
          /*
         //Constructor for insta-steel generated in the level
         public PaintedObject(World world, Texture2D blobtexture, Texture2D segmenttexture, List<Vector2> blobs, int numBlobs)

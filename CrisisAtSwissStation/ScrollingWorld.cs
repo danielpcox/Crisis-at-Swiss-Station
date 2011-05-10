@@ -1692,7 +1692,7 @@ namespace CrisisAtSwissStation
                 PhysicsObject obj = body.GetUserData() as PhysicsObject;
 
                 // code to fill up a hole
-                int fillradius = 4;
+                int fillradius = 3;
                 if (obj is PaintedObject)
                 {
                     foreach (PhysicsObject hole in this.world.Objects)
