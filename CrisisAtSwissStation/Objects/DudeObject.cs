@@ -35,8 +35,9 @@ namespace CrisisAtSwissStation
 
         private const int JUMP_COOLDOWN = 30;
 
+        private const float DUDE_DENSITY = 0.7f;
         private const float DUDE_FORCE = 30.0f;   //was 20, raised so horizonal moving plats are a bit smoother, How much force to apply to get the dude moving
-        private const float UNGROUNDED_DUDE_FORCE = 5.0f;   //was 20, raised so horizonal moving plats are a bit smoother, How much force to apply to get the dude moving
+        private const float UNGROUNDED_DUDE_FORCE = 6.0f;
         private const float DUDE_DAMPING = 10.0f; // was 10, How hard the brakes are applied to get a dude to stop moving
         private const float DUDE_MAXSPEED = 6.0f; //was 6, Upper limit on dude left-right movement.  Does NOT apply to vertical movement.
 
@@ -155,7 +156,7 @@ namespace CrisisAtSwissStation
          */
         //public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
         public DudeObject(World world, ScrollingWorld theWorld, string texturename, string objectTexturename, string armTexturename, LaserObject Laser, string groundSensorName)
-        : base(world, objectTexturename, .5f, 0.0f, 0.0f, 1, false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
+        : base(world, objectTexturename, DUDE_DENSITY, 0.0f, 0.0f, 1, false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
         {
             this.armTextureName = armTexturename;
             this.animTextureName = texturename;
@@ -229,10 +230,10 @@ namespace CrisisAtSwissStation
 
             // Create collision shape of the ground sensor
             PolygonDef groundSensor = new PolygonDef();
-            groundSensor.Density = 1.0f;
+            groundSensor.Density = 0.0f;
             groundSensor.IsSensor = true;
             groundSensor.UserData = groundSensorName;
-            groundSensor.SetAsBox(halfWidth, 0.05f, Utils.Convert(sensorCenter), 0);
+            groundSensor.SetAsBox(halfWidth, halfHeight/2, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
 
             /*
