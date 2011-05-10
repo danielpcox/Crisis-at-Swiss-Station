@@ -15,5 +15,7 @@ namespace CrisisAtSwissStation.Common
         public static List<MenuCommand> floors = new List<MenuCommand> { MenuCommand.LoadGenesis, MenuCommand.LoadExodus, MenuCommand.LoadLeviticus, MenuCommand.LoadNumbers};
 
         public const float HALF_GUN = 30f;
+
+        public const float STEEPEST_SLOPE =(float) Math.PI / 6f; // in radians, the steepest slope Cosmo can walk up comfortably
     }
 }

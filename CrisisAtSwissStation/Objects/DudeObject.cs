@@ -24,10 +24,13 @@ namespace CrisisAtSwissStation
 
         private static bool lockDude;
         private bool amDead;
+
+        private Vector2 normal = new Vector2(0,-1); // when the dude is in contact with a surface, this points from the surface to the dude
        
 
         //dude's jump impulse
-        public static float jumpImpulse = -5f;
+        //public static float jumpImpulse = -5f;
+        public static float jumpImpulse = 5f;
 
 
         private const int JUMP_COOLDOWN = 30;
@@ -56,6 +59,10 @@ namespace CrisisAtSwissStation
         private int yFrame;
         private int spriteWidth;
         private int spriteHeight;
+
+        private int prevxFrame;
+        private int prevyFrame;
+
         [NonSerialized]
         private Texture2D animTexture;
         protected string animTextureName;
@@ -225,15 +232,17 @@ namespace CrisisAtSwissStation
             groundSensor.Density = 1.0f;
             groundSensor.IsSensor = true;
             groundSensor.UserData = groundSensorName;
-            groundSensor.SetAsBox(halfWidth / 2f, 0.05f, Utils.Convert(sensorCenter), 0);
+            groundSensor.SetAsBox(halfWidth, 0.05f, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
 
+            /*
             PolygonDef slopeSensor = new PolygonDef();
             slopeSensor.Density = 1.0f;
             slopeSensor.IsSensor = true;
             slopeSensor.UserData = groundSensorName + "SLOPE";
-            slopeSensor.SetAsBox(halfWidth * 1.9f, 0.1f, Utils.Convert(sensorCenter + new Vector2(0, 0)), 0);
+            slopeSensor.SetAsBox(halfWidth * 1.1f, 0.1f, Utils.Convert(sensorCenter + new Vector2(0, 0)), 0);
             shapes.Add(slopeSensor);
+            */
 
             lockDude = false;
 
@@ -357,8 +366,20 @@ namespace CrisisAtSwissStation
          */
         public bool OnSlope
         {
-            get { return isSloped; }
-            set { isSloped = value; }
+            get
+            {
+                double angle = 0;
+                angle = (Math.PI /2) - Math.Atan2(Math.Abs(Normal.Y), Math.Abs(Normal.X)); 
+                //angle = (angle > Math.PI/2f) ? (Math.PI - angle) : angle ;
+                //Console.WriteLine(angle / Math.PI);
+                return Grounded && (angle < Constants.STEEPEST_SLOPE);
+            }
+        }
+
+        public Vector2 Normal
+        {
+            get { return normal; }
+            set { normal = value; }
         }
 
         public bool isRight()
@@ -402,7 +423,7 @@ namespace CrisisAtSwissStation
                 {
                
                     
-                    if (dudeObject.Grounded)
+                    if (dudeObject.OnSlope)
                     {
                         moveForce.X = -DUDE_FORCE;
                     }
@@ -412,16 +433,22 @@ namespace CrisisAtSwissStation
                     }
 
                     //dudeObject.walkAnimation(dudeObject.getTime());
+                    /*
                         if (dudeObject.OnSlope) 
                         dudeObject.walkAnimation();
                         else
+                        dudeObject.fallAnimation();
+                    */
+                    if (dudeObject.Grounded)
+                        dudeObject.walkAnimation();
+                    else
                         dudeObject.fallAnimation();
                 }
                 else if ((ks.IsKeyDown(Keys.Right) || ks.IsKeyDown(Keys.D)) &&!lockDude) //&& !CASSWorld.getFailed())
                 {
 
                     //moveForce.X += DUDE_FORCE;
-                    if (dudeObject.Grounded)
+                    if (dudeObject.OnSlope)
                     {
                         moveForce.X = +DUDE_FORCE;
                     }
@@ -431,7 +458,13 @@ namespace CrisisAtSwissStation
                     }
 
                     //dudeObject.walkAnimation(dudeObject.getTime());
+                    /*
                     if (dudeObject.OnSlope)
+                        dudeObject.walkAnimation();
+                    else
+                        dudeObject.fallAnimation();
+                    */
+                    if (dudeObject.Grounded)
                         dudeObject.walkAnimation();
                     else
                         dudeObject.fallAnimation();
@@ -439,7 +472,13 @@ namespace CrisisAtSwissStation
                 }
                 else
                 {
+                    /*
                     if (dudeObject.OnSlope)
+                        dudeObject.standAnimation();
+                    else
+                        dudeObject.fallAnimation();
+                    */
+                    if (dudeObject.Grounded)
                         dudeObject.standAnimation();
                     else
                         dudeObject.fallAnimation();
@@ -516,7 +555,8 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                   Vector2 impulse = new Vector2(0, jumpImpulse);
+                   //Vector2 impulse = new Vector2(0, jumpImpulse);
+                    Vector2 impulse = dudeObject.Normal * jumpImpulse;
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }
@@ -534,6 +574,8 @@ namespace CrisisAtSwissStation
 
         private void fallAnimation()
         {
+            prevxFrame = xFrame;
+            prevyFrame = yFrame;
             xFrame = 2;
             yFrame = 2;
             // Console.WriteLine("Stand called");
@@ -543,6 +585,8 @@ namespace CrisisAtSwissStation
         //animation stuff
         private void walkAnimation()//int gameTime)
         {
+            xFrame = prevxFrame;
+            yFrame = prevyFrame;
             //walkTimer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             //walkTimer += (float)gameTime;
             walkTimer += myGameTime;
@@ -570,6 +614,9 @@ namespace CrisisAtSwissStation
                 // -= (int)walkInterval;
                 myGameTime = 0;
                 walkTimer = 0;
+
+                prevxFrame = xFrame;
+                prevyFrame = yFrame;
 
             }
 

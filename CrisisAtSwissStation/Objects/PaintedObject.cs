@@ -25,7 +25,7 @@ namespace CrisisAtSwissStation
     {
         // physical parameters for each blob in a PaintedObject
         private const float POB_DENSITY = 1f;//0.001f;
-        private const float POB_FRICTION = 0.5f;
+        private const float POB_FRICTION = 0.2f;
         private const float POB_RESTITUTION = 0.0f;
         public static Color INSTASTEEL_COLOR = Color.Gray;
 
