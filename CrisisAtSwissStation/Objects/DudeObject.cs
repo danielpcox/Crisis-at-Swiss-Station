@@ -233,7 +233,7 @@ namespace CrisisAtSwissStation
             groundSensor.Density = 0.0f;
             groundSensor.IsSensor = true;
             groundSensor.UserData = groundSensorName;
-            groundSensor.SetAsBox(halfWidth, halfHeight/2, Utils.Convert(sensorCenter), 0);
+            groundSensor.SetAsBox(halfWidth*0.6f, halfHeight*0.5f, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
 
             /*
@@ -557,7 +557,15 @@ namespace CrisisAtSwissStation
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
                    //Vector2 impulse = new Vector2(0, jumpImpulse);
-                    Vector2 impulse = dudeObject.Normal * jumpImpulse;
+
+                    Vector2 impulse;
+                    double normalAngle = (Math.PI /2) - Math.Atan2(Math.Abs(dudeObject.Normal.Y), Math.Abs(dudeObject.Normal.X)); 
+                    // if slope is pretty shallow, just jump straight up
+                    if (normalAngle < Constants.FLAT_ENOUGH)
+                        impulse = new Vector2(0, -jumpImpulse);
+                    else
+                        impulse = dudeObject.Normal * jumpImpulse;
+
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }

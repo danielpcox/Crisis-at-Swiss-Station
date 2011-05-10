@@ -126,7 +126,8 @@ namespace CrisisAtSwissStation
             segmentTexture = segmenttexture;
             blobTexture = blobtexture;
 
-            radius = (float)blobtexture.Width / (2 * CASSWorld.SCALE);
+            //radius = (float)(blobtexture.Width) / (2 * CASSWorld.SCALE);
+            radius = (float)(blobtexture.Width - 6) / (2 * CASSWorld.SCALE);
 
             // calculate amount of instasteel that was taken from this object during sanitation so we can return it to you
             float origamount = 0;
