@@ -57,6 +57,17 @@ namespace CrisisAtSwissStation
             currentScreen = screens[0];
         }
 
+        public void NextMenu()
+        {
+            try
+            {
+                currentScreen = screens[screens.IndexOf(currentScreen) + 1];
+            }
+            finally
+            {
+            }
+        }
+
         public void Update()
         {
             currentScreen.Update();
@@ -68,7 +79,10 @@ namespace CrisisAtSwissStation
                 switch (selected.Type)
                 {
                     case MenuOptionType.Link:
+                        KeyboardState prevks = currentScreen.controller.keyState;
                         currentScreen = selected.Link;
+                        // pass along the previous keystate the first time so we don't duplicate selection
+                        currentScreen.controller.prevState = prevks;
                         break;
 
                     case MenuOptionType.Command:
@@ -89,8 +103,10 @@ namespace CrisisAtSwissStation
         /// to prevent getting stuck in an infinite loop.
         /// </summary>
         /// <returns></returns>
-        public MenuCommand ReturnAndResetCommand()
+        public MenuCommand ReturnAndResetCommand(MenuCommand forcedCommand = MenuCommand.NONE)
         {
+            if (!(forcedCommand == MenuCommand.NONE))
+                return forcedCommand;
             MenuCommand temp = command;
             command = MenuCommand.NONE;
             return temp;

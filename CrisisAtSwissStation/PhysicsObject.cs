@@ -15,7 +15,7 @@ namespace CrisisAtSwissStation
     public abstract class PhysicsObject
     {
         // The world we live in
-        private World world;
+        public World world;
 
         // Our body definition
         private BodyDef bodyDef;
@@ -73,7 +73,6 @@ namespace CrisisAtSwissStation
 
         public void AddToWorld()
         {
-            
             body = world.CreateBody(bodyDef);
             foreach (ShapeDef shape in shapes)
                 body.CreateShape(shape);

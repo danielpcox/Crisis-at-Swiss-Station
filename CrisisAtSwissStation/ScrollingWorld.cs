@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace CrisisAtSwissStation
         // Dimensions of the game world
         public const float WIDTH = 80.0f; //16.0f originally, then 20f, now changed for side scrolling
         public const float HEIGHT = 15.0f; //12.0f
-        private const float GRAVITY = 9.8f;
+        private const float GRAVITY = 9.8f * 1.5f; // now with 50% more gravity!
         public const int SCREEN_WIDTH = GameEngine.SCREEN_WIDTH;
         public const int SCREEN_HEIGHT = GameEngine.SCREEN_HEIGHT;
 
@@ -35,7 +36,7 @@ namespace CrisisAtSwissStation
         // HACK - these are all deprecated by GameEngine.TextureList
 
         [NonSerialized]
-        private static Texture2D groundTexture;
+        private static Texture2D groundTexture; 
         [NonSerialized]
         private static Texture2D dudeTexture;
         [NonSerialized]
@@ -279,6 +280,7 @@ namespace CrisisAtSwissStation
         Rectangle cursorSrcRect;
         int cursorWidth = 32;
         public static float numDrawLeft;
+        public static float drawLimit = 4096;
         float totalInstaSteelInWorld;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
         Vector2 prevMousePos;
@@ -814,12 +816,86 @@ namespace CrisisAtSwissStation
 
         }
 
+        public ScrollingWorld(string savedroomname, bool loadingWorldFromFile)
+            : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
+        {
+            SavedRoom sr = Serializer.DeSerialize(savedroomname);
+            World = sr.world;
+            backgroundName = sr.backgroundName; // "Art\\Backgrounds\\" + backgroundname;
+            Objects = sr.objects;
+            this.World.Gravity = Utils.Convert(new Vector2(0, GRAVITY)); // RESET GRAVITY
+            foreach (PhysicsObject obj in sr.objects)
+            {
+                //obj.AddToWorld();
+                //obj.SetupJoints(this.World);
+                obj.world = this.World;
+                //obj.Body.SetWorld(this.World);
+                //obj.AddToWorld();
+                //Objects.Add(obj);
+                //AddObject(obj);
+                List<Body> tobedeleted = new List<Body>();
+                for (Body bd = World.GetBodyList(); bd != null; bd = bd.GetNext() )
+                {
+                    if (!Objects.Contains(bd.GetUserData()))
+                    {
+                        //World.DestroyBody(bd);
+                        //tobedeleted.Add(bd);
+                        World.DestroyBody(bd);
+                    }
+                    else if (bd.GetUserData() is DudeObject || bd.GetUserData() is WinDoorObject)
+                    {
+                        World.DestroyBody(bd);
+                    }
+                }
+                //foreach (Body bd in tobedeleted)
+                    //World.DestroyBody(bd);
+            }
+
+            musicName = sr.musicName;
+            background = GameEngine.TextureList[backgroundName];
+
+            gameLevelWidth = background.Width;
+            gameLevelHeight = background.Height;
+
+            cursorSrcRect = new Rectangle(cursorWidth, cursorWidth, cursorWidth, cursorWidth);
+            numDrawLeft = 0; // reset the amount of instasteel when loading the level
+            totalInstaSteelInWorld = 0;
+
+            winDoor = new WinDoorObject(World, "door_strip", "WinDoor", 93, 99, 20, 5);
+            winDoor.Position = sr.winDoor.Position; // winDoorPos;
+            winDoor.world = this.World;
+            AddObject(winDoor);
+
+            // Create laser
+            laser = new LaserObject(World, dude, "paintedsegment", 10);
+
+            dude = new DudeObject(World, this, "newDudeFilmstrip", "Dude", "arm", laser, dudeSensorName);
+            dude.Position = sr.dude.Position; // dudePosition;
+            dude.world = this.World;
+            AddObject(dude);
+
+            laser = new LaserObject(World, dude, "Art\\spray2_strip", 10);
+
+            World.SetContactListener(new PlatformContactListener(this));
+            World.SetBoundaryListener(new PlatformBoundaryListener(this));
+
+            paintTexture = GameEngine.TextureList["paint"];
+
+            halfdotsize = new Vector2(paintTexture.Width / 2, paintTexture.Height / 2);
+
+
+            //PLAYS THE SONG!!!  (It resets at the beginning of the level)
+            AudioManager audio = GameEngine.AudioManager;
+            //audio.Play(AudioManager.MusicSelection.Destruction);
+        }
+
         public void reloadNonSerializedAssets()
         {
             paintTexture = GameEngine.TextureList["paint"];
             AudioManager audio = GameEngine.AudioManager;
             //audio.Play(AudioManager.MusicSelection.Basement);
             audio.Play(musicName);
+            //Console.WriteLine(musicName);
             background = GameEngine.TextureList[backgroundName];
             holeList = new List<HoleObject>();
             foreach (PhysicsObject obj in Objects)
@@ -984,8 +1060,8 @@ namespace CrisisAtSwissStation
 
         public override void Simulate(float dt)
         {
-            pulleyPipe1.Position = new Vector2(16.8f,pulleyPipe1.Position.Y);
-            pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
+            //pulleyPipe1.Position = new Vector2(16.8f,pulleyPipe1.Position.Y);
+            //pulleyPipe2.Position = new Vector2(18.2f, pulleyPipe2.Position.Y);         
 
 
             //Console.WriteLine("{0}", getGameCoords(new Vector2(Mouse.GetState().X, Mouse.GetState().Y)));
@@ -1065,7 +1141,7 @@ namespace CrisisAtSwissStation
             */
 
             dude.Grounded = false; // unrelated to the following
-            dude.OnSlope = false; // unrelated to the following
+            //dude.OnSlope = false; // unrelated to the following
 
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
@@ -1115,7 +1191,7 @@ namespace CrisisAtSwissStation
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
-            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY)
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY && lengthCurDrawing < drawLimit)
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
@@ -1227,6 +1303,7 @@ namespace CrisisAtSwissStation
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
+                lengthCurDrawing = 0;
                 finishDraw = false;
             }
             // end painting code (except for prevms = ms below)
@@ -1287,6 +1364,23 @@ namespace CrisisAtSwissStation
                 PhysicsObject object1 = shape1.GetBody().GetUserData() as PhysicsObject;
                 PhysicsObject object2 = shape2.GetBody().GetUserData() as PhysicsObject;
 
+                // set the normal vector from the object to the dude sensor - used for jumping
+                if (!(
+                    (shape1.GetBody().GetUserData() == world.dude && (ScrollingWorld.dudeSensorName).Equals(shape2.UserData))
+                    ||
+                    (shape2.GetBody().GetUserData() == world.dude && (ScrollingWorld.dudeSensorName).Equals(shape1.UserData))
+                    ))
+                {
+                    if ((ScrollingWorld.dudeSensorName).Equals(shape1.UserData))
+                    {
+                        world.dude.Normal = -Utils.Convert(point.Normal);
+                    }
+                    else if ((ScrollingWorld.dudeSensorName).Equals(shape2.UserData))
+                    {
+                        world.dude.Normal = Utils.Convert(point.Normal);
+                    }
+                }
+
                 if ((ScrollingWorld.dudeSensorName+"SLOPE").Equals(shape2.UserData) || ScrollingWorld.dudeSensorName.Equals(shape2.UserData))
                 {
                     Shape temp = shape1;
@@ -1298,13 +1392,14 @@ namespace CrisisAtSwissStation
                 {
                     world.dude.Grounded = true;
                 }
+                /*
                 if ((ScrollingWorld.dudeSensorName + "SLOPE").Equals(shape1.UserData) &&
                     (world.dude != shape2.GetBody().GetUserData()) && (shape1.GetBody() != shape2.GetBody()))
                 {
                     //Console.WriteLine(shape2.UserData); // DEBUG
                     world.dude.OnSlope = true;
                 }
-
+                */
                 Dictionary<String, List<PhysicsObject>> objsDict = new Dictionary<String, List<PhysicsObject>>();
                 objsDict.Add("BoxObject", new List<PhysicsObject>()); 
                 objsDict.Add("PolygonObject", new List<PhysicsObject>());
@@ -1599,7 +1694,7 @@ namespace CrisisAtSwissStation
                 PhysicsObject obj = body.GetUserData() as PhysicsObject;
 
                 // code to fill up a hole
-                int fillradius = 4;
+                int fillradius = 3;
                 if (obj is PaintedObject)
                 {
                     foreach (PhysicsObject hole in this.world.Objects)

@@ -292,7 +292,8 @@ namespace Box2DX.Dynamics
 
 		public static void Destroy(Contact contact)
 		{
-			Box2DXDebug.Assert(s_initialized == true);
+
+            //Box2DXDebug.Assert(s_initialized == true); // COMMENT IS HACK HACK HACK
 
 			if (contact.GetManifoldCount() > 0)
 			{
@@ -306,8 +307,15 @@ namespace Box2DX.Dynamics
 			Box2DXDebug.Assert(ShapeType.UnknownShape < type1 && type1 < ShapeType.ShapeTypeCount);
 			Box2DXDebug.Assert(ShapeType.UnknownShape < type2 && type2 < ShapeType.ShapeTypeCount);
 
-			ContactDestroyFcn destroyFcn = s_registers[(int)type1][(int)type2].DestroyFcn;
-			destroyFcn(contact);
+            try
+            {
+                ContactDestroyFcn destroyFcn = s_registers[(int)type1][(int)type2].DestroyFcn;
+                destroyFcn(contact);
+            }
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("NullReferenceException caught in Box2DX.Dynamics.Contact#Destroy");
+            }
 		}
 
 		/// <summary>

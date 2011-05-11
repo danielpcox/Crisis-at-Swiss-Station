@@ -29,7 +29,7 @@ namespace CrisisAtSwissStation
     public class MenuController
     {
         // Instantiates keyboard states
-        KeyboardState keyState, prevState = Keyboard.GetState();
+        public KeyboardState keyState, prevState = Keyboard.GetState();
 
         private MenuInput controlCode;
         public MenuInput ControlCode

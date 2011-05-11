@@ -30,7 +30,7 @@ namespace CrisisAtSwissStation
             world = myScrollingWorld;
             position = myPosition;
             destroyedBody = false;
-
+            shapes[0].IsSensor = true;
         }
 
         public void reloadNonSerializedAssets()
