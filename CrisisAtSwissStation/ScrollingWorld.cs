@@ -36,7 +36,7 @@ namespace CrisisAtSwissStation
         // HACK - these are all deprecated by GameEngine.TextureList
 
         [NonSerialized]
-        private static Texture2D groundTexture;
+        private static Texture2D groundTexture; 
         [NonSerialized]
         private static Texture2D dudeTexture;
         [NonSerialized]
@@ -280,6 +280,7 @@ namespace CrisisAtSwissStation
         Rectangle cursorSrcRect;
         int cursorWidth = 32;
         public static float numDrawLeft;
+        public static float drawLimit = 4096;
         float totalInstaSteelInWorld;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
         Vector2 prevMousePos;
@@ -1190,7 +1191,7 @@ namespace CrisisAtSwissStation
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
-            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY)
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY && lengthCurDrawing < drawLimit)
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
@@ -1302,6 +1303,7 @@ namespace CrisisAtSwissStation
                 }
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
+                lengthCurDrawing = 0;
                 finishDraw = false;
             }
             // end painting code (except for prevms = ms below)
