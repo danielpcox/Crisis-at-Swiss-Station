@@ -1443,14 +1443,14 @@ namespace CrisisAtSwissStation
                                     {
                                         if (((HorizontalMovingObject)hMove).isMoving)
                                         {
-                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
+                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(5.2f, 0)), world.dude.Body.GetWorldCenter());
                                             // world.dude.Position += new Vector2(.035f, 0);
 
                                         }
 
                                         else
                                         {
-                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
+                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-5.2f, 0)), world.dude.Body.GetWorldCenter());
                                             // world.dude.Position += new Vector2(-0.05f, 0);
                                         }
 
@@ -1461,14 +1461,14 @@ namespace CrisisAtSwissStation
 
                                     if (((HorizontalMovingObject)hMove).isMoving)
                                     {
-                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(11f, 0)), world.dude.Body.GetWorldCenter());
+                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(5.2f, 0)), world.dude.Body.GetWorldCenter());
                                         // world.dude.Position += new Vector2(.035f, 0);
 
                                     }
 
                                     else
                                     {
-                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-11f, 0)), world.dude.Body.GetWorldCenter());
+                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-5.2f, 0)), world.dude.Body.GetWorldCenter());
                                         // world.dude.Position += new Vector2(-0.05f, 0);
                                     }
                                 }
