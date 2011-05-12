@@ -163,7 +163,7 @@ namespace CrisisAtSwissStation
             groundSensor.IsSensor = true;
             groundSensor.UserData = groundSensorName;
             //groundSensor.SetAsBox(halfWidth*0.6f, halfHeight*0.5f, Utils.Convert(sensorCenter), 0);
-            groundSensor.SetAsBox(3/CASSWorld.SCALE, halfWidth, Utils.Convert(sensorCenter), 0);
+            groundSensor.SetAsBox(2f/CASSWorld.SCALE, halfWidth/2f, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
 
             /* CIRCULAR GROUND SENSOR - just comment above out and uncomment this
@@ -177,7 +177,7 @@ namespace CrisisAtSwissStation
             */
 
             PolygonDef slopeSensor = new PolygonDef();
-            slopeSensor.Density = 1.0f;
+            slopeSensor.Density = 0.0f;
             slopeSensor.IsSensor = true;
             slopeSensor.UserData = groundSensorName + "SLOPE";
             slopeSensor.SetAsBox(halfWidth * 1.1f, 0.1f, Utils.Convert(sensorCenter + new Vector2(0, 0)), 0);
