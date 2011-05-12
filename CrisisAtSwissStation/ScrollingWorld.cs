@@ -1594,13 +1594,13 @@ namespace CrisisAtSwissStation
                             (object1 == piston && object2 == circle))
                         {
                             if (MathHelper.ToDegrees(object1.Angle) == 0)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(200, 0)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(500, 0)), circle.Body.GetWorldCenter()); }
                             else if (MathHelper.ToDegrees(object1.Angle) == 90)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, 200)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, 500)), circle.Body.GetWorldCenter()); }
                             else if (MathHelper.ToDegrees(object1.Angle) == -90)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, -200)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, -500)), circle.Body.GetWorldCenter()); }
                             else if (MathHelper.ToDegrees(object1.Angle) == 180)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(-200, 0)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(-500, 0)), circle.Body.GetWorldCenter()); }
                         }
                     }
                 }
