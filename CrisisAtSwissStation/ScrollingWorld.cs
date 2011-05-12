@@ -1141,7 +1141,7 @@ namespace CrisisAtSwissStation
             */
 
             dude.Grounded = false; // unrelated to the following
-            //dude.OnSlope = false; // unrelated to the following
+            dude.OnSlope = false; // unrelated to the following
 
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
@@ -1277,30 +1277,18 @@ namespace CrisisAtSwissStation
 
                 laser.finishDrawing();
 
-                // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
-                if (false)//overlapped != null)
-                {
-                    foreach (Vector2 pos in dotPositions)
-                    {
-                        ((PaintedObject)po).AddToShapes(dotPositions);
-                    }
-                }
-                else
-                {
+                List<Vector2> dp2 = new List<Vector2>();
+                // hack to make the drawing fit the offset
+                //foreach (Vector2 pos in dotPositions)
+                //{
+                //    //Console.WriteLine(dude.Position.X * CASSWorld.SCALE);
+                //    dp2.Add(pos + new Vector2(dude.Position.X * CASSWorld.SCALE, 0));
+                //}
 
-                    List<Vector2> dp2 = new List<Vector2>();
-                    // hack to make the drawing fit the offset
-                    //foreach (Vector2 pos in dotPositions)
-                    //{
-                    //    //Console.WriteLine(dude.Position.X * CASSWorld.SCALE);
-                    //    dp2.Add(pos + new Vector2(dude.Position.X * CASSWorld.SCALE, 0));
-                    //}
-
-                    // create the painting as an object in the world
-                    if (dotPositions.Count > 1)
-                        //this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dp2));
-                        this.AddObject(new PaintedObject(World, "paint", "paintedsegment", dotPositions));
-                }
+                // create the painting as an object in the world
+                if (dotPositions.Count > 1)
+                    //this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dp2));
+                    this.AddObject(new PaintedObject(World, "paint", "paintedsegment", dotPositions));
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
                 lengthCurDrawing = 0;
@@ -1373,11 +1361,15 @@ namespace CrisisAtSwissStation
                 {
                     if ((ScrollingWorld.dudeSensorName).Equals(shape1.UserData))
                     {
-                        world.dude.Normal = -Utils.Convert(point.Normal);
+                        Vector2 b2dnormal = -Utils.Convert(point.Normal);
+                        b2dnormal.Normalize();
+                        world.dude.Normal = b2dnormal;
                     }
                     else if ((ScrollingWorld.dudeSensorName).Equals(shape2.UserData))
                     {
-                        world.dude.Normal = Utils.Convert(point.Normal);
+                        Vector2 b2dnormal = Utils.Convert(point.Normal);
+                        b2dnormal.Normalize();
+                        world.dude.Normal = b2dnormal;
                     }
                 }
 
@@ -1392,14 +1384,12 @@ namespace CrisisAtSwissStation
                 {
                     world.dude.Grounded = true;
                 }
-                /*
                 if ((ScrollingWorld.dudeSensorName + "SLOPE").Equals(shape1.UserData) &&
                     (world.dude != shape2.GetBody().GetUserData()) && (shape1.GetBody() != shape2.GetBody()))
                 {
                     //Console.WriteLine(shape2.UserData); // DEBUG
                     world.dude.OnSlope = true;
                 }
-                */
                 Dictionary<String, List<PhysicsObject>> objsDict = new Dictionary<String, List<PhysicsObject>>();
                 objsDict.Add("BoxObject", new List<PhysicsObject>()); 
                 objsDict.Add("PolygonObject", new List<PhysicsObject>());

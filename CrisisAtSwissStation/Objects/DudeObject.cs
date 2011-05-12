@@ -80,78 +80,6 @@ namespace CrisisAtSwissStation
         ScrollingWorld myWorld;
 
         /**
-         * Creates a new dude // HACK HACK - this constructor is obsolete, and needs to be removed when the reference to it in ScrollingWorld is
-         */
-        /*
-        public DudeObject(World world, ScrollingWorld theWorld, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, LaserObject Laser, string groundSensorName)
-        : base(world, objectTexture, .5f, 0f, 0.0f,1,false) //: base(world, texture, 1.0f, 0.0f, 0.0f)
-        {
-            Height = objectTexture.Height;
-            Width = objectTexture.Width;
-
-            boundingBox = new Rectangle((int)(Position.X * CASSWorld.SCALE), (int)(Position.Y * CASSWorld.SCALE), (int)Height, (int)Width);
-
-            // Initialize
-            isGrounded = false;
-
-            // BodyDef options
-            BodyDef.FixedRotation = true;
-
-            // Make a dude controller
-            controllers.Add(new DudeController());
-
-            myLaser = Laser;
-            armAngle = 0;
-
-            myWorld = theWorld;
-
-            //animation stuff
-            myGameTime = 0;
-            animTexture = texture;
-            this.armTexture = armTexture;
-            walkTimer = 0;
-            walkInterval = 5;
-            xFrame = 0;
-            yFrame = 0;
-            spriteWidth = 100;
-            spriteHeight = 100;
-            sourceRect = new Rectangle(xFrame * spriteWidth, yFrame * spriteHeight, spriteWidth, spriteHeight);
-            animOrigin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
-            armOrigin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2) - new Vector2(10,18);
-
-
-            // Ground Sensor
-            // -------------
-            //   We only allow the dude to jump when he's
-            // on the ground.  After all, how can you jump
-            // when you're flying in the air?  (Unless you
-            // can double jump)
-            //   To determine whether or not the dude is on
-            // the ground, we create a thin sensor under his
-            // feet, which reports collisions with the world
-            // but has no collision response.
-            //   Game logic in PlatformWorld tells the dude
-            // whether or not he is grounded.
-
-
-            //animation stuff
-            float halfWidth = (float)objectTexture.Width / (2 * CASSWorld.SCALE);
-            float halfHeight = (float)objectTexture.Height / (2 * CASSWorld.SCALE);
-            Vector2 sensorCenter = new Vector2(0, halfHeight); 
-
-            // Create collision shape of the ground sensor
-            PolygonDef groundSensor = new PolygonDef();
-            groundSensor.Density = 1.0f;
-            groundSensor.IsSensor = true;
-            groundSensor.UserData = groundSensorName;
-            groundSensor.SetAsBox(halfWidth / 2, 0.05f, Utils.Convert(sensorCenter), 0);
-            shapes.Add(groundSensor);
-
-            //animation stuff
-            //base.(world, texture, 1.0f, 0.0f, 0.0f);
-        } */
-
-        /**
          * Creates a new dude
          */
         //public DudeObject(World world, Texture2D texture, Texture2D objectTexture, Texture2D armTexture, string groundSensorName)
@@ -226,24 +154,34 @@ namespace CrisisAtSwissStation
              */
             float halfWidth = (float)objectTexture.Width / (2 * CASSWorld.SCALE);
             float halfHeight = (float)objectTexture.Height / (2 * CASSWorld.SCALE);
-            Vector2 sensorCenter = new Vector2(0, halfHeight); 
+            //Vector2 sensorCenter = new Vector2(0, halfHeight); 
+            Vector2 sensorCenter = new Vector2(0, halfHeight - (5f / CASSWorld.SCALE)); 
 
             // Create collision shape of the ground sensor
             PolygonDef groundSensor = new PolygonDef();
             groundSensor.Density = 0.0f;
             groundSensor.IsSensor = true;
             groundSensor.UserData = groundSensorName;
-            groundSensor.SetAsBox(halfWidth, halfHeight/2, Utils.Convert(sensorCenter), 0);
+            //groundSensor.SetAsBox(halfWidth*0.6f, halfHeight*0.5f, Utils.Convert(sensorCenter), 0);
+            groundSensor.SetAsBox(3/CASSWorld.SCALE, halfWidth, Utils.Convert(sensorCenter), 0);
             shapes.Add(groundSensor);
 
-            /*
+            /* CIRCULAR GROUND SENSOR - just comment above out and uncomment this
+            CircleDef groundSensor = new CircleDef();
+            groundSensor.Radius = halfWidth * 0.95f;
+            //groundSensor.Radius = (15f/2f) / CASSWorld.SCALE;
+            groundSensor.LocalPosition = Utils.Convert(sensorCenter);
+            groundSensor.UserData = groundSensorName;
+            groundSensor.IsSensor = true;
+            shapes.Add(groundSensor);
+            */
+
             PolygonDef slopeSensor = new PolygonDef();
             slopeSensor.Density = 1.0f;
             slopeSensor.IsSensor = true;
             slopeSensor.UserData = groundSensorName + "SLOPE";
             slopeSensor.SetAsBox(halfWidth * 1.1f, 0.1f, Utils.Convert(sensorCenter + new Vector2(0, 0)), 0);
             shapes.Add(slopeSensor);
-            */
 
             lockDude = false;
 
@@ -369,11 +307,18 @@ namespace CrisisAtSwissStation
         {
             get
             {
+                /*
                 double angle = 0;
                 angle = (Math.PI /2) - Math.Atan2(Math.Abs(Normal.Y), Math.Abs(Normal.X)); 
                 //angle = (angle > Math.PI/2f) ? (Math.PI - angle) : angle ;
                 //Console.WriteLine(angle / Math.PI);
                 return Grounded && (angle < Constants.STEEPEST_SLOPE);
+                */
+                return isSloped;
+            }
+            set
+            {
+                isSloped = value;
             }
         }
 
@@ -424,7 +369,7 @@ namespace CrisisAtSwissStation
                 {
                
                     
-                    if (dudeObject.OnSlope)
+                    if (dudeObject.Grounded)
                     {
                         moveForce.X = -DUDE_FORCE;
                     }
@@ -440,7 +385,7 @@ namespace CrisisAtSwissStation
                         else
                         dudeObject.fallAnimation();
                     */
-                    if (dudeObject.Grounded)
+                    if (dudeObject.OnSlope)
                         dudeObject.walkAnimation();
                     else
                         dudeObject.fallAnimation();
@@ -449,7 +394,7 @@ namespace CrisisAtSwissStation
                 {
 
                     //moveForce.X += DUDE_FORCE;
-                    if (dudeObject.OnSlope)
+                    if (dudeObject.Grounded)
                     {
                         moveForce.X = +DUDE_FORCE;
                     }
@@ -465,7 +410,7 @@ namespace CrisisAtSwissStation
                     else
                         dudeObject.fallAnimation();
                     */
-                    if (dudeObject.Grounded)
+                    if (dudeObject.OnSlope)
                         dudeObject.walkAnimation();
                     else
                         dudeObject.fallAnimation();
@@ -479,7 +424,7 @@ namespace CrisisAtSwissStation
                     else
                         dudeObject.fallAnimation();
                     */
-                    if (dudeObject.Grounded)
+                    if (dudeObject.OnSlope)
                         dudeObject.standAnimation();
                     else
                         dudeObject.fallAnimation();
@@ -556,8 +501,28 @@ namespace CrisisAtSwissStation
                 {
                     //animation stuff
                     //Vector2 impulse = new Vector2(0, -2.1f);
-                   //Vector2 impulse = new Vector2(0, jumpImpulse);
-                    Vector2 impulse = dudeObject.Normal * jumpImpulse;
+                    Vector2 impulse = new Vector2(0, -jumpImpulse);
+
+                    //Vector2 impulse;
+                    //double normalAngle = (Math.PI /2) - Math.Atan2(Math.Abs(dudeObject.Normal.Y), Math.Abs(dudeObject.Normal.X));
+
+                    //Console.WriteLine(normalAngle * 180 / Math.PI); // DEBUG
+                    // if slope is pretty shallow, just jump straight up
+                    /*
+                    if (normalAngle < Constants.FLAT_ENOUGH)
+                    {
+                        impulse = new Vector2(0, -jumpImpulse);
+                        Console.WriteLine("STANDING ON FLAT GROUND"); // DEBUG
+                    }
+                    else
+                    {
+                        impulse = dudeObject.Normal * jumpImpulse;
+                        Console.WriteLine((normalAngle / Math.PI) * 180f); // DEBUG
+                        Console.WriteLine(dudeObject.Normal.Length()); // DEBUG
+                    }
+                    */
+
+                    //dudeObject.Position += new Vector2(0.05f,-0.05f); // HACK HACK HACK
                     dude.ApplyImpulse(Utils.Convert(impulse), dude.GetPosition());
                     dudeObject.jumpCooldown = JUMP_COOLDOWN;
                 }
