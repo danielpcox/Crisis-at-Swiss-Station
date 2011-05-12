@@ -19,6 +19,6 @@ namespace CrisisAtSwissStation.Common
         public const float HALF_GUN = 30f;
 
         public const float STEEPEST_SLOPE =(float) Math.PI / 3f; // in radians, the steepest slope Cosmo can walk up comfortably
-        public const float FLAT_ENOUGH =(float) Math.PI / 18f; // in radians, the the steepest slope we'll call flat (10 degrees)
+        public const float FLAT_ENOUGH =(float) Math.PI / 6f; // in radians, the the steepest slope we'll call flat (10 degrees)
     }
 }
