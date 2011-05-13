@@ -30,9 +30,9 @@ namespace CrisisAtSwissStation
             return false;
         }
 
-        public int GetCurrentFloor()
+        public int GetCurrentFloor(int numoptions = 200)
         {
-            int low_water_mark = 200; // starts as "infinity"
+            int low_water_mark = numoptions; // starts as the maximum number of options, or "infinity" (200 is pretty close)
             foreach (int floor in disabledOptions)
             {
                 if (floor < low_water_mark)

@@ -15,7 +15,7 @@ CrisisAtSwissStation/Content/Art/Objects/AnimationObjects/Thumbs.db
 CrisisAtSwissStation/Content/Art/Objects/AnimationObjects/strips/Thumbs.db
 CrisisAtSwissStation/Content/Art/Objects/BoxObjects/Thumbs.db
 *~
-CrisisAtSwissStation/Content/Worlds/*.world
+CrisisAtSwissStation/Levels/*.world
 *.db
 Thumbs.db
 */Thumbs.db

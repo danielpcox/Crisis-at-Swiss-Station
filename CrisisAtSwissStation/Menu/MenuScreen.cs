@@ -21,36 +21,36 @@ namespace CrisisAtSwissStation
         public static readonly Color Unselected = new Color(182,0,0);
         public static readonly Color Disabled = new Color(25, 25, 25);
 
-        private bool sgconnect = false;
+        protected bool sgconnect = false;
 
-        private float initialX;
-        private float initialY;
+        protected float initialX;
+        protected float initialY;
         /// <summary>
         /// Y distance between menu options
         /// </summary>
-        private float distY;
+        protected float distY;
 
         /// <summary>
         /// Options player has to choose
         /// </summary>
-        private List<MenuOption> options;
+        protected List<MenuOption> options;
         //public List<int> disabledOptions = new List<int>();
         public List<MenuOption> Options
         {
             get { return options; }
         }
 
-        private int selected;
-        private bool returnSelected; // Return command to menu
+        protected int selected;
+        protected bool returnSelected; // Return command to menu
 
         /// <summary>
         /// Title of menu
         /// </summary>
-        private string title;
+        protected string title;
 
         public MenuController controller;
 
-        private SpriteFont font;
+        protected SpriteFont font;
 
         /// <summary>
         /// 
@@ -108,13 +108,17 @@ namespace CrisisAtSwissStation
                     viable += 1;
                     while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
                         viable += 1;
+                    //Console.WriteLine(viable); // DEBUG
                     selected = viable;
                     break;
 
                 case MenuInput.UP:
                     viable -= 1;
+                    if (viable < 0)
+                        viable = Options.Count - Math.Abs(viable); // HACK
                     while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
                         viable -= 1;
+                    // Console.WriteLine(viable); // DEBUG
                     selected = viable;
                     break;
 
@@ -123,7 +127,8 @@ namespace CrisisAtSwissStation
                     break;
             }
 
-            selected = (selected + options.Count) % options.Count;
+            //selected = (selected + options.Count) % options.Count;
+            selected = (selected) % options.Count;
         }
 
         /// <summary>
