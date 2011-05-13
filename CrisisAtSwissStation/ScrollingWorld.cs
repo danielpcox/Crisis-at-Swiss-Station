@@ -134,6 +134,10 @@ namespace CrisisAtSwissStation
         [NonSerialized]
         private static Texture2D switchDeathAnimTexture;
         [NonSerialized]
+        private static Texture2D rollingpinTexture;
+        [NonSerialized]
+        private static Texture2D rollingpinAnimTexture;
+        [NonSerialized]
         private static Texture2D switchObjectTexture;
         [NonSerialized]
         private static Texture2D deathObjectTexture;
@@ -995,6 +999,8 @@ namespace CrisisAtSwissStation
             switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
             switchDeathAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_death_strip");
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
+            rollingpinAnimTexture = content.Load<Texture2D>("Art\\Objects\\AnimationObjects\\rollingpin_strip");
+            rollingpinTexture = content.Load<Texture2D>("Art\\Objects\\AnimationObjects\\rollingpin");
             deathObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\death");
             failButtonObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\fail_button");
 
@@ -1469,6 +1475,21 @@ namespace CrisisAtSwissStation
                     else if (po is PistonObject)
                     {
                         objsDict["PistonObject"].Add(po);
+                    }
+                }
+                foreach (PhysicsObject switchObj in objsDict["AnimationObject"])
+                {
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                    //(object1 == switchObj || object2 == switchObj)
+                    {
+                      AnimationObject temp = (AnimationObject)switchObj;
+                      if (temp.checkDeathObject())
+                        {
+
+                           world.dude.setDead();
+                          world.Fail();
+                        }
                     }
                 }
                 
