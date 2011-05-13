@@ -36,7 +36,7 @@ namespace CrisisAtSwissStation
         // HACK - these are all deprecated by GameEngine.TextureList
 
         [NonSerialized]
-        private static Texture2D groundTexture;
+        private static Texture2D groundTexture; 
         [NonSerialized]
         private static Texture2D dudeTexture;
         [NonSerialized]
@@ -133,6 +133,10 @@ namespace CrisisAtSwissStation
         private static Texture2D switchAnimTexture;
         [NonSerialized]
         private static Texture2D switchDeathAnimTexture;
+        [NonSerialized]
+        private static Texture2D rollingpinTexture;
+        [NonSerialized]
+        private static Texture2D rollingpinAnimTexture;
         [NonSerialized]
         private static Texture2D switchObjectTexture;
         [NonSerialized]
@@ -280,6 +284,7 @@ namespace CrisisAtSwissStation
         Rectangle cursorSrcRect;
         int cursorWidth = 32;
         public static float numDrawLeft;
+        public static float drawLimit = 4096;
         float totalInstaSteelInWorld;
         float lengthCurDrawing = 0; // The length of the drawing so far that the player is currently drawing
         Vector2 prevMousePos;
@@ -994,6 +999,8 @@ namespace CrisisAtSwissStation
             switchAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_strip");
             switchDeathAnimTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button_death_strip");
             switchObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\button");
+            rollingpinAnimTexture = content.Load<Texture2D>("Art\\Objects\\AnimationObjects\\rollingpin_strip");
+            rollingpinTexture = content.Load<Texture2D>("Art\\Objects\\AnimationObjects\\rollingpin");
             deathObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\death");
             failButtonObjectTexture = content.Load<Texture2D>("Art\\Objects\\SwitchObjects\\fail_button");
 
@@ -1140,7 +1147,7 @@ namespace CrisisAtSwissStation
             */
 
             dude.Grounded = false; // unrelated to the following
-            //dude.OnSlope = false; // unrelated to the following
+            dude.OnSlope = false; // unrelated to the following
 
             // code for erasing a painted object
             MouseState mouse = Mouse.GetState();
@@ -1190,7 +1197,7 @@ namespace CrisisAtSwissStation
             if (mouse.LeftButton == ButtonState.Released && laser.canDraw())
                 drawingInterrupted = false;
 
-            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY)
+            if (mouse.LeftButton == ButtonState.Pressed && laser.canDraw() && !drawingInterrupted && mouseinbounds && numDrawLeft > PAINTING_GRANULARITY && lengthCurDrawing < drawLimit)
             {
                 //random ronnie addition for laser
                 laser.startDrawing();
@@ -1276,32 +1283,21 @@ namespace CrisisAtSwissStation
 
                 laser.finishDrawing();
 
-                // DEBUG : uncomment next line (and delete "false)") to attempt connecting of painted objects
-                if (false)//overlapped != null)
-                {
-                    foreach (Vector2 pos in dotPositions)
-                    {
-                        ((PaintedObject)po).AddToShapes(dotPositions);
-                    }
-                }
-                else
-                {
+                List<Vector2> dp2 = new List<Vector2>();
+                // hack to make the drawing fit the offset
+                //foreach (Vector2 pos in dotPositions)
+                //{
+                //    //Console.WriteLine(dude.Position.X * CASSWorld.SCALE);
+                //    dp2.Add(pos + new Vector2(dude.Position.X * CASSWorld.SCALE, 0));
+                //}
 
-                    List<Vector2> dp2 = new List<Vector2>();
-                    // hack to make the drawing fit the offset
-                    //foreach (Vector2 pos in dotPositions)
-                    //{
-                    //    //Console.WriteLine(dude.Position.X * CASSWorld.SCALE);
-                    //    dp2.Add(pos + new Vector2(dude.Position.X * CASSWorld.SCALE, 0));
-                    //}
-
-                    // create the painting as an object in the world
-                    if (dotPositions.Count > 1)
-                        //this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dp2));
-                        this.AddObject(new PaintedObject(World, "paint", "paintedsegment", dotPositions));
-                }
+                // create the painting as an object in the world
+                if (dotPositions.Count > 1)
+                    //this.AddObject(new PaintedObject(World, paintTexture, paintedSegmentTexture, dp2));
+                    this.AddObject(new PaintedObject(World, "paint", "paintedsegment", dotPositions));
                 // clear the way for another painting
                 dotPositions = new List<Vector2>(); // 
+                lengthCurDrawing = 0;
                 finishDraw = false;
             }
             // end painting code (except for prevms = ms below)
@@ -1371,11 +1367,15 @@ namespace CrisisAtSwissStation
                 {
                     if ((ScrollingWorld.dudeSensorName).Equals(shape1.UserData))
                     {
-                        world.dude.Normal = -Utils.Convert(point.Normal);
+                        Vector2 b2dnormal = -Utils.Convert(point.Normal);
+                        b2dnormal.Normalize();
+                        world.dude.Normal = b2dnormal;
                     }
                     else if ((ScrollingWorld.dudeSensorName).Equals(shape2.UserData))
                     {
-                        world.dude.Normal = Utils.Convert(point.Normal);
+                        Vector2 b2dnormal = Utils.Convert(point.Normal);
+                        b2dnormal.Normalize();
+                        world.dude.Normal = b2dnormal;
                     }
                 }
 
@@ -1390,14 +1390,12 @@ namespace CrisisAtSwissStation
                 {
                     world.dude.Grounded = true;
                 }
-                /*
                 if ((ScrollingWorld.dudeSensorName + "SLOPE").Equals(shape1.UserData) &&
                     (world.dude != shape2.GetBody().GetUserData()) && (shape1.GetBody() != shape2.GetBody()))
                 {
                     //Console.WriteLine(shape2.UserData); // DEBUG
                     world.dude.OnSlope = true;
                 }
-                */
                 Dictionary<String, List<PhysicsObject>> objsDict = new Dictionary<String, List<PhysicsObject>>();
                 objsDict.Add("BoxObject", new List<PhysicsObject>()); 
                 objsDict.Add("PolygonObject", new List<PhysicsObject>());
@@ -1479,6 +1477,21 @@ namespace CrisisAtSwissStation
                         objsDict["PistonObject"].Add(po);
                     }
                 }
+                foreach (PhysicsObject switchObj in objsDict["AnimationObject"])
+                {
+                    if ((object1 == switchObj && object2 == world.dude) ||
+                        (object2 == switchObj && object1 == world.dude))
+                    //(object1 == switchObj || object2 == switchObj)
+                    {
+                      AnimationObject temp = (AnimationObject)switchObj;
+                      if (temp.checkDeathObject())
+                        {
+
+                           world.dude.setDead();
+                          world.Fail();
+                        }
+                    }
+                }
                 
                 foreach (PhysicsObject switchObj in objsDict["SwitchObject"])
                 {
@@ -1536,14 +1549,14 @@ namespace CrisisAtSwissStation
                                     {
                                         if (((HorizontalMovingObject)hMove).isMoving)
                                         {
-                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(5.2f, 0)), world.dude.Body.GetWorldCenter());
+                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(10.5f, 0)), world.dude.Body.GetWorldCenter());
                                             // world.dude.Position += new Vector2(.035f, 0);
 
                                         }
 
                                         else
                                         {
-                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-5.2f, 0)), world.dude.Body.GetWorldCenter());
+                                            world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-10.5f, 0)), world.dude.Body.GetWorldCenter());
                                             // world.dude.Position += new Vector2(-0.05f, 0);
                                         }
 
@@ -1554,14 +1567,14 @@ namespace CrisisAtSwissStation
 
                                     if (((HorizontalMovingObject)hMove).isMoving)
                                     {
-                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(5.2f, 0)), world.dude.Body.GetWorldCenter());
+                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(10.5f, 0)), world.dude.Body.GetWorldCenter());
                                         // world.dude.Position += new Vector2(.035f, 0);
 
                                     }
 
                                     else
                                     {
-                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-5.2f, 0)), world.dude.Body.GetWorldCenter());
+                                        world.dude.Body.ApplyForce(Utils.Convert(new Vector2(-10.5f, 0)), world.dude.Body.GetWorldCenter());
                                         // world.dude.Position += new Vector2(-0.05f, 0);
                                     }
                                 }
@@ -1602,13 +1615,13 @@ namespace CrisisAtSwissStation
                             (object1 == piston && object2 == circle))
                         {
                             if (MathHelper.ToDegrees(object1.Angle) == 0)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(200, 0)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(500, 0)), circle.Body.GetWorldCenter()); }
                             else if (MathHelper.ToDegrees(object1.Angle) == 90)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, 200)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, 500)), circle.Body.GetWorldCenter()); }
                             else if (MathHelper.ToDegrees(object1.Angle) == -90)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, -200)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, -500)), circle.Body.GetWorldCenter()); }
                             else if (MathHelper.ToDegrees(object1.Angle) == 180)
-                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(-200, 0)), circle.Body.GetWorldCenter()); }
+                            { circle.Body.ApplyForce(Utils.Convert(new Vector2(-500, 0)), circle.Body.GetWorldCenter()); }
                         }
                     }
                 }

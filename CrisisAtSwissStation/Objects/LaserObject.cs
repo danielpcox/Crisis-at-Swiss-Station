@@ -385,7 +385,7 @@ namespace CrisisAtSwissStation
             lambda = 0;
             amDrawing = false;
             amErasing = false;
-            interference = new Box2DX.Collision.Shape[2];
+            interference = new Box2DX.Collision.Shape[3];
             //interference.Initialize();         
 
             SCALE = CASSWorld.SCALE;
@@ -502,7 +502,7 @@ namespace CrisisAtSwissStation
 
             //interference = world.RaycastOne(myseg, out lambda, out normal, false, null); 
             //Console.WriteLine("hi");
-            int numShapes = world.Raycast(myseg, interference, 2, false, null);
+            int numShapes = world.Raycast(myseg, interference, 3, false, null);
             //Console.WriteLine( "{0}", interference[0]);
             if (interference[0] == null)
             {
@@ -513,12 +513,63 @@ namespace CrisisAtSwissStation
             }
             else if (interference[0].IsSensor)
             {
+
+
+
+                
                 if (interference[1] == null)
                 {
                     canIDraw = true;
                     canIErase = true;
 
                     endpoint = new Vector2(mouseX, mouseY);
+                }
+                else if (interference[1].IsSensor)
+                {
+                    if (interference[2] == null)
+                    {
+                        canIDraw = true;
+                        canIErase = true;
+                        endpoint = new Vector2(mouseX, mouseY);
+                    }
+                    else
+                    {
+                        AABB aabb = new AABB();
+                        aabb.LowerBound = Common.Utils.Convert(dude.getWorld().getGameCoords(new Vector2(mouseX, mouseY)) - new Vector2(0.1f));
+                        aabb.UpperBound = Common.Utils.Convert(dude.getWorld().getGameCoords(new Vector2(mouseX, mouseY)) + new Vector2(0.1f));
+
+                        Shape[] shapes = new Shape[1];
+                        int nHit = world.Query(aabb, shapes, 1);
+
+                        if (nHit > 0)
+                        {
+                            Body body1 = shapes[0].GetBody();
+                            PhysicsObject po1 = (PhysicsObject)body1.GetUserData();
+                            Body body2 = interference[2].GetBody();
+                            PhysicsObject po2 = (PhysicsObject)body2.GetUserData();
+                            if ((po1 is PaintedObject) && body1.Equals(body2))
+                            {
+                                canIErase = true;
+                                canIDraw = false;
+                            }
+                            else
+                            {
+                                canIErase = false;
+                                canIDraw = false;
+                            }
+                        }
+                        else
+                        {
+                            canIErase = false;
+                            canIDraw = false;
+                        }
+
+                        myseg.P1 = new Box2DX.Common.Vec2(dude.Position.X, dude.Position.Y + .7f);
+                        Box2DX.Collision.Shape intersect = world.RaycastOne(myseg, out lambda, out normal, false, null);
+                        Box2DX.Common.Vec2 p = (((1 - lambda) * (myseg.P1)) + (lambda * (myseg.P2)));
+                        endpoint = dude.getWorld().getScreenCoords(Common.Utils.Convert(p));
+                    }
+
                 }
                 else
                 {
@@ -544,7 +595,7 @@ namespace CrisisAtSwissStation
                         {
                             canIErase = false;
                             canIDraw = false;
-                        }                      
+                        }
                     }
                     else
                     {
@@ -557,6 +608,7 @@ namespace CrisisAtSwissStation
                     Box2DX.Common.Vec2 p = (((1 - lambda) * (myseg.P1)) + (lambda * (myseg.P2)));
                     endpoint = dude.getWorld().getScreenCoords(Common.Utils.Convert(p));
                 }
+                 
             }
             else
             {

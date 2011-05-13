@@ -754,18 +754,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\spray1.png">
-      <Name>spray1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\spray1_strip.png">
-      <Name>spray1_strip</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Art\spray2.png">
       <Name>spray2</Name>
       <Importer>TextureImporter</Importer>
@@ -1281,6 +1269,27 @@
   <ItemGroup>
     <Compile Include="Art\Backgrounds\corelevelbg1.png">
       <Name>corelevelbg1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Backgrounds\corelevelbg2.png">
+      <Name>corelevelbg2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\AnimationObjects\rollingpin.png">
+      <Name>rollingpin</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\AnimationObjects\strips\rollingpin_strip.png">
+      <Name>rollingpin_strip</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

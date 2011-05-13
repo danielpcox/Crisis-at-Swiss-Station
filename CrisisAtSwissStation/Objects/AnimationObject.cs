@@ -27,6 +27,7 @@ namespace CrisisAtSwissStation
         private Texture2D animTexture;
         private int myGameTime, animateTimer, animateInterval;
         private bool hasBody;
+        private bool deathObject;
 
         string animTextureName;
 
@@ -49,10 +50,11 @@ namespace CrisisAtSwissStation
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
             hasBody = true;
+            deathObject = false;
 
 
         }
-        public AnimationObject(World world, string animTexturename, string objectTexturename, int sprWidth, int sprHeight, int animInt, int myNumFrames, bool hasBody)
+        public AnimationObject(World world, string animTexturename, string objectTexturename, int sprWidth, int sprHeight, int animInt, int myNumFrames, bool hasBody, bool deathObject)
             : base(world, objectTexturename, 0f, .5f, 0.0f, 1, false)
         {
             animTextureName = animTexturename;
@@ -71,9 +73,12 @@ namespace CrisisAtSwissStation
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
             this.hasBody = hasBody;
-         
+            this.deathObject = deathObject;
 
 
+        }
+        public bool checkDeathObject(){
+            return deathObject;
         }
 
         public void reloadNonSerializedAssets()
@@ -118,7 +123,8 @@ namespace CrisisAtSwissStation
             SpriteBatch spriteBatch = GameEngine.Instance.SpriteBatch;
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default,
                               RasterizerState.CullCounterClockwise, null, cameraTransform);
-            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin, scale, SpriteEffects.None, 0);
+
+            spriteBatch.Draw(animTexture, screenOffset, sourceRect, Color.White, Angle, origin,scale, SpriteEffects.None, 0);
 
             spriteBatch.End();
 
