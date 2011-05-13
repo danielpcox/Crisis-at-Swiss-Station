@@ -713,11 +713,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Music\Destruction%28v1%29.mp3">
-      <Name>Destruction%28v1%29</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="Music\EarlyLevelv2.mp3">
       <Name>EarlyLevelv2</Name>
       <Importer>Mp3Importer</Importer>
@@ -727,11 +722,6 @@
       <Name>LevelComplete</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Music\Tension%28Lab 3%29.mp3">
-      <Name>Tension%28Lab 3%29</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
     </Compile>
     <Compile Include="Music\VictoryTrumpets.mp3">
       <Name>VictoryTrumpets</Name>
@@ -1391,6 +1381,20 @@
       <Name>corroded_Tpipe_top</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Music\Middle Core.mp3">
+      <Name>Middle Core</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Music\Upper Basement.mp3">
+      <Name>Upper Basement</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

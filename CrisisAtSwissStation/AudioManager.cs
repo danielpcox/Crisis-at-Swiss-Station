@@ -47,12 +47,12 @@ namespace CrisisAtSwissStation
         public enum MusicSelection
         {
             EarlyLevelv2,
-            Tension,
-            Destruction,
             Basement,
             Happy,
             Robots,
-            Menu
+            Menu,
+            MidBasement,
+            MidCore
            
         }
 
@@ -77,25 +77,29 @@ namespace CrisisAtSwissStation
 
             //Music
             songs.Add(MusicSelection.EarlyLevelv2, content.Load<Song>("Music/EarlyLevelv2"));
-            songs.Add(MusicSelection.Tension, content.Load<Song>("Music/Tension(Lab 3)"));
-            songs.Add(MusicSelection.Destruction, content.Load<Song>("Music/Destruction(v1)"));
             songs.Add(MusicSelection.Basement, content.Load<Song>("Music/Basement"));
             songs.Add(MusicSelection.Happy, content.Load<Song>("Music/SpaceThemeHappy"));
             songs.Add(MusicSelection.Robots, content.Load<Song>("Music/LaterLevelv1"));
             songs.Add(MusicSelection.Menu, content.Load<Song>("Music/MainMenuv1"));
-            
+            songs.Add(MusicSelection.MidCore, content.Load<Song>("Music/Middle Core"));
+            songs.Add(MusicSelection.MidBasement, content.Load<Song>("Music/Upper Basement"));
 
             // MAPS BACKGROUND FILENAMES TO MUSIC FILES
             songsdict.Add("background", content.Load<Song>("Music/Basement"));
-            songsdict.Add("tutorial", content.Load<Song>("Music/SpaceThemeHappy"));
+            songsdict.Add("tutorial", content.Load<Song>("Music/EarlyLevelv2"));
             songsdict.Add("ballroom", content.Load<Song>("Music/EarlyLevelv2"));
             songsdict.Add("RonniesBestWork", content.Load<Song>("Music/SpaceThemeHappy"));
-            songsdict.Add("basement2", content.Load<Song>("Music/LaterLevelv1"));
+            songsdict.Add("basement2", content.Load<Song>("Music/Upper Basement"));
             songsdict.Add("bathroom", content.Load<Song>("Music/Basement"));
             songsdict.Add("plinko", content.Load<Song>("Music/EarlyLevelv2"));
             songsdict.Add("hallway2", content.Load<Song>("Music/EarlyLevelv2"));
-            songsdict.Add("credits", content.Load<Song>("Music/MainMenuv1"));
+            songsdict.Add("credits", content.Load<Song>("Music/SpaceThemeHappy"));
             songsdict.Add("space", content.Load<Song>("Music/EarlyLevelv2"));
+            songsdict.Add("corelevelbg1", content.Load<Song>("Music/LaterLevelv1"));
+            songsdict.Add("corelevelbg2", content.Load<Song>("Music/Middle Core"));
+            songsdict.Add("corelevelbg3", content.Load<Song>("Music/LaterLevelv1"));
+            songsdict.Add("corelevelbg4", content.Load<Song>("Music/Middle Core"));
+
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));
