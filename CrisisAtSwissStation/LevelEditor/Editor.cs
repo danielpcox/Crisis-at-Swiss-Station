@@ -563,15 +563,19 @@ namespace CrisisAtSwissStation.LevelEditor
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 7);
                 else if (lastname == "broken_platform")
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
-                else if (lastname == "light")
+                else if (lastname == "light" || lastname == "fire")
                 {
                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8,false, false);
                     //ao.RemoveFromWorld();
                     //world.World.DestroyBody(ao.Body);
                 }
+                else if (lastname == "rollingpin")
+                {
+                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8, true, true);
+                }
                 else
                 {
-                     ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8, true, true);
+                    ao = new AnimationObject(world.World, texStripName, texName, tex.Width, tex.Height, 20, 8);
                 }
                 ao.Position = gameposition;
                 world.AddObject(ao);

@@ -131,8 +131,11 @@ namespace CrisisAtSwissStation
          */
         public void Fail()
         {
-            DudeObject.locked();
-            failed = true;
+            if (succeeded == false)
+            {
+                DudeObject.locked();
+                failed = true;
+            }
         }
 
         /**
