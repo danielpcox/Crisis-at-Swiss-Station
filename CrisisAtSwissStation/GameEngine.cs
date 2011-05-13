@@ -465,7 +465,7 @@ namespace CrisisAtSwissStation
                             break;
                         case MenuCommand.Continue:
                             countdown = COUNTDOWN;
-                            forcedCommand = Constants.floors[savedgame.GetCurrentFloor()];
+                            forcedCommand = Constants.floors[savedgame.GetCurrentFloor(floorsScreen.Options.Count)];
                             break;
                     }
 
@@ -742,7 +742,8 @@ namespace CrisisAtSwissStation
         {
             // Set up main screen
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
-            floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
+            //floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
+            floorsScreen = new MenuScreenGraphical();
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
@@ -750,9 +751,9 @@ namespace CrisisAtSwissStation
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Ballroom", MenuCommand.LoadExodus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Basement", MenuCommand.LoadLeviticus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Free Play", MenuCommand.LoadNumbers));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Recreation", MenuCommand.LoadExodus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Engineering", MenuCommand.LoadLeviticus));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Core", MenuCommand.LoadNumbers));
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
@@ -760,6 +761,7 @@ namespace CrisisAtSwissStation
             {
                 mainScreen.Options[0] = new MenuOption(MenuOptionType.Command, "Continue", MenuCommand.Continue);
             }*/
+            savedgame.LoadGame();
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);
@@ -863,7 +865,6 @@ namespace CrisisAtSwissStation
 
                     if (currentMenu == pauseMenu)
                     {
-                        //currentWorld.Draw(spriteBatch, (float)this.Window.ClientBounds.Width, (float)this.Window.ClientBounds.Height);
                         currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
 
                         // Draw a "dimming" layer over the world
@@ -873,69 +874,15 @@ namespace CrisisAtSwissStation
                             new Color(0,0,0,100));
                         spriteBatch.End();
                     }
-                    else
+                    else // current menu is one of the main menus
                     {
                         spriteBatch.Begin();
                         spriteBatch.Draw(menuBack,
                             new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                        currentMenu.Draw(spriteBatch);
+                        //currentMenu.Draw(spriteBatch);
                         spriteBatch.End();
                     }
 
-                    /*
-                    //oh god hacking for menu screen
-                    if (menuAnimate)
-                    {
-                        menuXFrame = 0;
-                        menuYFrame = 0;
-                        menuSpriteWidth = 500;
-                        menuSpriteHeight = 500;
-                        menuAnimateInterval = 20;
-                        menuMyGameTime = 0;
-                        menuAnimateTimer = 0;
-                        menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
-                        menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
-                        spriteBatch.Begin();
-                        for (int i = 0; i < 150; i++)
-                        {
-                            Console.WriteLine("i got here");
-                            menuMyGameTime++;
-                            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
-                            if (!((menuXFrame == 5) && (menuYFrame == 1)))
-                            {
-                                menuAnimateTimer += menuMyGameTime;
-
-                                if (menuAnimateTimer > menuAnimateInterval)
-                                {
-                                    menuXFrame++;
-
-                                    if (menuXFrame > 5 && menuYFrame == 0)
-                                    {
-                                        menuXFrame = 0;
-                                        menuYFrame = 1;
-                                    }
-                                    else if (menuXFrame > 5 && menuYFrame == 1)
-                                    {
-                                        menuXFrame = 5;
-                                        menuYFrame = 1;
-                                    }                                   
-                                    myGameTime = 0;
-                                    animateTimer = 0;
-                                }
-                            }
-
-                            spriteBatch.Draw(menuPanelAnimation,
-                                    new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
-                           
-
-                        }
-                        spriteBatch.End();
-
-                        menuAnimate = false;
-
-                    }
-                    
-                    */
                     DrawSuccessOrFail();
 
                     spriteBatch.Begin();

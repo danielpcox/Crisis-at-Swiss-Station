@@ -40,16 +40,16 @@ namespace CrisisAtSwissStation
         public void UpdateInput()
         {
             keyState = Keyboard.GetState();
+            MouseState ms = Mouse.GetState();
 
             controlCode = MenuInput.NONE;
 
-            if (keyState.IsKeyDown(Keys.Down) && !prevState.IsKeyDown(Keys.Down))
+            if ( (keyState.IsKeyDown(Keys.S) || keyState.IsKeyDown(Keys.Down)) && !(prevState.IsKeyDown(Keys.Down) || prevState.IsKeyDown(Keys.S)) )
                 controlCode = MenuInput.DOWN;
-            else if (keyState.IsKeyDown(Keys.Up) && !prevState.IsKeyDown(Keys.Up))
+            else if ( (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W)) && !(prevState.IsKeyDown(Keys.Up) || prevState.IsKeyDown(Keys.W)) )
                 controlCode = MenuInput.UP;
-            else if (keyState.IsKeyDown(Keys.Enter) && !prevState.IsKeyDown(Keys.Enter))
+            else if ( ms.LeftButton == ButtonState.Pressed ||  keyState.IsKeyDown(Keys.Enter) && !prevState.IsKeyDown(Keys.Enter))
                 controlCode = MenuInput.SELECT;
-
             prevState = keyState;
         }
     }

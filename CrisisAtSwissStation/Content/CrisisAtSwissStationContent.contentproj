@@ -713,11 +713,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Music\Destruction%28v1%29.mp3">
-      <Name>Destruction%28v1%29</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-    </Compile>
     <Compile Include="Music\EarlyLevelv2.mp3">
       <Name>EarlyLevelv2</Name>
       <Importer>Mp3Importer</Importer>
@@ -727,11 +722,6 @@
       <Name>LevelComplete</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Music\Tension%28Lab 3%29.mp3">
-      <Name>Tension%28Lab 3%29</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
     </Compile>
     <Compile Include="Music\VictoryTrumpets.mp3">
       <Name>VictoryTrumpets</Name>
@@ -1389,6 +1379,114 @@
     </Compile>
     <Compile Include="Art\Objects\BoxObjects\corroded_Tpipe_top.png">
       <Name>corroded_Tpipe_top</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\BoxObjects\straight_wood.png">
+      <Name>straight_wood</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\BoxObjects\straight_wood_tile.png">
+      <Name>straight_wood_tile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\BoxObjects\wood_roundede.png">
+      <Name>wood_roundede</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\BoxObjects\wood_thing.png">
+      <Name>wood_thing</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Music\Middle Core.mp3">
+      <Name>Middle Core</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Music\Upper Basement.mp3">
+      <Name>Upper Basement</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Menus\menu\menu_core.png">
+      <Name>menu_core</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_coreselect.png">
+      <Name>menu_core_coreselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_engselect.png">
+      <Name>menu_core_engselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_introselect.png">
+      <Name>menu_core_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_recselect.png">
+      <Name>menu_core_recselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering.png">
+      <Name>menu_engineering</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering_engselect.png">
+      <Name>menu_engineering_engselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering_introselect.png">
+      <Name>menu_engineering_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering_recselect.png">
+      <Name>menu_engineering_recselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_introduction.png">
+      <Name>menu_introduction</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_introduction_introselect.png">
+      <Name>menu_introduction_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_recreation.png">
+      <Name>menu_recreation</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_recreation_introselect.png">
+      <Name>menu_recreation_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_recreation_recselect.png">
+      <Name>menu_recreation_recselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
