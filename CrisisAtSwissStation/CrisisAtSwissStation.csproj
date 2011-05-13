@@ -223,9 +223,7 @@
     <Content Include="Levels\face.world" />
     <Content Include="Levels\introduction.world" />
     <Content Include="Levels\introduction1.world" />
-    <Content Include="Levels\piston_jump.world" />
     <Content Include="Levels\test.world" />
-    <Content Include="Levels\test2.world" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
