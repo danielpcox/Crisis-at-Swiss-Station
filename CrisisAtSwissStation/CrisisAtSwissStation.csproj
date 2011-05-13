@@ -212,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
+    <Content Include="Levels\alpha.world" />
     <Content Include="Levels\ballroom.world" />
     <Content Include="Levels\ballroom1.world" />
     <Content Include="Levels\basement.world" />
@@ -219,8 +220,12 @@
     <Content Include="Levels\basement2.world" />
     <Content Include="Levels\basement3.world" />
     <Content Include="Levels\credits.world" />
+    <Content Include="Levels\face.world" />
     <Content Include="Levels\introduction.world" />
     <Content Include="Levels\introduction1.world" />
+    <Content Include="Levels\piston_jump.world" />
+    <Content Include="Levels\test.world" />
+    <Content Include="Levels\test2.world" />
   </ItemGroup>
   <ItemGroup>
     <NestedContentProject Include="Content\Content.contentproj">
@@ -291,36 +296,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CrisisAtSwissStation_TemporaryKey.pfx" />
-    <Content Include="Levels\alpha.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\coreexample1.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\coreexample2.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\coreexample3.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\coreexample4.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\coreexample5.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\face.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\piston_jump.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\test.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Levels\test2.world">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="Levels\core1.world" />
+    <None Include="Levels\core2.world" />
+    <None Include="Levels\core3.world" />
+    <None Include="Levels\core4.world" />
+    <None Include="Levels\core5.world" />
+    <None Include="Levels\hallway.world" />
+    <None Include="Levels\introduction2.world" />
+    <None Include="Levels\recHallway.world" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="Levels\alpha.world">

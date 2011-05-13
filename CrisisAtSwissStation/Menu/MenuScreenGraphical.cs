@@ -70,7 +70,7 @@ namespace CrisisAtSwissStation
             Vector2 rollingPos = new Vector2(initialX, initialY);
 
             int currentFloor = GameEngine.savedgame.GetCurrentFloor(Options.Count);
-            currentFloor = currentFloor % Options.Count - 1;
+            currentFloor = currentFloor % (Options.Count - 1);
 
             //DEBUG
             //Console.WriteLine("GOT HERE");
@@ -106,7 +106,7 @@ namespace CrisisAtSwissStation
             // the selected menu item with the one closest to the mouse
             if (ms.X != prevms.X || ms.Y != prevms.Y)
             {
-                Console.WriteLine(new Vector2(ms.X, ms.Y));
+                //Console.WriteLine(new Vector2(ms.X, ms.Y));
                 foreach (Vector2 optionPos in optionPositions)
                 {
                     float distance = Vector2.Distance(optionPos, new Vector2(ms.X, ms.Y));
@@ -116,7 +116,9 @@ namespace CrisisAtSwissStation
                         distance_lwm = distance;
                     }
                 }
-                selected = optionPositions.IndexOf(low_water_mark);
+                int potential_new_selected = optionPositions.IndexOf(low_water_mark);
+                if (!GameEngine.savedgame.disabledOptions.Contains(potential_new_selected))
+                    selected = potential_new_selected;
             }
 
             base.Update();
