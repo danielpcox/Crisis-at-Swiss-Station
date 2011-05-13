@@ -1384,13 +1384,35 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Art\Objects\BoxObjects\straight_wood.png">
+      <Name>straight_wood</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\BoxObjects\straight_wood_tile.png">
+      <Name>straight_wood_tile</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Art\Objects\BoxObjects\wood_roundede.png">
+      <Name>wood_roundede</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Objects\BoxObjects\wood_thing.png">
+      <Name>wood_thing</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Music\Middle Core.mp3">
       <Name>Middle Core</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Music\Upper Basement.mp3">
       <Name>Upper Basement</Name>
       <Importer>Mp3Importer</Importer>
