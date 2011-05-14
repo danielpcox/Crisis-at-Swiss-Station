@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace CrisisAtSwissStation
 {
-    class MenuScreen
+    public class MenuScreen
     {
         public static readonly Color Selected = new Color(255, 247, 153);
         public static readonly Color Unselected = new Color(182,0,0);

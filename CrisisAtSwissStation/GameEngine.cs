@@ -27,14 +27,14 @@ namespace CrisisAtSwissStation
 
         static MenuEngine currentMenu;
         static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
-        static MenuScreen floorsScreen;
+        public static MenuScreen floorsScreen;
 
         static MenuScreen introductionRoomsScreen;
         static MenuScreen recreationRoomsScreen;
         static MenuScreen engineeringRoomsScreen;
         static MenuScreen coreRoomsScreen;
 
-        public int lastFloorPlayed;
+        public static int lastFloorPlayed;
 
         public static SavedGame savedgame = new SavedGame();
         MenuCommand forcedCommand = MenuCommand.NONE;
@@ -842,24 +842,28 @@ namespace CrisisAtSwissStation
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction2", MenuCommand.LoadIntroduction));
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction3", MenuCommand.LoadIntroduction));
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction4", MenuCommand.LoadIntroduction));
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction5", MenuCommand.LoadIntroduction));
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
 
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation1", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation2", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation3", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation4", MenuCommand.LoadRecreation));
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation5", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
 
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering1", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering2", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering3", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering4", MenuCommand.LoadEngineering));
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering5", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
 
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core1", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core2", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core3", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core4", MenuCommand.LoadCore));
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core5", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
 
             savedgame.LoadGame();

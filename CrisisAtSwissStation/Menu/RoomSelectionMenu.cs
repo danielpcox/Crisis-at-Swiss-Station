@@ -21,12 +21,12 @@ namespace CrisisAtSwissStation
 
         List<Vector2> optionPositions = new List<Vector2>()
         {
-            new Vector2(0, 154),
-            new Vector2(210, 154),
-            new Vector2(420, 154),
-            new Vector2(630, 154),
-            new Vector2(840, 154),
-            new Vector2(0, 500)
+            new Vector2(238, 83),
+            new Vector2(579, 83),
+            new Vector2(238, 310),
+            new Vector2(579, 310),
+            new Vector2(238, 541),
+            new Vector2(579, 541)
         };
 
         public RoomSelectionMenu()
@@ -39,7 +39,7 @@ namespace CrisisAtSwissStation
                 "Art\\Menus\\screenshots\\introduction\\introduction3",
                 "Art\\Menus\\screenshots\\introduction\\introduction4",
                 "Art\\Menus\\screenshots\\introduction\\introduction5",
-                "Art\\Menus\\menu\\back"
+                "Art\\Menus\\back"
             };
             screenshots[1] = new List<string>()
             {
@@ -48,7 +48,7 @@ namespace CrisisAtSwissStation
                 "Art\\Menus\\screenshots\\recreation\\recreation3",
                 "Art\\Menus\\screenshots\\recreation\\recreation4",
                 "Art\\Menus\\screenshots\\recreation\\recreation5",
-                "Art\\Menus\\menu\\back"
+                "Art\\Menus\\back"
             };
             screenshots[2] = new List<string>()
             {
@@ -57,7 +57,7 @@ namespace CrisisAtSwissStation
                 "Art\\Menus\\screenshots\\engineering\\engineering3",
                 "Art\\Menus\\screenshots\\engineering\\engineering4",
                 "Art\\Menus\\screenshots\\engineering\\engineering5",
-                "Art\\Menus\\menu\\back"
+                "Art\\Menus\\back"
             };
             screenshots[3] = new List<string>()
             {
@@ -66,7 +66,7 @@ namespace CrisisAtSwissStation
                 "Art\\Menus\\screenshots\\core\\core3",
                 "Art\\Menus\\screenshots\\core\\core4",
                 "Art\\Menus\\screenshots\\core\\core5",
-                "Art\\Menus\\menu\\back"
+                "Art\\Menus\\\back"
             };
         }
 
@@ -75,7 +75,7 @@ namespace CrisisAtSwissStation
             //base.Draw(spriteBatch);
 
             // draw special background
-            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\menu\\menu_background"],
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\zzblack"],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
 
             Vector2 rollingPos = new Vector2(initialX, initialY);
@@ -83,8 +83,8 @@ namespace CrisisAtSwissStation
             for (int i = 0; i < options.Count-1; i++)
             {
 
-                spriteBatch.Draw(GameEngine.TextureList[screenshots[0][i]],
-                    optionPositions[i], selected==i ? Color.White : Color.Yellow);
+                spriteBatch.Draw(GameEngine.TextureList[screenshots[GameEngine.floorsScreen.selected][i]],
+                    optionPositions[i], selected==i ? Color.White : Color.Gray);
                 /*
                 spriteBatch.DrawString(font,
                     options[i].Text,
@@ -143,7 +143,7 @@ namespace CrisisAtSwissStation
                 //Console.WriteLine(new Vector2(ms.X, ms.Y));
                 foreach (Vector2 optionPos in optionPositions)
                 {
-                    float distance = Vector2.Distance(optionPos, new Vector2(ms.X, ms.Y));
+                    float distance = Vector2.Distance(optionPos + new Vector2(100, 0), new Vector2(ms.X, ms.Y));
                     if (distance < distance_lwm)
                     {
                         low_water_mark = optionPos;

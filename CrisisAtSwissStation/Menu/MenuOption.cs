@@ -58,7 +58,7 @@ namespace CrisisAtSwissStation{
         LinkToMainMenu
     }
 
-    class MenuOption
+    public class MenuOption
     {
         private string text;
         public string Text
