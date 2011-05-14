@@ -15,7 +15,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace CrisisAtSwissStation
 {
-    class MenuScreen
+    public class MenuScreen
     {
         public static readonly Color Selected = new Color(255, 247, 153);
         public static readonly Color Unselected = new Color(182,0,0);
@@ -42,7 +42,7 @@ namespace CrisisAtSwissStation
             get { return options; }
         }
 
-        protected int selected;
+        public int selected;
         protected bool returnSelected; // Return command to menu
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace CrisisAtSwissStation
             selected = (selected) % options.Count;
 
             // actually click the button
-            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
+            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
                 returnSelected = true;
 
             prevms = ms;
