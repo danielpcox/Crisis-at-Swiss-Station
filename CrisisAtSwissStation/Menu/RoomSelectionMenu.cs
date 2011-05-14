@@ -102,7 +102,7 @@ namespace CrisisAtSwissStation
 
 
             spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\back"],
-                optionPositions.Last(), selected == optionPositions.Count ? selectedColor : unselectedColor);
+                optionPositions.Last(), selected == optionPositions.Count-1 ? selectedColor : unselectedColor);
 
             string actualHeader =  headers[GameEngine.floorsScreen.selected] + " (" + (GameEngine.savedgame.NumberOfRoomsBeatenOnFloor(GameEngine.floorsScreen.selected)) + "/5)";
 
