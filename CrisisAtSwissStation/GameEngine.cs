@@ -542,7 +542,7 @@ namespace CrisisAtSwissStation
                     {
                         LoadWorld(cwname);
                     }
-                    else if (ks.IsKeyDown(Keys.N) && ks.IsKeyDown(Keys.U) && ks.IsKeyDown(Keys.I) && ks.IsKeyDown(Keys.O))
+                    else if (ks.IsKeyDown(Keys.N) && ks.IsKeyDown(Keys.U))
                     {
                         //LoadNextWorld();
                         currentWorld.Succeeded = true;
