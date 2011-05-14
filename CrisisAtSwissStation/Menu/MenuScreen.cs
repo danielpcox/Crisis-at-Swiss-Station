@@ -145,7 +145,7 @@ namespace CrisisAtSwissStation
                     float distance_lwm = 1280;
                     for (int i = 0; i < options.Count; i++)
                     {
-                        float distance = Vector2.Distance(rollingPos + new Vector2(0, 20), new Vector2(ms.X, ms.Y));
+                        float distance = Vector2.Distance(rollingPos + new Vector2(0, 35), new Vector2(ms.X, ms.Y));
                         //Console.WriteLine(distance); // DEBUG
                         if (distance < distance_lwm)
                         {

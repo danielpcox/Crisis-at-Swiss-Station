@@ -97,6 +97,11 @@ namespace CrisisAtSwissStation
 
                 spriteBatch.Draw(GameEngine.TextureList[screenshots[GameEngine.floorsScreen.selected][i]],
                     optionPositions[i], selected==i ? selectedColor : unselectedColor);
+                if (GameEngine.savedgame.roomsBeatenBitmap[GameEngine.floorsScreen.selected, i])
+                {
+                    spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\check"],
+                        optionPositions[i], null, Color.White, 0, new Vector2(), 0.5f, SpriteEffects.None, 0);
+                }
                 rollingPos.Y += distY;
             }
 

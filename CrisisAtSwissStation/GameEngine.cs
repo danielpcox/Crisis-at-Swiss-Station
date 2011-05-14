@@ -30,10 +30,10 @@ namespace CrisisAtSwissStation
         public static MenuScreen pauseScreen;
         public static MenuScreen floorsScreen;
 
-        static MenuScreen introductionRoomsScreen;
-        static MenuScreen recreationRoomsScreen;
-        static MenuScreen engineeringRoomsScreen;
-        static MenuScreen coreRoomsScreen;
+        public static MenuScreen introductionRoomsScreen;
+        public static MenuScreen recreationRoomsScreen;
+        public static MenuScreen engineeringRoomsScreen;
+        public static MenuScreen coreRoomsScreen;
 
         public static int lastFloorPlayed;
 
@@ -397,6 +397,12 @@ namespace CrisisAtSwissStation
                             audioManager.Stop();
                             break;
 
+                        case MenuCommand.LinkToRooms:
+                            LinkToRooms();
+                            currentWorld = null;
+                            audioManager.Stop();
+                            break;
+
                         case MenuCommand.ExitProgram:
                             ExitGame();
                             break;
@@ -697,6 +703,12 @@ namespace CrisisAtSwissStation
             startMenu.NextMenu();
         }
 
+        public static void LinkToRooms()
+        {
+            SetCurrentMenu(startMenu);
+            currentMenu.currentScreen = Constants.floorScreens[lastFloorPlayed];
+        }
+
         public void ExitGame()
         {
             UnloadContent();
@@ -830,9 +842,9 @@ namespace CrisisAtSwissStation
             coreRoomsScreen = new RoomSelectionMenu();
 
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
-            mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
-            mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
-            mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
+            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
+            mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
+            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
@@ -857,28 +869,28 @@ namespace CrisisAtSwissStation
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction3", MenuCommand.LoadIntroduction));
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction4", MenuCommand.LoadIntroduction));
             introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction5", MenuCommand.LoadIntroduction));
-            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
 
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation1", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation2", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation3", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation4", MenuCommand.LoadRecreation));
             recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation5", MenuCommand.LoadRecreation));
-            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
 
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering1", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering2", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering3", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering4", MenuCommand.LoadEngineering));
             engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering5", MenuCommand.LoadEngineering));
-            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
 
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core1", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core2", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core3", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core4", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core5", MenuCommand.LoadCore));
-            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
 
             savedgame.LoadGame();
 
@@ -897,9 +909,10 @@ namespace CrisisAtSwissStation
             pauseScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
 
             pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Resume", MenuCommand.Resume));
-            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load", MenuCommand.Load));
+            //pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load", MenuCommand.Load));
             //pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Main Menu", MenuCommand.LinkToMainMenu)); // Can link between engines...
-            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
+            //pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Return to Rooms", MenuCommand.LinkToRooms));
+            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
 
             //pauseMenu.Screens.Add(pauseScreen);
             startMenu.Screens.Add(pauseScreen);

@@ -55,7 +55,8 @@ namespace CrisisAtSwissStation{
         Save,
         ExitProgram,
         LaunchEditor,
-        LinkToMainMenu
+        LinkToMainMenu,
+        LinkToRooms
     }
 
     public class MenuOption
