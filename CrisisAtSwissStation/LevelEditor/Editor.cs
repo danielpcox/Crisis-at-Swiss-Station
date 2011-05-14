@@ -675,9 +675,18 @@ namespace CrisisAtSwissStation.LevelEditor
 
                 if (lastname == "moving_platform")
                     ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\moving_platform", 0, 0.5f, 0, 1, false, null, new Vector2(0, -11500), 4.5f, 14.2f);
+                else if (lastname == "gate")
+                {
+                    SwitchObject ssfine;
+                    ssfine = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
+                    ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\gate", 0, 0.5f, 0, 1, false, ssfine, new Vector2(0, -11500), 4.5f, 14.2f);
+                    //brokenMovingPlatform1 = new SwitchObject(World, "broken_strip", "broken_moving_platform", 89, 32, 20, 8);
+                    ssfine.Position = gameposition;
+                    world.AddObject(ssfine);
+                }
                 else
                 {
-                   
+
                     SwitchObject ss1;
                     ss1 = new SwitchObject(world.World, "Art\\Objects\\SwitchObjects\\button_strip", "Art\\Objects\\SwitchObjects\\button", 181, 84, 20, 2);
                     ss = new MovingObject(world.World, "Art\\Objects\\MovingPlatformObjects\\switchmoving_platform", 0, 0.5f, 0, 1, false, ss1, new Vector2(0, -11500), 4.5f, 14.2f);
