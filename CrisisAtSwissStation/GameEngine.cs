@@ -29,6 +29,8 @@ namespace CrisisAtSwissStation
         static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
         static MenuScreen floorsScreen;
 
+        public int lastFloorPlayed;
+
         public static SavedGame savedgame = new SavedGame();
         MenuCommand forcedCommand = MenuCommand.NONE;
 
@@ -376,8 +378,10 @@ namespace CrisisAtSwissStation
             {
                 case ProgramState.Menu:
                     currentMenu.Update();
+                    MenuCommand command = currentMenu.ReturnAndResetCommand(forcedCommand);
+                    lastFloorPlayed = Constants.floors.IndexOf(command);
 
-                    switch (currentMenu.ReturnAndResetCommand(forcedCommand))
+                    switch (command)
                     {
                         case MenuCommand.LinkToMainMenu:
                             LinkToMain();
@@ -576,7 +580,8 @@ namespace CrisisAtSwissStation
             }
             else
             {
-                EnableNextFloor();
+                if (savedgame.GetCurrentFloor() == lastFloorPlayed)
+                    EnableNextFloor();
                 LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
