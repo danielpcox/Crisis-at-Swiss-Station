@@ -1613,13 +1613,13 @@ namespace CrisisAtSwissStation
                         if ((object1 == piston && object2 == circle) ||
                             (object1 == piston && object2 == circle))
                         {
-                            if (MathHelper.ToDegrees(object1.Angle) == 0)
+                            if ((MathHelper.ToRadians(object1.Angle) > -5) && (MathHelper.ToRadians(object1.Angle) < 5))
                             { circle.Body.ApplyForce(Utils.Convert(new Vector2(500, 0)), circle.Body.GetWorldCenter()); }
-                            else if (MathHelper.ToDegrees(object1.Angle) == 90)
+                            else if ((MathHelper.ToRadians(object1.Angle) > 85) && (MathHelper.ToRadians(object1.Angle) < 95))
                             { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, 500)), circle.Body.GetWorldCenter()); }
-                            else if (MathHelper.ToDegrees(object1.Angle) == -90)
+                            else if ((MathHelper.ToRadians(object1.Angle) > -95) && (MathHelper.ToRadians(object1.Angle) < -85))
                             { circle.Body.ApplyForce(Utils.Convert(new Vector2(0, -500)), circle.Body.GetWorldCenter()); }
-                            else if (MathHelper.ToDegrees(object1.Angle) == 180)
+                            else if ((MathHelper.ToRadians(object1.Angle) > 175) && (MathHelper.ToRadians(object1.Angle) < 185))
                             { circle.Body.ApplyForce(Utils.Convert(new Vector2(-500, 0)), circle.Body.GetWorldCenter()); }
                         }
                     }
