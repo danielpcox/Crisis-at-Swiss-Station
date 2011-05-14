@@ -159,7 +159,7 @@ namespace CrisisAtSwissStation
             selected = (selected) % options.Count;
 
             // actually click the button
-            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
+            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
                 returnSelected = true;
 
             prevms = ms;
