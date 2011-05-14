@@ -13,21 +13,33 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace CrisisAtSwissStation.Menu
+namespace CrisisAtSwissStation
 {
     class RoomSelectionMenu : MenuScreen
     {
+        List<string>[] screenshots = new List<string>[4];
+
+        List<Vector2> optionPositions = new List<Vector2>()
+        {
+            new Vector2(238, 83),
+            new Vector2(579, 83),
+            new Vector2(238, 310),
+            new Vector2(579, 310),
+            new Vector2(238, 541),
+            new Vector2(579, 541)
+        };
+
         public RoomSelectionMenu()
             : base(0, 0, 80, true)
         {
-            List<string>[] screenshots = new List<string>[4];
             screenshots[0] = new List<string>()
             {
                 "Art\\Menus\\screenshots\\introduction\\introduction1",
                 "Art\\Menus\\screenshots\\introduction\\introduction2",
                 "Art\\Menus\\screenshots\\introduction\\introduction3",
                 "Art\\Menus\\screenshots\\introduction\\introduction4",
-                "Art\\Menus\\screenshots\\introduction\\introduction5"
+                "Art\\Menus\\screenshots\\introduction\\introduction5",
+                "Art\\Menus\\back"
             };
             screenshots[1] = new List<string>()
             {
@@ -35,7 +47,8 @@ namespace CrisisAtSwissStation.Menu
                 "Art\\Menus\\screenshots\\recreation\\recreation2",
                 "Art\\Menus\\screenshots\\recreation\\recreation3",
                 "Art\\Menus\\screenshots\\recreation\\recreation4",
-                "Art\\Menus\\screenshots\\recreation\\recreation5"
+                "Art\\Menus\\screenshots\\recreation\\recreation5",
+                "Art\\Menus\\back"
             };
             screenshots[2] = new List<string>()
             {
@@ -43,7 +56,8 @@ namespace CrisisAtSwissStation.Menu
                 "Art\\Menus\\screenshots\\engineering\\engineering2",
                 "Art\\Menus\\screenshots\\engineering\\engineering3",
                 "Art\\Menus\\screenshots\\engineering\\engineering4",
-                "Art\\Menus\\screenshots\\engineering\\engineering5"
+                "Art\\Menus\\screenshots\\engineering\\engineering5",
+                "Art\\Menus\\back"
             };
             screenshots[3] = new List<string>()
             {
@@ -51,12 +65,43 @@ namespace CrisisAtSwissStation.Menu
                 "Art\\Menus\\screenshots\\core\\core2",
                 "Art\\Menus\\screenshots\\core\\core3",
                 "Art\\Menus\\screenshots\\core\\core4",
-                "Art\\Menus\\screenshots\\core\\core5"
+                "Art\\Menus\\screenshots\\core\\core5",
+                "Art\\Menus\\\back"
             };
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //base.Draw(spriteBatch);
+
+            Color selectedColor = Color.LightSeaGreen;
+            Color unselectedColor = Color.White;
+
+            // draw special background
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\zzwhite"],
+                        new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
+
+            Vector2 rollingPos = new Vector2(initialX, initialY);
+
+            for (int i = 0; i < options.Count-1; i++)
+            {
+
+                spriteBatch.Draw(GameEngine.TextureList[screenshots[GameEngine.floorsScreen.selected][i]],
+                    optionPositions[i], selected==i ? selectedColor : unselectedColor);
+                /*
+                spriteBatch.DrawString(font,
+                    options[i].Text,
+                    rollingPos,
+                    (sgconnect && GameEngine.savedgame.disabledOptions.Contains(i) ? Disabled : (i == selected ? Selected : Unselected) ));
+                */
+
+                rollingPos.Y += distY;
+            }
+
+
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\back"],
+                optionPositions.Last(), selected == optionPositions.Count ? selectedColor : unselectedColor);
+
             // draw cursor
             Texture2D crosshair = GameEngine.TextureList["Crosshair"];
             spriteBatch.Draw(crosshair, new Vector2(ms.X - (crosshair.Width / 2), ms.Y - (crosshair.Height / 2)), Color.White);
@@ -100,13 +145,12 @@ namespace CrisisAtSwissStation.Menu
 
             // if the current mouse position is different from the previous one, update
             // the selected menu item with the one closest to the mouse
-            /*
             if (ms.X != prevms.X || ms.Y != prevms.Y)
             {
                 //Console.WriteLine(new Vector2(ms.X, ms.Y));
                 foreach (Vector2 optionPos in optionPositions)
                 {
-                    float distance = Vector2.Distance(optionPos, new Vector2(ms.X, ms.Y));
+                    float distance = Vector2.Distance(optionPos + new Vector2(100, 70), new Vector2(ms.X, ms.Y));
                     if (distance < distance_lwm)
                     {
                         low_water_mark = optionPos;
@@ -118,10 +162,9 @@ namespace CrisisAtSwissStation.Menu
                     selected = potential_new_selected;
             }
 
-            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
+            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
                 returnSelected = true;
             prevms = ms;
-            */
         }
     }
 }

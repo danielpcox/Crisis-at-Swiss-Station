@@ -46,13 +46,19 @@ namespace CrisisAtSwissStation{
         LoadLeviticus,
         LoadNumbers,
         LoadDeuteronomy,
+
+        LoadIntroduction,
+        LoadRecreation,
+        LoadEngineering,
+        LoadCore,
+
         Save,
         ExitProgram,
         LaunchEditor,
         LinkToMainMenu
     }
 
-    class MenuOption
+    public class MenuOption
     {
         private string text;
         public string Text
