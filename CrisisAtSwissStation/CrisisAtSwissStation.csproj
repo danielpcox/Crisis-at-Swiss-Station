@@ -294,11 +294,11 @@
     <None Include="Levels\core3.world" />
     <None Include="Levels\core4.world" />
     <None Include="Levels\core5.world" />
-    <None Include="Levels\engineering1" />
-    <None Include="Levels\engineering2" />
-    <None Include="Levels\engineering3" />
-    <None Include="Levels\engineering4" />
-    <None Include="Levels\engineering5" />
+    <None Include="Levels\engineering1.world" />
+    <None Include="Levels\engineering2.world" />
+    <None Include="Levels\engineering3.world" />
+    <None Include="Levels\engineering4.world" />
+    <None Include="Levels\engineering5.world" />
     <None Include="Levels\hallway.world" />
     <None Include="Levels\introduction2.world" />
     <None Include="Levels\recHallway.world" />
