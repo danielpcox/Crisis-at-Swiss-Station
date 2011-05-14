@@ -212,11 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
-    <Content Include="Levels\ballroom.world" />
-    <Content Include="Levels\ballroom1.world" />
-    <Content Include="Levels\basement.world" />
-    <Content Include="Levels\basement3.world" />
-    <Content Include="Levels\introduction.world" />
     <Content Include="Levels\introduction1.world" />
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +288,21 @@
     <None Include="Levels\core3.world" />
     <None Include="Levels\core4.world" />
     <None Include="Levels\core5.world" />
-    <None Include="Levels\hallway.world" />
+    <None Include="Levels\credits1.world" />
+    <None Include="Levels\engineering1.world" />
+    <None Include="Levels\engineering2.world" />
+    <None Include="Levels\engineering3.world" />
+    <None Include="Levels\engineering4.world" />
+    <None Include="Levels\engineering5.world" />
     <None Include="Levels\introduction2.world" />
-    <None Include="Levels\recHallway.world" />
+    <None Include="Levels\introduction3.world" />
+    <None Include="Levels\introduction4.world" />
+    <None Include="Levels\introduction5.world" />
+    <None Include="Levels\recreation1.world" />
+    <None Include="Levels\recreation2.world" />
+    <None Include="Levels\recreation3.world" />
+    <None Include="Levels\recreation4.world" />
+    <None Include="Levels\recreation5.world" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="Levels\alpha.world">
