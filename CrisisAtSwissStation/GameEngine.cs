@@ -37,7 +37,7 @@ namespace CrisisAtSwissStation
         public static int lastFloorPlayed;
 
         public static SavedGame savedgame = new SavedGame();
-        MenuCommand forcedCommand = MenuCommand.NONE;
+        static MenuCommand forcedCommand = MenuCommand.NONE;
 
         KeyboardState keyState, prevKeyState;
 
@@ -85,6 +85,8 @@ namespace CrisisAtSwissStation
         {
             currentMenu = menu;
             currentMenu.Reset();
+            forcedCommand = MenuCommand.NONE;
+            progstate = ProgramState.Menu;
         }
 
         //textbox for setting insta-steel
