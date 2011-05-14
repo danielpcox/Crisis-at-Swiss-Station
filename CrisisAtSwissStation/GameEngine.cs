@@ -451,9 +451,32 @@ namespace CrisisAtSwissStation
                             }
                             break;
 
-                            // TESTING NEW FUNCTIONALITY...
+                        case MenuCommand.LoadIntroduction:
+                            if (LoadRelWorld("introduction" + (currentMenu.currentScreen.selected + 1) ))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+                        case MenuCommand.LoadRecreation:
+                            if (LoadRelWorld("recreation" + (currentMenu.currentScreen.selected + 1) ))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+                        case MenuCommand.LoadEngineering:
+                            if (LoadRelWorld("engineering" + (currentMenu.currentScreen.selected + 1) ))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
                         case MenuCommand.LoadCore:
-                            if (LoadRelWorld("credits" + currentMenu.currentScreen.selected))
+                            if (LoadRelWorld("core" + (currentMenu.currentScreen.selected + 1) ))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
