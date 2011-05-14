@@ -31,7 +31,7 @@ namespace CrisisAtSwissStation
             new Vector2(174, 692)
         };
 
-        MouseState ms, prevms;
+        //MouseState ms, prevms;
 
         public MenuScreenGraphical()
             : base(0, 0, 80, true)
@@ -79,6 +79,10 @@ namespace CrisisAtSwissStation
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            // draw special background
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\menu\\menu_background"],
+                        new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
+
             Vector2 rollingPos = new Vector2(initialX, initialY);
 
             int currentFloor = GameEngine.savedgame.GetCurrentFloor(Options.Count);
@@ -92,6 +96,7 @@ namespace CrisisAtSwissStation
             spriteBatch.Draw(GameEngine.TextureList[menuState[currentFloor][selected]],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
 
+            /*
             for (int i = 0; i < options.Count; i++)
             {
                 spriteBatch.DrawString(font,
@@ -101,6 +106,7 @@ namespace CrisisAtSwissStation
 
                 rollingPos.Y += distY;
             }
+            */
 
             // draw cursor
             Texture2D crosshair = GameEngine.TextureList["Crosshair"];
@@ -131,6 +137,8 @@ namespace CrisisAtSwissStation
                 int potential_new_selected = optionPositions.IndexOf(low_water_mark);
                 if (!GameEngine.savedgame.disabledOptions.Contains(potential_new_selected))
                     selected = potential_new_selected;
+                Console.WriteLine("SELECTED:");
+                Console.WriteLine(selected);
             }
 
             base.Update();

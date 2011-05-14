@@ -460,7 +460,6 @@ namespace CrisisAtSwissStation
 
                         case MenuCommand.New:
                            // menuAnimate = true;
-                            //animateMyMenu();
                             if (NewWorld())
                             {
                                 countdown = COUNTDOWN;
@@ -795,54 +794,6 @@ namespace CrisisAtSwissStation
         }
 
 
-        private void animateMyMenu()
-        {
-            menuXFrame = 0;
-            menuYFrame = 0;
-            menuSpriteWidth = 500;
-            menuSpriteHeight = 500;
-            menuAnimateInterval = 20;
-            menuMyGameTime = 0;
-            menuAnimateTimer = 0;
-            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
-            menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
-            spriteBatch.Begin();
-            for (int i = 0; i < 150; i++)
-            {
-                menuMyGameTime++;
-                menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
-                if (!((menuXFrame == 5) && (menuYFrame == 1)))
-                {
-                    menuAnimateTimer += menuMyGameTime;
-
-                    if (menuAnimateTimer > menuAnimateInterval)
-                    {
-                        menuXFrame++;
-
-                        if (menuXFrame > 5 && menuYFrame == 0)
-                        {
-                            menuXFrame = 0;
-                            menuYFrame = 1;
-                        }
-                        else if (menuXFrame > 5 && menuYFrame == 1)
-                        {
-                            menuXFrame = 5;
-                            menuYFrame = 1;
-                        }
-                        myGameTime = 0;
-                        animateTimer = 0;
-                    }
-                }
-
-                spriteBatch.Draw(menuPanelAnimation,
-                        new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
-
-
-            }
-            spriteBatch.End();
-
-        }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -888,11 +839,14 @@ namespace CrisisAtSwissStation
                     }
                     else // current menu is one of the main menus
                     {
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(menuBack,
-                            new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                        //currentMenu.Draw(spriteBatch);
-                        spriteBatch.End();
+                        if (currentMenu.currentScreen != floorsScreen) // HACK - special case for the floors menu
+                        {
+                            spriteBatch.Begin();
+                            spriteBatch.Draw(menuBack,
+                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                            //currentMenu.Draw(spriteBatch);
+                            spriteBatch.End();
+                        }
                     }
 
                     DrawSuccessOrFail();

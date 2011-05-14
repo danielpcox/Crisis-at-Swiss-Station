@@ -22,7 +22,7 @@ namespace CrisisAtSwissStation
         /// <summary>
         /// Current screen viewed by user
         /// </summary>
-        MenuScreen currentScreen;
+        public MenuScreen currentScreen;
 
         private List<MenuScreen> screens;
         public List<MenuScreen> Screens
@@ -84,10 +84,11 @@ namespace CrisisAtSwissStation
                 {
                     case MenuOptionType.Link:
                         KeyboardState prevks = currentScreen.controller.keyState;
-                        //MouseState prevms = currentScreen.controller.ms;
+                        MouseState prevms = currentScreen.ms;
                         currentScreen = selected.Link;
                         // pass along the previous keystate the first time so we don't duplicate selection
                         currentScreen.controller.prevState = prevks;
+                        currentScreen.prevms = prevms;
                         break;
 
                     case MenuOptionType.Command:
