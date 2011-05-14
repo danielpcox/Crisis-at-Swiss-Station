@@ -100,6 +100,7 @@ namespace CrisisAtSwissStation.Menu
 
             // if the current mouse position is different from the previous one, update
             // the selected menu item with the one closest to the mouse
+            /*
             if (ms.X != prevms.X || ms.Y != prevms.Y)
             {
                 //Console.WriteLine(new Vector2(ms.X, ms.Y));
@@ -120,6 +121,7 @@ namespace CrisisAtSwissStation.Menu
             if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
                 returnSelected = true;
             prevms = ms;
+            */
         }
     }
 }
