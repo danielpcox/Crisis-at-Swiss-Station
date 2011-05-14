@@ -31,7 +31,7 @@ namespace CrisisAtSwissStation
             new Vector2(174, 692)
         };
 
-        MouseState ms, prevms;
+        //MouseState ms, prevms;
 
         public MenuScreenGraphical()
             : base(0, 0, 80, true)
@@ -79,19 +79,24 @@ namespace CrisisAtSwissStation
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            // draw special background
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\menu\\menu_background"],
+                        new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
+
             Vector2 rollingPos = new Vector2(initialX, initialY);
 
             int currentFloor = GameEngine.savedgame.GetCurrentFloor(Options.Count);
             currentFloor = currentFloor % (Options.Count - 1);
 
             //DEBUG
-            Console.WriteLine("GOT HERE");
-            Console.WriteLine(currentFloor);
-            Console.WriteLine(selected);
+            //Console.WriteLine("GOT HERE");
+            //Console.WriteLine(currentFloor);
+            //Console.WriteLine(selected);
 
             spriteBatch.Draw(GameEngine.TextureList[menuState[currentFloor][selected]],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
 
+            /*
             for (int i = 0; i < options.Count; i++)
             {
                 spriteBatch.DrawString(font,
@@ -101,6 +106,7 @@ namespace CrisisAtSwissStation
 
                 rollingPos.Y += distY;
             }
+            */
 
             // draw cursor
             Texture2D crosshair = GameEngine.TextureList["Crosshair"];
@@ -113,6 +119,35 @@ namespace CrisisAtSwissStation
 
             float distance_lwm = 1280; // distance low-water-mark is sqrt(1024^2 + 768^2)
             Vector2 low_water_mark = new Vector2(1024, 768);
+
+            controller.UpdateInput();
+            returnSelected = false;
+
+            int viable = selected;
+            switch (controller.ControlCode)
+            {
+                case MenuInput.DOWN:
+                    viable += 1;
+                    while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
+                        viable += 1;
+                    //Console.WriteLine(viable); // DEBUG
+                    selected = viable;
+                    break;
+
+                case MenuInput.UP:
+                    viable -= 1;
+                    if (viable < 0)
+                        viable = Options.Count - Math.Abs(viable); // HACK
+                    while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
+                        viable -= 1;
+                    // Console.WriteLine(viable); // DEBUG
+                    selected = viable;
+                    break;
+
+                case MenuInput.SELECT:
+                    returnSelected = true;
+                    break;
+            }
 
             // if the current mouse position is different from the previous one, update
             // the selected menu item with the one closest to the mouse
@@ -133,7 +168,6 @@ namespace CrisisAtSwissStation
                     selected = potential_new_selected;
             }
 
-            base.Update();
             if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
                 returnSelected = true;
             prevms = ms;

@@ -460,7 +460,6 @@ namespace CrisisAtSwissStation
 
                         case MenuCommand.New:
                            // menuAnimate = true;
-                            //animateMyMenu();
                             if (NewWorld())
                             {
                                 countdown = COUNTDOWN;
@@ -575,16 +574,24 @@ namespace CrisisAtSwissStation
             if (File.Exists(newfilename))
             {
                 LoadWorld(newfilename);
-                savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum] = true; savedgame.SaveGame();
                 progstate = ProgramState.Playing;
             }
             else
-            { // TODO : Change things here so iff you beat all the levels you unlock the next Floor
-                if (savedgame.GetCurrentFloor() == lastFloorPlayed)
-                    EnableNextFloor();
+            {
+                EnableNextFloor(); // only actually does it if you've beaten all of the rooms on the floor right before the next one
                 LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
+            }
+
+            // either way, say we beat this room and save the game
+            // WARNING - this assumes there are FIVE rooms per floor, and that they're named like floorname1.world, floorname2.world...etc. - starting with 1
+            try
+            {
+                savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum - 1] = true; savedgame.SaveGame();
+            }
+            catch (IndexOutOfRangeException e)
+            {
             }
 
             countdown = COUNTDOWN;
@@ -600,9 +607,24 @@ namespace CrisisAtSwissStation
                     low_water_mark = floor;
                 }
             }
+
             //savedgame.currentRoom = 0;
-            savedgame.disabledOptions.Remove(low_water_mark);
-            savedgame.SaveGame();
+            
+            // DEBUG
+            /*
+            Console.WriteLine("SAVE STUFF:");
+            Console.WriteLine(low_water_mark);
+            Console.WriteLine(savedgame.GetCurrentFloor());
+            Console.WriteLine(lastFloorPlayed);
+            Console.WriteLine(savedgame.AreAllLevelsOnCurrentFloorBeaten());
+            */
+
+            if (savedgame.GetCurrentFloor() == lastFloorPlayed && savedgame.AreAllLevelsOnCurrentFloorBeaten())
+            {
+                savedgame.disabledOptions.Remove(low_water_mark);
+                savedgame.SaveGame();
+            }
+
             //floorsScreen.disabledOptions.Remove(low_water_mark);
         }
 
@@ -759,7 +781,7 @@ namespace CrisisAtSwissStation
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Recreation", MenuCommand.LoadExodus));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Engineering", MenuCommand.LoadLeviticus));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Core", MenuCommand.LoadNumbers));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Credits", MenuCommand.LoadDeuteronomy));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Credits", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
             /*if (savedgame.LoadGame()) // if there is a saved game, load it instead of the hardcoded starter version above
@@ -787,54 +809,6 @@ namespace CrisisAtSwissStation
 
         }
 
-
-        private void animateMyMenu()
-        {
-            menuXFrame = 0;
-            menuYFrame = 0;
-            menuSpriteWidth = 500;
-            menuSpriteHeight = 500;
-            menuAnimateInterval = 20;
-            menuMyGameTime = 0;
-            menuAnimateTimer = 0;
-            menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
-            menuOrigin = new Vector2(menuSourceRect.Width / 2, menuSourceRect.Height / 2);
-            spriteBatch.Begin();
-            for (int i = 0; i < 150; i++)
-            {
-                menuMyGameTime++;
-                menuSourceRect = new Rectangle(menuXFrame * menuSpriteWidth, menuYFrame * menuSpriteHeight, menuSpriteWidth, menuSpriteHeight);
-                if (!((menuXFrame == 5) && (menuYFrame == 1)))
-                {
-                    menuAnimateTimer += menuMyGameTime;
-
-                    if (menuAnimateTimer > menuAnimateInterval)
-                    {
-                        menuXFrame++;
-
-                        if (menuXFrame > 5 && menuYFrame == 0)
-                        {
-                            menuXFrame = 0;
-                            menuYFrame = 1;
-                        }
-                        else if (menuXFrame > 5 && menuYFrame == 1)
-                        {
-                            menuXFrame = 5;
-                            menuYFrame = 1;
-                        }
-                        myGameTime = 0;
-                        animateTimer = 0;
-                    }
-                }
-
-                spriteBatch.Draw(menuPanelAnimation,
-                        new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), menuSourceRect, Color.White);
-
-
-            }
-            spriteBatch.End();
-
-        }
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -881,11 +855,14 @@ namespace CrisisAtSwissStation
                     }
                     else // current menu is one of the main menus
                     {
-                        spriteBatch.Begin();
-                        spriteBatch.Draw(menuBack,
-                            new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
-                        //currentMenu.Draw(spriteBatch);
-                        spriteBatch.End();
+                        if (currentMenu.currentScreen != floorsScreen) // HACK - special case for the floors menu
+                        {
+                            spriteBatch.Begin();
+                            spriteBatch.Draw(menuBack,
+                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                            //currentMenu.Draw(spriteBatch);
+                            spriteBatch.End();
+                        }
                     }
 
                     DrawSuccessOrFail();

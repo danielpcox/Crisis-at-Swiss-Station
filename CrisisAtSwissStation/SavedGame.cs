@@ -49,5 +49,23 @@ namespace CrisisAtSwissStation
             }
             return low_water_mark - 1;
         }
+
+        public bool AreAllLevelsOnCurrentFloorBeaten()
+        {
+            Console.WriteLine(roomsBeatenBitmap[0,0]);
+            Console.WriteLine(roomsBeatenBitmap[0,1]);
+            Console.WriteLine(roomsBeatenBitmap[0,2]);
+            Console.WriteLine(roomsBeatenBitmap[0,3]);
+            Console.WriteLine(roomsBeatenBitmap[0,4]);
+            bool allbeaten = true;
+            for (int i=0;i<5;i++)
+            {
+                if (!roomsBeatenBitmap[GetCurrentFloor(), i])
+                {
+                    allbeaten = false;
+                }
+            }
+            return allbeaten;
+        }
     }
 }

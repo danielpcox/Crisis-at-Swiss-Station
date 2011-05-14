@@ -1470,8 +1470,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Menus\menu\1menu_background.png">
-      <Name>1menu_background</Name>
+    <Compile Include="Art\Menus\menu\menu_background.png">
+      <Name>menu_background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1540,6 +1540,13 @@
       <Name>tutorial_half</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Music\Ballroom.mp3">
+      <Name>Ballroom</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
