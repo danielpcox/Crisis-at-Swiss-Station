@@ -98,12 +98,13 @@ namespace CrisisAtSwissStation
             {
                 if (obj is BackgroundObject)
                     obj.Draw(cameraTransform);
+                if (obj is WinDoorObject) obj.Draw(cameraTransform);
                 if (obj is PaintedObject)
                     obj.Draw(cameraTransform);
             }
             foreach (PhysicsObject obj in objects)
             {
-                if (!(obj is BackgroundObject) && !(obj is PaintedObject))
+                if (!(obj is BackgroundObject) && !(obj is PaintedObject) && !(obj is WinDoorObject))
                     obj.Draw(cameraTransform);
             }
         }
