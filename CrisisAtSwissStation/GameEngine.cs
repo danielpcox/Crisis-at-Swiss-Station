@@ -586,7 +586,13 @@ namespace CrisisAtSwissStation
 
             // either way, say we beat this room and save the game
             // WARNING - this assumes there are FIVE rooms per floor, and that they're named like floorname1.world, floorname2.world...etc. - starting with 1
-            savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum-1] = true; savedgame.SaveGame();
+            try
+            {
+                savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum - 1] = true; savedgame.SaveGame();
+            }
+            catch (IndexOutOfRangeException e)
+            {
+            }
 
             countdown = COUNTDOWN;
         }
