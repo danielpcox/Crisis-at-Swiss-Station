@@ -891,8 +891,8 @@ namespace CrisisAtSwissStation
                     DrawSuccessOrFail();
 
                     spriteBatch.Begin();
-                    //spriteBatch.Draw(menuPanel,
-                                //new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                    spriteBatch.Draw(menuPanel,
+                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
                     currentMenu.Draw(spriteBatch);
                     spriteBatch.End();
                 
