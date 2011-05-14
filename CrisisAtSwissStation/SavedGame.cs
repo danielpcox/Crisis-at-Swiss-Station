@@ -62,5 +62,18 @@ namespace CrisisAtSwissStation
             }
             return allbeaten;
         }
+
+        public int NumberOfRoomsBeatenOnFloor(int floor)
+        {
+            int numbeaten = 0;
+            for (int i=0;i<5;i++)
+            {
+                if (roomsBeatenBitmap[floor, i])
+                {
+                    numbeaten++;
+                }
+            }
+            return numbeaten;
+        }
     }
 }

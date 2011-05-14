@@ -384,7 +384,7 @@ namespace CrisisAtSwissStation
                 case ProgramState.Menu:
                     currentMenu.Update();
                     MenuCommand command = currentMenu.ReturnAndResetCommand(forcedCommand);
-                    lastFloorPlayed = Constants.floors.IndexOf(command);
+                    //lastFloorPlayed = Constants.floors.IndexOf(command);
 
                     switch (command)
                     {
@@ -409,6 +409,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadGenesis:
                             if (LoadRelWorld("introduction1"))
                             {
+                                lastFloorPlayed = 0;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -418,6 +419,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadExodus:
                             if (LoadRelWorld("recreation1"))
                             {
+                                lastFloorPlayed = 1;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -427,6 +429,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadLeviticus:
                             if (LoadRelWorld("engineering1"))
                             {
+                                lastFloorPlayed = 2;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -436,6 +439,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadNumbers:
                             if (LoadRelWorld("core1"))
                             {
+                                lastFloorPlayed = 3;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -445,6 +449,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadDeuteronomy:
                             if (LoadRelWorld("credits1"))
                             {
+                                lastFloorPlayed = 3;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -454,6 +459,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadIntroduction:
                             if (LoadRelWorld("introduction" + (currentMenu.currentScreen.selected + 1) ))
                             {
+                                lastFloorPlayed = 0;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -462,6 +468,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadRecreation:
                             if (LoadRelWorld("recreation" + (currentMenu.currentScreen.selected + 1) ))
                             {
+                                lastFloorPlayed = 1;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -470,6 +477,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadEngineering:
                             if (LoadRelWorld("engineering" + (currentMenu.currentScreen.selected + 1) ))
                             {
+                                lastFloorPlayed = 2;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
@@ -478,6 +486,7 @@ namespace CrisisAtSwissStation
                         case MenuCommand.LoadCore:
                             if (LoadRelWorld("core" + (currentMenu.currentScreen.selected + 1) ))
                             {
+                                lastFloorPlayed = 3;
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
                                 progstate = ProgramState.Playing;
