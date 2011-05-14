@@ -402,7 +402,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadGenesis:
-                            if (LoadRelWorld("introduction"))
+                            if (LoadRelWorld("introduction1"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -411,7 +411,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadExodus:
-                            if (LoadRelWorld("ballroom"))
+                            if (LoadRelWorld("recreation1"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -420,7 +420,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadLeviticus:
-                            if (LoadRelWorld("basement"))
+                            if (LoadRelWorld("engineering1"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -429,7 +429,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadNumbers:
-                            if (LoadRelWorld("credits"))
+                            if (LoadRelWorld("core1"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -438,7 +438,7 @@ namespace CrisisAtSwissStation
                             break;
 
                         case MenuCommand.LoadDeuteronomy:
-                            if (LoadRelWorld("deuteronomy"))
+                            if (LoadRelWorld("credits1"))
                             {
                                 countdown = COUNTDOWN;
                                 forcedCommand = MenuCommand.NONE;
@@ -575,11 +575,11 @@ namespace CrisisAtSwissStation
             if (File.Exists(newfilename))
             {
                 LoadWorld(newfilename);
-                savedgame.currentRoom++; savedgame.SaveGame();
+                savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum] = true; savedgame.SaveGame();
                 progstate = ProgramState.Playing;
             }
             else
-            {
+            { // TODO : Change things here so iff you beat all the levels you unlock the next Floor
                 if (savedgame.GetCurrentFloor() == lastFloorPlayed)
                     EnableNextFloor();
                 LinkToFloors();
@@ -600,7 +600,7 @@ namespace CrisisAtSwissStation
                     low_water_mark = floor;
                 }
             }
-            savedgame.currentRoom = 0;
+            //savedgame.currentRoom = 0;
             savedgame.disabledOptions.Remove(low_water_mark);
             savedgame.SaveGame();
             //floorsScreen.disabledOptions.Remove(low_water_mark);
@@ -759,7 +759,7 @@ namespace CrisisAtSwissStation
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Recreation", MenuCommand.LoadExodus));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Engineering", MenuCommand.LoadLeviticus));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Core", MenuCommand.LoadNumbers));
-            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Deuteronomy", MenuCommand.LoadDeuteronomy));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Setting, "Credits", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
             /*if (savedgame.LoadGame()) // if there is a saved game, load it instead of the hardcoded starter version above
@@ -891,8 +891,8 @@ namespace CrisisAtSwissStation
                     DrawSuccessOrFail();
 
                     spriteBatch.Begin();
-                    spriteBatch.Draw(menuPanel,
-                                new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
+                    //spriteBatch.Draw(menuPanel,
+                                //new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
                     currentMenu.Draw(spriteBatch);
                     spriteBatch.End();
                 
