@@ -1550,6 +1550,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Art\Menus\screenshots\core\core1.png">
+      <Name>core1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\screenshots\core\core2.png">
+      <Name>core2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\screenshots\core\core3.png">
+      <Name>core3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\screenshots\core\core4.png">
+      <Name>core4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\screenshots\core\core5.png">
+      <Name>core5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Music\Deep Core.mp3">
       <Name>Deep Core</Name>
       <Importer>Mp3Importer</Importer>
