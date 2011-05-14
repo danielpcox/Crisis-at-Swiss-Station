@@ -630,6 +630,7 @@ namespace CrisisAtSwissStation
             {
             }
 
+            EnableNextFloor(); // only actually does it if you've beaten all of the rooms on the floor right before the next one
             if (File.Exists(newfilename))
             {
                 LoadWorld(newfilename);
@@ -637,7 +638,7 @@ namespace CrisisAtSwissStation
             }
             else
             {
-                EnableNextFloor(); // only actually does it if you've beaten all of the rooms on the floor right before the next one
+                //EnableNextFloor(); // only actually does it if you've beaten all of the rooms on the floor right before the next one
                 LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
