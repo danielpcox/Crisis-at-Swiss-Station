@@ -149,6 +149,8 @@ namespace CrisisAtSwissStation
                     break;
             }
 
+            selected = selected % Options.Count;
+
             // if the current mouse position is different from the previous one, update
             // the selected menu item with the one closest to the mouse
             if (ms.X != prevms.X || ms.Y != prevms.Y)
