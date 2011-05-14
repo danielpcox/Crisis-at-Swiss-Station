@@ -38,6 +38,7 @@ namespace CrisisAtSwissStation{
     {
         NONE,
         New,
+        LoadCompleted,
         Continue,
         Resume,
         Load,

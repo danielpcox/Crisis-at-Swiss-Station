@@ -285,6 +285,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="COMPLETEDSAVEDGAME.sav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="CrisisAtSwissStation_TemporaryKey.pfx" />
     <Content Include="Levels\core1.world">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -348,6 +351,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PublishFile Include="COMPLETEDSAVEDGAME.sav">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
     <PublishFile Include="Levels\alpha.world">
       <Visible>False</Visible>
       <Group>

@@ -522,6 +522,12 @@ namespace CrisisAtSwissStation
                                 progstate = ProgramState.Playing;
                             }
                             break;
+
+                        case MenuCommand.LoadCompleted:
+                           // menuAnimate = true;
+                            LoadCompleted();
+                            break;
+
                         case MenuCommand.Continue:
                             countdown = COUNTDOWN;
                             forcedCommand = Constants.floors[savedgame.GetCurrentFloor(floorsScreen.Options.Count)];
@@ -546,6 +552,10 @@ namespace CrisisAtSwissStation
                     {
                         //LoadNextWorld();
                         currentWorld.Succeeded = true;
+                    }
+                    else if (ks.IsKeyDown(Keys.RightControl) && ks.IsKeyDown(Keys.P) && ks.IsKeyDown(Keys.O))
+                    {
+                        LoadCompleted();
                     }
 
                     //world.Update();
@@ -608,6 +618,13 @@ namespace CrisisAtSwissStation
 
             base.Update(gameTime);
             prevKeyState = keyState;
+        }
+
+        public void LoadCompleted()
+        {
+            savedgame.LoadCompletedGame();
+            currentMenu.currentScreen = floorsScreen;
+            progstate = ProgramState.Menu;
         }
 
         private void LoadNextWorld()
@@ -730,9 +747,10 @@ namespace CrisisAtSwissStation
             if (File.Exists(GetCurrDir() + Constants.SAVED_GAME_FILENAME))
             {
                 File.Delete(GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME);
-                savedgame = new SavedGame();
-                savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
             }
+            // either way, start a new saved game
+            savedgame = new SavedGame();
+            savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
 
             //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
             cwname = GetCurrDir() + "\\Levels\\" + Constants.NEW_GAME_NAME;
@@ -849,7 +867,8 @@ namespace CrisisAtSwissStation
             engineeringRoomsScreen = new RoomSelectionMenu();
             coreRoomsScreen = new RoomSelectionMenu();
 
-            mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
+            mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Reset Game", MenuCommand.New));
+            //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Unlock All", MenuCommand.LoadCompleted));
             //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Sector Select", floorsScreen));
             //mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));

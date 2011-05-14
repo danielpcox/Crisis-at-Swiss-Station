@@ -14,6 +14,8 @@ namespace CrisisAtSwissStation.Common
 
         public const string SAVED_GAME_FILENAME = "SAVEDGAME.sav";
 
+        public const string COMPLETED_SAVED_GAME_FILENAME = "COMPLETEDSAVEDGAME.sav";
+
         public static List<MenuCommand> floors = new List<MenuCommand> { MenuCommand.LoadGenesis, MenuCommand.LoadExodus, MenuCommand.LoadLeviticus, MenuCommand.LoadNumbers};
 
         public static List<MenuScreen> floorScreens = new List<MenuScreen> { GameEngine.introductionRoomsScreen, GameEngine.recreationRoomsScreen, GameEngine.engineeringRoomsScreen, GameEngine.coreRoomsScreen };

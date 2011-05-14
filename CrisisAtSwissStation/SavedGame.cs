@@ -23,12 +23,27 @@ namespace CrisisAtSwissStation
             //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
             Serializer.Serialize(this, GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME);
         }
+
         public bool LoadGame()
         {
             //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
             if (File.Exists(GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME))
             {
                 SavedGame tmp = Serializer.DeSerialize(GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME, true);
+                disabledOptions = tmp.disabledOptions;
+                //currentRoom = tmp.currentRoom;
+                roomsBeatenBitmap = tmp.roomsBeatenBitmap;
+                return true;
+            }
+            return false;
+        }
+
+        public bool LoadCompletedGame()
+        {
+            //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
+            if (File.Exists(GameEngine.GetCurrDir() + "\\" + Constants.COMPLETED_SAVED_GAME_FILENAME))
+            {
+                SavedGame tmp = Serializer.DeSerialize(GameEngine.GetCurrDir() + "\\" + Constants.COMPLETED_SAVED_GAME_FILENAME, true);
                 disabledOptions = tmp.disabledOptions;
                 //currentRoom = tmp.currentRoom;
                 roomsBeatenBitmap = tmp.roomsBeatenBitmap;
