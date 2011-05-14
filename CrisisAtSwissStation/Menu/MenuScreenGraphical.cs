@@ -85,7 +85,7 @@ namespace CrisisAtSwissStation
 
             Vector2 rollingPos = new Vector2(initialX, initialY);
 
-            int currentFloor = GameEngine.savedgame.GetCurrentFloor(Options.Count);
+            int currentFloor = GameEngine.savedgame.GetCurrentFloor(Options.Count - 2);
             currentFloor = currentFloor % (Options.Count - 1);
 
             //DEBUG
@@ -168,7 +168,7 @@ namespace CrisisAtSwissStation
                     selected = potential_new_selected;
             }
 
-            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
+            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
                 returnSelected = true;
             prevms = ms;
         }
