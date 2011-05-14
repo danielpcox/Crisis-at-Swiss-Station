@@ -726,6 +726,14 @@ namespace CrisisAtSwissStation
 
         public bool NewWorld()
         {
+            // new game deletes the autosave
+            if (File.Exists(GetCurrDir() + Constants.SAVED_GAME_FILENAME))
+            {
+                File.Delete(GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME);
+                savedgame = new SavedGame();
+                savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
+            }
+
             //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
             cwname = GetCurrDir() + "\\Levels\\" + Constants.NEW_GAME_NAME;
             ScrollingWorld world = new ScrollingWorld(cwname, true);
