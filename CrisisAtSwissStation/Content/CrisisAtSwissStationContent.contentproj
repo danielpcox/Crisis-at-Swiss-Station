@@ -1577,6 +1577,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Music\Deep Core.mp3">
+      <Name>Deep Core</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Art\Menus\screenshots\engineering\engineering1.png">
       <Name>engineering1</Name>
       <Importer>TextureImporter</Importer>

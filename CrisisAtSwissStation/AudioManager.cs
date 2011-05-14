@@ -53,7 +53,8 @@ namespace CrisisAtSwissStation
             Menu,
             MidBasement,
             MidCore,
-            Ballroom
+            Ballroom,
+            Final
            
         }
 
@@ -85,6 +86,7 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.MidCore, content.Load<Song>("Music/Middle Core"));
             songs.Add(MusicSelection.MidBasement, content.Load<Song>("Music/Upper Basement"));
             songs.Add(MusicSelection.Ballroom, content.Load<Song>("Music/Ballroom"));
+            songs.Add(MusicSelection.Final, content.Load<Song>("Music/Deep Core"));
 
             // MAPS BACKGROUND FILENAMES TO MUSIC FILES
             songsdict.Add("background", content.Load<Song>("Music/Basement"));
