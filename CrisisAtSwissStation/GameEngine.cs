@@ -585,7 +585,8 @@ namespace CrisisAtSwissStation
             }
 
             // either way, say we beat this room and save the game
-            savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum] = true; savedgame.SaveGame();
+            // WARNING - this assumes there are FIVE rooms per floor, and that they're named like floorname1.world, floorname2.world...etc. - starting with 1
+            savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum-1] = true; savedgame.SaveGame();
 
             countdown = COUNTDOWN;
         }
@@ -602,6 +603,15 @@ namespace CrisisAtSwissStation
             }
 
             //savedgame.currentRoom = 0;
+            
+            // DEBUG
+            /*
+            Console.WriteLine("SAVE STUFF:");
+            Console.WriteLine(low_water_mark);
+            Console.WriteLine(savedgame.GetCurrentFloor());
+            Console.WriteLine(lastFloorPlayed);
+            Console.WriteLine(savedgame.AreAllLevelsOnCurrentFloorBeaten());
+            */
 
             if (savedgame.GetCurrentFloor() == lastFloorPlayed && savedgame.AreAllLevelsOnCurrentFloorBeaten())
             {
