@@ -52,11 +52,6 @@ namespace CrisisAtSwissStation
 
         public bool AreAllLevelsOnCurrentFloorBeaten()
         {
-            Console.WriteLine(roomsBeatenBitmap[0,0]);
-            Console.WriteLine(roomsBeatenBitmap[0,1]);
-            Console.WriteLine(roomsBeatenBitmap[0,2]);
-            Console.WriteLine(roomsBeatenBitmap[0,3]);
-            Console.WriteLine(roomsBeatenBitmap[0,4]);
             bool allbeaten = true;
             for (int i=0;i<5;i++)
             {
