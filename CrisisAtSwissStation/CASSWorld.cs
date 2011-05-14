@@ -98,6 +98,7 @@ namespace CrisisAtSwissStation
             {
                 if (obj is BackgroundObject)
                     obj.Draw(cameraTransform);
+                if (obj is WinDoorObject) obj.Draw(cameraTransform);
                 if (obj is PaintedObject)
                     obj.Draw(cameraTransform);
             }
