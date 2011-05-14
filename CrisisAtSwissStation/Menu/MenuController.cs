@@ -28,8 +28,9 @@ namespace CrisisAtSwissStation
 
     public class MenuController
     {
-        // Instantiates keyboard states
+        // Instantiates keyboard and mouse states
         public KeyboardState keyState, prevState = Keyboard.GetState();
+        //public MouseState ms, prevms = Mouse.GetState();
 
         private MenuInput controlCode;
         public MenuInput ControlCode
@@ -40,16 +41,18 @@ namespace CrisisAtSwissStation
         public void UpdateInput()
         {
             keyState = Keyboard.GetState();
+            //ms = Mouse.GetState();
 
             controlCode = MenuInput.NONE;
 
-            if (keyState.IsKeyDown(Keys.Down) && !prevState.IsKeyDown(Keys.Down))
+            if ( (keyState.IsKeyDown(Keys.S) || keyState.IsKeyDown(Keys.Down)) && !(prevState.IsKeyDown(Keys.Down) || prevState.IsKeyDown(Keys.S)) )
                 controlCode = MenuInput.DOWN;
-            else if (keyState.IsKeyDown(Keys.Up) && !prevState.IsKeyDown(Keys.Up))
+            else if ( (keyState.IsKeyDown(Keys.Up) || keyState.IsKeyDown(Keys.W)) && !(prevState.IsKeyDown(Keys.Up) || prevState.IsKeyDown(Keys.W)) )
                 controlCode = MenuInput.UP;
+            //else if ( (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed) ||  keyState.IsKeyDown(Keys.Enter) && !prevState.IsKeyDown(Keys.Enter))
             else if (keyState.IsKeyDown(Keys.Enter) && !prevState.IsKeyDown(Keys.Enter))
                 controlCode = MenuInput.SELECT;
-
+            //prevms = ms;
             prevState = keyState;
         }
     }
