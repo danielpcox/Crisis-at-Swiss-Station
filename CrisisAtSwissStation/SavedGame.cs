@@ -11,7 +11,13 @@ namespace CrisisAtSwissStation
     public class SavedGame
     {
         public List<int> disabledOptions = new List<int>();
-        public int currentRoom = 0;
+        //public int currentRoom = 0;
+        public bool[,] roomsBeatenBitmap = new bool[4,5]{
+        {false, false, false, false, false},
+        {false, false, false, false, false},
+        {false, false, false, false, false},
+        {false, false, false, false, false}
+        };
         public void SaveGame()
         {
             //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
@@ -24,7 +30,8 @@ namespace CrisisAtSwissStation
             {
                 SavedGame tmp = Serializer.DeSerialize(GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME, true);
                 disabledOptions = tmp.disabledOptions;
-                currentRoom = tmp.currentRoom;
+                //currentRoom = tmp.currentRoom;
+                roomsBeatenBitmap = tmp.roomsBeatenBitmap;
                 return true;
             }
             return false;

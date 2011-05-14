@@ -23,10 +23,12 @@ namespace CrisisAtSwissStation
 
         List<Vector2> optionPositions = new List<Vector2>()
         {
-            new Vector2(0, 0),
-            new Vector2(1024, 0),
-            new Vector2(0, 768 ),
-            new Vector2(1024, 768)
+            new Vector2(575, 243), // introduction
+            new Vector2(206, 332),
+            new Vector2(917, 416),
+            new Vector2(478, 442),
+            new Vector2(895, 55),
+            new Vector2(174, 692)
         };
 
         MouseState ms, prevms;
@@ -34,34 +36,44 @@ namespace CrisisAtSwissStation
         public MenuScreenGraphical()
             : base(0, 0, 80, true)
         {
-            // only unlocked introduction, so can only see the introduction and intro selected
+            // only unlocked introduction, so can only see the introduction or intro or credits or back selected
             menuState[0] = new List<string>() { 
-                "Art\\Menus\\menu\\menu_introduction",
-                "Art\\Menus\\menu\\menu_introduction_introselect"
+                "Art\\Menus\\menu\\menu_introduction_introselect",
+                "",
+                "",
+                "",
+                "Art\\Menus\\menu\\menu_introduction_creditselect",
+                "Art\\Menus\\menu\\menu_introduction_backselect"
             };
 
-            // unlocked recreation, so can select introduction or recreation or nothing
+            // unlocked recreation, so can select introduction or recreation or credits or back
             menuState[1] = new List<string>() { 
-                "Art\\Menus\\menu\\menu_recreation",
                 "Art\\Menus\\menu\\menu_recreation_introselect",
-                "Art\\Menus\\menu\\menu_recreation_recselect"
+                "Art\\Menus\\menu\\menu_recreation_recselect",
+                "",
+                "",
+                "Art\\Menus\\menu\\menu_recreation_creditselect",
+                "Art\\Menus\\menu\\menu_recreation_backselect"
             };
 
-            // unlocked engineering, so can select introduction or recreation or engineering or nothing
+            // unlocked engineering, so can select introduction or recreation or engineering or credits or back
             menuState[2] = new List<string>() { 
-                "Art\\Menus\\menu\\menu_engineering",
                 "Art\\Menus\\menu\\menu_engineering_introselect",
                 "Art\\Menus\\menu\\menu_engineering_recselect",
-                "Art\\Menus\\menu\\menu_engineering_engselect"
+                "Art\\Menus\\menu\\menu_engineering_engselect",
+                "",
+                "Art\\Menus\\menu\\menu_engineering_creditselect",
+                "Art\\Menus\\menu\\menu_engineering_backselect"
             };
 
-            // unlocked core, so can select introduction or recreation or engineering or core or nothing
+            // unlocked core, so can select introduction or recreation or engineering or core or credits or back
             menuState[3] = new List<string>() { 
-                "Art\\Menus\\menu\\menu_core",
                 "Art\\Menus\\menu\\menu_core_introselect",
                 "Art\\Menus\\menu\\menu_core_recselect",
                 "Art\\Menus\\menu\\menu_core_engselect",
-                "Art\\Menus\\menu\\menu_core_coreselect"
+                "Art\\Menus\\menu\\menu_core_coreselect",
+                "Art\\Menus\\menu\\menu_core_creditselect",
+                "Art\\Menus\\menu\\menu_core_backselect"
             };
         }
 
@@ -73,11 +85,11 @@ namespace CrisisAtSwissStation
             currentFloor = currentFloor % (Options.Count - 1);
 
             //DEBUG
-            //Console.WriteLine("GOT HERE");
-            //Console.WriteLine(currentFloor);
-            //Console.WriteLine(selected);
+            Console.WriteLine("GOT HERE");
+            Console.WriteLine(currentFloor);
+            Console.WriteLine(selected);
 
-            spriteBatch.Draw(GameEngine.TextureList[menuState[currentFloor][selected+1]],
+            spriteBatch.Draw(GameEngine.TextureList[menuState[currentFloor][selected]],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
 
             for (int i = 0; i < options.Count; i++)

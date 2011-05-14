@@ -57,6 +57,56 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Art\Menus\menu\menu_core_coreselect.png">
+      <Name>menu_core_coreselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_engselect.png">
+      <Name>menu_core_engselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_introselect.png">
+      <Name>menu_core_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_core_recselect.png">
+      <Name>menu_core_recselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering_engselect.png">
+      <Name>menu_engineering_engselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering_introselect.png">
+      <Name>menu_engineering_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_engineering_recselect.png">
+      <Name>menu_engineering_recselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_introduction_introselect.png">
+      <Name>menu_introduction_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_recreation_introselect.png">
+      <Name>menu_recreation_introselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Art\Menus\menu\menu_recreation_recselect.png">
+      <Name>menu_recreation_recselect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="WinDoor.png">
       <Name>WinDoor</Name>
       <Importer>TextureImporter</Importer>
@@ -1420,73 +1470,53 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Art\Menus\menu\menu_core.png">
-      <Name>menu_core</Name>
+    <Compile Include="Art\Menus\menu\1menu_background.png">
+      <Name>1menu_background</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_core_coreselect.png">
-      <Name>menu_core_coreselect</Name>
+    <Compile Include="Art\Menus\menu\menu.png">
+      <Name>menu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_core_engselect.png">
-      <Name>menu_core_engselect</Name>
+    <Compile Include="Art\Menus\menu\menu_core_backselect.png">
+      <Name>menu_core_backselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_core_introselect.png">
-      <Name>menu_core_introselect</Name>
+    <Compile Include="Art\Menus\menu\menu_core_creditselect.png">
+      <Name>menu_core_creditselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_core_recselect.png">
-      <Name>menu_core_recselect</Name>
+    <Compile Include="Art\Menus\menu\menu_engineering_backselect.png">
+      <Name>menu_engineering_backselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_engineering.png">
-      <Name>menu_engineering</Name>
+    <Compile Include="Art\Menus\menu\menu_engineering_creditselect.png">
+      <Name>menu_engineering_creditselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_engineering_engselect.png">
-      <Name>menu_engineering_engselect</Name>
+    <Compile Include="Art\Menus\menu\menu_introduction_backselect.png">
+      <Name>menu_introduction_backselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_engineering_introselect.png">
-      <Name>menu_engineering_introselect</Name>
+    <Compile Include="Art\Menus\menu\menu_introduction_creditselect.png">
+      <Name>menu_introduction_creditselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_engineering_recselect.png">
-      <Name>menu_engineering_recselect</Name>
+    <Compile Include="Art\Menus\menu\menu_recreation_backselect.png">
+      <Name>menu_recreation_backselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Art\Menus\menu\menu_introduction.png">
-      <Name>menu_introduction</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\Menus\menu\menu_introduction_introselect.png">
-      <Name>menu_introduction_introselect</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\Menus\menu\menu_recreation.png">
-      <Name>menu_recreation</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\Menus\menu\menu_recreation_introselect.png">
-      <Name>menu_recreation_introselect</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Art\Menus\menu\menu_recreation_recselect.png">
-      <Name>menu_recreation_recselect</Name>
+    <Compile Include="Art\Menus\menu\menu_recreation_creditselect.png">
+      <Name>menu_recreation_creditselect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
