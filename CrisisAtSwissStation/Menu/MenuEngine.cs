@@ -70,7 +70,11 @@ namespace CrisisAtSwissStation
 
         public void Update()
         {
-            currentScreen.Update();
+            //currentScreen.Update();
+            if (currentScreen is MenuScreenGraphical)
+                ((MenuScreenGraphical)currentScreen).Update();
+            else
+                currentScreen.Update();
 
             MenuOption selected = currentScreen.ReturnCommand(); // command returned by user
 
@@ -80,6 +84,7 @@ namespace CrisisAtSwissStation
                 {
                     case MenuOptionType.Link:
                         KeyboardState prevks = currentScreen.controller.keyState;
+                        //MouseState prevms = currentScreen.controller.ms;
                         currentScreen = selected.Link;
                         // pass along the previous keystate the first time so we don't duplicate selection
                         currentScreen.controller.prevState = prevks;
@@ -95,7 +100,10 @@ namespace CrisisAtSwissStation
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            currentScreen.Draw(spriteBatch);
+            if (currentScreen is MenuScreenGraphical)
+                ((MenuScreenGraphical)currentScreen).Draw(spriteBatch);
+            else
+                currentScreen.Draw(spriteBatch);
         }
 
         /// <summary>

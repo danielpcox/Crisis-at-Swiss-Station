@@ -11,7 +11,13 @@ namespace CrisisAtSwissStation
     public class SavedGame
     {
         public List<int> disabledOptions = new List<int>();
-        public int currentRoom = 0;
+        //public int currentRoom = 0;
+        public bool[,] roomsBeatenBitmap = new bool[4,5]{
+        {false, false, false, false, false},
+        {false, false, false, false, false},
+        {false, false, false, false, false},
+        {false, false, false, false, false}
+        };
         public void SaveGame()
         {
             //string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "Content").Replace("bin\\x86\\Release", "Content").Replace("\\Worlds", "");
@@ -24,15 +30,16 @@ namespace CrisisAtSwissStation
             {
                 SavedGame tmp = Serializer.DeSerialize(GameEngine.GetCurrDir() + "\\" + Constants.SAVED_GAME_FILENAME, true);
                 disabledOptions = tmp.disabledOptions;
-                currentRoom = tmp.currentRoom;
+                //currentRoom = tmp.currentRoom;
+                roomsBeatenBitmap = tmp.roomsBeatenBitmap;
                 return true;
             }
             return false;
         }
 
-        public int GetCurrentFloor()
+        public int GetCurrentFloor(int numoptions = 200)
         {
-            int low_water_mark = 200; // starts as "infinity"
+            int low_water_mark = numoptions; // starts as the maximum number of options, or "infinity" (200 is pretty close)
             foreach (int floor in disabledOptions)
             {
                 if (floor < low_water_mark)

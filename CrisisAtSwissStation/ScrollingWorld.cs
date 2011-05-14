@@ -305,7 +305,6 @@ namespace CrisisAtSwissStation
         public ScrollingWorld(string backgroundname = "background")
             : base(WIDTH, HEIGHT, new Vector2(0, GRAVITY))
         {
-
             backgroundName = "Art\\Backgrounds\\" + backgroundname;
             musicName = backgroundname;
             background = GameEngine.TextureList[backgroundName];
