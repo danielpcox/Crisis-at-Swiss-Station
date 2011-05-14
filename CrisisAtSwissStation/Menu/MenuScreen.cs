@@ -21,6 +21,8 @@ namespace CrisisAtSwissStation
         public static readonly Color Unselected = new Color(182,0,0);
         public static readonly Color Disabled = new Color(25, 25, 25);
 
+        public MouseState ms, prevms;
+
         protected bool sgconnect = false;
 
         protected float initialX;
@@ -94,10 +96,16 @@ namespace CrisisAtSwissStation
 
                 rollingPos.Y += distY;
             }
+
+            // draw cursor
+            Texture2D crosshair = GameEngine.TextureList["Crosshair"];
+            spriteBatch.Draw(crosshair, new Vector2(ms.X - (crosshair.Width/2), ms.Y - (crosshair.Height/2)), Color.White);
         }
 
         public void Update()
         {
+            ms = Mouse.GetState();
+
             controller.UpdateInput();
             returnSelected = false;
 
@@ -127,8 +135,34 @@ namespace CrisisAtSwissStation
                     break;
             }
 
+            // code to click menu items
+            if (ms.X != prevms.X || ms.Y != prevms.Y)
+            {
+                Vector2 rollingPos = new Vector2(initialX, initialY);
+                int low_water_mark = 0;
+                float distance_lwm = 1280;
+                for (int i = 0; i < options.Count; i++)
+                {
+                    float distance = Vector2.Distance(rollingPos + new Vector2(0, 20), new Vector2(ms.X, ms.Y));
+                    //Console.WriteLine(distance); // DEBUG
+                    if (distance < distance_lwm)
+                    {
+                        low_water_mark = i;
+                        distance_lwm = distance;
+                    }
+                    rollingPos.Y += distY;
+                }
+                selected = low_water_mark;
+            }
+
             //selected = (selected + options.Count) % options.Count;
             selected = (selected) % options.Count;
+
+            // actually click the button
+            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
+                returnSelected = true;
+
+            prevms = ms;
         }
 
         /// <summary>
