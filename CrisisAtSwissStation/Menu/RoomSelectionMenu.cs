@@ -19,18 +19,27 @@ namespace CrisisAtSwissStation
     {
         List<string>[] screenshots = new List<string>[4];
 
+        Vector2 headerPosition = new Vector2(238, 80);
+        List<string> headers = new List<string>()
+        {
+            "Training Bay",
+            "Recreation Bay",
+            "Engineering Bay",
+            "The Core",
+        };
+
         List<Vector2> optionPositions = new List<Vector2>()
         {
-            new Vector2(238, 83),
-            new Vector2(579, 83),
-            new Vector2(238, 310),
-            new Vector2(579, 310),
-            new Vector2(238, 541),
-            new Vector2(579, 541)
+            new Vector2(238, 183),
+            new Vector2(579, 183),
+            new Vector2(238, 370),
+            new Vector2(579, 370),
+            new Vector2(238, 561),
+            new Vector2(579, 561)
         };
 
         public RoomSelectionMenu()
-            : base(0, 0, 80, true)
+            : base(0, 0, 80, false)
         {
             screenshots[0] = new List<string>()
             {
@@ -74,8 +83,11 @@ namespace CrisisAtSwissStation
         {
             //base.Draw(spriteBatch);
 
+            Color selectedColor = Color.LightSeaGreen;
+            Color unselectedColor = Color.White;
+
             // draw special background
-            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\zzblack"],
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\zzwhite"],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
 
             Vector2 rollingPos = new Vector2(initialX, initialY);
@@ -84,16 +96,20 @@ namespace CrisisAtSwissStation
             {
 
                 spriteBatch.Draw(GameEngine.TextureList[screenshots[GameEngine.floorsScreen.selected][i]],
-                    optionPositions[i], selected==i ? Color.White : Color.Gray);
-                /*
-                spriteBatch.DrawString(font,
-                    options[i].Text,
-                    rollingPos,
-                    (sgconnect && GameEngine.savedgame.disabledOptions.Contains(i) ? Disabled : (i == selected ? Selected : Unselected) ));
-                */
-
+                    optionPositions[i], selected==i ? selectedColor : unselectedColor);
                 rollingPos.Y += distY;
             }
+
+
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\back"],
+                optionPositions.Last(), selected == optionPositions.Count-1 ? selectedColor : unselectedColor);
+
+            string actualHeader =  headers[GameEngine.floorsScreen.selected] + " (" + (GameEngine.savedgame.NumberOfRoomsBeatenOnFloor(GameEngine.floorsScreen.selected)) + "/5)";
+
+            spriteBatch.DrawString(font,
+                actualHeader,
+                headerPosition,
+                Color.White);
 
             // draw cursor
             Texture2D crosshair = GameEngine.TextureList["Crosshair"];
@@ -136,6 +152,8 @@ namespace CrisisAtSwissStation
                     break;
             }
 
+            selected = selected % Options.Count;
+
             // if the current mouse position is different from the previous one, update
             // the selected menu item with the one closest to the mouse
             if (ms.X != prevms.X || ms.Y != prevms.Y)
@@ -143,16 +161,14 @@ namespace CrisisAtSwissStation
                 //Console.WriteLine(new Vector2(ms.X, ms.Y));
                 foreach (Vector2 optionPos in optionPositions)
                 {
-                    float distance = Vector2.Distance(optionPos + new Vector2(100, 0), new Vector2(ms.X, ms.Y));
+                    float distance = Vector2.Distance(optionPos + new Vector2(100, 70), new Vector2(ms.X, ms.Y));
                     if (distance < distance_lwm)
                     {
                         low_water_mark = optionPos;
                         distance_lwm = distance;
                     }
                 }
-                int potential_new_selected = optionPositions.IndexOf(low_water_mark);
-                if (!GameEngine.savedgame.disabledOptions.Contains(potential_new_selected))
-                    selected = potential_new_selected;
+                selected = optionPositions.IndexOf(low_water_mark);
             }
 
             if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
