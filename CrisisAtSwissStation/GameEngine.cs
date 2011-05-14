@@ -631,18 +631,26 @@ namespace CrisisAtSwissStation
         {
             int levelnum;
             string[] pieces = cwname.Split('.');
-            bool parsed = int.TryParse(pieces[0].Substring(pieces[0].Length - 1), out levelnum);
-            string origname;
+            pieces = pieces[pieces.Length - 2].Split('\\');
+            bool parsed = int.TryParse(pieces.Last().Substring(pieces.Last().Length - 1), out levelnum);
+            //string origname;
+            string lastpartofname;
             if (parsed)
             {
-                origname = pieces[0].Substring(0, pieces[0].Length - 1);
+                //origname = pieces.Last().Substring(0, pieces.Last().Length - 1);
+                lastpartofname = pieces.Last().Substring(0, pieces.Last().Length - 1);
             }
             else
             {
-                origname = pieces[0];
+                //origname = pieces[0];
+                lastpartofname = pieces.Last();
             }
+            //string[] tempary = origname.Split('\\');
+            //string lastpartofname = tempary[tempary.Length-2];
 
-            string newfilename = origname + (levelnum + 1) + ".world";
+            //string newfilename = origname + (levelnum + 1) + ".world";
+            string newfilename = GameEngine.GetCurrDir() + "\\Levels\\" + lastpartofname + (levelnum + 1) + ".world";
+            //throw new System.ArgumentException(lastpartofname, parsed.ToString()); 
 
             // either way, say we beat this room and save the game
             // WARNING - this assumes there are FIVE rooms per floor, and that they're named like floorname1.world, floorname2.world...etc. - starting with 1
@@ -735,6 +743,7 @@ namespace CrisisAtSwissStation
         public static string GetCurrDir()
         {
             string currdir = (Directory.GetCurrentDirectory()).Replace("bin\\x86\\Debug", "").Replace("bin\\x86\\Release", "").Replace("\\Worlds", "").Replace("\\Levels", "");
+            //string currdir = AppDomain.CurrentDomain.BaseDirectory;
             //Console.WriteLine(currdir);
             //Console.WriteLine("GOT HERE");
             return currdir;
