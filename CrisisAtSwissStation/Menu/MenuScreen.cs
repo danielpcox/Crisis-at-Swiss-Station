@@ -135,32 +135,35 @@ namespace CrisisAtSwissStation
                     break;
             }
 
-            // code to click menu items
-            if (ms.X != prevms.X || ms.Y != prevms.Y)
+            if (controller.ControlCode == MenuInput.NONE)
             {
-                Vector2 rollingPos = new Vector2(initialX, initialY);
-                int low_water_mark = 0;
-                float distance_lwm = 1280;
-                for (int i = 0; i < options.Count; i++)
+                // code to click menu items
+                if (ms.X != prevms.X || ms.Y != prevms.Y)
                 {
-                    float distance = Vector2.Distance(rollingPos + new Vector2(0, 20), new Vector2(ms.X, ms.Y));
-                    //Console.WriteLine(distance); // DEBUG
-                    if (distance < distance_lwm)
+                    Vector2 rollingPos = new Vector2(initialX, initialY);
+                    int low_water_mark = 0;
+                    float distance_lwm = 1280;
+                    for (int i = 0; i < options.Count; i++)
                     {
-                        low_water_mark = i;
-                        distance_lwm = distance;
+                        float distance = Vector2.Distance(rollingPos + new Vector2(0, 20), new Vector2(ms.X, ms.Y));
+                        //Console.WriteLine(distance); // DEBUG
+                        if (distance < distance_lwm)
+                        {
+                            low_water_mark = i;
+                            distance_lwm = distance;
+                        }
+                        rollingPos.Y += distY;
                     }
-                    rollingPos.Y += distY;
+                    selected = low_water_mark;
                 }
-                selected = low_water_mark;
+
+                //selected = (selected + options.Count) % options.Count;
+                selected = (selected) % options.Count;
+
+                // actually click the button
+                if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
+                    returnSelected = true;
             }
-
-            //selected = (selected + options.Count) % options.Count;
-            selected = (selected) % options.Count;
-
-            // actually click the button
-            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed && ms.X < GameEngine.SCREEN_WIDTH && ms.X > 0 && ms.Y > 0 && ms.Y < GameEngine.SCREEN_HEIGHT)
-                returnSelected = true;
 
             prevms = ms;
         }

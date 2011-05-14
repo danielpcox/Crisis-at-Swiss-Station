@@ -27,6 +27,7 @@ namespace CrisisAtSwissStation
 
         static MenuEngine currentMenu;
         static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
+        public static MenuScreen pauseScreen;
         public static MenuScreen floorsScreen;
 
         static MenuScreen introductionRoomsScreen;
@@ -680,7 +681,8 @@ namespace CrisisAtSwissStation
 
         public static void EnterMenu()
         {
-            SetCurrentMenu(pauseMenu);
+            //SetCurrentMenu(pauseMenu);
+            currentMenu.currentScreen = pauseScreen;
             progstate = ProgramState.Menu;
         }
 
@@ -892,13 +894,15 @@ namespace CrisisAtSwissStation
 
             // Pause screen
 
-            MenuScreen pauseScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
+            pauseScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
 
             pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Resume", MenuCommand.Resume));
             pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load", MenuCommand.Load));
-            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Main Menu", MenuCommand.LinkToMainMenu)); // Can link between engines...
+            //pauseScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Main Menu", MenuCommand.LinkToMainMenu)); // Can link between engines...
+            pauseScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
 
-            pauseMenu.Screens.Add(pauseScreen);
+            //pauseMenu.Screens.Add(pauseScreen);
+            startMenu.Screens.Add(pauseScreen);
 
             SetCurrentMenu(startMenu);
 
@@ -937,7 +941,8 @@ namespace CrisisAtSwissStation
             {
                 case ProgramState.Menu:
 
-                    if (currentMenu == pauseMenu)
+                    //if (currentMenu == pauseMenu)
+                    if (currentMenu.currentScreen == pauseScreen)
                     {
                         currentWorld.Draw(graphics.GraphicsDevice, Matrix.Identity);
 
