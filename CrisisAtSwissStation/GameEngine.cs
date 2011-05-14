@@ -821,10 +821,14 @@ namespace CrisisAtSwissStation
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Launch Editor", MenuCommand.LaunchEditor));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Exit", MenuCommand.ExitProgram));
 
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Recreation", MenuCommand.LoadExodus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Engineering", MenuCommand.LoadLeviticus));
+            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
+            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Recreation", MenuCommand.LoadExodus));
+            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Engineering", MenuCommand.LoadLeviticus));
             //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Core", MenuCommand.LoadNumbers));
+
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Introduction", introductionRoomsScreen));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Recreation", recreationRoomsScreen));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Engineering", engineeringRoomsScreen));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Core", coreRoomsScreen));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Credits", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
@@ -833,6 +837,24 @@ namespace CrisisAtSwissStation
             {
                 mainScreen.Options[0] = new MenuOption(MenuOptionType.Command, "Continue", MenuCommand.Continue);
             }*/
+
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction1", MenuCommand.LoadIntroduction));
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction2", MenuCommand.LoadIntroduction));
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction3", MenuCommand.LoadIntroduction));
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "introduction4", MenuCommand.LoadIntroduction));
+            introductionRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation1", MenuCommand.LoadRecreation));
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation2", MenuCommand.LoadRecreation));
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation3", MenuCommand.LoadRecreation));
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "recreation4", MenuCommand.LoadRecreation));
+            recreationRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering1", MenuCommand.LoadEngineering));
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering2", MenuCommand.LoadEngineering));
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering3", MenuCommand.LoadEngineering));
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "engineering4", MenuCommand.LoadEngineering));
+            engineeringRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
 
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core1", MenuCommand.LoadCore));
             coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core2", MenuCommand.LoadCore));
@@ -845,9 +867,9 @@ namespace CrisisAtSwissStation
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);
 
-            //startMenu.Screens.Add(introductionRoomsScreen);
-            //startMenu.Screens.Add(recreationRoomsScreen);
-            //startMenu.Screens.Add(engineeringRoomsScreen);
+            startMenu.Screens.Add(introductionRoomsScreen);
+            startMenu.Screens.Add(recreationRoomsScreen);
+            startMenu.Screens.Add(engineeringRoomsScreen);
             startMenu.Screens.Add(coreRoomsScreen);
 
 
@@ -912,7 +934,7 @@ namespace CrisisAtSwissStation
                     }
                     else // current menu is one of the main menus
                     {
-                        if (currentMenu.currentScreen != floorsScreen) // HACK - special case for the floors menu
+                        if (currentMenu.currentScreen != floorsScreen && currentMenu.currentScreen != floorsScreen) // HACK - special case for the floors and rooms menus
                         {
                             spriteBatch.Begin();
                             spriteBatch.Draw(menuBack,

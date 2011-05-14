@@ -89,9 +89,9 @@ namespace CrisisAtSwissStation
             currentFloor = currentFloor % (Options.Count - 1);
 
             //DEBUG
-            Console.WriteLine("GOT HERE");
-            Console.WriteLine(currentFloor);
-            Console.WriteLine(selected);
+            //Console.WriteLine("GOT HERE");
+            //Console.WriteLine(currentFloor);
+            //Console.WriteLine(selected);
 
             spriteBatch.Draw(GameEngine.TextureList[menuState[currentFloor][selected]],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
