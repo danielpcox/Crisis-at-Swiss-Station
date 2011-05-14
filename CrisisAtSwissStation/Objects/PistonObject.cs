@@ -55,7 +55,7 @@ namespace CrisisAtSwissStation
 
         public override void Update(CASSWorld world, float dt)
         {
-            if (Angle == MathHelper.ToRadians(90))
+            if ((Angle > MathHelper.ToRadians(85)) && (Angle < MathHelper.ToRadians(95)))
             {
                 if(!adjusted)
                 {
@@ -80,7 +80,7 @@ namespace CrisisAtSwissStation
                 }
 
             }
-            else if (Angle == MathHelper.ToRadians(-90))
+            else if ((Angle > MathHelper.ToRadians(-95)) && (Angle < MathHelper.ToRadians(-85)))
             {
                 if (!adjusted)
                 {
@@ -105,7 +105,7 @@ namespace CrisisAtSwissStation
                 }
 
             }
-            else if (Angle == MathHelper.ToRadians(0))
+            else if ((Angle > MathHelper.ToRadians(-5)) && (Angle < MathHelper.ToRadians(5)))
             {
                 if (pistonMove == true)
                 {
@@ -120,7 +120,7 @@ namespace CrisisAtSwissStation
                         pistonMove = true;
                 }
             }
-            else if (Angle == MathHelper.ToRadians(180))
+            else if ((Angle > MathHelper.ToRadians(175)) && (Angle < MathHelper.ToRadians(185)))
             {        
                 if (!adjusted)
                 {
