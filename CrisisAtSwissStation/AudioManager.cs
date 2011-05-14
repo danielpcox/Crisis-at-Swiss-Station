@@ -89,21 +89,26 @@ namespace CrisisAtSwissStation
             songs.Add(MusicSelection.Final, content.Load<Song>("Music/Deep Core"));
 
             // MAPS BACKGROUND FILENAMES TO MUSIC FILES
-            songsdict.Add("background", content.Load<Song>("Music/Basement"));
+            
             songsdict.Add("tutorial", content.Load<Song>("Music/EarlyLevelv2"));
-            songsdict.Add("ballroom", content.Load<Song>("Music/Ballroom"));
-            songsdict.Add("RonniesBestWork", content.Load<Song>("Music/SpaceThemeHappy"));
-            songsdict.Add("basement2", content.Load<Song>("Music/Upper Basement"));
+            songsdict.Add("plinko", content.Load<Song>("Music/SpaceThemeHappy"));
+            songsdict.Add("tutorial_3072", content.Load<Song>("Music/EarlyLevelv2"));
+
+            songsdict.Add("background3072", content.Load<Song>("Music/Upper Basement"));
             songsdict.Add("bathroom", content.Load<Song>("Music/Basement"));
-            songsdict.Add("plinko", content.Load<Song>("Music/EarlyLevelv2"));
+            songsdict.Add("background", content.Load<Song>("Music/Basement"));
+            
+            songsdict.Add("ballroom", content.Load<Song>("Music/Ballroom"));
             songsdict.Add("hallway2", content.Load<Song>("Music/Ballroom"));
-            songsdict.Add("credits", content.Load<Song>("Music/SpaceThemeHappy"));
             songsdict.Add("space", content.Load<Song>("Music/Ballroom"));
+            
             songsdict.Add("corelevelbg1", content.Load<Song>("Music/LaterLevelv1"));
             songsdict.Add("corelevelbg2", content.Load<Song>("Music/Middle Core"));
             songsdict.Add("corelevelbg3", content.Load<Song>("Music/LaterLevelv1"));
             songsdict.Add("corelevelbg4", content.Load<Song>("Music/Middle Core"));
+            songsdict.Add("basement2", content.Load<Song>("Music/Deep Core"));
 
+            songsdict.Add("credits", content.Load<Song>("Music/SpaceThemeHappy"));
 
             //Sound Effects
             soundEffects.Add(SFXSelection.LevelComplete, content.Load<SoundEffect>("Music\\LevelComplete"));
