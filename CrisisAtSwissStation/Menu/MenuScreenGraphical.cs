@@ -122,6 +122,8 @@ namespace CrisisAtSwissStation
             }
 
             base.Update();
+            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
+                returnSelected = true;
             prevms = ms;
         }
     }
