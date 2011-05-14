@@ -73,6 +73,8 @@ namespace CrisisAtSwissStation
             //currentScreen.Update();
             if (currentScreen is MenuScreenGraphical)
                 ((MenuScreenGraphical)currentScreen).Update();
+            else if (currentScreen is RoomSelectionMenu)
+                ((RoomSelectionMenu)currentScreen).Update();
             else
                 currentScreen.Update();
 
@@ -103,6 +105,8 @@ namespace CrisisAtSwissStation
         {
             if (currentScreen is MenuScreenGraphical)
                 ((MenuScreenGraphical)currentScreen).Draw(spriteBatch);
+            else if (currentScreen is RoomSelectionMenu)
+                ((RoomSelectionMenu)currentScreen).Draw(spriteBatch);
             else
                 currentScreen.Draw(spriteBatch);
         }

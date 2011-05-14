@@ -29,6 +29,11 @@ namespace CrisisAtSwissStation
         static MenuEngine startMenu = new MenuEngine(), pauseMenu = new MenuEngine();
         static MenuScreen floorsScreen;
 
+        static MenuScreen introductionRoomsScreen;
+        static MenuScreen recreationRoomsScreen;
+        static MenuScreen engineeringRoomsScreen;
+        static MenuScreen coreRoomsScreen;
+
         public int lastFloorPlayed;
 
         public static SavedGame savedgame = new SavedGame();
@@ -446,6 +451,16 @@ namespace CrisisAtSwissStation
                             }
                             break;
 
+                            // TESTING NEW FUNCTIONALITY...
+                        case MenuCommand.LoadCore:
+                            if (LoadRelWorld("credits" + currentMenu.currentScreen.selected))
+                            {
+                                countdown = COUNTDOWN;
+                                forcedCommand = MenuCommand.NONE;
+                                progstate = ProgramState.Playing;
+                            }
+                            break;
+
                         case MenuCommand.LaunchEditor:
                             {
                                 progstate = ProgramState.EditorOpen;
@@ -571,6 +586,16 @@ namespace CrisisAtSwissStation
 
             string newfilename = origname + (levelnum + 1) + ".world";
 
+            // either way, say we beat this room and save the game
+            // WARNING - this assumes there are FIVE rooms per floor, and that they're named like floorname1.world, floorname2.world...etc. - starting with 1
+            try
+            {
+                savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum - 1] = true; savedgame.SaveGame();
+            }
+            catch (IndexOutOfRangeException e)
+            {
+            }
+
             if (File.Exists(newfilename))
             {
                 LoadWorld(newfilename);
@@ -582,16 +607,6 @@ namespace CrisisAtSwissStation
                 LinkToFloors();
                 progstate = ProgramState.Menu;
                 currentWorld = null;
-            }
-
-            // either way, say we beat this room and save the game
-            // WARNING - this assumes there are FIVE rooms per floor, and that they're named like floorname1.world, floorname2.world...etc. - starting with 1
-            try
-            {
-                savedgame.roomsBeatenBitmap[lastFloorPlayed, levelnum - 1] = true; savedgame.SaveGame();
-            }
-            catch (IndexOutOfRangeException e)
-            {
             }
 
             countdown = COUNTDOWN;
@@ -771,6 +786,12 @@ namespace CrisisAtSwissStation
             MenuScreen mainScreen = new MenuScreen(520.0f, 180.0f, 50.0f);
             //floorsScreen = new MenuScreen(520.0f, 150.0f, 50.0f, true);
             floorsScreen = new MenuScreenGraphical();
+
+            introductionRoomsScreen = new RoomSelectionMenu();
+            recreationRoomsScreen = new RoomSelectionMenu();
+            engineeringRoomsScreen = new RoomSelectionMenu();
+            coreRoomsScreen = new RoomSelectionMenu();
+
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "New Game", MenuCommand.New));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Load Game", MenuCommand.Load));
             mainScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Select Floor", floorsScreen));
@@ -780,7 +801,8 @@ namespace CrisisAtSwissStation
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Introduction", MenuCommand.LoadGenesis));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Recreation", MenuCommand.LoadExodus));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Engineering", MenuCommand.LoadLeviticus));
-            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Core", MenuCommand.LoadNumbers));
+            //floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Core", MenuCommand.LoadNumbers));
+            floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Core", coreRoomsScreen));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "Credits", MenuCommand.LoadDeuteronomy));
             floorsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Main Menu", mainScreen));
             savedgame.disabledOptions.AddRange(new List<int> { 1, 2, 3 });
@@ -788,10 +810,22 @@ namespace CrisisAtSwissStation
             {
                 mainScreen.Options[0] = new MenuOption(MenuOptionType.Command, "Continue", MenuCommand.Continue);
             }*/
+
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core1", MenuCommand.LoadCore));
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core2", MenuCommand.LoadCore));
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core3", MenuCommand.LoadCore));
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Command, "core4", MenuCommand.LoadCore));
+            coreRoomsScreen.Options.Add(new MenuOption(MenuOptionType.Link, "Floor Select", floorsScreen));
+
             savedgame.LoadGame();
 
             startMenu.Screens.Add(mainScreen);
             startMenu.Screens.Add(floorsScreen);
+
+            //startMenu.Screens.Add(introductionRoomsScreen);
+            //startMenu.Screens.Add(recreationRoomsScreen);
+            //startMenu.Screens.Add(engineeringRoomsScreen);
+            startMenu.Screens.Add(coreRoomsScreen);
 
 
 

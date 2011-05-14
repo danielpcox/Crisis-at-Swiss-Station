@@ -42,7 +42,7 @@ namespace CrisisAtSwissStation
             get { return options; }
         }
 
-        protected int selected;
+        public int selected;
         protected bool returnSelected; // Return command to menu
 
         /// <summary>

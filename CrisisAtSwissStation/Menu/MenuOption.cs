@@ -46,6 +46,12 @@ namespace CrisisAtSwissStation{
         LoadLeviticus,
         LoadNumbers,
         LoadDeuteronomy,
+
+        LoadIntroduction,
+        LoadRecreation,
+        LoadEngineering,
+        LoadCore,
+
         Save,
         ExitProgram,
         LaunchEditor,

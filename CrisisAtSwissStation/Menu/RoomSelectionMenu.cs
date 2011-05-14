@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 
-namespace CrisisAtSwissStation.Menu
+namespace CrisisAtSwissStation
 {
     class RoomSelectionMenu : MenuScreen
     {
@@ -57,6 +57,8 @@ namespace CrisisAtSwissStation.Menu
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
+
             // draw cursor
             Texture2D crosshair = GameEngine.TextureList["Crosshair"];
             spriteBatch.Draw(crosshair, new Vector2(ms.X - (crosshair.Width / 2), ms.Y - (crosshair.Height / 2)), Color.White);
@@ -64,64 +66,7 @@ namespace CrisisAtSwissStation.Menu
 
         public void Update()
         {
-            ms = Mouse.GetState();
-
-            float distance_lwm = 1280; // distance low-water-mark is sqrt(1024^2 + 768^2)
-            Vector2 low_water_mark = new Vector2(1024, 768);
-
-            controller.UpdateInput();
-            returnSelected = false;
-
-            int viable = selected;
-            switch (controller.ControlCode)
-            {
-                case MenuInput.DOWN:
-                    viable += 1;
-                    while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
-                        viable += 1;
-                    //Console.WriteLine(viable); // DEBUG
-                    selected = viable;
-                    break;
-
-                case MenuInput.UP:
-                    viable -= 1;
-                    if (viable < 0)
-                        viable = Options.Count - Math.Abs(viable); // HACK
-                    while (sgconnect && GameEngine.savedgame.disabledOptions.Contains(viable))
-                        viable -= 1;
-                    // Console.WriteLine(viable); // DEBUG
-                    selected = viable;
-                    break;
-
-                case MenuInput.SELECT:
-                    returnSelected = true;
-                    break;
-            }
-
-            // if the current mouse position is different from the previous one, update
-            // the selected menu item with the one closest to the mouse
-            /*
-            if (ms.X != prevms.X || ms.Y != prevms.Y)
-            {
-                //Console.WriteLine(new Vector2(ms.X, ms.Y));
-                foreach (Vector2 optionPos in optionPositions)
-                {
-                    float distance = Vector2.Distance(optionPos, new Vector2(ms.X, ms.Y));
-                    if (distance < distance_lwm)
-                    {
-                        low_water_mark = optionPos;
-                        distance_lwm = distance;
-                    }
-                }
-                int potential_new_selected = optionPositions.IndexOf(low_water_mark);
-                if (!GameEngine.savedgame.disabledOptions.Contains(potential_new_selected))
-                    selected = potential_new_selected;
-            }
-
-            if (ms.LeftButton == ButtonState.Pressed && prevms.LeftButton != ButtonState.Pressed)
-                returnSelected = true;
-            prevms = ms;
-            */
+            base.Update();
         }
     }
 }
