@@ -74,8 +74,11 @@ namespace CrisisAtSwissStation
         {
             //base.Draw(spriteBatch);
 
+            Color selectedColor = Color.LightSeaGreen;
+            Color unselectedColor = Color.White;
+
             // draw special background
-            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\zzblack"],
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\zzwhite"],
                         new Rectangle(0, 0, GameEngine.SCREEN_WIDTH, GameEngine.SCREEN_HEIGHT), Color.White);
 
             Vector2 rollingPos = new Vector2(initialX, initialY);
@@ -84,7 +87,7 @@ namespace CrisisAtSwissStation
             {
 
                 spriteBatch.Draw(GameEngine.TextureList[screenshots[GameEngine.floorsScreen.selected][i]],
-                    optionPositions[i], selected==i ? Color.White : Color.Gray);
+                    optionPositions[i], selected==i ? selectedColor : unselectedColor);
                 /*
                 spriteBatch.DrawString(font,
                     options[i].Text,
@@ -94,6 +97,10 @@ namespace CrisisAtSwissStation
 
                 rollingPos.Y += distY;
             }
+
+
+            spriteBatch.Draw(GameEngine.TextureList["Art\\Menus\\back"],
+                optionPositions.Last(), selected == optionPositions.Count ? selectedColor : unselectedColor);
 
             // draw cursor
             Texture2D crosshair = GameEngine.TextureList["Crosshair"];
@@ -143,7 +150,7 @@ namespace CrisisAtSwissStation
                 //Console.WriteLine(new Vector2(ms.X, ms.Y));
                 foreach (Vector2 optionPos in optionPositions)
                 {
-                    float distance = Vector2.Distance(optionPos + new Vector2(100, 0), new Vector2(ms.X, ms.Y));
+                    float distance = Vector2.Distance(optionPos + new Vector2(100, 70), new Vector2(ms.X, ms.Y));
                     if (distance < distance_lwm)
                     {
                         low_water_mark = optionPos;
